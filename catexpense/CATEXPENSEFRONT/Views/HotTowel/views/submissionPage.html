@@ -33,16 +33,7 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="col-sm-12">
-            <button id="syncProjectsButton" class="btn btn-primary pull-right" ng-click="syncProjects()" ng-disabled="flag" ng-hide="flag">
-                <i class="glyphicon glyphicon-retweet"></i>
-                <span>Sync Projects</span>
-            </button>
-            <progressbar class="progress-striped active pull-right" style="height: 34px; width: 130px;" animate="true" max="100" value="progressValue" type="primary" ng-hide="!flag">
-
-            </progressbar>
-        </div>
+        </div>        
         <div ng-show="clientAndDate() && !se()">
             <div class="col-sm-12">
                 <button class="btn btn-default" ng-disabled="disableCreate" id="createSubmissionButton" ng-click="createNewSubmission()">Create Submission</button>

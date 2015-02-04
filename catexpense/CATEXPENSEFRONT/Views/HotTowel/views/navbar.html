@@ -1,6 +1,17 @@
 ﻿<div class="header" ng-controller="NavController">
     <ul class="nav nav-pills pull-right" ng-if="isLoggedIn">
         <li>
+            <div class="col-sm-12 pull-right">
+                <button id="syncProjectsButton" class="btn btn-primary pull-right" ng-click="syncProjects()" ng-disabled="flag" ng-hide="flag">
+                    <i class="glyphicon glyphicon-retweet"></i>
+                    <span>Sync Projects</span>
+                </button>
+                <progressbar class="progress-striped active pull-right" style="height: 34px; width: 130px;" animate="true" max="100" value="progressValue" type="primary" ng-hide="!flag">
+
+                </progressbar>
+            </div>
+        </li>
+        <li>
             <button id="logoutButton" class="btn btn-danger pull-right" ng-click="logout()" title="Logout">
                 <i class="glyphicon glyphicon-log-out"></i>
                 <span>Log out</span>

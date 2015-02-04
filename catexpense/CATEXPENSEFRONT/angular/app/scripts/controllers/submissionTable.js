@@ -2,7 +2,7 @@
     .controller('submissionTableCtrl', function ($scope, $route, $modal, $location, $rootScope, $filter, Application, receiptService, LineItemService, MessageService, SubmissionService, Authentication) {
         $scope.receipts = true;
         var orderBy = $filter('orderBy');
-        var sortColumn = { field: 'DateCreated', reverse: false };        
+        var sortColumn = { field: 'DateCreated', reverse: false };
         $scope.submissionOrder = function (field) {
             if (field === sortColumn.field) {
                 sortColumn.reverse = !sortColumn.reverse;
@@ -24,9 +24,8 @@
             if (submission) {
                 Application.setSubmission(submission);
                 $rootScope.$broadcast("checkReceipts");
-                
-                //if the submission id is 1, 4, or 6 the user can edit the submission
-                $scope.createNewItemLoad = submission.StatusId == 1;
+
+                $scope.createNewItemLoad = submission.StatusId == 1 || submission.StatusId == 4 || submission.StatusId == 6;
                 //set the current submission being editted
                 $scope.currentSubmission = submission;
                 $scope.isApprover = false;
@@ -84,7 +83,7 @@
         };
 
         $scope.isApprover = false;
-        $scope.createNewItemLoad = Application.getSubmissionStatus() == 1;
+        $scope.createNewItemLoad = Application.getSubmissionStatus() == 1 || Application.getSubmissionStatus() == 4 || Application.getSubmissionStatus() == 6;
         var receipts;
 
         if (Application.getOrigin() !== "EmployeeTable") {
@@ -143,11 +142,11 @@
         });
 
         if (Application.getSubmission()) {
-            $scope.currentSubmission = Application.getSubmission();            
+            $scope.currentSubmission = Application.getSubmission();
             $scope.userName = Authentication.getUserName();
             $scope.showComments = $scope.currentSubmission.LineItems.length != 0;
             //if the submission id is 1 the user can edit the submission
-            $scope.createNewItemLoad = $scope.currentSubmission.StatusId == 1;
+            $scope.createNewItemLoad = $scope.currentSubmission.StatusId == 1 || $scope.currentSubmission.StatusId == 4 || $scope.currentSubmission.StatusId == 6;
             $scope.dt1 = $scope.currentSubmission.WeekEndingDate;
             if (Authentication.getApprover() || Authentication.getIsManager()) {
                 $scope.isApprover = true;
@@ -157,7 +156,7 @@
                 if ($scope.currentSubmission.RepliconProject.RepliconProjectName == Application.getRepliconProjects()[i].RepliconProjectName) {
                     $scope.selectedClient = Application.getRepliconProjects()[i];
                 }
-            }            
+            }
             $scope.editExistingSubmission = true;
             if ($scope.currentSubmission.LineItems.length != 0) {
                 for (var i = 0; i < $scope.currentSubmission.LineItemComments.length; i++) {
@@ -218,7 +217,7 @@
 
             $scope.currentSubmission.Status["StatusName"] = statusName;
             SubmissionService.updateSubmission($scope.currentSubmission.SubmissionId, $scope.currentSubmission).then(function (data) {
-                if ( statusName == "Manager Approved" ) {
+                if (statusName == "Manager Approved") {
                     var submissions = Application.getPendingSubmissionsByManagerName();
                     submissions.splice(Application.getSubmissionIndex(), 1);
                 } else {
@@ -243,7 +242,7 @@
             $scope.currentSubmission.LineItemComments[0] = {};
             $scope.currentSubmission.LineItemComments[0]["ExpenseComment"] = comment;
             SubmissionService.updateSubmission($scope.currentSubmission.SubmissionId, $scope.currentSubmission).then(function (data) {
-                if ( statusName == "Manager Rejected" ) {
+                if (statusName == "Manager Rejected") {
 
                     var submissions = Application.getPendingSubmissionsByManagerName();
                     submissions.splice(Application.getSubmissionIndex(), 1);

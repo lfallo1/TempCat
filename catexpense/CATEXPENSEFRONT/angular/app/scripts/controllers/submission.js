@@ -21,8 +21,8 @@ angular.module('expenseApp')
       if (Application.getSubmission()) {
           $scope.submittedNotApproved = Application.getSubmissionStatus() === 2
         && Application.getSubmission().ActiveDirectoryUser.toUpperCase() == Authentication.getUserName().toUpperCase();
+          $scope.createNewItemLoad = $scope.submission.StatusId == 1 || $scope.submission.StatusId == 4 || $scope.submission.StatusId == 6
       }
-
 
       //this variable stores the date string chosen from the datepicker
       $scope.dt1 = '';
@@ -81,8 +81,7 @@ angular.module('expenseApp')
                   $scope.missingLineItems = $scope.submission.LineItems.length < 1;
                   $scope.submissionExists = true;
                   $scope.missingLineItems = $scope.submission.LineItems.length < 1;
-                  //$rootScope.$broadcast
-                  $scope.createNewItemLoad = $scope.submission.StatusId == 1;
+                  $scope.createNewItemLoad = $scope.submission.StatusId == 1 || $scope.submission.StatusId == 4 || $scope.submission.StatusId == 6;
               } else {
                   $scope.submissionExists = false;
               }
@@ -120,37 +119,12 @@ angular.module('expenseApp')
           // load replicon projects into clients array upon page load
           getAllProjects();
       }
+      $scope.$on("syncComplete", function () {
+          $scope.syncComplete = true;
+          //populates the drop down list with projects.
+          getAllProjects();
+      });
 
-      // sync the projects in the replicon database with the project database
-      $scope.syncProjects = function () {
-          $scope.flag = true;
-          $scope.countFrom = 0;
-          $scope.progressValue = 0;
-
-          RepliconProjectService.updateRepliconProjects().then(
-           function (success) {
-               $scope.progressValue = 98;
-               $scope.flag = false;
-               $scope.syncComplete = true;
-               //populates the drop down list with projects.
-               getAllProjects();
-           },
-           function (error) {
-               alert(error);
-               $scope.flag = false;
-           }
-           );
-
-          $scope.onTimeout = function () {
-              $scope.progressValue += .325;
-              mytimeout = $timeout($scope.onTimeout, 100);
-          }
-          var mytimeout = $timeout($scope.onTimeout, 100);
-          $timeout(function () {
-              $timeout.cancel(mytimeout);
-          }, 28000);
-
-      };
 
       /**
        * Poulates the client drop down list.
