@@ -1,0 +1,20 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>Expense</groupId>
+  <artifactId>CatExpense</artifactId>
+  <version>0.1.0</version>
+  <name>CatExpense</name>
+  <!-- <packaging>netpack</packaging> -->
+<!-- A Change -->
+  <properties>
+    <visual.studio.solution>CatExpense.sln</visual.studio.solution>
+    <visual.test.project.pattern>*.Tests;*Test</visual.test.project.pattern>
+	<sonar.gallio.runner>IsolatedProcess</sonar.gallio.runner>
+	<sonar.gallio.coverage.tool>NCover</sonar.gallio.coverage.tool>
+    <dotnet.tool.version>3.5</dotnet.tool.version>	
+	<sonar.dotnet.test.assemblies>UnitTestProject\obj\Debug\UnittTestProject.dll</sonar.dotnet.test.assemblies>
+	<sonar.fxcop.mode>skip</sonar.fxcop.mode>
+    <sonar.language>cs</sonar.language>	
+  </properties>
+
+</project> 
