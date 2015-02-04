@@ -1,0 +1,83 @@
+// Generated on 2014-12-30 using generator-angular 0.10.0
+'use strict';
+
+// # Globbing
+// for performance reasons we're only matching one level down:
+// 'test/spec/{,*/}*.js'
+// use this if you want to recursively match all subfolders:
+// 'test/spec/**/*.js'
+
+module.exports = function ( grunt ) {
+
+    // Load grunt tasks automatically
+    require( 'load-grunt-tasks' )( grunt );
+
+    // Time how long tasks take. Can help when optimizing build times
+    require( 'time-grunt' )( grunt );
+
+    // Configurable paths for the application
+    var appConfig = {
+        app: 'app',
+        dist: 'dist'
+    };
+
+    // Define the configuration for all the tasks
+    grunt.initConfig( {
+
+        // Project settings
+        yeoman: appConfig,
+
+        // The actual grunt server settings
+        connect: {
+            test: {
+                options: {
+                    port: 40218,
+                    middleware: function ( connect ) {
+                        return [
+                          connect.static( '.tmp' ),
+                          connect.static( 'test' ),
+                          connect().use(
+                            '/app/bower_components',
+                            connect.static( './app/bower_components' )
+                          ),
+                          connect.static( appConfig.app )
+                        ];
+                    }
+                }
+            }
+        },
+
+        // Empties folders to start fresh
+        clean: {
+            server: '.tmp'
+        },
+
+        // Run some tasks in parallel to speed up the build process
+        concurrent: {
+            test: [
+              'copy:styles'
+            ]
+        },
+
+        // Test settings
+        karma: {
+            unit: {
+                configFile: 'test/karma.conf.js',
+                singleRun: true,
+                plugins: [
+      'karma-jasmine',
+      'karma-coverage',
+      'karma-phantomjs-launcher'
+                ],
+            }
+        }
+    } );
+
+    grunt.registerTask( 'test', [
+      'clean:server',
+      'concurrent:test',
+      'autoprefixer',
+      'connect:test',
+      'karma'
+    ] );
+};

@@ -1,0 +1,18 @@
+﻿Installing Dependencies:
+
+after pulling, go to the /CATEXPENSE/angular folder in the command line and type 
+> npm install
+This will install the dependencies required into a folder called node_modules
+This is only done once, unless there is a need for more dependencies to be added in the future.
+
+
+Running Tests:
+
+In the command line, within /CATEXPENSE/angular, type
+> grunt karma
+This will run the tests (as of this point there are only 2 tests).
+
+Viewing Code Coverage:
+
+Assuming all tests pass, a code coverage report will be generated inside of /CATEXPENSEFRONT/angular/test/coverage/PhantomJs
+To view the coverage, open up the index.html file in a web browser.

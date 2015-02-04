@@ -1,0 +1,66 @@
+﻿<div ng-controller="FinanceTableController" ng-show="isFinanceApprover">
+    <div class="panel panel-default">
+        <div class="panel-heading alert-info form-group col-md-12 col-sm-12">
+            <div class="col-md-2 pull-left">
+                <button class="btn btn-small" ng-if="!expanded" ng-click="expandContract(true)" title="expand table"><i class="glyphicon glyphicon-plus"></i></button>
+                <button class="btn btn-small" ng-if="expanded" ng-click="expandContract(false)" title="collapse table"><i class="glyphicon glyphicon-minus"></i></button>
+            </div>
+            <div>
+                <h4 class="col-sm-6 col-md-6">
+                    Finance Table
+                    <small style="font-weight: lighter" class="bg-warning">Awaiting Approval: {{financeTotal}}</small></h4>
+            </div>
+            <div class="col-sm-4 col-md-4 pull-right">
+                <select class="form-control col-sm-5 col-md-5 pull-right" ng-change="loadFinanceTableStatusX(selectedFinanceStatus.value)"
+                    ng-model="selectedFinanceStatus" ng-options="status.name for status in financeStatuses">
+                </select>
+            </div>
+        </div>
+        <table class="panel-body table table-hover table-striped table-condensed" ng-if="expanded">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th><a href="" id="finSubmitted" ng-click="financeOrder('DateCreated')">Submitted</a>
+                    </th>
+                    <th><a href="" id="finSubmittedBy" ng-click="financeOrder('ActiveDirectoryUser')">Submitted
+                        By</a></th>
+                    <th><a href="" id="finWeekEnding" ng-click="financeOrder('WeekEndingDate')">Week Ending</a>
+                    </th>
+                    <th><a href="" id="finClient" ng-click="financeOrder('RepliconProject.RepliconProjectName')">
+                        Client</a>
+                    </th>
+                    <th><a href="" id="finDescription" ng-click="financeOrder('Description')">Description</a></th>
+                    <th><a href="" id="finAmount" ng-click="financeOrder('TotalAmount')">Amount</a></th>
+                </tr>
+            </thead>
+            <tbody ng-repeat="submission in financeSubmissions">
+                <tr>
+                    <td>
+                        <div ng-if="Status.StatusName !== 'Finance Rejected' || Status.StatusName !== 'Finance Approved'">
+                            <span style="cursor: pointer" class="glyphicon glyphicon-edit" ng-click="loadFinaceSubmission(submission, $index)"
+                                  data-toggle="tooltip" data-placement="left" title="Edit Report"></span>
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <span style="cursor: pointer" class="glyphicon glyphicon-trash" ng-click="deleteSubmission(submission, $index)"
+                                data-toggle="tooltip" data-placement="left" title="Delete Submission"></span>
+                        </div>
+                    </td>
+                    <td>{{submission.DateCreated | date:'yyyy/MM/dd'}}</td>
+                    <td>{{submission.ActiveDirectoryUser}}</td>
+                    <td>{{submission.WeekEndingDate | date:'yyyy/MM/dd'}}</td>
+                    <td>{{submission.RepliconProject.RepliconProjectName}}</td>
+                    <td>{{submission.Description}}</td>
+                    <td>{{("$" + (submission.TotalAmount).toFixed( 2 ))}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div ng-if="financeSubmissions.length == 0">
+            <div class="alert alert-warning fade in">
+                You have no reports awaiting your approval!
+            </div>
+        </div>
+    </div>
+</div>

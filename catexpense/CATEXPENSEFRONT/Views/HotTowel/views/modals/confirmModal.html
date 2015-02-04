@@ -1,0 +1,29 @@
+﻿<div>
+    <div class="modal-header">
+        <h3>Please Confirm</h3>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div><b ng-bind="message" class="bg-warning col-md-12"></b></div>
+            </div>
+            <br />
+            <div class="col-md-12" ng-show="addComment">
+                <label class="col-md-5">Add a comment:</label>
+                <textarea placeholder="Reasons for rejecting this submission." ng-model="comment" class="form-control col-md-6"></textarea>
+            </div>
+            <div class="col-md-12">
+                <div>
+                    <button id="cancelButton" class="btn btn-danger col-md-2 pull-right" ng-click="cancel()">
+                        <i class="glyphicon glyphicon-ban-circle"></i>
+                        <span>Cancel</span>
+                    </button>
+                    <button id="yesButton" ng-disabled="!comment" class="btn btn-success col-md-2 pull-right" ng-click="confirm()">
+                        <i class="glyphicon glyphicon-ok"></i>
+                        <span>Yes</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

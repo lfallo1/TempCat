@@ -1,0 +1,20 @@
+﻿<div>
+    <div class="modal-header">
+        <h3>Comment:</h3>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-md-12">
+                <label class="col-md-5">Add a comment:</label>
+                <textarea id="commentTextArea" placeholder="Add a comment." ng-model="comment" class="form-control col-md-6"></textarea>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <button id="cancelButton" class="btn btn-danger col-md-2 pull-right" ng-click="cancel()">Cancel</button>
+                <button id="yesButton" ng-disabled="!comment" class="btn btn-success col-md-2 pull-right" ng-click="save()">Save</button>
+            </div>
+        </div>
+    </div>
+</div>

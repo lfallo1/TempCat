@@ -1,0 +1,28 @@
+﻿<Window x:Class="TestRunner.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="350" Width="525">
+    <StackPanel Background="LightBlue"  Height="350" Width="525">
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="Username: " FontSize="20"/>
+            <TextBox Name="TextBox_UserName" FontSize="20" Width="200" Background="LightBlue" BorderBrush="Black"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="Password: " FontSize="20"/>
+            <PasswordBox Name="TextBox_Password" FontSize="20" Width="200" Background="LightBlue" BorderBrush="Black"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="Browser: " FontSize="20"/>
+            <ComboBox Name="ComboBox_Browser" Width="100" HorizontalAlignment="Left" SelectedIndex="0" FontSize="20">
+                <ComboBoxItem Content="Chrome"/>
+                <ComboBoxItem Content="Firefox"/>
+                <ComboBoxItem Content="IE"/>
+            </ComboBox>
+            <Button Name="Button_Start" Content="Start Tests" FontSize="20" Margin="10,0" Click="Button_Start_Click"/>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock Text="Remember username and password? " FontSize="20"/>
+            <CheckBox Margin="0,8,0,0" Name="usrnamePassCB" IsChecked="True" Click="usrnamePassCB_Click"/>
+        </StackPanel>
+    </StackPanel>
+</Window>

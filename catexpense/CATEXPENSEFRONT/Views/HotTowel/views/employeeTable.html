@@ -1,0 +1,81 @@
+﻿<div ng-controller="EmployeeTableController">
+    <div class="panel panel-default">
+        <div class="panel-heading alert-info form-group col-md-12 col-sm-12">
+            <div class="col-md-2 pull-left">
+                <button class="btn btn-small" ng-if="!expanded" ng-click="expandContract(true)" title="expand table"><i class="glyphicon glyphicon-plus"></i></button>
+                <button class="btn btn-small" ng-if="expanded" ng-click="expandContract(false)" title="collapse table"><i class="glyphicon glyphicon-minus"></i></button>
+            </div>
+            <div>
+                <h4 class="col-sm-6 col-md-6">My Submissions</h4>
+            </div>
+            <div class="col-sm-4 col-md-4 pull-right">
+                <select class="form-control col-sm-4 col-md-4 pull-right" ng-change="loadEmployeeTableStatusX(selectedStatus.value)"
+                        ng-model="selectedStatus" ng-options="status.name for status in statuses"></select>
+            </div>
+        </div>
+        <table class="panel-body table table-hover table-striped table-condensed" ng-if="expanded">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th>
+                        <a href="" id="empSubmitted" ng-click="employeeOrder('DateCreated')">Submitted</a>
+                    </th>
+                    <th>
+                        <a href="" id="empClient" ng-click="employeeOrder('RepliconProject.RepliconProjectName')">
+                            Client
+                        </a>
+                    </th>
+                    <th><a href="" id="empDesc" ng-click="employeeOrder('Description')">Description</a></th>
+                    <th><a href="" id="empTotal" ng-click="employeeOrder('TotalAmount')">Total</a></th>
+                    <th>
+                        <a href="" id="empWeekEnding" ng-click="employeeOrder('WeekEndingDate')">Week Ending</a>
+                    </th>
+                    <th>
+                        <a href="" id="empStatus" ng-click="employeeOrder('Status.StatusName')">Status</a>
+                    </th>
+                    <th>
+                        <a href="" id="empLastUpdated" ng-click="employeeOrder('DateUpdated')">Last Updated</a>
+                    </th>
+                    <th><a href="" id="Receipts" ng-click="employeeOrder('ReceiptPresent')">Receipts</a></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="submission in employeeSubmissions">
+                    <td>
+                        <div ng-if="submission.Status.StatusName == 'Submitted' || submission.Status.StatusName == 'Manager Approved' || submission.Status.StatusName == 'Finance Approved'">
+                            <span style="cursor: pointer" class="glyphicon glyphicon-search" ng-click="loadEmployeeSubmission(submission, $index)"
+                                  data-toggle="tooltip" data-placement="left" title="View Report"></span>
+                        </div>
+                        <div ng-if="submission.Status.StatusName == 'In Progress' || submission.Status.StatusName == 'Manager Rejected' || submission.Status.StatusName == 'Finance Rejected'">
+                            <span style="cursor: pointer" class="glyphicon glyphicon-edit" ng-click="loadEmployeeSubmission(submission, $index)"
+                                  data-toggle="tooltip" data-placement="left" title="Edit Report"></span>
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            <span style="cursor: pointer" class="glyphicon glyphicon-trash" ng-click="deleteSubmission(submission, $index)"
+                                  data-toggle="tooltip" data-placement="left" title="Delete Submission"></span>
+                        </div>
+                    </td>
+                    <td>{{submission.DateCreated | date:'yyyy/MM/dd'}}</td>
+                    <td>{{submission.RepliconProject.RepliconProjectName}}</td>
+                    <td>{{submission.Description}}</td>
+                    <td>{{("$" + (submission.TotalAmount).toFixed( 2 ))}}</td>
+                    <td>{{submission.WeekEndingDate | date:'yyyy/MM/dd'}}</td>
+                    <td>{{submission.Status.StatusName}}</td>
+                    <td>{{submission.DateUpdated | date:'yyyy/MM/dd'}}</td>
+                    <td class="row">
+                        <span class="col-md-2 glyphicon" style="display: table-cell" ng-class="{ 'glyphicon-remove': !{{submission.ReceiptPresent}}, 'glyphicon-ok': {{submission.ReceiptPresent}} }" ng-sty ng-style="{ 'color': {{submission.ReceiptPresent}} ? 'green' : 'red'}"></span>
+                        <span title="View all receipts" style="cursor: pointer" class="col-md-2 pull-left btn-link glyphicon glyphicon-file" ng-click="showAllAvailableReceipts(submission.allSubmissionReceipts, submission, $index)" ng-show="submission.ReceiptPresent"></span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div ng-if="employeeSubmissions == undefined || employeeSubmissions.length == 0">
+            <div class="alert alert-warning fade in">
+                You have no submissions!
+            </div>
+        </div>
+    </div>
+</div>

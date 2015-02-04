@@ -1,0 +1,123 @@
+﻿<div>
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="row">
+                    <h4 class="col-sm-12">Submission Information</h4>
+                </div>
+            </div>
+            <table class="panel-body table table-condensed table-hover">
+                <thead>
+                    <tr>
+                        <th ng-show="createNewItemLoad"></th>
+                        <th ng-show="createNewItemLoad"></th>
+                        <th>
+                            <a href="" id="subExpenseDate" ng-click="submissionOrder('LineItemDate')">
+                                Expense
+                                Date
+                            </a>
+                        </th>
+                        <th>
+                            <a href="" id="subExpenseType" ng-click="submissionOrder('ExpenseCategory.ExpenseCategoryName')">
+                                Expense Type
+                            </a>
+                        </th>
+                        <th>
+                            <a href="" id="subAmount" ng-click="submissionOrder('LineItemAmount')">Amount</a>
+                        </th>
+                        <th>
+                            <a href="" id="subBillable" ng-click="submissionOrder('Billable')">Billable?</a>
+                        </th>
+                        <th>
+                            <a href="" id="subReceipt" ng-click="submissionOrder('ReceiptPresent')">Receipt?</a>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody ng-repeat="expense in currentSubmission.LineItems">
+                    <tr>
+                        <td ng-show="createNewItemLoad">
+                            <span style="cursor: pointer" class="glyphicon glyphicon-edit" ng-click="editExpenseLine(expense, $index)"
+                                  data-toggle="tooltip" data-placement="left" title="Edit Report"></span>
+
+                        </td>
+                        <td ng-show="createNewItemLoad">
+                            <span style="cursor: pointer" class="glyphicon glyphicon-trash" ng-click="confirmLineRemove(expense, $index)"
+                                  data-toggle="tooltip" data-placement="left" title="Delete Report"></span>
+                        </td>
+                        <td>{{expense.LineItemDate | date:'yyyy/MM/dd'}}</td>
+                        <td>{{expense.ExpenseCategory.ExpenseCategoryName}}</td>
+                        <td>{{("$" + (expense.LineItemAmount).toFixed( 2 ))}}</td>
+                        <td>
+                            <span class="glyphicon" ng-class="{ 'glyphicon-remove': !{{expense.Billable}}, 'glyphicon-ok': {{expense.Billable}} }"
+                                  ng-style="{'color' : {{expense.Billable}} ? 'green' : 'red' }"></span>
+                        </td>
+                        <td class="row">
+                            <span class="col-md-2 glyphicon" style="display: table-cell" ng-class="{ 'glyphicon-remove': !{{expense.Receipts.length > 0}}, 'glyphicon-ok': {{expense.Receipts.length > 0}} }" ng-st ng-style="{ 'color': {{expense.Receipts.length > 0}} ? 'green' : 'red'}"></span>
+                            <span title="View receipt" style="cursor: pointer" class="col-md-2 pull-left btn-link glyphicon glyphicon-file" ng-click="viewReceipts({{expense.LineItemId}}, $index)" ng-show="expense.Receipts.length > 0"></span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div>
+                <button ng-show="submittedNotApproved" class="btn btn-warning pull-right" ng-click="unSubmit()">
+                    <i class="glyphicon icon-undo-white"></i>
+                    <span>Undo Submission</span>
+                </button>
+                <button id="saveTableButton" ng-disabled="missingLineItems" ng-show="submissionLoad && createNewItemLoad || createNewItemLoad"
+                        class="btn btn-primary pull-right" ng-click="saveTable()">
+                    <i class="glyphicon glyphicon-save"></i>
+                    <span>Save Table</span>
+                </button>
+                <button id="submitTableButton" ng-disabled="missingLineItems" ng-show="submissionLoad && createNewItemLoad || createNewItemLoad"
+                        class="btn btn-success pull-right" ng-click="submitTable()">
+                    <i class="glyphicon glyphicon-ok"></i>
+                    <span>Submit Table</span>
+                </button>
+            </div>
+            <div ng-show="isApprover">
+                <button class="btn btn-danger pull-right" ng-click="reject()">
+                    <i class="glyphicon glyphicon-thumbs-down"></i>
+                    <span>Reject</span>
+                </button>
+                <button class="btn btn-success pull-right" ng-click="approve()">
+                    <i class="glyphicon glyphicon-thumbs-up"></i>
+                    <span>Approve</span>
+                </button>
+            </div>
+        </div>
+        <div ng-show="showComments">
+            <fieldset class="fieldset">
+                <legend>Comments:</legend>
+                <div class="sizedTable">
+                    <table class="panel-body table table-condensed table-hover">
+                        <tbody ng-repeat="expenseComments in currentSubmission.LineItemComments">
+                            <tr>
+                                <td>
+                                    <span ng-show="{{expenseComments.commentIsMine}}" style="cursor: pointer" class="glyphicon glyphicon-edit"
+                                          ng-click="editComment($index)"
+                                          data-toggle="tooltip" data-placement="left" title="Edit Comment"></span>
+                                </td>
+                                <td>
+                                    <span ng-show="{{expenseComments.commentIsMine}}" style="cursor: pointer" class="glyphicon glyphicon-trash"
+                                          ng-click="deleteComment($index)"
+                                          data-toggle="tooltip" data-placement="left" title="Delete Comment"></span>
+                                </td>
+                                <td class="span4">
+                                    <strong>{{expenseComments.RepliconUserName}}</strong>
+                                </td>
+                                <td class="span4">{{expenseComments.DateUpdated | date:'yyyy/MM/dd'}}</td>
+                                <td class="span4">{{expenseComments.ExpenseComment}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div>
+                    <button id="newCommentButton" class="btn btn-primary" ng-click="editComment(-1)">
+                        <i class="glyphicon glyphicon-comment"></i>
+                        <span>New comment</span>
+                    </button>
+                </div>
+            </fieldset>
+        </div>
+    </div>
+</div>

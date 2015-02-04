@@ -1,0 +1,59 @@
+﻿<div ng-controller="OtherCtrl">
+    <form role="form" class="expense-form" id="other-line-form" name="otherForm">
+        <div class="form-horizontal">
+
+            <div class="row">
+                <div class="col-md-10">
+                    <div class="form-group has-feedback col-md-12" ng-class="{'has-error' : !otherValidation.date.valid}">
+                        <label class="sr-only" for="otherDatePickerValue">Date</label>
+                        <div class="input-group">
+                            <div class="input-group-addon">Date:</div>
+                            <input type="text" class="form-control" id="otherDatePickerValue" datepicker-popup="{{format}}"
+                                   ng-model="otherValues.date"
+                                   is-open="opened" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions"
+                                   date-disabled="disabled(date, mode)" close-text="Close" readonly />
+                            <span class="input-group-btn">
+                                <button type="button" id="otherDatePickerButton" class="btn btn-default" ng-click="open($event)">
+                                    <i class="glyphicon glyphicon-calendar"></i>
+                                </button>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-10">
+                    <div class="form-group col-md-12" ng-class="{'has-error' : !otherValidation.description.valid}">
+                        <label class="sr-only" for="otherDescription">Description</label>
+                        <div class="input-group">
+                            <div class="input-group-addon">Description:</div>
+                            <input ng-model="otherValues.description" id="otherDescription" class="form-control"
+                                   placeholder="Description" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-10">
+                    <div class="form-group col-md-12" ng-class="{'has-error' : !otherValidation.amount.valid}">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="sr-only" for="otherAmount">Amount</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon">$</div>
+                                    <input ng-model="otherValues.amount" class="form-control" id="otherAmount" placeholder="0.00" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="checkbox">
+            <label>
+                <input ng-model="otherValues.billable" id="otherBillable" type="checkbox">Billable
+            </label>
+        </div>
+    </form>
+</div>

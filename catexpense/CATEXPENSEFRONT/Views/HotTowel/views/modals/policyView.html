@@ -1,0 +1,242 @@
+﻿<div>
+    <div class="modal-header">
+        <h3 class="modal-title">{{policyType}} Policy.</h3>
+    </div>
+    <div class="modal-body">
+
+        <!--Policy for MILEAGE -->
+        <div id="mileagePolicy" ng-show="policyIs.mileage">
+            <p>
+                Employees should first work with Laura DiValerio regarding car rental arrangements.
+            </p>
+            <p>
+                If this is not possible and an Employee must make his or her own car rental arrangements,
+                the following rules apply.
+            </p>
+
+            <p>Employees must use the most cost-effective means of ground transportation.  </p>
+            <p>
+                Employees must rent compact or intermediate size cars unless approved in advance
+                by the Employee’s supervisor.
+            </p>
+            <p>
+                Employees must decline all fuel options and return the car with a full tank of gas.
+            </p>
+            <p>
+                Employees should rent the car in the name of Catalyst IT Services, Inc. and decline
+                all insurance options 
+            as Catalyst has an automobile liability insurance policy for cars rented by employees
+                that are used 
+            for business purposes and are rented in the name of the company.
+            </p>
+
+            <p>a. Employees’ Vehicles. </p>
+            <p>
+                An Employee will be reimbursed for use of the Employee’s vehicles used within the
+                Employee’s scope of work (other than transportation between home and the Employee’s
+                regular worksite).
+            </p>
+            <p>Mileage detail must be listed on the Employee’s expense report. </p>
+            <p>
+                An Employee who is traveling to a client site rather than the office should deduct/not
+                count mileage the Employee would normally spend commuting to the office.
+            </p>
+            <p>b. Airport Parking. </p>
+            <p>
+                Employees should use long-term parking unless the trip will be for two days or less,
+                in which case Employees may use daily parking.
+            </p>
+            <p>c. Use of Taxi Service. </p>
+            <p>
+                The daily expense for taxi service should not exceed the cost of a car rental.
+            </p>
+        </div>
+
+        <!--Policy for PER DIEM -->
+        <div id="perDiemPolicy" ng-show="policyIs.perdiem">
+            <p>
+                When overnight travel is required, an Employee may submit an expense report for
+                a $30 per diem 
+                for such travel days to cover meals, tips, snacks, dry cleaning, personal phone
+                calls and 
+                other personal incidentals.
+            </p>
+            <p>
+                Meal expenses incurred in the course of travel are not otherwise reimbursable.
+            </p>
+        </div>
+
+        <!--Policy for TRANSPORTATION -->
+        <div id="transportationPolicy" ng-show="policyIs.transportation">
+            <p>
+                Employees should first work with Laura DiValerio regarding car rental arrangements.
+            </p>
+            <p>
+                If this is not possible and an Employee must make his or her own car rental arrangements,
+                the following rules apply.
+            </p>
+            <p>Employees must use the most cost-effective means of ground transportation. </p>
+            <p>
+                Employees must rent compact or intermediate size cars unless approved in advance
+                by the Employee’s supervisor.
+            </p>
+            <p>
+                Employees must decline all fuel options and return the car with a full tank of gas.
+            </p>
+            <p>
+                Employees should rent the car in the name of Catalyst IT Services, Inc. and decline
+                all insurance options as Catalyst has an automobile liability insurance policy for
+                cars rented by employees that are used for business purposes and are rented in the
+                name of the company.' +
+            </p>
+            <p>a. Employees’ Vehicles.</p>
+            <p>
+                An Employee will be reimbursed for use of the Employee’s vehicles used within the
+                Employee’s scope of work (other than transportation between home and the Employee’s
+                regular worksite).
+            </p>
+            <p>
+                Mileage detail must be listed on the Employee’s expense report.
+            </p>
+            <p>
+                An Employee who is traveling to a client site rather than the office should deduct/not
+                count mileage the Employee would normally spend commuting to the office.
+            </p>
+            <p>b. Airport Parking.</p>
+            <p>
+                Employees should use long-term parking unless the trip will be for two days or less,
+                in which case Employees may use daily parking.
+            </p>
+            <p>c. Use of Taxi Service. </p>
+            <p>
+                The daily expense for taxi service should not exceed the cost of a car rental.
+            </p>
+        </div>
+
+        <!--Policy for LODGING -->
+        <div id="lodgingPolicy" ng-show="policyIs.lodging">
+            <p>
+                Employees should first work with Laura DiValerio regarding lodging arrangements.
+            </p>
+            <p>
+                If this is not possible and an Employee must make his or her own lodging arrangements,
+                the
+                following rules apply.
+            </p>
+            <p>
+                If an Employee’s scope of work requires the use of overnight lodging, the Employee
+                should use moderately-priced single room accommodations.
+            </p>
+            <p>
+                It is the Employee’s responsibility to cancel any reservation in a timely fashion
+                in order to avoid a "No Show" charge.
+            </p>
+            <p>Employees will not be reimbursed for avoidable \"No Show\" charges. </p>
+            <p>
+                Employees may not make lodging selections based on frequent traveler programs.
+            </p>
+        </div>
+
+        <!--Policy for PARKING -->
+        <div id="parkingPolicy" ng-show="policyIs.parking">
+            <p>
+                Employees should use long-term parking unless the trip will be for two days or less,
+                in which case Employees may use daily parking.
+            </p>
+        </div>
+
+        <!--Policy for ENTERTAINMENT -->
+        <div id="entertainmentPolicy" ng-show="policyIs.entertainment">
+            <p>
+                The following is a partial list of items that Catalyst will not reimburse:
+            </p>
+            <p>•    Transportation between home and regular worksite </p>
+            <p>•	Traffic or parking tickets </p>
+            <p>•	Frequent traveler program fees </p>
+            <p>•	Additional travel or car rental insurance costs </p>
+            <p>•	Navigational systems in rental cars </p>
+            <p>•	Credit card and other late fees </p>
+            <p>•	Airline club membership fees </p>
+            <p>•	In-room movies </p>
+            <p>•	Personal items lost, stolen or damaged while traveling. </p>
+        </div>
+
+        <!--Policy for MEALS -->
+        <div id="mealsPolicy" ng-show="policyIs.meals">
+            <p>
+                When overnight travel is required, an Employee may submit an expense report for
+                a $30 per diem for such travel days to cover meals, tips, snacks, dry cleaning,
+                personal phone calls and other personal incidentals. 
+            </p>
+            <p>
+                Meal expenses incurred in the course of travel are not otherwise reimbursable.
+            </p>
+        </div>
+
+        <!--Policy for AIRFARE -->
+        <div id="airfarePolicy" ng-show="policyIs.airfare">
+            <p>
+                Employees should first work with Laura DiValerio regarding air and train travel
+                arrangements.
+            </p>
+            <p>
+                If this is not possible and an Employee must make his or her own air or train arrangements,
+                the following rules apply:
+            </p>
+            <p>a. Lowest Logical Fare.  </p>
+            <p>
+                Employees should obtain the lowest logical fare when traveling by commercial airline
+                or train.
+            </p>
+            <p>
+                In the case of air travel, the lowest logical rate may require the Employee to use
+                alternative (e.g. regional discount) carriers or secondary airport.
+            </p>
+            <p>
+                By saying “lowest logical fare,” Catalyst means for its Employees to use reasonable
+                discretion.
+            </p>
+            <p>
+                For instance, it is not necessary to take an overnight trip solely to achieve a
+                lower fare (and, when combined with the cost of lodging, it may not lead to savings
+                in any event). 
+            </p>
+            <p>
+                Similarly, if a higher fare will save hours’ worth of travel time, it is reasonable
+                to choose the higher fare.
+            </p>
+            <p>b. Class of Service.  </p>
+            <p>Employees must travel in coach class.  </p>
+            <p>Employees may upgrade airline or train tickets only at their own expense.</p>
+            <p>
+                The one exception to the foregoing is that if an Employee is traveling via Amtrak
+                and coach is oversold, he or she may upgrade to business class for that leg.
+            </p>
+            <p>c. Frequent Flyer Programs. </p>
+            <p>
+                Mileage credits and other benefits from individual frequent traveler programs may
+                be accumulated by Employees for personal use; however, Employees may not make travel
+                selections based on frequent traveler programs.
+            </p>
+        </div>
+
+        <!--Policy for OTHER -->
+        <div id="otherPolicy" ng-show="policyIs.other">
+            <p>The following is a partial list of items that Catalyst will not reimburse:</p>
+            <p>•	Transportation between home and regular worksite </p>
+            <p>•	Traffic or parking tickets </p>
+            <p>•	Frequent traveler program fees </p>
+            <p>•	Additional travel or car rental insurance costs </p>
+            <p>•	Navigational systems in rental cars </p>
+            <p>•	Credit card and other late fees </p>
+            <p>•	Airline club membership fees </p>
+            <p>•	In-room movies</p>
+            <p>•	Personal items lost, stolen or damaged while traveling.</p>
+        </div>
+
+    </div>
+
+    <div class="modal-footer">
+        <button class="btn btn-primary" id="exitPolicy" ng-click="ok()">OK</button>
+    </div>
+</div>

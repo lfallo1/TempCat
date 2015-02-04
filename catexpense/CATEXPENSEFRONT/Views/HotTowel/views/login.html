@@ -1,0 +1,38 @@
+<div controller="LoginController">
+    <form name="loginForm" class="form-horizontal" role="form">
+        <div class="alert alert-danger fade in" ng-show="ErrorMessage !== ''">
+            <button type="button" id="awaitingAlert" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <div ng-bind="ErrorMessage"></div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right" for="email"> User Name </label>
+            <div class="col-sm-7">
+                <span class="block input-icon input-icon-right">
+                    <input id="usernameInput" type="text" class="form-control" placeholder="User Name" name="useName" ng-model="login.username" required focus />
+                    <i class="ace-icon fa fa-user"></i>
+                </span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label no-padding-right" for="password"> Password </label>
+            <div class="col-sm-7">
+                <span class="block input-icon input-icon-right">
+                    <input id="passwordInput" type="password" class="form-control" placeholder="Password" ng-model="login.password" required />
+                    <i class="ace-icon fa fa-lock"></i>
+                </span>
+            </div>
+        </div>
+        <div class="space"></div>
+        <div class="clearfix">
+            <div class="row">
+                <label class="col-sm-3 control-label no-padding-right"> </label>
+                <div class="col-sm-7">
+                    <button id="loginButton" type="submit" class="width-35 pull-right btn btn-sm btn-primary" ng-click="doLogin(login)" data-ng-disabled="loginForm.$invalid">
+                        <i class="glyphicon glyphicon-log-in"></i>
+                        <span>Login</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
