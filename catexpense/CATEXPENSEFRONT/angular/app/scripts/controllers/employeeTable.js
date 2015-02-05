@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('expenseApp')
-  .controller('EmployeeTableController', function ($scope, $location, $modal, $route, $rootScope, $filter, Application, SubmissionService, MessageService, receiptService) {
+  .controller( 'EmployeeTableController', function ( $scope, $location, $modal, $route, $rootScope, $filter, Application, SubmissionService, MessageService, ReceiptService ) {
 
       // statuses is used for the drop down filter
       $scope.statuses = [
@@ -121,7 +121,7 @@ angular.module('expenseApp')
           Application.setSubmissionStatus(submission.Status.StatusId);
           Application.setOrigin("EmployeeTable");
           Application.setSubmissionIndex(index);
-          receiptService.setAllReceipts(submission.allSubmissionReceipts);
+          ReceiptService.setAllReceipts( submission.allSubmissionReceipts );
           $location.path('/submission');
       }
       // redirect to submission page with the submission id to allow the table to populate
@@ -142,11 +142,11 @@ angular.module('expenseApp')
       }
 
       $scope.showAllAvailableReceipts = function (allReceipts, submission, submissionIndex) {
-          receiptService.setReceipts(allReceipts);
-          receiptService.setShowAllReceipts(true);
+          ReceiptService.setReceipts( allReceipts );
+          ReceiptService.setShowAllReceipts( true );
           Application.setSubmission(submission);
           Application.setSubmissionIndex(submissionIndex);
-          receiptService.setAddReceipt(false);
+          ReceiptService.setAddReceipt( false );
           var modalInstance = $modal.open({
               templateUrl: 'Views/HotTowel/views/modals/receiptModal.html',
               controller: 'receiptController'

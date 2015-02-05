@@ -26,7 +26,7 @@ angular.module( 'expenseApp.Services' )
           LineItemDesc: '',
           LineItemAmount: 0,
           LineItemMetadata: 'Miles:0,Origin:,Destination:,Sunday:false,Monday:false,Tuesday:false,Wednesday:false,Thursday:false,Friday:false,Saturday:false',
-          ReceiptPresent: 0,
+          ReceiptPresent: false,
           StatusId: 1,
           ManagerApproverDate: null,
           FinanceApproverDate: null
@@ -133,51 +133,6 @@ angular.module( 'expenseApp.Services' )
       };
 
       /**
-       * This function will take in an expense category name and return its cooresponding expensecategory id.
-       * This function should be called when setting the ExpenseCategoryId when only the name is known.
-       *
-       * NOTE: this is a private method
-       */
-      function _GetExpenseCategoryId( name ) {
-          var id = 0;
-
-          switch ( name ) {
-              case 'Mileage':
-                  id = 1;
-                  break;
-              case 'Per Diem':
-                  id = 2;
-                  break;
-              case 'Transportation':
-                  id = 3;
-                  break;
-              case 'Lodging':
-                  id = 4;
-                  break;
-              case 'Parking':
-                  id = 5;
-                  break;
-              case 'Entertainment':
-                  id = 6;
-                  break;
-              case 'Meals':
-                  id = 7;
-                  break;
-              case 'Airfare':
-                  id = 8;
-                  break;
-              case 'Other':
-                  id = 9;
-                  break;
-              default:
-                  id = null;
-          };
-
-          return id;
-
-      };
-
-      /**
        * This function take the metadata from the lineItem and get the 'Miles' value from it and return it.
        *
        * NOTE: this is a private method
@@ -265,11 +220,6 @@ angular.module( 'expenseApp.Services' )
 
           return extraData.days;
       };
-
-      function _setLineItemMetadata( value ) {
-          lineItem.LineItemMetadata = value;
-      };
-
 
       //=====================================================================//
       //
@@ -438,44 +388,6 @@ angular.module( 'expenseApp.Services' )
           } else {
               lineItem.StatusId = 0;
           }
-      };
-
-      /**
-       * Gets the lineItem's ManagerApproverDate
-       */
-      self.getManagerApproverDate = function () {
-          return lineItem.ManagerApproverDate;
-      };
-
-      /**
-       * Sets the lineItem's ManagerApproverDate
-       */
-      self.setManagerApproverDate = function ( value ) {
-          var date = new Date( value );
-          if ( date instanceof Date && !isNaN( date.valueOf() ) ) {
-              lineItem.ManagerApproverDate = date;
-          } else {
-              lineItem.ManagerApproverDate = null;
-          };
-      };
-
-      /**
-       * Gets the lineItem's FinanceApproverDate
-       */
-      self.getFinanceApproverDate = function () {
-          return lineItem.FinanceApproverDate;
-      };
-
-      /**
-       * Sets the lineItem's FinanceApproverDate
-       */
-      self.setFinanceApproverDate = function ( value ) {
-          var date = new Date( value );
-          if ( date instanceof Date && !isNaN( date.valueOf() ) ) {
-              lineItem.FinanceApproverDate = date;
-          } else {
-              lineItem.FinanceApproverDate = null;
-          };
       };
 
       /**
@@ -668,51 +580,6 @@ angular.module( 'expenseApp.Services' )
       };
 
       /**
-       * Sets the current lineItem information.
-       * TODO: needs to be better coded, needs to ensure the value being passed in is a vali
-       */
-      self.setLineItem = function ( value ) {
-          if ( typeof value !== 'undefined' && value !== null ) {
-              if ( value.hasOwnProperty( 'LineItemId' ) ) {
-                  self.setLineItemId( value.LineItemId );
-              };
-              if ( value.hasOwnProperty( 'SubmissionId' ) ) {
-                  self.setSubmissionId( value.LineItemId );
-              };
-              if ( value.hasOwnProperty( 'Billable' ) ) {
-                  self.setBillable( value.Billable );
-              };
-              if ( value.hasOwnProperty( 'ExpenseCategoryId' ) ) {
-                  self.setExpenseCategoryId( value.ExpenseCategoryId );
-              };
-              if ( value.hasOwnProperty( 'LineItemDate' ) ) {
-                  self.setLineItemDate( value.LineItemDate );
-              };
-              if ( value.hasOwnProperty( 'LineItemDesc' ) ) {
-                  self.setLineItemDesc( value.LineItemDesc );
-              };
-              if ( value.hasOwnProperty( 'LineItemAmount' ) ) {
-                  self.setLineItemAmount( value.LineItemAmount );
-              };
-              if ( value.hasOwnProperty( 'LineItemMetadata' ) ) {
-                  _setLineItemMetadata( value.LineItemMetadata );
-              };
-              if ( value.hasOwnProperty( 'ReceiptPresent' ) ) {
-                  self.setReceiptPresent( value.ReceiptPresent );
-              };
-              if ( value.hasOwnProperty( 'StatusId' ) ) {
-                  self.setStatusId( value.StatusId );
-              };
-              if ( value.hasOwnProperty( 'ManagerApproverDate' ) ) {
-                  self.setManagerApproverDate( value.ManagerApproverDate );
-              };
-              if ( value.hasOwnProperty( 'FinanceApproverDate' ) ) {
-                  self.setFinanceApproverDate( value.FinanceApproverDate );
-              };
-          };
-      }
-
-      /**
        * Gets all of the current extra data.
        */
       self.getExtraData = function () {
@@ -730,10 +597,10 @@ angular.module( 'expenseApp.Services' )
        */
       self.resetLineItem = function () {
           self.setLineItemDate( '' );
-          self.setOrigin('');
-          self.setDestination('');
-          self.setMiles(0);
-          self.setLineItemDesc('');
+          self.setOrigin( '' );
+          self.setDestination( '' );
+          self.setMiles( 0 );
+          self.setLineItemDesc( '' );
           self.setDays(
               {
                   sunday: false,
@@ -801,22 +668,13 @@ angular.module( 'expenseApp.Services' )
       //=====================================================================//
 
       /**
-       * GETS all line items
-       */
-      self.getLineItems = function () {
-          return $http( {
-              url: '/api/LineItem',
-              method: 'GET'
-          } );
-      };
-
-      /**
        * GETS a line item by id
        */
       self.getLineItemById = function ( id ) {
           return $http( {
-              url: '/api/LineItem/' + id,
-              method: 'GET'
+              url: '/api/LineItem',
+              method: 'GET',
+              params: { id: id }
           } );
       };
 
@@ -825,8 +683,9 @@ angular.module( 'expenseApp.Services' )
        */
       self.getLineItemsBySubmissionId = function ( id ) {
           return $http( {
-              url: '/api/LineItem/GetLineItemsBySubmissionId/' + id,
-              method: 'GET'
+              url: '/api/LineItem/GetLineItemsBySubmissionId',
+              method: 'GET',
+              params: { id: id }
           } );
       };
 
@@ -860,9 +719,10 @@ angular.module( 'expenseApp.Services' )
        */
       self.updateLineItem = function ( id, data ) {
           return $http( {
-              url: '/api/LineItem/' + id,
+              url: '/api/LineItem',
               method: 'PUT',
-              data: data
+              data: data,
+              params: { id: id }
           } );
       };
 
@@ -877,8 +737,9 @@ angular.module( 'expenseApp.Services' )
        */
       self.deleteLineItem = function ( id ) {
           return $http( {
-              url: '/api/LineItem/' + id,
-              method: 'DELETE'
+              url: '/api/LineItem',
+              method: 'DELETE',
+              params: { id: id }
           } );
       };
   } );

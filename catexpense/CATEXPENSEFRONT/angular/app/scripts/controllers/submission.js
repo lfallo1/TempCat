@@ -2,7 +2,7 @@
 
 angular.module('expenseApp')
 
-  .controller('SubmissionCtrl', function ($scope, $modal, $window, $location, $route, $rootScope, $timeout, LineItemService, SubmissionService, RepliconProjectService, MessageService, DateService, Application, Authentication, receiptService) {
+  .controller('SubmissionCtrl', function ($scope, $modal, $window, $location, $route, $rootScope, $timeout, LineItemService, SubmissionService, RepliconProjectService, MessageService, DateService, Application, Authentication, ReceiptService) {
 
       $scope.syncComplete = false;
       $scope.flag = false;
@@ -31,6 +31,8 @@ angular.module('expenseApp')
       //Also, if true, the submission table will be visible
       $scope.submissionExists = false;
 
+      //used for html validation,
+      //displaying or hiding elements
       $scope.se = function () {
           return $scope.submissionExists;
       };
@@ -39,6 +41,9 @@ angular.module('expenseApp')
           $rootScope.$broadcast("editCommentFromSubmission", index);
       }
 
+      //initializes html button validation depending on whether 
+      //or not there are line items present in the submission
+      //which the user is currently working with
       function setDisabledButtons() {
           if (Application.getSubmission() !== undefined) {
               $scope.missingLineItems = Application.getSubmission().LineItems.length < 1;
@@ -46,6 +51,7 @@ angular.module('expenseApp')
       }
       setDisabledButtons();
 
+      //this function is used by clientAndDate below
       $scope.findSpecificSubmission = function () {
 
           var submission = false;
@@ -66,7 +72,9 @@ angular.module('expenseApp')
       };
 
 
-
+      //this variable is used in front end validation,
+      //determining the current state of the application
+      //and displaying or hiding elements accordingly
       $scope.clientAndDate = function () {
 
           if ($scope.selectedClient !== null && ($scope.dt1 instanceof Date && !isNaN($scope.dt1.valueOf()))) {
@@ -89,6 +97,7 @@ angular.module('expenseApp')
       };
 
       //Get the list of all submissions made by that user
+      //this function is called on page load
       $scope.getSubmissionList = function () {
           if (Application.getAllUserSubmissions() != undefined) {
               $scope.totalSubmissions = Application.getAllUserSubmissions();
@@ -124,6 +133,7 @@ angular.module('expenseApp')
 
       $scope.getSubmissionList();
 
+      //set initial values of scope variables upon page load
       if (Application.getRepliconProjects() != undefined) {
           $scope.clients = Application.getRepliconProjects();
           $scope.selectedClient = $scope.clients[0];
@@ -237,6 +247,8 @@ angular.module('expenseApp')
 
       });
 
+      //prepares LineItemService to create a new line item
+      //then opens the LineItem modal
       $scope.addNewLineItem = function () {
           LineItemService.resetLineItem();
           LineItemService.setUnderEdit(false);
@@ -278,6 +290,9 @@ angular.module('expenseApp')
       $scope.openDetailsView = function () {
       };
 
+      //internal function used by the editExpenseLine function above
+      //to parse the MetaData string stored in a line item for display 
+      //on the modal when editing the line item
       function parseMetaData(string) {
           var days = {
               sunday: {},
@@ -319,17 +334,19 @@ angular.module('expenseApp')
           LineItemService.setDays(days);
       }
 
+      //opens receiptModal.html to show all the receipts for all the line items 
+      //in a particular submission
       $scope.showAllReceipts = function () {
-          receiptService.setReceipts(receiptService.getAllReceipts());
-          receiptService.setShowAllReceipts(true);
-          receiptService.setAddReceipt(false);
+          ReceiptService.setReceipts( ReceiptService.getAllReceipts() );
+          ReceiptService.setShowAllReceipts( true );
+          ReceiptService.setAddReceipt( false );
           var modalInstance = $modal.open({
               templateUrl: 'Views/HotTowel/views/modals/receiptModal.html',
               controller: 'receiptController'
           });
       }
       $scope.$on("checkReceipts", function () {
-          if (receiptService.getAllReceipts() && receiptService.getAllReceipts().length != 0) {
+          if ( ReceiptService.getAllReceipts() && ReceiptService.getAllReceipts().length != 0 ) {
               $scope.receipts = false;
           } else {
               var receipts = [];
@@ -341,14 +358,14 @@ angular.module('expenseApp')
                       }
                   }
               }
-              receiptService.setAllReceipts(receipts);
+              ReceiptService.setAllReceipts( receipts );
               if (receipts.length != 0) {
                   $scope.receipts = false;
               } else {
                   $scope.receipts = true;
               }
           }
-          $scope.receiptsAmount = receiptService.getAllReceipts().length;
+          $scope.receiptsAmount = ReceiptService.getAllReceipts().length;
       });
 
       // populate the manager in the view for the client selected from the dropdown
@@ -365,6 +382,8 @@ angular.module('expenseApp')
               controller: 'FormDetailsCtrl',
           });
 
+          //as a result of the LineItem modal closing ($modalInstance.close in formDetailsView.js)
+          //this will save the new line item or save the edited line item returned in successMessage
           modalInstance.result.then(
               function (successMessage) {
                   if (LineItemService.getUnderEdit() == true) {
@@ -407,8 +426,8 @@ angular.module('expenseApp')
                                               $scope.showComments = true;
                                               LineItemService.setLineItemId(success.data.LineItemId);
                                               Application.setLineItemIndex(userSubmission[Application.getSubmissionIndex()].LineItems.length - 1);
-                                              if (receiptService.getAddReceipt()) {
-                                                  receiptService.setReceipts(userSubmission[Application.getSubmissionIndex()].LineItems[Application.getLineItemIndex()].Receipts);
+                                              if ( ReceiptService.getAddReceipt() ) {
+                                                  ReceiptService.setReceipts( userSubmission[Application.getSubmissionIndex()].LineItems[Application.getLineItemIndex()].Receipts );
                                                   var modalInstance = $modal.open({
                                                       templateUrl: 'Views/HotTowel/views/modals/receiptModal.html',
                                                       controller: 'receiptController'
@@ -422,8 +441,8 @@ angular.module('expenseApp')
                                                   });
                                               }                                              
                                               $scope.$on("addReeciptForLineItem", function () {
-                                                  receiptService.setAddReceipt(true);
-                                                  receiptService.setReceipts(userSubmission[Application.getSubmissionIndex()].LineItems[Application.getLineItemIndex()].Receipts);
+                                                  ReceiptService.setAddReceipt( true );
+                                                  ReceiptService.setReceipts( userSubmission[Application.getSubmissionIndex()].LineItems[Application.getLineItemIndex()].Receipts );
                                                   var modalInstance = $modal.open({
                                                       templateUrl: 'Views/HotTowel/views/modals/receiptModal.html',
                                                       controller: 'receiptController'

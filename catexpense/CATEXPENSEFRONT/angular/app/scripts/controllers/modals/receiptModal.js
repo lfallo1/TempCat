@@ -1,19 +1,19 @@
 ﻿'use strict';
 
 angular.module('expenseApp')
-  .controller('receiptController', function ($scope, $modalInstance, receiptService, $http, $rootScope, MessageService, $modal, Application, $route, LineItemService) {
+  .controller( 'receiptController', function ( $scope, $modalInstance, ReceiptService, $http, $rootScope, MessageService, $modal, Application, $route, LineItemService ) {
       var allReceipts = false;
       $scope.canDelete = true;
-      if (receiptService.getShowAllReceipts()) {
+      if ( ReceiptService.getShowAllReceipts() ) {
           allReceipts = true;
       }
-      $scope.userReceipts = receiptService.getReceipts();
+      $scope.userReceipts = ReceiptService.getReceipts();
       if (Application.getOrigin() == "ManagerTable" || Application.getOrigin() == "FinanceTable") {
           $scope.canDelete = false;
       }
       //if ($scope.userReceipts[0].)
 
-      $scope.createNewReceipt = receiptService.getAddReceipt();
+      $scope.createNewReceipt = ReceiptService.getAddReceipt();
       $scope.hover = false;
       $scope.downloadFile = function (receiptId) {
           $http({
@@ -37,7 +37,7 @@ angular.module('expenseApp')
       $scope.$on("confirmDeleteReceipt", function () {
           MessageService.setMessage("");
           MessageService.setBroadCastMessage("");
-          var lineItems = receiptService.getReceipts().LineItems;
+          var lineItems = ReceiptService.getReceipts().LineItems;
           var indexId = Application.getLineItemIndex();
           $http({
               method: "DELETE",
@@ -54,7 +54,7 @@ angular.module('expenseApp')
                     $scope.userReceipts.splice(receiptIndexId, 1);
                     var lineItems = LineItems.data;
                     submissions[Application.getSubmissionIndex()].LineItems = lineItems;
-                    receiptService.setReceipts($scope.userReceipts);
+                    ReceiptService.setReceipts( $scope.userReceipts );
                     var receipts = [];
                     //get all receipts in that submission
                     for (var i = 0; i < lineItems.length; i++) {
@@ -64,7 +64,7 @@ angular.module('expenseApp')
                             }
                         }
                     }
-                    receiptService.setAllReceipts(receipts);
+                    ReceiptService.setAllReceipts( receipts );
                     submissions[Application.getSubmissionIndex()].allSubmissionReceipts = receipts;
                     if (receipts.length == 0) {
                         submissions[Application.getSubmissionIndex()].ReceiptPresent = false;

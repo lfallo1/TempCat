@@ -23,7 +23,7 @@
 
     // GET /api/Submissions
     it( 'should call the GET /api/Submissions endpoint. (success)', function () {
-        var url = '/api/Submissions/';
+        var url = '/api/Submissions';
         var successCallback = jasmine.createSpy();
         var errorCallback = jasmine.createSpy();
 
@@ -44,7 +44,7 @@
     } );
 
     it( 'should call the GET /api/Submissions endpoint. (error)', function () {
-        var url = '/api/Submissions/';
+        var url = '/api/Submissions';
         var successCallback = jasmine.createSpy();
         var errorCallback = jasmine.createSpy();
 
@@ -208,13 +208,14 @@
     //=====================================================================//
 
     //PUT /api/Submissions/
-    it( 'should call the PUT /api/Submissions/ endpoint. (success)', function () {
-        var url = '/api/Submissions/';
+    it( 'should call the PUT /api/Submissions + id endpoint. (success)', function () {
+        var url = '/api/Submissions';
+        var id = 10;
         var successCallback = jasmine.createSpy();
         var errorCallback = jasmine.createSpy();
 
-        $httpBackend.expect( 'PUT', url + '?id=1' ).respond( 200, 'mock submissions' );
-        SubmissionService.updateSubmission( 1, {} ).then( successCallback, errorCallback );
+        $httpBackend.expect( 'PUT', url + '?id=' + id ).respond( 200, 'mock submissions' );
+        SubmissionService.updateSubmission( id, {} ).then( successCallback, errorCallback );
 
         expect( successCallback ).not.toHaveBeenCalled();
         expect( errorCallback ).not.toHaveBeenCalled();
@@ -229,13 +230,14 @@
 
     } );
 
-    it( 'should call the PUT /api/Submissions/n endpoint. (error)', function () {
-        var url = '/api/Submissions/';
+    it( 'should call the PUT /api/Submissions + id endpoint. (error)', function () {
+        var url = '/api/Submissions';
+        var id = 10;
         var successCallback = jasmine.createSpy();
         var errorCallback = jasmine.createSpy();
 
-        $httpBackend.when( 'PUT', url + '?id=1' ).respond( 500, 'mock error message' );
-        SubmissionService.updateSubmission( 1, {} ).then( successCallback, errorCallback );
+        $httpBackend.when( 'PUT', url + '?id=' + id ).respond( 500, 'mock error message' );
+        SubmissionService.updateSubmission( id, {} ).then( successCallback, errorCallback );
 
         expect( successCallback ).not.toHaveBeenCalled();
         expect( errorCallback ).not.toHaveBeenCalled();
@@ -256,14 +258,15 @@
     //
     //=====================================================================//
 
-    //DELETE /api/Submissions/
-    it( 'should call the DELETE /api/Submissions/ endpoint. (success)', function () {
+    //DELETE /api/Submissions
+    it( 'should call the DELETE /api/Submissions + id endpoint. (success)', function () {
         var url = '/api/Submissions';
+        var id = 10;
         var successCallback = jasmine.createSpy();
         var errorCallback = jasmine.createSpy();
 
-        $httpBackend.expect( 'DELETE', url + '?id=1' ).respond( 200, 'mock submissions' );
-        SubmissionService.deleteExpenseReport( 1 ).then( successCallback, errorCallback );
+        $httpBackend.expect( 'DELETE', url + '?id=' + id ).respond( 200, 'mock submissions' );
+        SubmissionService.deleteExpenseReport( id ).then( successCallback, errorCallback );
 
         expect( successCallback ).not.toHaveBeenCalled();
         expect( errorCallback ).not.toHaveBeenCalled();
@@ -278,13 +281,14 @@
 
     } );
 
-    it( 'should call the DELETE /api/Submissions/n endpoint. (error)', function () {
+    it( 'should call the DELETE /api/Submissions + id endpoint. (error)', function () {
         var url = '/api/Submissions';
+        var id = 10;
         var successCallback = jasmine.createSpy();
         var errorCallback = jasmine.createSpy();
 
-        $httpBackend.when( 'DELETE', url + '?id=1' ).respond( 500, 'mock error message' );
-        SubmissionService.deleteExpenseReport( 1 ).then( successCallback, errorCallback );
+        $httpBackend.when( 'DELETE', url + '?id=' + id ).respond( 500, 'mock error message' );
+        SubmissionService.deleteExpenseReport( id ).then( successCallback, errorCallback );
 
         expect( successCallback ).not.toHaveBeenCalled();
         expect( errorCallback ).not.toHaveBeenCalled();
