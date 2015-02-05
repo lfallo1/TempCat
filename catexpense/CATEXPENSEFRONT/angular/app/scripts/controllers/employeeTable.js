@@ -146,6 +146,7 @@ angular.module('expenseApp')
           receiptService.setShowAllReceipts(true);
           Application.setSubmission(submission);
           Application.setSubmissionIndex(submissionIndex);
+          receiptService.setAddReceipt(false);
           var modalInstance = $modal.open({
               templateUrl: 'Views/HotTowel/views/modals/receiptModal.html',
               controller: 'receiptController'
@@ -160,6 +161,9 @@ angular.module('expenseApp')
               Application.setAllUserSubmissions($scope.employeeSubmissions);
           }, function (error) { });
 
+      });
+      $scope.$on("addSubmissionEmployeeTable", function (message) {
+          $scope.employeeSubmissions = Application.getAllUserSubmissions();
       });
 
   });
