@@ -95,8 +95,26 @@ angular.module('expenseApp')
           } else {
               SubmissionService.getSubmissionsByUsername().then(
               function (success) {
-                  $scope.totalSubmissions = success.data;
-                  Application.setAllUserSubmissions(success.data);
+                  var userSubmissions = success.data;
+                  for (var i = 0; i < userSubmissions.length; i++) {                      
+                      var receipts = [];
+                      //get all receipts in that submission
+                      for (var b = 0; b < userSubmissions[i].LineItems.length; b++) {
+                          if (userSubmissions[i].LineItems[b].Receipts.length != 0) {
+                              for (var c = 0; c < userSubmissions[i].LineItems[b].Receipts.length; c++) {
+                                  receipts.push(userSubmissions[i].LineItems[b].Receipts[c]);
+                              }
+                          }
+                      }
+                      userSubmissions[i]["allSubmissionReceipts"] = receipts;
+                      if (receipts.length > 0) {
+                          userSubmissions[i]["ReceiptPresent"] = true;
+                      } else {
+                          userSubmissions[i]["ReceiptPresent"] = false;
+                      }
+                  }
+                  $scope.totalSubmissions = userSubmissions;
+                  Application.setAllUserSubmissions(userSubmissions);
               }, function (error) {
                   console.log(error);
               }

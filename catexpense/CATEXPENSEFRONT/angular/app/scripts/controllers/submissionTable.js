@@ -142,6 +142,7 @@
             submissions[Application.getSubmissionIndex()].LineItems[Application.getLineItemIndex()].Receipts.push(receipt);
             receiptService.setReceipts(allReceipt);
             Application.setAllUserSubmissions(submissions);
+            $scope.currentSubmission = submissions[Application.getSubmissionIndex()];
             $rootScope.$broadcast("addSubmissionEmployeeTable");
         });
 
