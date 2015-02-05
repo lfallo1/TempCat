@@ -67,7 +67,8 @@ module.exports = function ( grunt ) {
                 plugins: [
       'karma-jasmine',
       'karma-coverage',
-      'karma-phantomjs-launcher'
+      'karma-phantomjs-launcher',
+      'karma-chrome-launcher'
                 ],
             }
         }

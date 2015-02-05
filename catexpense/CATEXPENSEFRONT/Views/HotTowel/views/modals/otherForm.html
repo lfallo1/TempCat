@@ -4,7 +4,7 @@
 
             <div class="row">
                 <div class="col-md-10">
-                    <div class="form-group has-feedback col-md-12" ng-class="{'has-error' : !otherValidation.date.valid}">
+                    <div class="form-group has-feedback col-md-12" ng-class="{'has-error' : !isDateValid()}">
                         <label class="sr-only" for="otherDatePickerValue">Date</label>
                         <div class="input-group">
                             <div class="input-group-addon">Date:</div>
@@ -24,7 +24,7 @@
 
             <div class="row">
                 <div class="col-md-10">
-                    <div class="form-group col-md-12" ng-class="{'has-error' : !otherValidation.description.valid}">
+                    <div class="form-group col-md-12" ng-class="{'has-error' : !isDescValid()}">
                         <label class="sr-only" for="otherDescription">Description</label>
                         <div class="input-group">
                             <div class="input-group-addon">Description:</div>
@@ -36,7 +36,7 @@
             </div>
             <div class="row">
                 <div class="col-md-10">
-                    <div class="form-group col-md-12" ng-class="{'has-error' : !otherValidation.amount.valid}">
+                    <div class="form-group col-md-12" ng-class="{'has-error' : !isAmountValid()}">
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label class="sr-only" for="otherAmount">Amount</label>

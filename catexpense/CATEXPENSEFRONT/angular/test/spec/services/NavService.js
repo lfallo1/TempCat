@@ -1,4 +1,4 @@
-﻿'use strict';
+﻿/*'use strict';
 
 describe( 'Service: NavService', function () {
 
@@ -15,4 +15,4 @@ describe( 'Service: NavService', function () {
         expect( true ).toBe( true );
     } );
 
-} );
+} );*/

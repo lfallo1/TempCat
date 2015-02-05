@@ -9,7 +9,7 @@ describe( 'Service: ValidationService', function () {
     var expected_Other_Result
     var actual_Result;
 
-    beforeEach( module( 'expenseApp' ) );
+    beforeEach( module( 'expenseApp.Services' ) );
 
     beforeEach( inject( function ( _ValidationService_ ) {
         ValidationService = _ValidationService_;

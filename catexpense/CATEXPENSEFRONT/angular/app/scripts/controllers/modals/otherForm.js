@@ -24,7 +24,7 @@ angular.module( 'expenseApp' )
       };
 
       //default validation for fields
-      $scope.otherValidation = {
+      var otherValidation = {
           date: {
               valid: true,
               message: 'This field is valid.'
@@ -38,6 +38,34 @@ angular.module( 'expenseApp' )
               message: 'This field is valid.'
           },
           validInput: true
+      };
+
+      $scope.isDateValid = function () {
+          return otherValidation.date.valid;
+      };
+
+      $scope.dateValidationMessage = function () {
+          return otherValidation.date.message;
+      };
+
+      $scope.isDescValid = function () {
+          return otherValidation.description.valid;
+      };
+
+      $scope.descValidationMessage = function () {
+          return otherValidation.description.message;
+      };
+
+      $scope.isAmountValid = function () {
+          return otherValidation.amount.valid;
+      };
+
+      $scope.amountValidationMessage = function () {
+          return otherValidation.amount.message;
+      };
+
+      $scope.otherIsValid = function () {
+          return otherValidation.validInput;
       };
 
 
@@ -56,9 +84,9 @@ angular.module( 'expenseApp' )
                       LineItemService.setLineItemDesc( $scope.otherValues.description );
                       LineItemService.setLineItemAmount( $scope.otherValues.amount );
                       LineItemService.setBillable( $scope.otherValues.billable );
-                      $scope.otherValidation = ValidationService.validateOther( LineItemService.getLineItem() );
+                      otherValidation = ValidationService.validateOther( LineItemService.getLineItem() );
                       $scope.otherArray[0] = LineItemService.getLineItem();
-                      $scope.otherArray[0].valid = $scope.otherValidation.validInput;
+                      $scope.otherArray[0].valid = $scope.otherIsValid();
                   } else {
                       var lineitem = {
                           LineItemDate: $scope.otherValues.date,
@@ -66,8 +94,9 @@ angular.module( 'expenseApp' )
                           LineItemAmount: $scope.otherValues.amount
                       };
                       $scope.otherArray[0] = $scope.otherValues;
-                      $scope.otherValidation = ValidationService.validateOther( lineitem );
-                      $scope.otherArray[0].valid = $scope.otherValidation.validInput;
+                      otherValidation = ValidationService.validateOther( lineitem );
+                      console.log( otherValidation );
+                      $scope.otherArray[0].valid = $scope.otherIsValid();
 
                   }
 

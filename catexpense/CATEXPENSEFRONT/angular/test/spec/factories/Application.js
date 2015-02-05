@@ -1,4 +1,4 @@
-﻿'use strict';
+﻿/*'use strict';
 
 describe( 'Factory: Application', function () {
 
@@ -15,4 +15,4 @@ describe( 'Factory: Application', function () {
         expect( true ).toBe( true );
     } );
 
-} );
+} );*/

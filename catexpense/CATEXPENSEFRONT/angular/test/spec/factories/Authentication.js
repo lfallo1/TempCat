@@ -1,4 +1,4 @@
-﻿'use strict';
+﻿/*'use strict';
 
 describe( 'Factory: Authentication', function () {
 
@@ -21,4 +21,4 @@ describe( 'Factory: Authentication', function () {
         expect( true ).toBe( true );
     } );
 
-} );
+} );*/
