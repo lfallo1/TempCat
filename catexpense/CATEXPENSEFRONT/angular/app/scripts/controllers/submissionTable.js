@@ -3,6 +3,10 @@
         $scope.receipts = true;
         var orderBy = $filter('orderBy');
         var sortColumn = { field: 'DateCreated', reverse: false };
+
+        /**
+        * enable sorting for each column in the submissionTable
+        */
         $scope.submissionOrder = function (field) {
             if (field === sortColumn.field) {
                 sortColumn.reverse = !sortColumn.reverse;
@@ -13,6 +17,7 @@
                 $scope.currentSubmission.LineItems = orderBy($scope.currentSubmission.LineItems, sortColumn.field, sortColumn.reverse);
             };
         };
+
         //when a submission is found by a week ending date and a client then run this function
         $scope.$on('submissionFound', function (message, submission) {
             ReceiptService.setAllReceipts( [] )
@@ -186,6 +191,11 @@
             });
         }
 
+        /**
+        * this function is called when a manager chooses to reject a submission
+        * it will open a confirmation modal asking if they are certain they would
+        * like to reject the submission
+        */
         $scope.reject = function () {
             MessageService.setMessage("Please confirm you are about to reject this submission.");
             MessageService.setBroadCastMessage("confirmRejectSubmission");
@@ -195,6 +205,7 @@
                 controller: 'confirmModalController'
             });
         }
+
         //load the receipt modal with the line items receipts
         $scope.viewReceipts = function (id, index) {
             Application.setLineItemId(id);
@@ -212,6 +223,11 @@
             $scope.editExistingSubmission = false;
         });
 
+        /**
+        * receives confirmation from confirmModal.js that manager would like 
+        * to approve a submission and updates the submission status in the database
+        * adds the submission to the list of items for approval by the finance approver
+        */
         $scope.$on("confirmApproveSubmission", function () {
             var statusName = "";
             // this checks to see where the userer is comming from and if they are an approver
@@ -235,6 +251,11 @@
             });
         });
 
+        /*
+        * receives confirmation from confirmModal that a submission has been rejected
+        * updates the submission status depending on whether it manager or finance approver
+        * rejecting the submission
+        */
         $scope.$on("confirmRejectSubmission", function (response, comment) {
             var statusName = "";
             if ($scope.isApprover && Application.getOrigin() == "ManagerTable") {
@@ -260,6 +281,9 @@
             });
         });
 
+        /**
+        * recieves broadcast message from commentModal.js
+        */
         $scope.$on("saveComment", function (response, comment) {
             if (Application.getComment().ExpenseComment != undefined) {
                 SubmissionService.PutLineItemComment(Application.getComment().LineItemCommentId, comment).then(function (success) {
@@ -274,6 +298,10 @@
 
         });
 
+        /**
+        * receives confirmation from confirmModal that a comment would like to be deleted
+        * removes the comment from the line item in the database
+        */
         $scope.$on("confirmDeleteComment", function () {
             SubmissionService.DeleteLineItemComment($scope.currentSubmission.LineItemComments[commentIndex].LineItemCommentId).then(function (success) {
                 $scope.currentSubmission.LineItemComments.splice(commentIndex, 1);;
