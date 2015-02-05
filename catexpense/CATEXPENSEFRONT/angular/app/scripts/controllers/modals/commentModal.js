@@ -7,6 +7,10 @@ angular.module('expenseApp')
           $modalInstance.dismiss("dismiss comment modal");
           Application.setComment("");
       }
+
+      /**
+      * sends broadcast message to submissionTable.js
+      */
       $scope.save = function () {
           $rootScope.$broadcast("saveComment", $scope.comment);
           $modalInstance.dismiss();
