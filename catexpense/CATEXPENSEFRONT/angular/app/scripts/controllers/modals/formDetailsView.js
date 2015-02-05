@@ -130,6 +130,11 @@ angular.module('expenseApp')
           };
       };
 
+      /**
+      * Called by saveNew function to perform validation
+      * then proceed to close the modal upon which 
+      * line item will be saved to db in submission.js
+      */
       function _SaveNewMileage(returnArray, errorMsg) {
           if (returnArray.length === 0) {
               console.log(errorMsg);
@@ -142,6 +147,11 @@ angular.module('expenseApp')
           }
       };
 
+      /**
+      * Called by saveNew function to perform validation
+      * then proceed to close the modal upon which 
+      * line item will be saved to db in submission.js
+      */
       function _SaveNewPerDiem(returnArray, errorMsg) {
           if (returnArray.length === 0) {
               console.log(errorMsg);
@@ -155,6 +165,11 @@ angular.module('expenseApp')
 
       };
 
+      /**
+      * Called by saveNew function to perform validation
+      * then proceed to close the modal upon which 
+      * line item will be saved to db in submission.js
+      */
       function _SaveNewOther(returnArray, errorMsg) {
           if (returnArray.length === 0) {
               console.log(errorMsg);
@@ -316,6 +331,10 @@ angular.module('expenseApp')
           $('#upload').prop('disabled', !"" === $('input:file').val());
           $scope.divShow = false;
       };
+
+      /**
+      * post receipt image to database
+      */
       $scope.upload = function () {                    
           $scope.noReceipt = false;          
           if ($scope.image) {
