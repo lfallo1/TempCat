@@ -115,7 +115,7 @@ namespace CatExpenseFront.Controllers
             }
 
 
-            LineItem liFromDb = service.Find(lineitem.LineItemId);
+            LineItem liFromDb = service.Find(id);
             liFromDb.UpdateFields(lineitem);
             service.Update(liFromDb);
             service.SaveChanges();
@@ -152,7 +152,7 @@ namespace CatExpenseFront.Controllers
 
             service.Create(lineitem);
             service.SaveChanges();
-            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, lineitem);
+            HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, service.Find(lineitem.LineItemId));
             response.Headers.Location = new Uri(Url.Link("DefaultApi", new { id = lineitem.LineItemId }));
             return response;
         }
