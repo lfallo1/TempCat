@@ -345,7 +345,6 @@ angular.module('expenseApp')
           modalInstance.result.then(
               function (successMessage) {
                   if (LineItemService.getUnderEdit() == true) {
-                      successMessage.forEach(function (lineItem) {
                       LineItemService.updateLineItem(successMessage.LineItemId, successMessage).then(
                           function (success) {
                               if (Application.getAllUserSubmissions() != undefined) {
@@ -364,7 +363,6 @@ angular.module('expenseApp')
                             function (error) {
                                 console.log(error);
                             });
-                      });
                       LineItemService.setUnderEdit(false);
                   } else {
                       successMessage.forEach(function (lineItem) {
