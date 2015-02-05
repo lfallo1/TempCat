@@ -105,7 +105,7 @@ angular.module('expenseApp')
       $scope.saveNew = function () {
           var returnArray = [];
           var errorMsg = 'please create a ' + $scope.selectedType + ' expense.';
-          ReceiptService.setAddReceipt( $scope.addNewReceipt );
+          ReceiptService.setAddReceipt($scope.addNewReceipt);
           switch ($scope.selectedType) {
               case 'Mileage':
                   returnArray = _ConvertMileageArrayContents($scope.mileageArray);
@@ -122,7 +122,7 @@ angular.module('expenseApp')
               case 'Meals':
               case 'Airfare':
               case 'Other':
-                  returnArray = _ConvertOtherArrayContents($scope.otherArray);
+                  returnArray = _ConvertOtherArrayContents(LineItemService.getLineItem(), $scope.otherArray[0].valid);
                   _SaveNewOther(returnArray, errorMsg);
                   break;
               default:
@@ -252,26 +252,24 @@ angular.module('expenseApp')
        * 
        * NOTE: this is a private method
        */
-      function _ConvertOtherArrayContents(oldArray) {
+      function _ConvertOtherArrayContents(oldArray, valid) {
           var newArray = [];
-          for (var i = 0; i < oldArray.length; i++) {
-              /*var item = {};
-              item.Billable = oldArray[i].billable;
-              item.LineItemAmount = oldArray[i].amount;
-              item.LineItemMetadata = 'Miles:0,Origin:,Destination:,Wednesday:false,Thursday:false,Friday:false,Saturday:false';
-              item.StatusId = 1;
-              item.SubmissionId = LineItemService.getSubmissionId();
-              newArray.push( item );*/
+          /*var item = {};
+          item.Billable = oldArray[i].billable;
+          item.LineItemAmount = oldArray[i].amount;
+          item.LineItemMetadata = 'Miles:0,Origin:,Destination:,Wednesday:false,Thursday:false,Friday:false,Saturday:false';
+          item.StatusId = 1;
+          item.SubmissionId = LineItemService.getSubmissionId();
+          newArray.push( item );*/
 
-              LineItemService.resetLineItem();
-              LineItemService.setExpenseCategoryName($scope.selectedType);
-              LineItemService.setLineItemDate(oldArray[i].date);
-              LineItemService.setLineItemDesc(oldArray[i].description);
-              LineItemService.setLineItemAmount(oldArray[i].amount);
-              LineItemService.setBillable(oldArray[i].billable);
-              newArray.push(LineItemService.getLineItem());
-              newArray[i].valid = oldArray[i].valid;
-          };
+          //LineItemService.resetLineItem();
+          //LineItemService.setExpenseCategoryName($scope.selectedType);
+          //LineItemService.setLineItemDate(oldArray[i].date);
+          //LineItemService.setLineItemDesc(oldArray[i].description);
+          //LineItemService.setLineItemAmount(oldArray[i].amount);
+          //LineItemService.setBillable(oldArray[i].billable);
+          newArray.push(LineItemService.getLineItem());
+          newArray[0].valid = valid;
           return newArray;
       };
 
@@ -296,7 +294,7 @@ angular.module('expenseApp')
               case 'Meals':
               case 'Airfare':
               case 'Other':
-                  returnObj = _ConvertOtherArrayContents($scope.otherArray);
+                  returnObj = _ConvertOtherArrayContents(LineItemService.getLineItem(), $scope.otherArray[0].valid);
                   break;
               default:
                   returnObj = { msg: 'something went wrong' };
@@ -335,8 +333,8 @@ angular.module('expenseApp')
       /**
       * post receipt image to database
       */
-      $scope.upload = function () {                    
-          $scope.noReceipt = false;          
+      $scope.upload = function () {
+          $scope.noReceipt = false;
           if ($scope.image) {
               var datauri = $scope.image.dataURL + "";
               var base64 = datauri.substring(datauri.indexOf(',') + 1);
