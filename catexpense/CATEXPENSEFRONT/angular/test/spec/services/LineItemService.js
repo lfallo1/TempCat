@@ -192,7 +192,7 @@ describe( 'Service: LineItemService Getters & Setters', function () {
 
     //getReceiptPresent 
     it( 'should get the default value for \'LineItemAmount\'.', function () {
-        expect( LineItemService.getReceiptPresent() ).toBe( 0 );
+        expect( LineItemService.getReceiptPresent() ).toBe( false );
     } );
 
     //setReceiptPresent validation
@@ -232,54 +232,12 @@ describe( 'Service: LineItemService Getters & Setters', function () {
         };
     } );
 
-    //getManagerApproverDate 
-    it( 'should get the default value for \'ManagerApproverDate \'.', function () {
-        expect( LineItemService.getManagerApproverDate() ).toBe( null );
-    } );
-
-    //setManagerApproverDate validation
-    it( 'should store the correct input as the id and ignore invalid input when using setManagerApproverDate().', function () {
-        validArray = [new Date(), 0, -20000, 200000000, true, false, null];
-        invalidArray = [new Date( 'thing' ), '', 'something', {}, [], undefined];
-
-        for ( var i = 0; i < validArray.length; i++ ) {
-            LineItemService.setManagerApproverDate( validArray[i] );
-            expect( LineItemService.getManagerApproverDate() ).toEqual( new Date( validArray[i] ) );
-        };
-
-        for ( var j = 0; j < invalidArray.length; j++ ) {
-            LineItemService.setManagerApproverDate( invalidArray[j] );
-            expect( LineItemService.getManagerApproverDate() ).toBe( null );
-        };
-    } );
-
-    //getFinanceApproverDate  
-    it( 'should get the default value for \'FinanceApproverDate  \'.', function () {
-        expect( LineItemService.getFinanceApproverDate() ).toBe( null );
-    } );
-
-    //setFinanceApproverDate  validation
-    it( 'should store the correct input as the id and ignore invalid input when using setFinanceApproverDate().', function () {
-        validArray = [new Date(), 0, -20000, 200000000, true, false, null];
-        invalidArray = [new Date( 'thing' ), '', 'something', {}, [], undefined];
-
-        for ( var i = 0; i < validArray.length; i++ ) {
-            LineItemService.setFinanceApproverDate( validArray[i] );
-            expect( LineItemService.getFinanceApproverDate() ).toEqual( new Date( validArray[i] ) );
-        };
-
-        for ( var j = 0; j < invalidArray.length; j++ ) {
-            LineItemService.setFinanceApproverDate( invalidArray[j] );
-            expect( LineItemService.getFinanceApproverDate() ).toBe( null );
-        };
-    } );
-
     //getExpenseCategoryName   
     it( 'should get the default value for \'expenseCategoryName  \'.', function () {
         expect( LineItemService.getExpenseCategoryName() ).toBe( 'Mileage' );
     } );
 
-    //setFinanceApproverDate validation
+    //setExpenseCategoryName validation
     it( 'should store the correct input as the id and ignore invalid input when using setExpenseCategoryName().', function () {
         validArray = ['Mileage', 'Per Diem', 'Transportation', 'Lodging', 'Parking', 'Entertainment', 'Meals', 'Airfare', 'Other'];
         invalidArray = [new Date(), 0, -20000, 200000000, true, false, null, new Date( 'thing' ), '', 'something', {}, [], undefined];
@@ -532,7 +490,6 @@ describe( 'Service: LineItemService Getters & Setters', function () {
         expect( LineItemService.getDaysString() ).toEqual( daysStr );
     } );
 
-
     //getLineItem
     it( 'should get the default value for \'lineItem \'.', function () {
         var lineItem = {
@@ -544,17 +501,12 @@ describe( 'Service: LineItemService Getters & Setters', function () {
             LineItemDesc: '',
             LineItemAmount: 0,
             LineItemMetadata: 'Miles:0,Origin:,Destination:,Sunday:false,Monday:false,Tuesday:false,Wednesday:false,Thursday:false,Friday:false,Saturday:false',
-            ReceiptPresent: 0,
+            ReceiptPresent: false,
             StatusId: 1,
             ManagerApproverDate: null,
             FinanceApproverDate: null
         };
         expect( LineItemService.getLineItem() ).toEqual( lineItem );
-    } );
-
-    //setLineItem validation
-    it( 'should store the correct input as the id and ignore invalid input when using setlineItem().', function () {
-        //add in validation for setLineItem()
     } );
 
     //getExtraData 
@@ -594,14 +546,76 @@ describe( 'Service: LineItemService Specialized Methods', function () {
     beforeEach( module( 'expenseApp.Services' ) );
 
     var LineItemService;
+    var defaultLI = {
+        LineItemId: '',
+        SubmissionId: '',
+        Billable: false,
+        ExpenseCategoryId: 1,
+        LineItemDate: '',
+        LineItemDesc: '',
+        LineItemAmount: 0,
+        LineItemMetadata: 'Miles:0,Origin:,Destination:,Sunday:false,Monday:false,Tuesday:false,Wednesday:false,Thursday:false,Friday:false,Saturday:false',
+        ReceiptPresent: false,
+        StatusId: 1
+    };
 
     beforeEach( inject( function ( _LineItemService_ ) {
         LineItemService = _LineItemService_;
 
     } ) );
 
-    it( 'should run a dummy test ( true === true ).', function () {
-        expect( true ).toBe( true );
+
+    /*
+        resetLineItem() might be altered
+        possible future design session could change the functionality of this function
+        ie should this function reset LineItemId and/or SubmissionId???????
+    */
+    it( 'should reset the line item to its default values.', function () {
+        /*var testLI = {
+            LineItemDate: 'test date',
+            LineItemMetadata: 'Miles:100,Origin:abc,Destination:xyz,Sunday:true,Monday:true,Tuesday:true,Wednesday:true,Thursday:true,Friday:true,Saturday:true',
+            LineItemDesc: 'test description',
+            LineItemAmount: 49.95,
+            Billable: true,
+            ExpensecategoryId: 4,
+            StatusId: 3,
+            ManagertApproverDate: null,
+            FinanceApproverDate: null
+        };
+
+        LineItemService.setLineItemDate( 'test date' );
+        LineItemService.setOrigin( 'abc' );
+        LineItemService.setDestination( 'xyz' );
+        LineitemService.setMiles( 100 );
+        LineItemService.setLineItemDesc( 'test description' );
+        LineItemService.setDays( {
+            sunday: true,
+            monday: true,
+            tuesday: true,
+            wednesday: true,
+            thursday: true,
+            friday: true,
+            saturday: true
+        } );
+        LineItemService.setLineItemAmount( 49.95 );
+        LineItemService.setBillable( true );
+
+        expect( LineItemService.getLineItem() ).toEqual( testLI );*/
+    } );
+
+    it( 'should return the appropriate expenseCategoryName given an id.', function () {
+        var validArray = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+        var resultArray = ['Mileage', 'Per Diem', 'Transportation', 'Lodging', 'Parking', 'Entertainment', 'Meals', 'Airfare', 'Other'];
+        var invalidArray = [0, 10, {}, [], new Date(), null, undefined];
+
+        for ( var i = 0; i < validArray.length; i++ ) {
+            expect( LineItemService.getExpenseCategoryNameById( validArray[i] ) ).toBe( resultArray[i] );
+        };
+
+        for ( var j = 0; j < invalidArray.length; j++ ) {
+            expect( LineItemService.getExpenseCategoryNameById( invalidArray[i] ) ).toBe( '' );
+        };
+
     } );
 
 } );
@@ -624,8 +638,251 @@ describe( 'Service: LineItemService Http calls', function () {
         $httpBackend.verifyNoOutstandingRequest();
     } );
 
-    it( 'should run a dummy test ( true === true ).', function () {
-        expect( true ).toBe( true );
+    //=====================================================================//
+    //
+    //  testing GET methods
+    //
+    //=====================================================================//
+
+    // GET /api/LineItem + id
+    it( 'should call the GET /api/LineItem + id endpoint. (success)', function () {
+        var url = '/api/LineItem';
+        var id = 10;
+        var successCallback = jasmine.createSpy();
+        var errorCallback = jasmine.createSpy();
+
+        $httpBackend.expect( 'GET', url + '?id=' + id ).respond( 200, 'mock line item' );
+        LineItemService.getLineItemById( id ).then( successCallback, errorCallback );
+
+        expect( successCallback ).not.toHaveBeenCalled();
+        expect( errorCallback ).not.toHaveBeenCalled();
+
+        $httpBackend.flush();
+
+        expect( successCallback ).toHaveBeenCalled();
+        expect( successCallback.calls.mostRecent().args[0].data ).toBe( 'mock line item' );
+        expect( successCallback.calls.mostRecent().args[0].status ).toBe( 200 );
+
+        expect( errorCallback ).not.toHaveBeenCalled();
+
+    } );
+
+    it( 'should call the GET /api/LineItem + id endpoint. (error)', function () {
+        var url = '/api/LineItem';
+        var id = 10;
+        var successCallback = jasmine.createSpy();
+        var errorCallback = jasmine.createSpy();
+
+        $httpBackend.expect( 'GET', url + '?id=' + id ).respond( 500, 'mock error message' );
+        LineItemService.getLineItemById( id ).then( successCallback, errorCallback );
+
+        expect( successCallback ).not.toHaveBeenCalled();
+        expect( errorCallback ).not.toHaveBeenCalled();
+
+        $httpBackend.flush();
+
+        expect( errorCallback ).toHaveBeenCalled();
+        expect( errorCallback.calls.mostRecent().args[0].data ).toBe( 'mock error message' );
+        expect( errorCallback.calls.mostRecent().args[0].status ).toBe( 500 );
+
+        expect( successCallback ).not.toHaveBeenCalled();
+
+    } );
+
+    // GET /api/LineItem/GetLineItemsBySubmissionId + id
+    it( 'should call the GET /api/LineItem/GetLineItemsBySubmissionId + id endpoint. (success)', function () {
+        var url = '/api/LineItem/GetLineItemsBySubmissionId';
+        var id = 20;
+        var successCallback = jasmine.createSpy();
+        var errorCallback = jasmine.createSpy();
+
+        $httpBackend.expect( 'GET', url + '?id=' + id ).respond( 200, 'mock line items' );
+        LineItemService.getLineItemsBySubmissionId( id ).then( successCallback, errorCallback );
+
+        expect( successCallback ).not.toHaveBeenCalled();
+        expect( errorCallback ).not.toHaveBeenCalled();
+
+        $httpBackend.flush();
+
+        expect( successCallback ).toHaveBeenCalled();
+        expect( successCallback.calls.mostRecent().args[0].data ).toBe( 'mock line items' );
+        expect( successCallback.calls.mostRecent().args[0].status ).toBe( 200 );
+
+        expect( errorCallback ).not.toHaveBeenCalled();
+
+    } );
+
+    it( 'should call the GET /api/LineItem/GetLineItemsBySubmissionId + id endpoint. (error)', function () {
+        var url = '/api/LineItem/GetLineItemsBySubmissionId';
+        var id = 20;
+        var successCallback = jasmine.createSpy();
+        var errorCallback = jasmine.createSpy();
+
+        $httpBackend.expect( 'GET', url + '?id=' + id ).respond( 500, 'mock error message' );
+        LineItemService.getLineItemsBySubmissionId( id ).then( successCallback, errorCallback );
+
+        expect( successCallback ).not.toHaveBeenCalled();
+        expect( errorCallback ).not.toHaveBeenCalled();
+
+        $httpBackend.flush();
+
+        expect( errorCallback ).toHaveBeenCalled();
+        expect( errorCallback.calls.mostRecent().args[0].data ).toBe( 'mock error message' );
+        expect( errorCallback.calls.mostRecent().args[0].status ).toBe( 500 );
+
+        expect( successCallback ).not.toHaveBeenCalled();
+
+    } );
+
+    //=====================================================================//
+    //
+    //  testing POST methods
+    //
+    //=====================================================================//
+
+    //POST /api/LineItem
+    it( 'should call the POST /api/LineItem endpoint. (success)', function () {
+        var url = '/api/LineItem';
+        var successCallback = jasmine.createSpy();
+        var errorCallback = jasmine.createSpy();
+
+        $httpBackend.expect( 'POST', url ).respond( 201, 'mock line item' );
+        LineItemService.submitLineItem( {} ).then( successCallback, errorCallback );
+
+        expect( successCallback ).not.toHaveBeenCalled();
+        expect( errorCallback ).not.toHaveBeenCalled();
+
+        $httpBackend.flush();
+
+        expect( successCallback ).toHaveBeenCalled();
+        expect( successCallback.calls.mostRecent().args[0].data ).toBe( 'mock line item' );
+        expect( successCallback.calls.mostRecent().args[0].status ).toBe( 201 );
+
+        expect( errorCallback ).not.toHaveBeenCalled();
+
+    } );
+
+    it( 'should call the POST /api/LineItem endpoint. (error)', function () {
+        var url = '/api/LineItem';
+        var successCallback = jasmine.createSpy();
+        var errorCallback = jasmine.createSpy();
+
+        $httpBackend.expect( 'POST', url ).respond( 500, 'mock error message' );
+        LineItemService.submitLineItem( {} ).then( successCallback, errorCallback );
+
+        expect( successCallback ).not.toHaveBeenCalled();
+        expect( errorCallback ).not.toHaveBeenCalled();
+
+        $httpBackend.flush();
+
+        expect( errorCallback ).toHaveBeenCalled();
+        expect( errorCallback.calls.mostRecent().args[0].data ).toBe( 'mock error message' );
+        expect( errorCallback.calls.mostRecent().args[0].status ).toBe( 500 );
+
+        expect( successCallback ).not.toHaveBeenCalled();
+
+    } );
+
+    //=====================================================================//
+    //
+    //  testing PUT methods
+    //
+    //=====================================================================//
+
+    //PUT /api/LineItem
+    it( 'should call the PUT /api/LineItem endpoint. (success)', function () {
+        var url = '/api/LineItem';
+        var id = 10;
+        var successCallback = jasmine.createSpy();
+        var errorCallback = jasmine.createSpy();
+
+        $httpBackend.expect( 'PUT', url + '?id=' + id ).respond( 200, 'mock line item' );
+        LineItemService.updateLineItem( id, {} ).then( successCallback, errorCallback );
+
+        expect( successCallback ).not.toHaveBeenCalled();
+        expect( errorCallback ).not.toHaveBeenCalled();
+
+        $httpBackend.flush();
+
+        expect( successCallback ).toHaveBeenCalled();
+        expect( successCallback.calls.mostRecent().args[0].data ).toBe( 'mock line item' );
+        expect( successCallback.calls.mostRecent().args[0].status ).toBe( 200 );
+
+        expect( errorCallback ).not.toHaveBeenCalled();
+
+    } );
+
+    it( 'should call the PUT /api/LineItem endpoint. (error)', function () {
+        var url = '/api/LineItem';
+        var id = 10;
+        var successCallback = jasmine.createSpy();
+        var errorCallback = jasmine.createSpy();
+
+        $httpBackend.when( 'PUT', url + '?id=' + id ).respond( 500, 'mock error message' );
+        LineItemService.updateLineItem( id, {} ).then( successCallback, errorCallback );
+
+        expect( successCallback ).not.toHaveBeenCalled();
+        expect( errorCallback ).not.toHaveBeenCalled();
+
+        $httpBackend.flush();
+
+        expect( errorCallback ).toHaveBeenCalled();
+        expect( errorCallback.calls.mostRecent().args[0].data ).toBe( 'mock error message' );
+        expect( errorCallback.calls.mostRecent().args[0].status ).toBe( 500 );
+
+        expect( successCallback ).not.toHaveBeenCalled();
+
+    } );
+
+    //=====================================================================//
+    //
+    //  testing DELETE methods
+    //
+    //=====================================================================//
+
+    //DELETE /api/LineItem
+    it( 'should call the DELETE /api/LineItem endpoint. (success)', function () {
+        var url = '/api/LineItem';
+        var id = 10;
+        var successCallback = jasmine.createSpy();
+        var errorCallback = jasmine.createSpy();
+
+        $httpBackend.expect( 'DELETE', url + '?id=' + id ).respond( 200, 'mock deleted' );
+        LineItemService.deleteLineItem( id ).then( successCallback, errorCallback );
+
+        expect( successCallback ).not.toHaveBeenCalled();
+        expect( errorCallback ).not.toHaveBeenCalled();
+
+        $httpBackend.flush();
+
+        expect( successCallback ).toHaveBeenCalled();
+        expect( successCallback.calls.mostRecent().args[0].data ).toBe( 'mock deleted' );
+        expect( successCallback.calls.mostRecent().args[0].status ).toBe( 200 );
+
+        expect( errorCallback ).not.toHaveBeenCalled();
+
+    } );
+
+    it( 'should call the DELETE /api/LineItem endpoint. (error)', function () {
+        var url = '/api/LineItem';
+        var id = 10;
+        var successCallback = jasmine.createSpy();
+        var errorCallback = jasmine.createSpy();
+
+        $httpBackend.when( 'DELETE', url + '?id=' + id ).respond( 500, 'mock error message' );
+        LineItemService.deleteLineItem( id ).then( successCallback, errorCallback );
+
+        expect( successCallback ).not.toHaveBeenCalled();
+        expect( errorCallback ).not.toHaveBeenCalled();
+
+        $httpBackend.flush();
+
+        expect( errorCallback ).toHaveBeenCalled();
+        expect( errorCallback.calls.mostRecent().args[0].data ).toBe( 'mock error message' );
+        expect( errorCallback.calls.mostRecent().args[0].status ).toBe( 500 );
+
+        expect( successCallback ).not.toHaveBeenCalled();
+
     } );
 
 } );
