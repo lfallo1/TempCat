@@ -7,33 +7,33 @@ using System.Web;
 
 namespace CatExpenseFront.Models
 {
-    public static class SubmissionMetadata
+    public class SubmissionMetadata
     {
         // Metadata
         [NotMapped]
-        public static double Miles { get; set; }
+        public double Miles { get; set; }
         [NotMapped]
-        public static string Origin { get; set; }
+        public string Origin { get; set; }
         [NotMapped]
-        public static string Destination { get; set; }
+        public string Destination { get; set; }
 
         [NotMapped]
-        public static string Sunday { get; set; }
+        public string Sunday { get; set; }
         [NotMapped]
-        public static string Monday { get; set; }
+        public string Monday { get; set; }
         [NotMapped]
-        public static string Tuesday { get; set; }
+        public string Tuesday { get; set; }
         [NotMapped]
-        public static string Wednesday { get; set; }
+        public string Wednesday { get; set; }
         [NotMapped]
-        public static string Thursday { get; set; }
+        public string Thursday { get; set; }
         [NotMapped]
-        public static string Friday { get; set; }
+        public string Friday { get; set; }
         [NotMapped]
-        public static string Saturday { get; set; }
+        public string Saturday { get; set; }
 
-        
-        public static string MakeString()
+
+        public string MakeString()
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("Miles:" + Miles.ToString());
@@ -49,7 +49,7 @@ namespace CatExpenseFront.Models
             return sb.ToString();
         }
 
-        public static void SetMetadata(string value)
+        public void SetMetadata(string value)
         {
             string[] metadataString = value.Split(',');
             foreach (string m in metadataString)

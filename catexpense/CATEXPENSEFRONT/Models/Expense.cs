@@ -31,17 +31,7 @@ namespace CatExpenseFront.Models
         public bool Receipt { get; set; }
         public bool Billable { get; set; }
 
-        public string Metadata
-        {
-            get
-            {
-                return SubmissionMetadata.MakeString();
-            }
-            set
-            {
-                SubmissionMetadata.SetMetadata(value);
-            }
-        }
+        public string Metadata {get; set;}
     }
 
     [Serializable]

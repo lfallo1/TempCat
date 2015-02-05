@@ -10,18 +10,17 @@ namespace CatExpenseFront.Models
         // automatically whenever you change your model schema, add the following
         // code to the Application_Start method in your Global.asax file.
         // Note: this will destroy and re-create your database with every model change.
-        
+
         public TempCatExpenseContext()
             : base("name=CATEXPENSEConnectionString")
         {
-           
+
         }
 
         public DbSet<FinanceApprover> FinanceApprovers { get; set; }
 
         public DbSet<SubmissionPage> SubmissionPages { get; set; }
 
-        public DbSet<Expense> Expenses { get; set; }
 
         public DbSet<LineItem> LineItems { get; set; }
 
@@ -46,11 +45,6 @@ namespace CatExpenseFront.Models
                 s.Update(u => u.HasName("dbo.spSubmissionUpdate"))
                  .Insert(i => i.HasName("dbo.spSubmissionInsert")));
 
-            modelBuilder.Entity<Expense>().ToTable("dbo.Expense_V");
-            modelBuilder.Entity<Expense>().MapToStoredProcedures(e =>
-                e.Update(u => u.HasName("dbo.spExpenseUpdate"))
-                 .Delete(d => d.HasName("dbo.spExpenseDelete"))
-                 .Insert(i => i.HasName("dbo.spExpenseInsert")));
         }
     }
 }
