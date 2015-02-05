@@ -238,8 +238,6 @@ angular.module('expenseApp')
           LineItemService.setSubmissionId($scope.submission.SubmissionId);
           LineItemService.setExpenseCategoryName('Mileage');
           LineItemService.setEndingWeek(currentDate);
-          console.log(LineItemService.getEndingWeek());
-          LineItemService.setDaysString(DateService.getDaysOfThisWeekGivenDate(currentDate));
           $scope.openModal();
       };
 
@@ -255,7 +253,7 @@ angular.module('expenseApp')
           LineItemService.setLineItemDesc(lineItem.LineItemDesc);
           LineItemService.setLineItemAmount(lineItem.LineItemAmount);
           LineItemService.setBillable(lineItem.Billable);
-          LineItemService.setDaysString(DateService.getDaysOfThisWeekGivenDate(new Date(lineItem.LineItemDate)));
+          LineItemService.setEndingWeek($scope.dt1);
           LineItemService.setUnderEdit(true);
           $scope.openModal();
       };
@@ -351,6 +349,8 @@ angular.module('expenseApp')
 
           modalInstance.result.then(
               function (successMessage) {
+                  console.log('success message');
+                  console.log(successMessage);
                   if (LineItemService.getUnderEdit() == true) {
                       LineItemService.updateLineItem(successMessage.LineItemId, successMessage).then(
                           function (success) {
@@ -373,6 +373,8 @@ angular.module('expenseApp')
                       LineItemService.setUnderEdit(false);
                   } else {
                       successMessage.forEach(function (lineItem) {
+                          console.log('just before line item is saved');
+                          console.log(lineItem);
                           LineItemService.submitLineItem(lineItem).then(
                                           function (success) {
                                               if (Application.getAllUserSubmissions() != undefined) {

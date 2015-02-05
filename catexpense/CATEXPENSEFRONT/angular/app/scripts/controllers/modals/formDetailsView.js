@@ -112,7 +112,11 @@ angular.module('expenseApp')
                   _SaveNewMileage(returnArray, errorMsg);
                   break;
               case 'Per Diem':
-                  returnArray = _ConvertPerDiemArrayContents($scope.perDiemArray);
+                  console.log(LineItemService.getLineItemMetadata());
+                  console.log(LineItemService.getDays());
+                  $scope.perDiemArray[0].days = LineItemService.getDays();
+                  console.log($scope.perDiemArray[0].days);
+                  returnArray = _ConvertPerDiemArrayContents($scope.perDiemArray);     
                   _SaveNewPerDiem(returnArray, errorMsg);
                   break;
               case 'Transportation':
@@ -137,6 +141,7 @@ angular.module('expenseApp')
               console.log('Successfully saved report(s)');
               for (var i = 0; i < returnArray.length; i++) {
                   delete returnArray[i].valid;
+                  console.log(returnArray[i].days);
               }
               $modalInstance.close(returnArray);
           }
@@ -221,8 +226,8 @@ angular.module('expenseApp')
       function _ConvertPerDiemArrayContents(oldArray) {
           var newArray = [];
           for (var i = 0; i < oldArray.length; i++) {
-              LineItemService.resetLineItem();
-              LineItemService.setExpenseCategoryIdByName($scope.selectedType);
+              //LineItemService.resetLineItem();
+              LineItemService.setExpenseCategoryName($scope.selectedType);
               LineItemService.setDays(oldArray[i].days);
               LineItemService.setLineItemAmount(oldArray[i].amount);
               LineItemService.setBillable(oldArray[i].billable);
@@ -250,7 +255,7 @@ angular.module('expenseApp')
               newArray.push( item );*/
 
               LineItemService.resetLineItem();
-              LineItemService.setExpenseCategoryIdByName($scope.selectedType);
+              LineItemService.setExpenseCategoryName($scope.selectedType);
               LineItemService.setLineItemDate(oldArray[i].date);
               LineItemService.setLineItemDesc(oldArray[i].description);
               LineItemService.setLineItemAmount(oldArray[i].amount);

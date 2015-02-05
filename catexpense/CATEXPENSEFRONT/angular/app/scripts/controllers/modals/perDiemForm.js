@@ -59,7 +59,8 @@ angular.module( 'expenseApp' )
           'perDiemValues',
           function ( newValue, oldValue ) {
               if ( newValue !== oldValue ) {
-                  LineItemService.setDays( $scope.perDiemValues.days );
+                  LineItemService.setDays($scope.perDiemValues.days);
+                  console.log(LineItemService.getDays());
                   LineItemService.setLineItemAmount( $scope.perDiemValues.amount );
                   LineItemService.setBillable($scope.perDiemValues.billable);
                   LineItemService.setLineItemDate(LineItemService.getEndingWeek());

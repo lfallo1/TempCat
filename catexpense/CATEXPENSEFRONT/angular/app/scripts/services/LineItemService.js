@@ -729,12 +729,12 @@ angular.module( 'expenseApp.Services' )
        * Resets the lineItem values to their defaults.
        */
       self.resetLineItem = function () {
-          service.setLineItemDate( '' );
-          service.setOrigin( '' );
-          service.setDestination( '' );
-          service.setMiles( 0 );
-          service.setLineItemDesc( '' );
-          service.setDays(
+          self.setLineItemDate( '' );
+          self.setOrigin( '' );
+          self.setDestination('');
+          self.setMiles(0);
+          self.setLineItemDesc('');
+          self.setDays(
               {
                   sunday: false,
                   monday: false,
