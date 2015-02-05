@@ -221,7 +221,6 @@ angular.module('expenseApp')
       function _ConvertPerDiemArrayContents(oldArray) {
           var newArray = [];
           for (var i = 0; i < oldArray.length; i++) {
-              LineItemService.resetLineItem();
               LineItemService.setExpenseCategoryName($scope.selectedType);
               LineItemService.setDays(oldArray[i].days);
               LineItemService.setLineItemAmount(oldArray[i].amount);
@@ -250,7 +249,7 @@ angular.module('expenseApp')
               newArray.push( item );*/
 
               LineItemService.resetLineItem();
-              LineItemService.setExpenseCategoryIdByName($scope.selectedType);
+              LineItemService.setExpenseCategoryName($scope.selectedType);
               LineItemService.setLineItemDate(oldArray[i].date);
               LineItemService.setLineItemDesc(oldArray[i].description);
               LineItemService.setLineItemAmount(oldArray[i].amount);
@@ -270,10 +269,10 @@ angular.module('expenseApp')
           var errorMsg = 'please fix your ' + $scope.selectedType + ' expense.';
           switch ($scope.selectedType) {
               case 'Mileage':
-                  returnObj = $scope.mileageArray[0]
+                  returnObj = _ConvertMileageArrayContents($scope.mileageArray);
                   break;
               case 'Per Diem':
-                  returnObj = $scope.perDiemArray[0];
+                  returnObj = _ConvertPerDiemArrayContents($scope.perDiemArray);
                   break;
               case 'Transportation':
               case 'Lodging':
@@ -282,7 +281,7 @@ angular.module('expenseApp')
               case 'Meals':
               case 'Airfare':
               case 'Other':
-                  returnObj = $scope.otherArray[0];
+                  returnObj = _ConvertOtherArrayContents($scope.otherArray);
                   break;
               default:
                   returnObj = { msg: 'something went wrong' };
@@ -290,11 +289,13 @@ angular.module('expenseApp')
           if (undefined === returnObj) {
               console.log('you didnt make any changes');
           }
-          else if (!returnObj.valid) {
+          else if (!returnObj[0].valid) {
               console.log('invalid expense');
           } else {
               console.log('Successfully edited report');
-              delete returnObj.valid;
+              for (var i = 0; i < returnObj.length; i++) {
+                  delete returnObj[i].valid;
+              }
               $modalInstance.close(LineItemService.getLineItem());
           }
       };
@@ -321,7 +322,6 @@ angular.module('expenseApp')
               var datauri = $scope.image.dataURL + "";
               var base64 = datauri.substring(datauri.indexOf(',') + 1);
               var receipt = {
-                  "SubmissionId": Application.getSubmission().SubmissionId,
                   "LineItemId": LineItemService.getLineItemId(),
                   "Base64String": base64,
                   "Name": $scope.image.file.name,

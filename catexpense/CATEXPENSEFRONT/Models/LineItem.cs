@@ -21,13 +21,15 @@ namespace CatExpenseFront.Models
         /// Updates Specific fields
         /// </summary>
         /// <param name="li"></param>
-        public void  UpdateFields(LineItem li) {
+        public void UpdateFields(LineItem li)
+        {
             this.Billable = li.Billable;
             this.LineItemDate = li.LineItemDate;
             this.LineItemDesc = li.LineItemDesc;
             this.LineItemAmount = li.LineItemAmount;
             this.ReceiptPresent = li.ReceiptPresent;
             this.DateUpdated = DateTime.Now;
+            this.LineItemMetadata = li.LineItemMetadata;
         }
 
 
@@ -46,22 +48,12 @@ namespace CatExpenseFront.Models
         public Nullable<System.DateTime> ManagerApproverDate { get; set; }
         public Nullable<System.DateTime> FinanceApproverDate { get; set; }
 
-        
+
         public virtual ExpenseCategory ExpenseCategory { get; set; }
         public virtual ICollection<Receipt> Receipts { get; set; }
-        
+
         public virtual Status Status { get; set; }
 
-        public string LineItemMetadata
-        {
-            get
-            {
-                return SubmissionMetadata.MakeString();
-            }
-            set
-            {
-                SubmissionMetadata.SetMetadata(value);
-            }
-        }
+        public string LineItemMetadata { get; set; }
     }
 }
