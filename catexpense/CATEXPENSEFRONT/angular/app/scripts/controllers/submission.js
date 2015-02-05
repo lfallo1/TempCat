@@ -175,8 +175,7 @@ angular.module('expenseApp')
                   LineItemService.setUnderEdit(false);
                   LineItemService.setSubmissionId(success.data.SubmissionId);
                   LineItemService.setExpenseCategoryName('Mileage');
-                  LineItemService.setEndingWeek($scope.dt1);
-                  LineItemService.setDaysString(DateService.getDaysOfThisWeekGivenDate($scope.dt1));
+                  LineItemService.setEndingWeek($scope.dt1);                  
                   if (Application.getAllUserSubmissions() != undefined) {
                       var userSubmission = Application.getAllUserSubmissions();
                   } else {
@@ -239,7 +238,6 @@ angular.module('expenseApp')
           LineItemService.setExpenseCategoryName('Mileage');
           LineItemService.setEndingWeek(currentDate);
           console.log(LineItemService.getEndingWeek());
-          LineItemService.setDaysString(DateService.getDaysOfThisWeekGivenDate(currentDate));
           $scope.openModal();
       };
 
@@ -255,7 +253,7 @@ angular.module('expenseApp')
           LineItemService.setLineItemDesc(lineItem.LineItemDesc);
           LineItemService.setLineItemAmount(lineItem.LineItemAmount);
           LineItemService.setBillable(lineItem.Billable);
-          LineItemService.setDaysString(DateService.getDaysOfThisWeekGivenDate(new Date(lineItem.LineItemDate)));
+          LineItemService.setEndingWeek($scope.dt1);
           LineItemService.setUnderEdit(true);
           $scope.openModal();
       };

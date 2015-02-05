@@ -222,7 +222,7 @@ angular.module('expenseApp')
           var newArray = [];
           for (var i = 0; i < oldArray.length; i++) {
               LineItemService.resetLineItem();
-              LineItemService.setExpenseCategoryIdByName($scope.selectedType);
+              LineItemService.setExpenseCategoryName($scope.selectedType);
               LineItemService.setDays(oldArray[i].days);
               LineItemService.setLineItemAmount(oldArray[i].amount);
               LineItemService.setBillable(oldArray[i].billable);
