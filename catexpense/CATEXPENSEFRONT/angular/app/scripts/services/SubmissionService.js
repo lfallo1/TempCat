@@ -21,7 +21,7 @@ angular.module( 'expenseApp.Services' )
       self.getSubmissionsByUsername = function () {
           return $http( {
               method: "GET",
-              url: "/api/Submissions/",
+              url: "/api/Submissions",
               async: false
           } );
       };
@@ -77,7 +77,7 @@ angular.module( 'expenseApp.Services' )
           delete submission['Receipts'];
           return $http( {
               method: "PUT",
-              url: '/api/Submissions/',
+              url: '/api/Submissions',
               params: { id: SubmissionId },
               data: submission
           } )

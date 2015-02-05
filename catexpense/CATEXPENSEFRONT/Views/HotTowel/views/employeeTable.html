@@ -66,8 +66,8 @@
                     <td>{{submission.Status.StatusName}}</td>
                     <td>{{submission.DateUpdated | date:'yyyy/MM/dd'}}</td>
                     <td class="row">
-                        <span class="col-md-2 glyphicon" style="display: table-cell" ng-class="{ 'glyphicon-remove': !{{submission.ReceiptPresent}}, 'glyphicon-ok': {{submission.ReceiptPresent}} }" ng-sty ng-style="{ 'color': {{submission.ReceiptPresent}} ? 'green' : 'red'}"></span>
-                        <span title="View all receipts" style="cursor: pointer" class="col-md-2 pull-left btn-link glyphicon glyphicon-file" ng-click="showAllAvailableReceipts(submission.allSubmissionReceipts, submission, $index)" ng-show="submission.ReceiptPresent"></span>
+                        <span class="col-md-2 glyphicon" style="display: table-cell" ng-class="{ 'glyphicon-remove': submission.allSubmissionReceipts.length == 0, 'glyphicon-ok': submission.allSubmissionReceipts.length > 0 }" ng-sty ng-style="{ 'color': submission.allSubmissionReceipts.length > 0 ? 'green' : 'red'}"></span>
+                        <span title="View all receipts" style="cursor: pointer" class="col-md-2 pull-left btn-link glyphicon glyphicon-file" ng-click="showAllAvailableReceipts(submission.allSubmissionReceipts, submission, $index)" ng-show="submission.allSubmissionReceipts.length > 0"></span>
                     </td>
                 </tr>
             </tbody>

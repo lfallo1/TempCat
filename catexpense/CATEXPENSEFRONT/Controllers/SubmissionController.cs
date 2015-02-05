@@ -91,12 +91,12 @@ namespace CatExpenseFront.Controllers
         }
 
         /// <summary>
-        /// Returns all submissions by the current user. /api/Submissions/
+        /// Returns all submissions by the current user. /api/Submissions
         /// </summary>
         /// <returns></returns>
         [HttpGet]
         [ActionName("GetSubmissions")]
-        [Route("api/Submissions/")]
+        [Route("api/Submissions")]
         public List<Submission> GetUserSubmissions()
         {
             //Checks the session to see if it is valid
@@ -122,7 +122,7 @@ namespace CatExpenseFront.Controllers
         /// <returns>A status code 200 if successful.</returns>
         [HttpDelete]
         [ActionName("DelelteSubmission")]
-        [Route("api/Submissions/")]
+        [Route("api/Submissions")]
         public HttpResponseMessage DeleteSubmission(int id)
         {
             //Checks the session to see if it is valid
@@ -259,7 +259,7 @@ namespace CatExpenseFront.Controllers
         /// <returns>A status code</returns>
         [HttpPut]
         [ActionName("UpdateSubmissionStatus")]
-        [Route("api/Submissions/")]
+        [Route("api/Submissions")]
         public HttpResponseMessage UpdateSubmission(int id, Submission submission)
         {
             //Checks the session to see if it is valid
@@ -377,7 +377,8 @@ namespace CatExpenseFront.Controllers
                     submission.RepliconProject = new RepliconProject(up[0]);
 
                 }
-                else {
+                else
+                {
                     submission.RepliconProject = new RepliconProject();
                 }
 
