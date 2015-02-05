@@ -21,10 +21,9 @@
             // get username
             $scope.userName = Authentication.getUserName();
             //if the submission is valid set the submission in the application service
-            if (submission) {
-                Application.setSubmission(submission);
+            if (submission) {                
                 $rootScope.$broadcast("checkReceipts");
-
+                $scope.currentDescription = submission.Description;
                 $scope.createNewItemLoad = submission.StatusId == 1 || submission.StatusId == 4 || submission.StatusId == 6;
                 //set the current submission being editted
                 $scope.currentSubmission = submission;
@@ -153,6 +152,7 @@
             //if the submission id is 1 the user can edit the submission
             $scope.createNewItemLoad = $scope.currentSubmission.StatusId == 1 || $scope.currentSubmission.StatusId == 4 || $scope.currentSubmission.StatusId == 6;
             $scope.dt1 = $scope.currentSubmission.WeekEndingDate;
+            $scope.currentDescription = $scope.currentSubmission.Description;
             if (Authentication.getIsFinanceApprover() || Authentication.getIsManager()) {
                 $scope.isApprover = true;
             }

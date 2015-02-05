@@ -250,7 +250,7 @@ angular.module('expenseApp')
               newArray.push( item );*/
 
               LineItemService.resetLineItem();
-              LineItemService.setExpenseCategoryIdByName($scope.selectedType);
+              LineItemService.setExpenseCategoryName($scope.selectedType);
               LineItemService.setLineItemDate(oldArray[i].date);
               LineItemService.setLineItemDesc(oldArray[i].description);
               LineItemService.setLineItemAmount(oldArray[i].amount);

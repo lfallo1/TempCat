@@ -70,17 +70,12 @@ angular.module('expenseApp')
 
           if ($scope.selectedClient !== null && ($scope.dt1 instanceof Date && !isNaN($scope.dt1.valueOf()))) {
               //gets the submission that matches the date and client
-              if ($scope.submission) {
-                  $scope.submission = Application.getSubmission();
-              } else {
-                  $scope.submission = $scope.findSpecificSubmission();
-              }
+              $scope.submission = $scope.findSpecificSubmission();
               $rootScope.$broadcast("submissionFound", $scope.submission);
               Application.setAllUserSubmissions($scope.totalSubmissions);
               if ($scope.submission) {
                   $scope.missingLineItems = $scope.submission.LineItems.length < 1;
                   $scope.submissionExists = true;
-                  $scope.missingLineItems = $scope.submission.LineItems.length < 1;
                   $scope.createNewItemLoad = $scope.submission.StatusId == 1 || $scope.submission.StatusId == 4 || $scope.submission.StatusId == 6;
               } else {
                   $scope.submissionExists = false;
