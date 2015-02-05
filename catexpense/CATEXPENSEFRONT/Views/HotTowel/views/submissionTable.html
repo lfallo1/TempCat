@@ -63,12 +63,12 @@
                     <i class="glyphicon icon-undo-white"></i>
                     <span>Undo Submission</span>
                 </button>
-                <button id="saveTableButton" ng-disabled="missingLineItems" ng-show="submissionLoad && createNewItemLoad || createNewItemLoad"
+                <button id="saveTableButton" ng-disabled="currentSubmission.LineItems.length == 0" ng-show="submissionLoad && createNewItemLoad || createNewItemLoad"
                         class="btn btn-primary pull-right" ng-click="saveTable()">
                     <i class="glyphicon glyphicon-save"></i>
                     <span>Save Table</span>
                 </button>
-                <button id="submitTableButton" ng-disabled="missingLineItems" ng-show="submissionLoad && createNewItemLoad || createNewItemLoad"
+                <button id="submitTableButton" ng-disabled="currentSubmission.LineItems.length == 0" ng-show="submissionLoad && createNewItemLoad || createNewItemLoad"
                         class="btn btn-success pull-right" ng-click="submitTable()">
                     <i class="glyphicon glyphicon-ok"></i>
                     <span>Submit Table</span>
