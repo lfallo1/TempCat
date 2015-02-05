@@ -1,4 +1,4 @@
-﻿'use strict';
+﻿/*'use strict';
 
 describe( 'Service: receiptService', function () {
 
@@ -15,4 +15,4 @@ describe( 'Service: receiptService', function () {
         expect( true ).toBe( true );
     } );
 
-} );
+} );*/

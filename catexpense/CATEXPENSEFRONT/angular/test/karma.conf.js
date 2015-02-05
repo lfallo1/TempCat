@@ -32,10 +32,10 @@ module.exports = function ( config ) {
           'app/scripts/controllers/**/*.js',
           'app/scripts/directives/*.js',
           'app/scripts/services/*.js',
-          'test/spec/controllers/**/*.js',
-          'test/spec/factories/**/*.js',
+          //'test/spec/controllers/**/*.js',
+          //'test/spec/factories/**/*.js',
           'test/spec/services/**/*.js',
-          'test/mock/**/*.js'
+          //'test/mock/**/*.js'
         ],
 
         // list of files / patterns to exclude
@@ -54,6 +54,7 @@ module.exports = function ( config ) {
         // - IE (only Windows)
         browsers: [
           'PhantomJS'
+          //'Chrome'
         ],
 
         // Which plugins to enable

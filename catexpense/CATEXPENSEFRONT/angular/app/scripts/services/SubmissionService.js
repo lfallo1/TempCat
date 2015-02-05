@@ -16,62 +16,6 @@ angular.module( 'expenseApp.Services' )
       //=====================================================================//
 
       /**
-       * GETS all submissions
-       */
-      self.getSubmissions = function () {
-          return $http( {
-              url: '/api/Submission',
-              method: 'GET'
-          } );
-      };
-
-      /**
-       * GETS a submission by id
-       */
-      self.getSubmissionById = function () {
-          return $http( {
-              method: "GET",
-              url: '/api/Submission/GetSubmissionById',
-              params: { id: Application.getSubmission().SubmissionId }
-          } )
-      };
-
-      /**
-      * Gets receipt of the submission that the submission id belongs to
-      */
-      self.GetReceiptsBySubmissionId = function ( SubmissionId ) {
-          return $http( {
-              method: "GET",
-              url: '/api/Receipt/GetReceiptsBySubmissionId',
-              params: { id: SubmissionId }
-          } )
-      };
-
-      /**
-      * Gets receipt of the submission that the submission id belongs to with the image
-      */
-      self.GetReceiptsWithImageBySubmissionId = function ( SubmissionId ) {
-          return $http( {
-              method: "GET",
-              url: '/api/Receipt/GetReceiptsWithImageBySubmissionId',
-              params: { id: SubmissionId }
-          } )
-      };
-
-      /**
-      * updates the submission that the submission id belongs to, it will update the status, and 
-      * the line item comment as well
-      * DUPLICATED ON line 178
-      */
-      /*self.updateSubmission = function ( SubmissionId, statusName, LineItemId, comment ) {
-          return $http( {
-              method: "PUT",
-              url: '/api/Submissions/',
-              params: { id: SubmissionId, status: statusName, lineItemId: LineItemId, comment: comment }
-          } )
-      };*/
-
-      /**
        * GETS all submissions that were created by the current user
        */
       self.getSubmissionsByUsername = function () {
@@ -102,22 +46,11 @@ angular.module( 'expenseApp.Services' )
           } );
       };
 
-      /**
-      * This will check to see if the user is logged in.
-      */
-      self.isLoggedIn = function () {
-          return $http( {
-              url: '/api/login/isLoggedIn',
-              method: 'GET'
-          } );
-      };
-
       //=====================================================================//
       //
       //  list of POST methods
       //
       //=====================================================================//
-
 
       /**
        * POSTS a new submission
@@ -127,6 +60,89 @@ angular.module( 'expenseApp.Services' )
               url: '/api/Submission',
               method: 'POST',
               data: data
+          } );
+      };
+
+      //=====================================================================//
+      //
+      //  list of PUT methods
+      //
+      //=====================================================================//
+
+      /**
+       * updates the submission that the submission id belongs to, it will update the status, and 
+       * the line item comment as well
+       */
+      self.updateSubmission = function ( SubmissionId, submission ) {
+          delete submission['Receipts'];
+          return $http( {
+              method: "PUT",
+              url: '/api/Submissions/',
+              params: { id: SubmissionId },
+              data: submission
+          } )
+      };
+
+      //=====================================================================//
+      //
+      //  list of DELETE methods
+      //
+      //=====================================================================//
+
+      /**
+       * DELETES an existing submission
+       */
+      self.deleteExpenseReport = function ( id ) {
+          return $http( {
+              url: '/api/Submissions',
+              method: 'DELETE',
+              params: { "id": id }
+          } );
+      };
+
+
+
+
+
+
+
+
+      //=====================================================================//
+      //
+      //  THESE METHODS DO NOT BELONG HERE. PLEASE MOVE THEM TO THEIR APPROPRIATE SERVICE FOR MY SANITY'S SAKE.
+      //
+      //=====================================================================//
+
+
+      /**
+      * Gets receipt of the submission that the submission id belongs to
+      */
+      self.GetReceiptsBySubmissionId = function ( SubmissionId ) {
+          return $http( {
+              method: "GET",
+              url: '/api/Receipt/GetReceiptsBySubmissionId',
+              params: { id: SubmissionId }
+          } )
+      };
+
+      /**
+      * Gets receipt of the submission that the submission id belongs to with the image
+      */
+      self.GetReceiptsWithImageBySubmissionId = function ( SubmissionId ) {
+          return $http( {
+              method: "GET",
+              url: '/api/Receipt/GetReceiptsWithImageBySubmissionId',
+              params: { id: SubmissionId }
+          } )
+      };
+
+      /**
+      * This will check to see if the user is logged in.
+      */
+      self.isLoggedIn = function () {
+          return $http( {
+              url: '/api/login/isLoggedIn',
+              method: 'GET'
           } );
       };
 
@@ -154,53 +170,6 @@ angular.module( 'expenseApp.Services' )
           } );
       };
 
-      //=====================================================================//
-      //
-      //  list of PUT methods
-      //
-      //=====================================================================//
-
-      /**
-       * PUTS an existing submission
-       */
-      self.updateExpenseReport = function ( id, data ) {
-          return $http( {
-              url: '/api/Submission/' + id,
-              method: 'PUT',
-              params: data
-          } );
-      };
-
-      /**
-       * updates the submission that the submission id belongs to, it will update the status, and 
-       * the line item comment as well
-       */
-      self.updateSubmission = function (SubmissionId, submission) {
-          delete submission['Receipts'];
-          return $http( {
-              method: "PUT",
-              url: '/api/Submissions/',
-              params: { id: SubmissionId },
-              data : submission
-          } )
-      };
-
-      //=====================================================================//
-      //
-      //  list of DELETE methods
-      //
-      //=====================================================================//
-
-      /**
-       * DELETES an existing submission
-       */
-      self.deleteExpenseReport = function ( id ) {
-          return $http( {
-              url: '/api/Submissions',
-              method: 'DELETE',
-              params: { "id": id }
-          } );
-      };
 
       self.PutLineItemComment = function ( id, comment ) {
           return $http( {
