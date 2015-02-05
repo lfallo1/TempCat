@@ -142,6 +142,7 @@
             submissions[Application.getSubmissionIndex()].LineItems[Application.getLineItemIndex()].ReceiptPresent = true;
             submissions[Application.getSubmissionIndex()].LineItems[Application.getLineItemIndex()].Receipts.push(receipt);
             receiptService.setReceipts(allReceipt);
+            Application.setAllUserSubmissions(submissions);
             $route.reload();
         });
 
