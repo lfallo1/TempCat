@@ -1,4 +1,4 @@
-﻿'use strict';
+﻿/*'use strict';
 
 describe( 'Factory: RouteFilter', function () {
 
@@ -18,4 +18,4 @@ describe( 'Factory: RouteFilter', function () {
     } );
 
 
-} );
+} );*/

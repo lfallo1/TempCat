@@ -1,4 +1,4 @@
-﻿'use strict';
+﻿/*'use strict';
 
 describe( 'Factory: MessageService', function () {
 
@@ -15,4 +15,4 @@ describe( 'Factory: MessageService', function () {
         expect( true ).toBe( true );
     } );
 
-} );
+} );*/
