@@ -24,6 +24,7 @@ namespace Selenium.Tests
             username = ConfigurationManager.AppSettings["username"];
             password = ConfigurationManager.AppSettings["password"];
             thisPage = new ExpenseReportHomePage(WebDriver, username, password);
+            //trying to push via http
         }
 
         [Test]
