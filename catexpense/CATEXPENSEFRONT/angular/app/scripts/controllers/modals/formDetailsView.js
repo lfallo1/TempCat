@@ -221,7 +221,6 @@ angular.module('expenseApp')
       function _ConvertPerDiemArrayContents(oldArray) {
           var newArray = [];
           for (var i = 0; i < oldArray.length; i++) {
-              LineItemService.resetLineItem();
               LineItemService.setExpenseCategoryName($scope.selectedType);
               LineItemService.setDays(oldArray[i].days);
               LineItemService.setLineItemAmount(oldArray[i].amount);
