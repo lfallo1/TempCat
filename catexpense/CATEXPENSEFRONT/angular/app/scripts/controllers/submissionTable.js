@@ -285,7 +285,7 @@
         * recieves broadcast message from commentModal.js
         */
         $scope.$on("saveComment", function (response, comment) {
-            if (Application.getComment().ExpenseComment != undefined) {
+            if (Application.getComment().ExpenseComment) {
                 SubmissionService.PutLineItemComment(Application.getComment().LineItemCommentId, comment).then(function (success) {
                     $scope.currentSubmission.LineItemComments[commentIndex]['ExpenseComment'] = comment;
                 });

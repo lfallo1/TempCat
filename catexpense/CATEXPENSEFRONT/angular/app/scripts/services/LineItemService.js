@@ -719,10 +719,9 @@ angular.module( 'expenseApp.Services' )
        */
       self.updateLineItem = function ( id, data ) {
           return $http( {
-              url: '/api/LineItem',
+              url: '/api/LineItem/' + id,
               method: 'PUT',
-              data: data,
-              params: { id: id }
+              data: data
           } );
       };
 

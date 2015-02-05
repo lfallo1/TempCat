@@ -146,11 +146,11 @@
                             <table class="panel-body table table-condensed table-hover">
                                 <thead>
                                     <tr>
+                                        <th></th>
+                                        <th></th>
                                         <th>From</th>
                                         <th>To</th>
                                         <th>Amount</th>
-                                        <th></th>
-                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -165,7 +165,7 @@
                                         </td>
                                         <td ng-bind="expense.origin"></td>
                                         <td ng-bind="expense.destination"></td>
-                                        <td>{{("$" +(expense.amount).toFixed( 2 ))}}</td>                                       
+                                        <td>{{("$" +(expense.amount).toFixed( 2 ))}}</td>
                                     </tr>
                                 </tbody>
                             </table>
