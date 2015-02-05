@@ -436,6 +436,8 @@
     <Content Include="angular\app\scripts\services\RouteFilter.js" />
     <Content Include="angular\app\scripts\services\SubmissionService.js" />
     <Content Include="angular\app\scripts\services\ValidationService.js" />
+    <Content Include="angular\app\styles\images\icon-undo-white.png" />
+    <Content Include="angular\app\styles\images\icon-undo.png" />
     <Content Include="angular\app\styles\main.css" />
     <Content Include="angular\settingupFEtesting.txt" />
     <Content Include="angular\test\.gitignore" />
