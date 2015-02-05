@@ -26,6 +26,7 @@ angular.module('expenseApp')
 
       //this variable stores the date string chosen from the datepicker
       $scope.dt1 = '';
+      $scope.currentDescription = "";
       //this variable stores a boolean which determines if the 'create submission' button appears or the 'add new line item'
       //Also, if true, the submission table will be visible
       $scope.submissionExists = false;
@@ -178,8 +179,11 @@ angular.module('expenseApp')
                   }
                   $scope.submission.RepliconProject = $scope.selectedClient;
                   $scope.submission.Status = { "StatusName": "In Progress" };
+                  $scope.submission["allSubmissionReceipts"] = [];
+                  $scope.submission["ReceiptPresent"] = false;
                   userSubmission.push($scope.submission);
                   Application.setAllUserSubmissions(userSubmission);
+                  $rootScope.$broadcast("addSubmissionEmployeeTable");
                   $scope.openModal();
               }, function (error) {
                   console.log(error);
@@ -300,6 +304,7 @@ angular.module('expenseApp')
       $scope.showAllReceipts = function () {
           receiptService.setReceipts(receiptService.getAllReceipts());
           receiptService.setShowAllReceipts(true);
+          receiptService.setAddReceipt(false);
           var modalInstance = $modal.open({
               templateUrl: 'Views/HotTowel/views/modals/receiptModal.html',
               controller: 'receiptController'
@@ -352,7 +357,7 @@ angular.module('expenseApp')
                               } else {
                                   var userSubmission = $scope.totalSubmissions;
                               }
-                              userSubmission[Application.getSubmissionIndex()].LineItems[Application.getLineItemIndex()] = success.data;
+                              userSubmission[Application.getSubmissionIndex()].LineItems[Application.getLineItemIndex()] = success.data;                              
                               var submissionTotalAmount = 0;
                               for (var i = 0; i < userSubmission[Application.getSubmissionIndex()].LineItems.length; i++) {
                                   submissionTotalAmount += userSubmission[Application.getSubmissionIndex()].LineItems[i].LineItemAmount;
@@ -397,7 +402,7 @@ angular.module('expenseApp')
                                                       templateUrl: 'Views/HotTowel/views/modals/confirmModal.html',
                                                       controller: 'confirmModalController'
                                                   });
-                                              }
+                                              }                                              
                                               $scope.$on("addReeciptForLineItem", function () {
                                                   receiptService.setAddReceipt(true);
                                                   receiptService.setReceipts(userSubmission[Application.getSubmissionIndex()].LineItems[Application.getLineItemIndex()].Receipts);
@@ -430,6 +435,7 @@ angular.module('expenseApp')
                       var userSubmission = Application.getAllUserSubmissions();
                       userSubmission[Application.getSubmissionIndex()] = $scope.submission
                       $scope.dt1 = '';
+                      $scope.currentDescription = "";
                       $scope.submissionCreated = false;
                       $window.location.reload();
                   },
@@ -473,6 +479,7 @@ angular.module('expenseApp')
                   var userSubmission = Application.getAllUserSubmissions();
                   userSubmission[Application.getSubmissionIndex()] = $scope.submission
                   $scope.dt1 = '';
+                  $scope.currentDescription = "";
                   $scope.submissionCreated = false;
                   $window.location.reload();
               },
@@ -497,6 +504,7 @@ angular.module('expenseApp')
                  var userSubmission = Application.getAllUserSubmissions();
                  userSubmission[Application.getSubmissionIndex()] = $scope.submission
                  $scope.dt1 = '';
+                 $scope.currentDescription = "";
                  $scope.submissionCreated = false;
                  $window.location.reload();
              },

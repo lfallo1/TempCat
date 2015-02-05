@@ -95,7 +95,6 @@ angular.module('expenseApp')
               var datauri = $scope.image.dataURL + "";
               var base64 = datauri.substring(datauri.indexOf(',') + 1);
               var receipt = {
-                  "SubmissionId": Application.getSubmission().SubmissionId,
                   "LineItemId": LineItemService.getLineItemId(),
                   "Base64String": base64,
                   "Name": $scope.image.file.name,
