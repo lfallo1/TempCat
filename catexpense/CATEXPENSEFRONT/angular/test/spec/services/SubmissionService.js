@@ -7,7 +7,6 @@
     var loginPath = '/api/login/isLoggedIn';
     var loginObj = {
         userName: 'testUser',
-        isApprover: false,
         isLoggedIn: true,
         isFinanceApprover: false,
         isManager: false,

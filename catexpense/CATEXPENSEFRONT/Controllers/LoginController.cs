@@ -70,7 +70,6 @@ namespace CatExpenseFront.Controllers
                 SearchResult result = search.FindOne();
                 HttpContext.Current.Session["UserName"] = result.Properties["samaccountname"][0].ToString();
                 userWithSession.userName = HttpContext.Current.Session["UserName"].ToString();
-                userWithSession.isApprover = isApprover();
                 userWithSession.isLoggedIn = true;
                 userWithSession.isFinanceApprover = isFinanceApprover();
                 userWithSession.isManager = isManager();
@@ -97,7 +96,6 @@ namespace CatExpenseFront.Controllers
             if (null != HttpContext.Current.Session["UserName"])
             {
                 userWithSession.userName = HttpContext.Current.Session["UserName"].ToString();
-                userWithSession.isApprover = isApprover();
                 userWithSession.isLoggedIn = true;
                 userWithSession.isFinanceApprover = isFinanceApprover();
                 userWithSession.isManager = isManager();
@@ -105,7 +103,6 @@ namespace CatExpenseFront.Controllers
             else
             {
                 userWithSession.userName = "";
-                userWithSession.isApprover = false;
                 userWithSession.isLoggedIn = false;
                 userWithSession.isFinanceApprover = false;
                 userWithSession.isManager = false;
@@ -122,28 +119,6 @@ namespace CatExpenseFront.Controllers
         public void userLogout()
         {
             HttpContext.Current.Session.Abandon();
-        }
-
-        /// <summary>
-        /// Checks to see if the user is a finance approver.
-        /// </summary>
-        /// <returns></returns>
-        private bool isApprover()
-        {
-            int mgrCount = (from m in service.All()
-                            where m.ManagerName.ToUpper() == (null == HttpContext.Current.Session["UserName"]
-                                                          ? ""
-                                                          : HttpContext.Current.Session["UserName"].ToString().ToUpper())
-                            select m).Count();
-
-            if (mgrCount == 0 || !isFinanceApprover())
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
         }
 
         /// <summary>

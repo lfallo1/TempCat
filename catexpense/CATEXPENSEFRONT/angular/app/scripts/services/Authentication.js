@@ -4,7 +4,6 @@ angular.module('expenseApp.Services')
   .factory('Authentication', function Authentication($q, $http, $timeout, Application) {
 
       var authenticatedUser = null;
-      var isApprover;
       var userName;
       var isManager;
       var isFinanceApprover;
@@ -42,7 +41,6 @@ angular.module('expenseApp.Services')
               if (userLoginSuccess) {
                   authenticatedUser = userLoginSuccess.userName;
                   userName = userLoginSuccess.userName;
-                  isApprover = userLoginSuccess.isApprover;
                   isManager = userLoginSuccess.isManager;
                   isFinanceApprover = userLoginSuccess.isFinanceApprover;
                   Application.makeReady();
@@ -51,7 +49,6 @@ angular.module('expenseApp.Services')
 
           logout: function () {
               authenticatedUser = undefined;
-              isApprover = undefined;
               userName = undefined;
               isManager = undefined;
               isFinanceApprover = undefined;
@@ -59,14 +56,6 @@ angular.module('expenseApp.Services')
 
           isDeveloper: function () {
               return this.exists() && authenticatedUser.type == 'developer';
-          },
-
-          setIsApprover: function (approver) {
-              isApprover = approver;
-          },
-
-          getApprover: function () {
-              return isApprover;
           },
 
           setUserName: function (name) {

@@ -13,7 +13,7 @@ angular.module('expenseApp')
                   $rootScope.$broadcast("refresh");
                   $rootScope.$broadcast("refreshHome");
               } else {
-                  $scope.ErrorMessage = "The user name and password do not match any records we have.\nPlease try agian, be carefull, too many failded attemps could result in your account being locked.";
+                  $scope.ErrorMessage = "The user name and password do not match any records we have.\nPlease try agian, be carefull, too many failed attemps could result in your account being locked.";
               }
           });
       };

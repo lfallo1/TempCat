@@ -87,7 +87,11 @@
         var receipts;
 
         if (Application.getOrigin() !== "EmployeeTable") {
-            $scope.isApprover = Authentication.getApprover();
+            if (Authentication.getIsManager || Authentication.getIsFinanceApprover) {
+                 $scope.isApprover = true;
+            } else {
+                $scope.isApprover = false;
+            }
         }
         $scope.userName = Authentication.getUserName();
 
@@ -148,7 +152,7 @@
             //if the submission id is 1 the user can edit the submission
             $scope.createNewItemLoad = $scope.currentSubmission.StatusId == 1 || $scope.currentSubmission.StatusId == 4 || $scope.currentSubmission.StatusId == 6;
             $scope.dt1 = $scope.currentSubmission.WeekEndingDate;
-            if (Authentication.getApprover() || Authentication.getIsManager()) {
+            if (Authentication.getIsFinanceApprover() || Authentication.getIsManager()) {
                 $scope.isApprover = true;
             }
             $rootScope.$broadcast("checkReceipts");

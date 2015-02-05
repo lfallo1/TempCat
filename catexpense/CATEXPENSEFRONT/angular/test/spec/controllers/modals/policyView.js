@@ -30,7 +30,6 @@ describe( 'Controller: PolicyCtrl', function () {
         $httpBackend.expectGET( '/api/login/isLoggedIn' ).respond(
             {
                 userName: "testuser",
-                isApprover: false,
                 isLoggedIn: true,
                 isFinanceApprover: false,
                 isManager: false
@@ -97,7 +96,6 @@ describe( 'Controller: PolicyCtrl', function () {
         $httpBackend.expectGET( '/api/login/isLoggedIn' ).respond(
             {
                 userName: "testuser",
-                isApprover: false,
                 isLoggedIn: true,
                 isFinanceApprover: false,
                 isManager: false

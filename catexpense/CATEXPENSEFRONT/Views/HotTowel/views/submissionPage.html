@@ -33,7 +33,7 @@
                     </div>
                 </div>
             </div>
-        </div>        
+        </div>
         <div ng-show="clientAndDate() && !se()">
             <div class="col-sm-12">
                 <button class="btn btn-default" ng-disabled="disableCreate" id="createSubmissionButton" ng-click="createNewSubmission()">Create Submission</button>
@@ -46,11 +46,6 @@
             <button class="btn btn-primary" id="addLineItemButton" ng-click="addNewLineItem()" ng-disabled="!createNewItemLoad">
                 <i class="glyphicon glyphicon-plus"></i>
                 <span>Add Line Item</span>
-            </button>
-            <button ng-disabled="receipts" class="btn btn-info" ng-click="showAllReceipts()">
-                <i class="glyphicon glyphicon-file"></i>
-                <span>All Receipts</span>
-                <span class="badge small" ng-bind="receiptsAmount"></span>
             </button>
             <button class="btn btn-danger" id="deleteSubmissionButton" ng-click="deleteSubmission()" ng-disabled="!createNewItemLoad">
                 <i class="glyphicon glyphicon-trash"></i>
