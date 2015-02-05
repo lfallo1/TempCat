@@ -269,10 +269,10 @@ angular.module('expenseApp')
           var errorMsg = 'please fix your ' + $scope.selectedType + ' expense.';
           switch ($scope.selectedType) {
               case 'Mileage':
-                  returnObj = $scope.mileageArray[0]
+                  returnObj = _ConvertMileageArrayContents($scope.mileageArray);
                   break;
               case 'Per Diem':
-                  returnObj = $scope.perDiemArray[0];
+                  returnObj = _ConvertPerDiemArrayContents($scope.perDiemArray);
                   break;
               case 'Transportation':
               case 'Lodging':
@@ -281,7 +281,7 @@ angular.module('expenseApp')
               case 'Meals':
               case 'Airfare':
               case 'Other':
-                  returnObj = $scope.otherArray[0];
+                  returnObj = _ConvertOtherArrayContents($scope.otherArray);
                   break;
               default:
                   returnObj = { msg: 'something went wrong' };
@@ -289,11 +289,13 @@ angular.module('expenseApp')
           if (undefined === returnObj) {
               console.log('you didnt make any changes');
           }
-          else if (!returnObj.valid) {
+          else if (!returnObj[0].valid) {
               console.log('invalid expense');
           } else {
               console.log('Successfully edited report');
-              delete returnObj.valid;
+              for (var i = 0; i < returnObj.length; i++) {
+                  delete returnObj[i].valid;
+              }
               $modalInstance.close(LineItemService.getLineItem());
           }
       };
