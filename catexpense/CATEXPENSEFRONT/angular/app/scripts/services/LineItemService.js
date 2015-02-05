@@ -730,7 +730,7 @@ angular.module( 'expenseApp.Services' )
        */
       self.resetLineItem = function () {
           self.setLineItemDate( '' );
-          self.setOrigin( '' );
+          self.setOrigin('');
           self.setDestination('');
           self.setMiles(0);
           self.setLineItemDesc('');

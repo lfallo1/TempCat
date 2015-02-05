@@ -2,7 +2,7 @@
     <label class="sr-only" for="datePickerInput">Weekending-Date</label>
     <div class="input-group">
         <div class="input-group-addon">Weekending-Date:</div>
-        <input type="text" id="datePickerInput" class="form-control" datepicker-popup="{{format}}" ng-model="dt1" text="{{formatDate()}}" is-open="opened" min-date="minDate" max-date="dt" datepicker-options="dateOptions" ng-required="true" close-text="Close" ng-disabled="editExistingSubmission" placeholder="Day-Month-Year"/>
+        <input type="text" id="datePickerInput" disabled class="form-control" datepicker-popup="{{format}}" ng-model="dt1" text="{{formatDate()}}" is-open="opened" min-date="minDate" max-date="dt" datepicker-options="dateOptions" ng-required="true" close-text="Close" placeholder="Select a date"/>
         <span class="input-group-btn">
             <button type="button" id="datePickerBtn" class="btn btn-default" ng-click="open($event)" ng-disabled="editExistingSubmission"><i class="glyphicon glyphicon-calendar"></i></button>
         </span>

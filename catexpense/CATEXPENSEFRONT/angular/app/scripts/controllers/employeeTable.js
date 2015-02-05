@@ -42,7 +42,25 @@ angular.module('expenseApp')
       $scope.loadEmployeeTable = function () {
           if (Application.getAllUserSubmissions() != undefined) {
               var rejected = 0;
+              var userSubmissions = Application.getAllUserSubmissions();
               $scope.employeeSubmissions = Application.getAllUserSubmissions();
+              for (var i = 0; i < userSubmissions.length; i++) {                  
+                  var receipts = [];
+                  //get all receipts in that submission
+                  for (var b = 0; b < userSubmissions[i].LineItems.length; b++) {
+                      if (userSubmissions[i].LineItems[b].Receipts.length != 0) {
+                          for (var c = 0; c < userSubmissions[i].LineItems[b].Receipts.length; c++) {
+                              receipts.push(userSubmissions[i].LineItems[b].Receipts[c]);
+                          }
+                      }
+                  }
+                  userSubmissions[i]["allSubmissionReceipts"] = receipts;
+                  if (receipts.length > 0) {
+                      userSubmissions[i]["ReceiptPresent"] = true;
+                  } else {
+                      userSubmissions[i]["ReceiptPresent"] = false;
+                  }
+              }
               employeeSubmissionsContainer = $scope.employeeSubmissions;
               for (var i = 0; i < $scope.employeeSubmissions.length; i++) {
                   // a status of 4 and 6 means the submission was rejected

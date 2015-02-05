@@ -70,17 +70,12 @@ angular.module('expenseApp')
 
           if ($scope.selectedClient !== null && ($scope.dt1 instanceof Date && !isNaN($scope.dt1.valueOf()))) {
               //gets the submission that matches the date and client
-              if ($scope.submission) {
-                  $scope.submission = Application.getSubmission();
-              } else {
-                  $scope.submission = $scope.findSpecificSubmission();
-              }
+              $scope.submission = $scope.findSpecificSubmission();
               $rootScope.$broadcast("submissionFound", $scope.submission);
               Application.setAllUserSubmissions($scope.totalSubmissions);
               if ($scope.submission) {
                   $scope.missingLineItems = $scope.submission.LineItems.length < 1;
                   $scope.submissionExists = true;
-                  $scope.missingLineItems = $scope.submission.LineItems.length < 1;
                   $scope.createNewItemLoad = $scope.submission.StatusId == 1 || $scope.submission.StatusId == 4 || $scope.submission.StatusId == 6;
               } else {
                   $scope.submissionExists = false;
@@ -175,8 +170,7 @@ angular.module('expenseApp')
                   LineItemService.setUnderEdit(false);
                   LineItemService.setSubmissionId(success.data.SubmissionId);
                   LineItemService.setExpenseCategoryName('Mileage');
-                  LineItemService.setEndingWeek($scope.dt1);
-                  LineItemService.setDaysString(DateService.getDaysOfThisWeekGivenDate($scope.dt1));
+                  LineItemService.setEndingWeek($scope.dt1);                  
                   if (Application.getAllUserSubmissions() != undefined) {
                       var userSubmission = Application.getAllUserSubmissions();
                   } else {
@@ -238,6 +232,7 @@ angular.module('expenseApp')
           LineItemService.setSubmissionId($scope.submission.SubmissionId);
           LineItemService.setExpenseCategoryName('Mileage');
           LineItemService.setEndingWeek(currentDate);
+          console.log(LineItemService.getEndingWeek());
           $scope.openModal();
       };
 
@@ -349,8 +344,6 @@ angular.module('expenseApp')
 
           modalInstance.result.then(
               function (successMessage) {
-                  console.log('success message');
-                  console.log(successMessage);
                   if (LineItemService.getUnderEdit() == true) {
                       LineItemService.updateLineItem(successMessage.LineItemId, successMessage).then(
                           function (success) {
@@ -373,8 +366,6 @@ angular.module('expenseApp')
                       LineItemService.setUnderEdit(false);
                   } else {
                       successMessage.forEach(function (lineItem) {
-                          console.log('just before line item is saved');
-                          console.log(lineItem);
                           LineItemService.submitLineItem(lineItem).then(
                                           function (success) {
                                               if (Application.getAllUserSubmissions() != undefined) {

@@ -70,6 +70,19 @@ body {
         padding: 14px 24px;
     }
 
+.icon-undo-white {
+    background-image: url("images/icon-undo-white.png");
+    background-position: center center;
+    height: 14px;
+    width: 14px;
+}
+
+.icon-undo {
+    background-image: url("images/icon-undo.png");
+    background-position: center center;
+    height: 14px;
+    width: 14px;
+}
 /* Supporting marketing content */
 .marketing {
     margin: 40px 0;

@@ -112,11 +112,7 @@ angular.module('expenseApp')
                   _SaveNewMileage(returnArray, errorMsg);
                   break;
               case 'Per Diem':
-                  console.log(LineItemService.getLineItemMetadata());
-                  console.log(LineItemService.getDays());
-                  $scope.perDiemArray[0].days = LineItemService.getDays();
-                  console.log($scope.perDiemArray[0].days);
-                  returnArray = _ConvertPerDiemArrayContents($scope.perDiemArray);     
+                  returnArray = _ConvertPerDiemArrayContents($scope.perDiemArray);
                   _SaveNewPerDiem(returnArray, errorMsg);
                   break;
               case 'Transportation':
@@ -141,7 +137,6 @@ angular.module('expenseApp')
               console.log('Successfully saved report(s)');
               for (var i = 0; i < returnArray.length; i++) {
                   delete returnArray[i].valid;
-                  console.log(returnArray[i].days);
               }
               $modalInstance.close(returnArray);
           }
@@ -226,7 +221,7 @@ angular.module('expenseApp')
       function _ConvertPerDiemArrayContents(oldArray) {
           var newArray = [];
           for (var i = 0; i < oldArray.length; i++) {
-              //LineItemService.resetLineItem();
+              LineItemService.resetLineItem();
               LineItemService.setExpenseCategoryName($scope.selectedType);
               LineItemService.setDays(oldArray[i].days);
               LineItemService.setLineItemAmount(oldArray[i].amount);
