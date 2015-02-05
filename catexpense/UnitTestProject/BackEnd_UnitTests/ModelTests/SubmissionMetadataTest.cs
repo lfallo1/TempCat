@@ -13,6 +13,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ModelTests
             var subMDstring = "Miles:13000,Origin:Earth,Destination:Mars," +
             "Sunday:true,Monday:false,Tuesday:false,Wednesday:false,Thursday:false,Friday:false,Saturday:false,ThisShouldTestDefault:case";
 
+            SubmissionMetadata SubmissionMetadata = new SubmissionMetadata();
             SubmissionMetadata.SetMetadata(subMDstring);
 
             Assert.AreEqual(13000, SubmissionMetadata.Miles);
