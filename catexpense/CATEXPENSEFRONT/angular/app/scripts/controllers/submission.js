@@ -2,7 +2,7 @@
 
 angular.module('expenseApp')
 
-  .controller('SubmissionCtrl', function ($scope, $modal, $window, $location, $route, $rootScope, $timeout, LineItemService, SubmissionService, RepliconProjectService, MessageService, DateService, Application, Authentication, receiptService) {
+  .controller('SubmissionCtrl', function ($scope, $modal, $window, $location, $route, $rootScope, $timeout, LineItemService, SubmissionService, RepliconProjectService, MessageService, DateService, Application, Authentication, ReceiptService) {
 
       $scope.syncComplete = false;
       $scope.flag = false;
@@ -337,16 +337,16 @@ angular.module('expenseApp')
       //opens receiptModal.html to show all the receipts for all the line items 
       //in a particular submission
       $scope.showAllReceipts = function () {
-          receiptService.setReceipts(receiptService.getAllReceipts());
-          receiptService.setShowAllReceipts(true);
-          receiptService.setAddReceipt(false);
+          ReceiptService.setReceipts( ReceiptService.getAllReceipts() );
+          ReceiptService.setShowAllReceipts( true );
+          ReceiptService.setAddReceipt( false );
           var modalInstance = $modal.open({
               templateUrl: 'Views/HotTowel/views/modals/receiptModal.html',
               controller: 'receiptController'
           });
       }
       $scope.$on("checkReceipts", function () {
-          if (receiptService.getAllReceipts() && receiptService.getAllReceipts().length != 0) {
+          if ( ReceiptService.getAllReceipts() && ReceiptService.getAllReceipts().length != 0 ) {
               $scope.receipts = false;
           } else {
               var receipts = [];
@@ -358,14 +358,14 @@ angular.module('expenseApp')
                       }
                   }
               }
-              receiptService.setAllReceipts(receipts);
+              ReceiptService.setAllReceipts( receipts );
               if (receipts.length != 0) {
                   $scope.receipts = false;
               } else {
                   $scope.receipts = true;
               }
           }
-          $scope.receiptsAmount = receiptService.getAllReceipts().length;
+          $scope.receiptsAmount = ReceiptService.getAllReceipts().length;
       });
 
       // populate the manager in the view for the client selected from the dropdown
@@ -426,8 +426,8 @@ angular.module('expenseApp')
                                               $scope.showComments = true;
                                               LineItemService.setLineItemId(success.data.LineItemId);
                                               Application.setLineItemIndex(userSubmission[Application.getSubmissionIndex()].LineItems.length - 1);
-                                              if (receiptService.getAddReceipt()) {
-                                                  receiptService.setReceipts(userSubmission[Application.getSubmissionIndex()].LineItems[Application.getLineItemIndex()].Receipts);
+                                              if ( ReceiptService.getAddReceipt() ) {
+                                                  ReceiptService.setReceipts( userSubmission[Application.getSubmissionIndex()].LineItems[Application.getLineItemIndex()].Receipts );
                                                   var modalInstance = $modal.open({
                                                       templateUrl: 'Views/HotTowel/views/modals/receiptModal.html',
                                                       controller: 'receiptController'
@@ -441,8 +441,8 @@ angular.module('expenseApp')
                                                   });
                                               }                                              
                                               $scope.$on("addReeciptForLineItem", function () {
-                                                  receiptService.setAddReceipt(true);
-                                                  receiptService.setReceipts(userSubmission[Application.getSubmissionIndex()].LineItems[Application.getLineItemIndex()].Receipts);
+                                                  ReceiptService.setAddReceipt( true );
+                                                  ReceiptService.setReceipts( userSubmission[Application.getSubmissionIndex()].LineItems[Application.getLineItemIndex()].Receipts );
                                                   var modalInstance = $modal.open({
                                                       templateUrl: 'Views/HotTowel/views/modals/receiptModal.html',
                                                       controller: 'receiptController'

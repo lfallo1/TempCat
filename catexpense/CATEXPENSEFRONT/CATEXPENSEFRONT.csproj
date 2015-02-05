@@ -430,9 +430,8 @@
     <Content Include="angular\app\scripts\services\MapQuestService.js" />
     <Content Include="angular\app\scripts\services\MessageService.js" />
     <Content Include="angular\app\scripts\services\NavService.js" />
-    <Content Include="angular\app\scripts\services\receiptService.js" />
+    <Content Include="angular\app\scripts\services\ReceiptService.js" />
     <Content Include="angular\app\scripts\services\RepliconProjectService.js" />
-    <Content Include="angular\app\scripts\services\RepliconUserService.js" />
     <Content Include="angular\app\scripts\services\RouteFilter.js" />
     <Content Include="angular\app\scripts\services\SubmissionService.js" />
     <Content Include="angular\app\scripts\services\ValidationService.js" />
@@ -469,7 +468,6 @@
     <Content Include="angular\test\spec\services\NavService.js" />
     <Content Include="angular\test\spec\services\ReceiptService.js" />
     <Content Include="angular\test\spec\services\RepliconProjectService.js" />
-    <Content Include="angular\test\spec\services\RepliconUserService.js" />
     <Content Include="angular\test\spec\factories\RouteFilter.js" />
     <Content Include="angular\test\spec\services\SubmissionService.js" />
     <Content Include="angular\test\spec\services\ValidationService.js" />
@@ -527,39 +525,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="angular\bower_components\angular-animate\" />
-    <Folder Include="angular\bower_components\angular-bootstrap\" />
-    <Folder Include="angular\bower_components\angular-cookies\" />
-    <Folder Include="angular\bower_components\angular-mocks\" />
-    <Folder Include="angular\bower_components\angular-resource\" />
-    <Folder Include="angular\bower_components\angular-route\" />
-    <Folder Include="angular\bower_components\angular-sanitize\" />
-    <Folder Include="angular\bower_components\angular-scenario\" />
-    <Folder Include="angular\bower_components\angular-touch\" />
-    <Folder Include="angular\bower_components\angular\" />
-    <Folder Include="angular\bower_components\bootstrap\dist\css\" />
-    <Folder Include="angular\bower_components\bootstrap\dist\fonts\" />
-    <Folder Include="angular\bower_components\bootstrap\dist\js\" />
-    <Folder Include="angular\bower_components\bootstrap\fonts\" />
-    <Folder Include="angular\bower_components\bootstrap\grunt\" />
-    <Folder Include="angular\bower_components\bootstrap\js\" />
-    <Folder Include="angular\bower_components\bootstrap\less\mixins\" />
-    <Folder Include="angular\bower_components\es5-shim\" />
-    <Folder Include="angular\bower_components\jquery\dist\" />
-    <Folder Include="angular\bower_components\jquery\src\ajax\var\" />
-    <Folder Include="angular\bower_components\jquery\src\attributes\" />
-    <Folder Include="angular\bower_components\jquery\src\core\var\" />
-    <Folder Include="angular\bower_components\jquery\src\css\var\" />
-    <Folder Include="angular\bower_components\jquery\src\data\var\" />
-    <Folder Include="angular\bower_components\jquery\src\effects\" />
-    <Folder Include="angular\bower_components\jquery\src\event\" />
-    <Folder Include="angular\bower_components\jquery\src\exports\" />
-    <Folder Include="angular\bower_components\jquery\src\manipulation\var\" />
-    <Folder Include="angular\bower_components\jquery\src\queue\" />
-    <Folder Include="angular\bower_components\jquery\src\sizzle\dist\" />
-    <Folder Include="angular\bower_components\jquery\src\traversing\var\" />
-    <Folder Include="angular\bower_components\jquery\src\var\" />
-    <Folder Include="angular\bower_components\json3\lib\" />
     <Folder Include="angular\two\" />
   </ItemGroup>
   <ItemGroup>
