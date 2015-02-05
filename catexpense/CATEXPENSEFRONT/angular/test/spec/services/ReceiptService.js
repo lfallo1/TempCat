@@ -1,13 +1,13 @@
 ﻿/*'use strict';
 
-describe( 'Service: receiptService', function () {
+describe( 'Service: ReceiptService', function () {
 
     beforeEach( module( 'expenseApp' ) );
 
-    var receiptService;
+    var ReceiptService;
 
-    beforeEach( inject( function ( _receiptService_ ) {
-        receiptService = _receiptService_;
+    beforeEach( inject( function ( _ReceiptService_ ) {
+        ReceiptService = _ReceiptService_;
 
     } ) );
 

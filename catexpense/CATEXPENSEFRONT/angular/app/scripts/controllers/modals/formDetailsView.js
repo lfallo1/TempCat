@@ -11,7 +11,7 @@
  * Controller of the expenseApp
  */
 angular.module('expenseApp')
-  .controller('FormDetailsCtrl', function ($scope, $modalInstance, $modal, $rootScope, $http, LineItemService, ValidationService, Application, receiptService) {
+  .controller('FormDetailsCtrl', function ($scope, $modalInstance, $modal, $rootScope, $http, LineItemService, ValidationService, Application, ReceiptService) {
 
       $scope.divShow = false;
 
@@ -105,7 +105,7 @@ angular.module('expenseApp')
       $scope.saveNew = function () {
           var returnArray = [];
           var errorMsg = 'please create a ' + $scope.selectedType + ' expense.';
-          receiptService.setAddReceipt($scope.addNewReceipt);
+          ReceiptService.setAddReceipt( $scope.addNewReceipt );
           switch ($scope.selectedType) {
               case 'Mileage':
                   returnArray = _ConvertMileageArrayContents($scope.mileageArray);

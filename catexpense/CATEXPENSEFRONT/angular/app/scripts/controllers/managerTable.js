@@ -1,7 +1,7 @@
 ﻿'use strict';
 
 angular.module('expenseApp')
-  .controller('ManagerTableController', function ($scope, $location, $modal, $route, $rootScope, $filter, Application, SubmissionService, MessageService, Authentication, receiptService) {
+  .controller( 'ManagerTableController', function ( $scope, $location, $modal, $route, $rootScope, $filter, Application, SubmissionService, MessageService, Authentication, ReceiptService ) {
       $scope.isManager = Authentication.getIsManager();
 
       $scope.expanded = true;
@@ -64,7 +64,7 @@ angular.module('expenseApp')
                   }
               }
           }
-          receiptService.setAllReceipts(receipts);
+          ReceiptService.setAllReceipts( receipts );
           $location.path('/submission');
       }
 

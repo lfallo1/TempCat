@@ -1,5 +1,5 @@
 ﻿angular.module('expenseApp')
-    .controller('submissionTableCtrl', function ($scope, $route, $modal, $location, $rootScope, $filter, Application, receiptService, LineItemService, MessageService, SubmissionService, Authentication) {
+    .controller( 'submissionTableCtrl', function ( $scope, $route, $modal, $location, $rootScope, $filter, Application, ReceiptService, LineItemService, MessageService, SubmissionService, Authentication ) {
         $scope.receipts = true;
         var orderBy = $filter('orderBy');
         var sortColumn = { field: 'DateCreated', reverse: false };
@@ -15,7 +15,7 @@
         };
         //when a submission is found by a week ending date and a client then run this function
         $scope.$on('submissionFound', function (message, submission) {
-            receiptService.setAllReceipts([])
+            ReceiptService.setAllReceipts( [] )
             //when the orgin is employee table the submission cannot be approved or rejected
             Application.setOrigin("EmployeeTable");
             // get username
@@ -133,14 +133,14 @@
         // when this is called the receipt passed in is added to the cache
         $scope.$on("addNewReceipt", function (message, receipt) {
             var submissions = Application.getAllUserSubmissions();
-            var allReceipt = receiptService.getAllReceipts();
+            var allReceipt = ReceiptService.getAllReceipts();
             allReceipt.push(receipt);
-            receiptService.setAllReceipts(allReceipt);
+            ReceiptService.setAllReceipts( allReceipt );
             submissions[Application.getSubmissionIndex()].allSubmissionReceipts = allReceipt;
             submissions[Application.getSubmissionIndex()].ReceiptPresent = true;
             submissions[Application.getSubmissionIndex()].LineItems[Application.getLineItemIndex()].ReceiptPresent = true;
             submissions[Application.getSubmissionIndex()].LineItems[Application.getLineItemIndex()].Receipts.push(receipt);
-            receiptService.setReceipts(allReceipt);
+            ReceiptService.setReceipts( allReceipt );
             Application.setAllUserSubmissions(submissions);
             $scope.currentSubmission = submissions[Application.getSubmissionIndex()];
             $rootScope.$broadcast("addSubmissionEmployeeTable");
@@ -199,9 +199,9 @@
         $scope.viewReceipts = function (id, index) {
             Application.setLineItemId(id);
             Application.setLineItemIndex(index);
-            receiptService.setAddReceipt(false);
-            receiptService.setShowAllReceipts(false);
-            receiptService.setReceipts($scope.currentSubmission.LineItems[index].Receipts);
+            ReceiptService.setAddReceipt( false );
+            ReceiptService.setShowAllReceipts( false );
+            ReceiptService.setReceipts( $scope.currentSubmission.LineItems[index].Receipts );
             console.log();
             var modalInstance = $modal.open({
                 templateUrl: 'Views/HotTowel/views/modals/receiptModal.html',

@@ -1,7 +1,7 @@
 ﻿'use strict';
 
 angular.module('expenseApp')
-  .controller('FinanceTableController', function ($scope, $location, $modal, $route, $rootScope, $filter, Application, SubmissionService, MessageService, Authentication, receiptService) {
+  .controller( 'FinanceTableController', function ( $scope, $location, $modal, $route, $rootScope, $filter, Application, SubmissionService, MessageService, Authentication, ReceiptService ) {
       $scope.isFinanceApprover = Authentication.getIsFinanceApprover();
 
       $scope.expanded = true;
@@ -86,7 +86,7 @@ angular.module('expenseApp')
                   }
               }
           }
-          receiptService.setAllReceipts(receipts);
+          ReceiptService.setAllReceipts( receipts );
           $location.path('/submission');
       }
 

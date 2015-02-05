@@ -1,7 +1,8 @@
 ﻿'use strict';
 
-angular.module('expenseApp.Services')
-  .service('receiptService', function receiptService() {
+angular.module( 'expenseApp.Services' )
+  .service( 'ReceiptService', function ReceiptService( $http ) {
+      var self = this;
 
       var receipts;
       var addReceipt;
@@ -13,7 +14,7 @@ angular.module('expenseApp.Services')
               return receipts;
           },
 
-          setReceipts: function (data) {
+          setReceipts: function ( data ) {
               receipts = data;
           },
 
@@ -21,7 +22,7 @@ angular.module('expenseApp.Services')
               return showAllReceipts;
           },
 
-          setShowAllReceipts: function (data) {
+          setShowAllReceipts: function ( data ) {
               showAllReceipts = data;
           },
 
@@ -29,7 +30,7 @@ angular.module('expenseApp.Services')
               return allReceipts;
           },
 
-          setAllReceipts: function (data) {
+          setAllReceipts: function ( data ) {
               allReceipts = data;
           },
 
@@ -37,8 +38,8 @@ angular.module('expenseApp.Services')
               return addReceipt;
           },
 
-          setAddReceipt: function (data) {
+          setAddReceipt: function ( data ) {
               addReceipt = data;
           }
       }
-  });
+  } );
