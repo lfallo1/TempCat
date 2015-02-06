@@ -288,7 +288,6 @@ angular.module( 'expenseApp.Controllers' )
           LineItemService.setSubmissionId($scope.submission.SubmissionId);
           LineItemService.setExpenseCategoryName('Mileage');
           LineItemService.setEndingWeek(currentDate);
-          console.log(LineItemService.getEndingWeek());
           $scope.openModal();
       };
 
