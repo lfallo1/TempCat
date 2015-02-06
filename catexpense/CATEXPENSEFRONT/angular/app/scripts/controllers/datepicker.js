@@ -13,9 +13,9 @@ angular.module('expenseApp')
         };
 
         // Disable weekend selection
-       /* $scope.disabled = function (date, mode) {
-            return (mode === 'day' && (date.getDay() === 0 || date.getDay() === 6));
-        };*/
+        $scope.disabled = function (date, mode) {
+            return (mode === 'day' && !(date.getDay() === 6));
+        };
 
         // Insert the date object string into the text attribute of the html
         $scope.formatDate = function () {
