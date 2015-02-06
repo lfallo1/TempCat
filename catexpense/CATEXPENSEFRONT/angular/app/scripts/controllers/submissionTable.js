@@ -1,4 +1,4 @@
-﻿angular.module('expenseApp')
+﻿angular.module( 'expenseApp.Controllers' )
     .controller( 'submissionTableCtrl', function ( $scope, $route, $modal, $location, $rootScope, $filter, Application, ReceiptService, LineItemService, MessageService, CommentService, SubmissionService, Authentication ) {
         $scope.receipts = true;
         var orderBy = $filter('orderBy');
@@ -18,7 +18,10 @@
             };
         };
 
-        //when a submission is found by a week ending date and a client then run this function
+        /**
+        * when a submission is found by a week ending date and a client then run this function
+        * recieves the broadcast message from submission.js clientAndDate function
+        */
         $scope.$on('submissionFound', function (message, submission) {
             ReceiptService.setAllReceipts( [] )
             //when the orgin is employee table the submission cannot be approved or rejected
@@ -48,8 +51,10 @@
             }
         });
 
-        //recieves broadcast message from MessageService confirming
-        //that user would like to delete selected line item
+        /**
+        * recieves broadcast message from MessageService confirming
+        * that user would like to delete selected line item
+        */
         $scope.$on("confirmDeleteLineItem", function () {
             MessageService.setMessage("");
             MessageService.setBroadCastMessage("");
@@ -72,8 +77,10 @@
 
         });
 
-        // when user chooses to delete a line item in a submission,
-        // pop up a confirmation modal before the item is actually deleted
+        /** 
+        * when user chooses to delete a line item in a submission,
+        * pop up a confirmation modal before the item is actually deleted
+        */
         $scope.confirmLineRemove = function (expense, index) {
             // set the message for the confirm message
             MessageService.setMessage('Are you sure you want to delete this line item? NOTE: Any attached receipts will be permanently delete.');
@@ -86,10 +93,21 @@
             });
         };
 
+        /**
+        * is the current user a manager or finance approver?
+        */
         $scope.isApprover = false;
+
+        /**
+        * boolean value set upon page load 
+        * variable used as validation on submissionTable.html page
+        */
         $scope.createNewItemLoad = Application.getSubmissionStatus() == 1 || Application.getSubmissionStatus() == 4 || Application.getSubmissionStatus() == 6;
         var receipts;
 
+        /**
+        * sets the boolean value $scope.isApprover upon page load
+        */
         if (Application.getOrigin() !== "EmployeeTable") {
             if (Authentication.getIsManager || Authentication.getIsFinanceApprover) {
                  $scope.isApprover = true;
@@ -97,8 +115,16 @@
                 $scope.isApprover = false;
             }
         }
+
+        /**
+        * pulls current user name from session
+        */
         $scope.userName = Authentication.getUserName();
 
+
+        /**
+        * receives broadcast message from submission.js editComment function
+        */
         var commentIndex;
         $scope.$on("editCommentFromSubmission", function (response, index) {
             if (index != -1) {
@@ -112,7 +138,10 @@
                 controller: 'CommentController'
             });
         });
-        // when editing the comment the index will be -1 otherwise it assumes you are creating a new comment
+
+        /**
+        * when editing the comment the index will be -1 otherwise it assumes you are creating a new comment
+        */
         $scope.editComment = function (index) {
             if (index != -1) {
                 commentIndex = index;
@@ -126,6 +155,9 @@
             });
         }
 
+        /**
+        * delete a comment, will pop up a confirmation modal before delete is performed
+        */
         $scope.deleteComment = function (index) {
             commentIndex = index;
             MessageService.setMessage("Are you sure you want to delete this comment?");
@@ -135,7 +167,10 @@
                 controller: 'confirmModalController'
             });
         }
-        // when this is called the receipt passed in is added to the cache
+
+        /**
+        * when this is called the receipt passed in is added to the cache
+        */
         $scope.$on("addNewReceipt", function (message, receipt) {
             var submissions = Application.getAllUserSubmissions();
             var allReceipt = ReceiptService.getAllReceipts();
@@ -151,6 +186,10 @@
             $rootScope.$broadcast("addSubmissionEmployeeTable");
         });
 
+        /**
+        * if there is a submission stored in Application service,
+        * set submissionTable variables from those stored in Application service
+        */
         if (Application.getSubmission()) {
             $scope.currentSubmission = Application.getSubmission();
             $scope.userName = Authentication.getUserName();
@@ -179,7 +218,11 @@
                 }
             }
         }
-        // a Manager can approve a submission which will call this mehtod
+
+        /** 
+        * a Manager can approve a submission which will call this mehtod
+        *
+        */
         $scope.approve = function () {
             // the manager does not need a comment when approving
             MessageService.setAddComment(false);
@@ -206,7 +249,9 @@
             });
         }
 
-        //load the receipt modal with the line items receipts
+        /**
+        * load the receipt modal with the line items receipts
+        */
         $scope.viewReceipts = function (id, index) {
             Application.setLineItemId(id);
             Application.setLineItemIndex(index);

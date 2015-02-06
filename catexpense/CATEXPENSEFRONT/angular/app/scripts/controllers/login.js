@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('expenseApp')
+angular.module('expenseApp.Controllers')
   .controller('LoginController', function ($scope, $location, $rootScope, Authentication, LoginService) {
       
       $scope.ErrorMessage = "";

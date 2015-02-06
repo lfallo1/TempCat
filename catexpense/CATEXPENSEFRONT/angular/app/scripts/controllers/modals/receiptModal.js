@@ -1,6 +1,6 @@
 ﻿'use strict';
 
-angular.module('expenseApp')
+angular.module( 'expenseApp.Controllers' )
   .controller('receiptController', function ($scope, $modalInstance, ReceiptService, $rootScope, MessageService, $modal, Application, $route, LineItemService) {
       var allReceipts = false;
       $scope.canDelete = true;

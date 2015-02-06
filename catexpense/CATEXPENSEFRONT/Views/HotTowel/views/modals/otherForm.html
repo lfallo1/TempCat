@@ -9,9 +9,9 @@
                         <div class="input-group">
                             <div class="input-group-addon">Date:</div>
                             <input type="text" class="form-control" id="otherDatePickerValue" datepicker-popup="{{format}}"
-                                   ng-model="otherValues.date"
-                                   is-open="opened" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions"
-                                   date-disabled="disabled(date, mode)" close-text="Close" readonly />
+                                ng-model="otherValues.date" ng-change="updateDate()"
+                                is-open="opened" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions"
+                                date-disabled="disabled(date, mode)" close-text="Close" readonly />
                             <span class="input-group-btn">
                                 <button type="button" id="otherDatePickerButton" class="btn btn-default" ng-click="open($event)">
                                     <i class="glyphicon glyphicon-calendar"></i>
@@ -28,8 +28,9 @@
                         <label class="sr-only" for="otherDescription">Description</label>
                         <div class="input-group">
                             <div class="input-group-addon">Description:</div>
-                            <input ng-model="otherValues.description" id="otherDescription" class="form-control"
-                                   placeholder="Description" />
+                            <input ng-model="otherValues.description" ng-change="updateDescription()" id="otherDescription"
+                                class="form-control"
+                                placeholder="Description" />
                         </div>
                     </div>
                 </div>
@@ -42,7 +43,8 @@
                                 <label class="sr-only" for="otherAmount">Amount</label>
                                 <div class="input-group">
                                     <div class="input-group-addon">$</div>
-                                    <input ng-model="otherValues.amount" class="form-control" id="otherAmount" placeholder="0.00" />
+                                    <input ng-model="otherValues.amount" ng-change="updateAmount()" class="form-control"
+                                        id="otherAmount" placeholder="0.00" />
                                 </div>
                             </div>
                         </div>
@@ -52,7 +54,8 @@
         </div>
         <div class="checkbox">
             <label>
-                <input ng-model="otherValues.billable" id="otherBillable" type="checkbox">Billable
+                <input ng-model="otherValues.billable" id="otherBillable" ng-click="updateBillable()"
+                    type="checkbox">Billable
             </label>
         </div>
     </form>

@@ -7,7 +7,7 @@
  * # MainCtrl
  * Controller of the expenseApp
  */
-angular.module( 'expenseApp' )
+angular.module( 'expenseApp.Controllers' )
   .controller( 'PerDiemCtrl', function ( $scope, LineItemService, DateService, ValidationService ) {
 
       //default validation for fields
@@ -19,7 +19,7 @@ angular.module( 'expenseApp' )
           validInput: true
       };
 
-      $scope.perDiemValues = {          
+      $scope.perDiemValues = {
           daysString: {
               sunday: LineItemService.getDaysString().sunday.toString(),
               monday: LineItemService.getDaysString().monday.toString(),
@@ -48,50 +48,21 @@ angular.module( 'expenseApp' )
               if ( $scope.perDiemValues.days.hasOwnProperty( key ) ) {
                   $scope.perDiemValues.amount += $scope.perDiemValues.days[key] ? perDiem : 0;
               }
-          }
+          };
+          LineItemService.setLineItemAmount( $scope.perDiemValues.amount );
       };
 
-      /**
-       * Watch the form and updates the Form service values based on the values in the per diem form.
-       *
-       */
-      $scope.$watch(
-          'perDiemValues',
-          function ( newValue, oldValue ) {
-              if ( newValue !== oldValue ) {
-                  LineItemService.setDays($scope.perDiemValues.days);
-                  console.log(LineItemService.getDays());
-                  LineItemService.setLineItemAmount( $scope.perDiemValues.amount );
-                  LineItemService.setBillable($scope.perDiemValues.billable);
-                  LineItemService.setLineItemDate(LineItemService.getEndingWeek());
-                  $scope.perDiemArray[0] = $scope.perDiemValues;
-                  $scope.perDiemValidation = ValidationService.validatePerDiem( LineItemService.getLineItem() );
-                  $scope.perDiemArray[0].valid = $scope.perDiemValidation.validInput;
-              }
-          },
-          true
-      );
+      $scope.updateDays = function () {
+          LineItemService.setDays( $scope.perDiemValues.days );
+          $scope.perDiemArray[0] = $scope.perDiemValues;
+          $scope.perDiemValidation = ValidationService.validatePerDiem( LineItemService.getLineItem() );
+          $scope.perDiemArray[0].valid = $scope.perDiemValidation.validInput;
+      };
 
-      /*$scope.$parent.$watch(
-          'selectedType',
-          function ( newVal, oldVal ) {
-              $scope.perDiemValues = {
-                  daysString: {
-                      sunday: LineItemService.getDaysString().sunday.toString(),
-                      monday: LineItemService.getDaysString().monday.toString(),
-                      tuesday: LineItemService.getDaysString().tuesday.toString(),
-                      wednesday: LineItemService.getDaysString().wednesday.toString(),
-                      thursday: LineItemService.getDaysString().thursday.toString(),
-                      friday: LineItemService.getDaysString().friday.toString(),
-                      saturday: LineItemService.getDaysString().saturday.toString()
-                  },
-                  days: LineItemService.getDays(),
-                  billable: LineItemService.getBillable(),
-                  total: LineItemService.getLineItemAmount()
-
-              };
-          },
-          true
-          );*/
-
+      $scope.updateBillable = function () {
+          LineItemService.setBillable( $scope.perDiemValues.billable );
+          $scope.perDiemArray[0] = $scope.perDiemValues;
+          $scope.perDiemValidation = ValidationService.validatePerDiem( LineItemService.getLineItem() );
+          $scope.perDiemArray[0].valid = $scope.perDiemValidation.validInput;
+      };
   } );

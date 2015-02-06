@@ -10,7 +10,7 @@
  * # FormDetailsCtrl
  * Controller of the expenseApp
  */
-angular.module( 'expenseApp' )
+angular.module( 'expenseApp.Controllers' )
   .controller( 'FormDetailsCtrl', function ( $scope, $modalInstance, $modal, $rootScope, LineItemService, ValidationService, Application, ReceiptService ) {
 
       $scope.divShow = false;

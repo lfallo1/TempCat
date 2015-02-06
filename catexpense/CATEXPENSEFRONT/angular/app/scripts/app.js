@@ -14,7 +14,7 @@ angular.module( 'expenseApp.Services', [] );
 
 //this module will store all of the controllers
 //currently not used
-//angular.module( 'expenseApp.Controllers', [] );
+angular.module( 'expenseApp.Controllers', [] );
 
 //this is the main module
 angular
@@ -26,7 +26,8 @@ angular
     'ngSanitize',
     'ngTouch',
 	'ui.bootstrap',
-    'expenseApp.Services'
+    'expenseApp.Services',
+    'expenseApp.Controllers'
   ] )
   .config( function ( $routeProvider ) {
       $routeProvider

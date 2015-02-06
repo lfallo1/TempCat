@@ -1,6 +1,6 @@
 ﻿'use strict';
 
-angular.module('expenseApp')
+angular.module( 'expenseApp.Controllers' )
   .controller( 'ManagerTableController', function ( $scope, $location, $modal, $route, $rootScope, $filter, Application, SubmissionService, MessageService, Authentication, ReceiptService ) {
       $scope.isManager = Authentication.getIsManager();
 
