@@ -1,110 +1,100 @@
 ﻿'use strict';
 
-angular.module( 'expenseApp' )
-  .controller( 'receiptController', function ( $scope, $modalInstance, ReceiptService, $http, $rootScope, MessageService, $modal, Application, $route, LineItemService ) {
+angular.module('expenseApp')
+  .controller('receiptController', function ($scope, $modalInstance, ReceiptService, $rootScope, MessageService, $modal, Application, $route, LineItemService) {
       var allReceipts = false;
       $scope.canDelete = true;
-      if ( ReceiptService.getShowAllReceipts() ) {
+      if (ReceiptService.getShowAllReceipts()) {
           allReceipts = true;
       }
       $scope.userReceipts = ReceiptService.getReceipts();
-      if ( Application.getOrigin() == "ManagerTable" || Application.getOrigin() == "FinanceTable" ) {
+      if (Application.getOrigin() == "ManagerTable" || Application.getOrigin() == "FinanceTable") {
           $scope.canDelete = false;
       }
       //if ($scope.userReceipts[0].)
 
       $scope.createNewReceipt = ReceiptService.getAddReceipt();
       $scope.hover = false;
-      $scope.downloadFile = function ( receiptId ) {
-          ReceiptService.getReceiptById( receiptId );
+      $scope.downloadFile = function (receiptId) {
+          ReceiptService.getReceiptById(receiptId);
       }
       var receiptId = 0;
       var receiptIndexId = 0;
-      $scope.deleteReceipt = function ( receipt, index ) {
+      $scope.deleteReceipt = function (receipt, index) {
           receiptId = receipt;
           receiptIndexId = index;
-          MessageService.setMessage( "Are you sure you want to delete this receipt?" );
-          MessageService.setBroadCastMessage( "confirmDeleteReceipt" );
-          var modalInstance = $modal.open( {
+          MessageService.setMessage("Are you sure you want to delete this receipt?");
+          MessageService.setBroadCastMessage("confirmDeleteReceipt");
+          var modalInstance = $modal.open({
               templateUrl: 'Views/HotTowel/views/modals/confirmModal.html',
               controller: 'confirmModalController'
-          } );
+          });
       }
-      $scope.$on( "confirmDeleteReceipt", function () {
-          MessageService.setMessage( "" );
-          MessageService.setBroadCastMessage( "" );
-          var lineItems = ReceiptService.getReceipts().LineItems;
-          var indexId = Application.getLineItemIndex();
-          ReceiptService.deleteReceipt( receiptId, $scope.userReceipts[receiptIndexId].LineItemId ).then(
-            function ( success ) {
+
+      $scope.$on("confirmDeleteReceipt", function () {
+          MessageService.setMessage("");
+          MessageService.setBroadCastMessage("");
+          ReceiptService.deleteReceipt(receiptId, $scope.userReceipts[receiptIndexId].LineItemId).then(
+            function (success) {
                 var submissions = Application.getAllUserSubmissions();
-                $http( {
-                    method: "GET",
-                    url: "/api/LineItem/GetLineItemsBySubmissionId",
-                    params: { id: Application.getSubmission().SubmissionId }
-                } ).then( function ( LineItems ) {
-                    $scope.userReceipts.splice( receiptIndexId, 1 );
+                LineItemService.getLineItemsBySubmissionId(Application.getSubmission().SubmissionId).then(function (LineItems) {
+                    $scope.userReceipts.splice(receiptIndexId, 1);
                     var lineItems = LineItems.data;
                     submissions[Application.getSubmissionIndex()].LineItems = lineItems;
-                    ReceiptService.setReceipts( $scope.userReceipts );
+                    ReceiptService.setReceipts($scope.userReceipts);
                     var receipts = [];
                     //get all receipts in that submission
-                    for ( var i = 0; i < lineItems.length; i++ ) {
-                        if ( lineItems[i].Receipts.length > 0 ) {
-                            for ( var b = 0; b < lineItems[i].Receipts.length; b++ ) {
-                                receipts.push( lineItems[i].Receipts[b] );
+                    for (var i = 0; i < lineItems.length; i++) {
+                        if (lineItems[i].Receipts.length > 0) {
+                            for (var b = 0; b < lineItems[i].Receipts.length; b++) {
+                                receipts.push(lineItems[i].Receipts[b]);
                             }
                         }
                     }
-                    ReceiptService.setAllReceipts( receipts );
+                    ReceiptService.setAllReceipts(receipts);
                     submissions[Application.getSubmissionIndex()].allSubmissionReceipts = receipts;
-                    if ( receipts.length == 0 ) {
+                    if (receipts.length == 0) {
                         submissions[Application.getSubmissionIndex()].ReceiptPresent = false;
                     }
-                    if ( $scope.userReceipts.length == 0 ) {
-                        $modalInstance.dismiss( "dismiss receipt modal" );
+                    if ($scope.userReceipts.length == 0) {
+                        $modalInstance.dismiss("dismiss receipt modal");
                     }
-                    Application.setAllUserSubmissions( submissions )
-                    $route.reload();
-                } );
+                    Application.setAllUserSubmissions(submissions);
+                });
 
 
-            }, function ( fail ) {
+            }, function (fail) {
                 //console.log(fail);
-            } );
-      } );
+            });
+      });
       /**
       * Disables the submit button based on info.
       */
       $scope.checkFile = function () {
-          $( '#upload' ).prop( 'disabled', !"" === $( 'input:file' ).val() );
+          $('#upload').prop('disabled', !"" === $('input:file').val());
           $scope.divShow = false;
       };
 
       $scope.upload = function () {
           $scope.noReceipt = false;
-          if ( $scope.image ) {
+          if ($scope.image) {
               var datauri = $scope.image.dataURL + "";
-              var base64 = datauri.substring( datauri.indexOf( ',' ) + 1 );
+              var base64 = datauri.substring(datauri.indexOf(',') + 1);
               var receipt = {
                   "LineItemId": LineItemService.getLineItemId(),
                   "Base64String": base64,
                   "Name": $scope.image.file.name,
                   "Type": $scope.image.file.type
               };
-              ReceiptService.submitReceipt( receipt ).then( function ( receipt ) {
-                  $( '#upload' ).prop( 'disabled', true );
+              ReceiptService.submitReceipt(receipt).then(function (receipt) {
+                  $('#upload').prop('disabled', true);
                   $scope.divShow = true;
-                  $rootScope.$broadcast( "addNewReceipt", receipt.data );
+                  $rootScope.$broadcast("addNewReceipt", receipt.data);
                   $scope.image = undefined;
-              } );
+              });
           } else {
-              $( '#upload' ).prop( 'disabled', true );
+              $('#upload').prop('disabled', true);
               $scope.noReceipt = true;
           }
       }
-
-      $scope.$on( "refreshReceipts", function () {
-          $route.reload();
-      } );
-  } );
+  });

@@ -11,13 +11,11 @@
                     <small style="font-weight: lighter" class="bg-warning">Awaiting Approval: {{managerTotal}}</small></h4>
             </div>
         </div>
-        <table class="panel-body table table-hover table-striped table-condensed" ng-if="managerTotal != 0" ng-if="expanded">
+        <table class="panel-body table table-hover table-striped table-condensed" ng-if="expanded">
             <thead>
                 <tr>
                     <th></th>
                     <th></th>
-                    <th><a href="" id="manSubmitted" ng-click="managerOrder('DateCreated')">Submitted</a>
-                    </th>
                     <th><a href="" id="manSubmittedBy" ng-click="managerOrder('ActiveDirectoryUser')">Submitted
                         By</a></th>
                     <th><a href="" id="manWeekEnding" ng-click="managerOrder('WeekEndingDate')">Week Ending</a>
@@ -43,7 +41,6 @@
                                 data-toggle="tooltip" data-placement="left" title="Delete Submission"></span>
                         </div>
                     </td>
-                    <td>{{submission.DateCreated | date:'yyyy/MM/dd'}}</td>
                     <td>{{submission.ActiveDirectoryUser}}</td>
                     <td>{{submission.WeekEndingDate | date:'yyyy/MM/dd'}}</td>
                     <td>{{submission.RepliconProject.RepliconProjectName}}</td>

@@ -9,8 +9,8 @@
             <table class="panel-body table table-condensed table-hover">
                 <thead>
                     <tr>
-                        <th ng-show="createNewItemLoad"></th>
-                        <th ng-show="createNewItemLoad"></th>
+                        <th ng-if="createNewItemLoad"></th>
+                        <th ng-if="createNewItemLoad"></th>
                         <th>
                             <a href="" id="subExpenseDate" ng-click="submissionOrder('LineItemDate')">
                                 Expense
@@ -35,12 +35,12 @@
                 </thead>
                 <tbody ng-repeat="expense in currentSubmission.LineItems">
                     <tr>
-                        <td ng-show="createNewItemLoad">
+                        <td ng-if="createNewItemLoad">
                             <span style="cursor: pointer" class="glyphicon glyphicon-edit" ng-click="editExpenseLine(expense, $index)"
                                   data-toggle="tooltip" data-placement="left" title="Edit Report"></span>
 
                         </td>
-                        <td ng-show="createNewItemLoad">
+                        <td ng-if="createNewItemLoad">
                             <span style="cursor: pointer" class="glyphicon glyphicon-trash" ng-click="confirmLineRemove(expense, $index)"
                                   data-toggle="tooltip" data-placement="left" title="Delete Report"></span>
                         </td>
@@ -59,22 +59,22 @@
                 </tbody>
             </table>
             <div>
-                <button ng-show="submittedNotApproved" class="btn btn-warning pull-right" ng-click="unSubmit()">
+                <button ng-if="submittedNotApproved" class="btn btn-warning pull-right" ng-click="unSubmit()">
                     <i class="glyphicon icon-undo-white"></i>
                     <span>Undo Submission</span>
                 </button>
-                <button id="saveTableButton" ng-disabled="currentSubmission.LineItems.length == 0" ng-show="submissionLoad && createNewItemLoad || createNewItemLoad"
+                <button id="saveTableButton" ng-disabled="currentSubmission.LineItems.length == 0" ng-if="submissionLoad && createNewItemLoad || createNewItemLoad"
                         class="btn btn-primary pull-right" ng-click="saveTable()">
                     <i class="glyphicon glyphicon-save"></i>
                     <span>Save Table</span>
                 </button>
-                <button id="submitTableButton" ng-disabled="currentSubmission.LineItems.length == 0" ng-show="submissionLoad && createNewItemLoad || createNewItemLoad"
+                <button id="submitTableButton" ng-disabled="currentSubmission.LineItems.length == 0" ng-if="submissionLoad && createNewItemLoad || createNewItemLoad"
                         class="btn btn-success pull-right" ng-click="submitTable()">
                     <i class="glyphicon glyphicon-ok"></i>
                     <span>Submit Table</span>
                 </button>
             </div>
-            <div ng-show="isApprover">
+            <div ng-if="isApprover">
                 <button class="btn btn-danger pull-right" ng-click="reject()">
                     <i class="glyphicon glyphicon-thumbs-down"></i>
                     <span>Reject</span>
@@ -93,12 +93,12 @@
                         <tbody ng-repeat="expenseComments in currentSubmission.LineItemComments">
                             <tr>
                                 <td>
-                                    <span ng-show="{{expenseComments.commentIsMine}}" style="cursor: pointer" class="glyphicon glyphicon-edit"
+                                    <span ng-if="expenseComments.commentIsMine" style="cursor: pointer" class="glyphicon glyphicon-edit"
                                           ng-click="editComment($index)"
                                           data-toggle="tooltip" data-placement="left" title="Edit Comment"></span>
                                 </td>
                                 <td>
-                                    <span ng-show="{{expenseComments.commentIsMine}}" style="cursor: pointer" class="glyphicon glyphicon-trash"
+                                    <span ng-if="expenseComments.commentIsMine" style="cursor: pointer" class="glyphicon glyphicon-trash"
                                           ng-click="deleteComment($index)"
                                           data-toggle="tooltip" data-placement="left" title="Delete Comment"></span>
                                 </td>

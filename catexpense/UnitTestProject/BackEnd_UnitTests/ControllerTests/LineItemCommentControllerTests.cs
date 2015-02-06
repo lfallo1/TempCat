@@ -17,20 +17,20 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
     [TestFixture]
     public class LineItemCommentControllerTests
     {
-        private Mock<ILineItemCommentService> mockService = new Mock<ILineItemCommentService>();
+        private Mock<ICommentService> mockService = new Mock<ICommentService>();
         private Mock<IRepliconUserService> mockUserService = new Mock<IRepliconUserService>();
-        private LineItemCommentController controller;
+        private CommentController controller;
 
         private string comment = "im a comment";
-        private LineItemComment comment1;
-        private LineItemComment comment2;
-        private LineItemComment comment3;
-        private List<LineItemComment> comments;
+        private Comment comment1;
+        private Comment comment2;
+        private Comment comment3;
+        private List<Comment> comments;
 
         [TestFixtureSetUp]
         public void LineItemCommentControllerTestsSetUp()
         {
-            controller = new LineItemCommentController(mockService.Object, mockUserService.Object);
+            controller = new CommentController(mockService.Object, mockUserService.Object);
             controller.Request = new HttpRequestMessage()
             {
                 RequestUri = new Uri("http://localhost/api/lineitemcomment"),
@@ -45,19 +45,19 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
                 route: new HttpRoute(),
                 values: new HttpRouteValueDictionary { { "controller", "lineitemcomment" } });
 
-            comment1 = new LineItemComment();
+            comment1 = new Comment();
             comment1.SubmissionId = 1;
-            comment1.LineItemCommentId = 1;
+            comment1.CommentId = 1;
 
-            comment2 = new LineItemComment();
+            comment2 = new Comment();
             comment2.SubmissionId = 1;
-            comment2.LineItemCommentId = 2;
+            comment2.CommentId = 2;
 
-            comment3 = new LineItemComment();
+            comment3 = new Comment();
             comment3.SubmissionId = 2;
-            comment3.LineItemCommentId = 3;
+            comment3.CommentId = 3;
 
-            comments = new List<LineItemComment>
+            comments = new List<Comment>
             {
                 comment1,
                 comment2,
@@ -81,11 +81,11 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
         public void EmptyLineItemCommentControllerConstructorTest()
         {
             // Arrange
-            var emptyController = new LineItemCommentController();
+            var emptyController = new CommentController();
 
             // Assert
             Assert.IsNotNull(emptyController);
-            Assert.AreEqual(typeof(LineItemCommentController), emptyController.GetType());
+            Assert.AreEqual(typeof(CommentController), emptyController.GetType());
         }
 
        
@@ -97,22 +97,22 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             mockService.Setup(s => s.Find(It.IsAny<int>())).Returns(comment1);
 
             // Act
-            var response = controller.GetLineItemComment(1);
+            var response = controller.GetCommentById(1);
 
             // Assert
             Assert.IsNotNull(response);
-            Assert.AreEqual(typeof(OkNegotiatedContentResult<LineItemComment>), response.GetType());
+            Assert.AreEqual(typeof(OkNegotiatedContentResult<Comment>), response.GetType());
         }
 
         [Test]
         public void FailGetLineItemCommentTest()
         {
             // Arrange
-            LineItemComment nullComment = null;
+            Comment nullComment = null;
             mockService.Setup(s => s.Find(It.IsAny<int>())).Returns(nullComment);
 
             // Act
-            var response = controller.GetLineItemComment(1);
+            var response = controller.GetCommentById(1);
 
             // Assert
             Assert.IsNotNull(response);
@@ -126,23 +126,23 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             mockService.Setup(s => s.All()).Returns(comments);
 
             // Act
-            var response = controller.GetLineItemsByLineItemId(1);
+            var response = controller.GetCommentsBySubmissionId(1);
 
             // Assert
             Assert.IsNotNull(response);
-            Assert.AreEqual(2, (response as ICollection<LineItemComment>).Count);
-            Assert.IsTrue((response as ICollection<LineItemComment>).Contains(comment1));
-            Assert.IsTrue((response as ICollection<LineItemComment>).Contains(comment2));
-            Assert.IsFalse((response as ICollection<LineItemComment>).Contains(comment3));
+            Assert.AreEqual(2, (response as ICollection<Comment>).Count);
+            Assert.IsTrue((response as ICollection<Comment>).Contains(comment1));
+            Assert.IsTrue((response as ICollection<Comment>).Contains(comment2));
+            Assert.IsFalse((response as ICollection<Comment>).Contains(comment3));
         }
 
         [Test]
-        public void PutLineItemCommentTest()
+        public void PutCommentTest()
         {
             // Arrange
             mockService.Setup(s => s.Update(comment1)).Returns(0);
             // Act
-            var response = controller.PutLineItemComment(1, comment);
+            var response = controller.PutComment(1, comment);
 
             // Assert
             Assert.IsNotNull(response);
@@ -150,10 +150,10 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
         }
 
         [Test]
-        public void FailPutLineItemCommentTest()
+        public void FailPutCommentTest()
         {
             // Act
-            var response = controller.PutLineItemComment(3, comment);
+            var response = controller.PutComment(3, comment);
 
             // Assert
             Assert.IsNotNull(response);
@@ -161,13 +161,13 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
         }
 
         [Test]
-        public void ModelStateErrorPutLineItemCommentTest()
+        public void ModelStateErrorPutCommentTest()
         {
             // Arrange
             controller.ModelState.AddModelError("test", "test");
 
             // Act
-            var response = controller.PutLineItemComment(1, comment);
+            var response = controller.PutComment(1, comment);
 
             // Assert
             Assert.IsNotNull(response);
@@ -181,7 +181,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             controller.ModelState.AddModelError("test", "test");
 
             // Act
-            var response = controller.CreateLineItemComment(1, comment);
+            var response = controller.CreateComment(1, comment);
 
             // Assert
             Assert.IsNotNull(response);
@@ -191,24 +191,24 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
         public void PostTest()
         {
             // Arrange
-            mockService.Setup(s => s.Create(It.IsAny<LineItemComment>())).Returns(comment1);
+            mockService.Setup(s => s.Create(It.IsAny<Comment>())).Returns(comment1);
 
             // Act
-            var response = controller.CreateLineItemComment(1, comment);
+            var response = controller.CreateComment(1, comment);
 
             // Assert
             Assert.IsNotNull(response);
         }
 
         [Test]
-        public void DeleteLineItemCommentTest()
+        public void DeleteCommentTest()
         {
             // Arrange
             mockService.Setup(s => s.Find(1)).Returns(comment1);
             mockService.Setup(s => s.Delete(comment1)).Returns(0);
 
             // Act
-            var response = controller.DeleteLineItemComment(1);
+            var response = controller.DeleteComment(1);
 
             // Assert
             Assert.IsNotNull(response);
@@ -216,14 +216,14 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
         }
 
         [Test]
-        public void FailDeleteLineItemCommentTest()
+        public void FailDeleteCommentTest()
         {
             // Arrange
-            LineItemComment nullComment = null;
+            Comment nullComment = null;
             mockService.Setup(s => s.Find(It.IsAny<int>())).Returns(nullComment);
 
             // Act
-            var response = controller.DeleteLineItemComment(17);
+            var response = controller.DeleteComment(17);
 
             // Assert
             Assert.IsNotNull(response);

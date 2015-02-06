@@ -27,6 +27,7 @@ namespace CatExpenseFront.Controllers
     {
         private IReceiptService service;
         private ILineItemService lineItemService;
+        private ISubmissionService submissionService;
 
         /// <summary>
         /// Default Construcor
@@ -35,6 +36,7 @@ namespace CatExpenseFront.Controllers
         {
             service = new ReceiptService();
             lineItemService = new LineItemService();
+            submissionService = new SubmissionService();
         }
 
         /// <summary>
@@ -42,7 +44,7 @@ namespace CatExpenseFront.Controllers
         /// </summary>
         /// <param name="iService"></param>
         /// <param name="ilineItemService"></param>
-        public ReceiptController(IReceiptService iService, ILineItemService ilineItemService)
+        public ReceiptController(IReceiptService iService, ILineItemService ilineItemService, ISubmissionService iSubmissionService)
         {
             if (service == null)
             {
@@ -52,6 +54,7 @@ namespace CatExpenseFront.Controllers
             {
                 lineItemService = ilineItemService;
             }
+            submissionService = iSubmissionService;
         }
 
 
@@ -196,16 +199,22 @@ namespace CatExpenseFront.Controllers
 
             Receipt receipt = service.Find(id);
             LineItem lineItem = lineItemService.Find(lineItemId);
+            Submission submission = submissionService.Find(lineItem.SubmissionId);
+            string currentUser = (null == HttpContext.Current.Session["UserName"]
+                                                          ? ""
+                                                          : HttpContext.Current.Session["UserName"].ToString().ToUpper());
             if (null != receipt)
             {
-                service.Delete(receipt);
-                service.SaveChanges();
-                if (lineItem.Receipts.Count == 0)
+                if (submission.ActiveDirectoryUser.ToUpper() == currentUser)
                 {
-                    lineItem.ReceiptPresent = false;
-                    lineItemService.SaveChanges();
+                    service.Delete(receipt);
+                    service.SaveChanges();
+                    if (lineItem.Receipts.Count == 0)
+                    {
+                        lineItem.ReceiptPresent = false;
+                        lineItemService.SaveChanges();
+                    }
                 }
-
             }
 
             return Request.CreateResponse(HttpStatusCode.OK, receipt);

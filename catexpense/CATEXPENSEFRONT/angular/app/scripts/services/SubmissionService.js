@@ -100,41 +100,4 @@ angular.module( 'expenseApp.Services' )
           } );
       };
 
-
-
-
-
-
-
-
-      //=====================================================================//
-      //
-      //  THESE METHODS DO NOT BELONG HERE. PLEASE MOVE THEM TO THEIR APPROPRIATE SERVICE FOR MY SANITY'S SAKE.
-      //
-      //=====================================================================//
-
-
-      self.PutLineItemComment = function ( id, comment ) {
-          return $http( {
-              url: '/api/LineItem/PutLineItemComment',
-              method: 'PUT',
-              params: { id: id, comment: comment }
-          } );
-      };
-
-      self.DeleteLineItemComment = function ( id ) {
-          return $http( {
-              url: '/api/LineItem/DeleteLineItemComment',
-              method: 'DELETE',
-              params: { "id": id }
-          } );
-      };
-
-      self.CreateLineItemComment = function ( id, comment ) {
-          return $http( {
-              url: '/api/LineItem/CreateLineItemComment',
-              method: 'POST',
-              params: { submissionId: id, comment: comment }
-          } );
-      };
   } );

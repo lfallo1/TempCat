@@ -17,17 +17,18 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
     public class LineItemControllerTests
     {
         private Mock<ILineItemService> mockService = new Mock<ILineItemService>();
+        private Mock<ISubmissionService> mockSubmissionService = new Mock<ISubmissionService>();
         private LineItemController controller;
         private LineItem lineItem1;
         private LineItem lineItem2;
         private LineItem lineItem3;
         private List<LineItem> lineItems;
- 
+
         [TestFixtureSetUp]
         public void LineItemControllerTestsSetUp()
         {
             // Arrange
-            controller = new LineItemController(mockService.Object);
+            controller = new LineItemController(mockService.Object, mockSubmissionService.Object);
             controller.Request = new HttpRequestMessage()
             {
                 RequestUri = new Uri("http://localhost/api/lineitem"),
@@ -90,7 +91,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             Assert.AreEqual(typeof(LineItemController), emptyController.GetType());
         }
 
-        
+
 
         [Test]
         public void GetLineItemTest()
