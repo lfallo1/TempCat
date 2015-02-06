@@ -80,6 +80,8 @@ angular.module('expenseApp')
           if ($scope.selectedClient !== null && ($scope.dt1 instanceof Date && !isNaN($scope.dt1.valueOf()))) {
               //gets the submission that matches the date and client
               $scope.submission = $scope.findSpecificSubmission();
+              $scope.currentDescription = "";
+              $scope.createNewItemLoad = false;
               $rootScope.$broadcast("submissionFound", $scope.submission);
               Application.setAllUserSubmissions($scope.totalSubmissions);
               if ($scope.submission) {
