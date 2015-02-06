@@ -1,7 +1,7 @@
 ﻿'use strict';
 
 angular.module('expenseApp')
-  .controller('confirmModalController', function ($scope, $modalInstance, $http, MessageService, $rootScope) {
+  .controller('confirmModalController', function ($scope, $modalInstance, MessageService, $rootScope) {
       $scope.message = MessageService.getMessage();
       $scope.addComment = MessageService.getAddComment();
       if (!$scope.addComment) {

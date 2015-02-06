@@ -1,10 +1,10 @@
 ﻿'use strict';
 
 angular.module('expenseApp')
-  .controller( 'receiptController', function ( $scope, $modalInstance, ReceiptService, $http, $rootScope, MessageService, $modal, Application, $route, LineItemService ) {
+  .controller('receiptController', function ($scope, $modalInstance, ReceiptService, $rootScope, MessageService, $modal, Application, $route, LineItemService) {
       var allReceipts = false;
       $scope.canDelete = true;
-      if ( ReceiptService.getShowAllReceipts() ) {
+      if (ReceiptService.getShowAllReceipts()) {
           allReceipts = true;
       }
       $scope.userReceipts = ReceiptService.getReceipts();
@@ -16,11 +16,7 @@ angular.module('expenseApp')
       $scope.createNewReceipt = ReceiptService.getAddReceipt();
       $scope.hover = false;
       $scope.downloadFile = function (receiptId) {
-          $http({
-              method: "GET",
-              url: "/api/Receipts",
-              params: { id: receiptId }
-          });
+          ReceiptService.getReceiptById(receiptId);
       }
       var receiptId = 0;
       var receiptIndexId = 0;
@@ -34,25 +30,18 @@ angular.module('expenseApp')
               controller: 'confirmModalController'
           });
       }
+
       $scope.$on("confirmDeleteReceipt", function () {
           MessageService.setMessage("");
           MessageService.setBroadCastMessage("");
-          $http({
-              method: "DELETE",
-              url: "/api/Receipts/",
-              params: { id: receiptId, lineItemId: $scope.userReceipts[receiptIndexId].LineItemId }
-          }).then(
+          ReceiptService.deleteReceipt(receiptId, $scope.userReceipts[receiptIndexId].LineItemId).then(
             function (success) {
                 var submissions = Application.getAllUserSubmissions();
-                $http({
-                    method: "GET",
-                    url: "/api/LineItem/GetLineItemsBySubmissionId",
-                    params: { id: Application.getSubmission().SubmissionId }
-                }).then(function (LineItems) {
+                LineItemService.getLineItemsBySubmissionId(Application.getSubmission().SubmissionId).then(function (LineItems) {
                     $scope.userReceipts.splice(receiptIndexId, 1);
                     var lineItems = LineItems.data;
                     submissions[Application.getSubmissionIndex()].LineItems = lineItems;
-                    ReceiptService.setReceipts( $scope.userReceipts );
+                    ReceiptService.setReceipts($scope.userReceipts);
                     var receipts = [];
                     //get all receipts in that submission
                     for (var i = 0; i < lineItems.length; i++) {
@@ -62,7 +51,7 @@ angular.module('expenseApp')
                             }
                         }
                     }
-                    ReceiptService.setAllReceipts( receipts );
+                    ReceiptService.setAllReceipts(receipts);
                     submissions[Application.getSubmissionIndex()].allSubmissionReceipts = receipts;
                     if (receipts.length == 0) {
                         submissions[Application.getSubmissionIndex()].ReceiptPresent = false;
@@ -97,11 +86,7 @@ angular.module('expenseApp')
                   "Name": $scope.image.file.name,
                   "Type": $scope.image.file.type
               };
-              $http({
-                  url: '/api/Receipts',
-                  method: 'POST',
-                  data: receipt
-              }).then(function (receipt) {
+              ReceiptService.submitReceipt(receipt).then(function (receipt) {
                   $('#upload').prop('disabled', true);
                   $scope.divShow = true;
                   $rootScope.$broadcast("addNewReceipt", receipt.data);

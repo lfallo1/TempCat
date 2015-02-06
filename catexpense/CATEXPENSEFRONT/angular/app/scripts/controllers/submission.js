@@ -31,8 +31,10 @@ angular.module('expenseApp')
       //Also, if true, the submission table will be visible
       $scope.submissionExists = false;
 
-      //used for html validation,
-      //displaying or hiding elements
+      /**
+      * used for html validation,
+      * displaying or hiding elements
+      */
       $scope.se = function () {
           return $scope.submissionExists;
       };
@@ -41,9 +43,11 @@ angular.module('expenseApp')
           $rootScope.$broadcast("editCommentFromSubmission", index);
       }
 
-      //initializes html button validation depending on whether 
-      //or not there are line items present in the submission
-      //which the user is currently working with
+      /**
+      * initializes html button validation depending on whether 
+      * or not there are line items present in the submission
+      * which the user is currently working with
+      */
       function setDisabledButtons() {
           if (Application.getSubmission() !== undefined) {
               $scope.missingLineItems = Application.getSubmission().LineItems.length < 1;
@@ -51,7 +55,9 @@ angular.module('expenseApp')
       }
       setDisabledButtons();
 
-      //this function is used by clientAndDate below
+      /**
+      * this function is used by clientAndDate below
+      */
       $scope.findSpecificSubmission = function () {
 
           var submission = false;
@@ -72,9 +78,11 @@ angular.module('expenseApp')
       };
 
 
-      //this variable is used in front end validation,
-      //determining the current state of the application
-      //and displaying or hiding elements accordingly
+      /**
+      * this variable is used in front end validation,
+      * determining the current state of the application
+      * and displaying or hiding elements accordingly
+      */
       $scope.clientAndDate = function () {
 
           if ($scope.selectedClient !== null && ($scope.dt1 instanceof Date && !isNaN($scope.dt1.valueOf()))) {
@@ -98,8 +106,10 @@ angular.module('expenseApp')
 
       };
 
-      //Get the list of all submissions made by that user
-      //this function is called on page load
+      /**
+      * Get the list of all submissions made by that user
+      * this function is called on page load
+      */
       $scope.getSubmissionList = function () {
           if (Application.getAllUserSubmissions() != undefined) {
               $scope.totalSubmissions = Application.getAllUserSubmissions();
@@ -135,7 +145,9 @@ angular.module('expenseApp')
 
       $scope.getSubmissionList();
 
-      //set initial values of scope variables upon page load
+      /**
+      * set initial values of scope variables upon page load
+      */
       if (Application.getRepliconProjects() != undefined) {
           $scope.clients = Application.getRepliconProjects();
           $scope.selectedClient = $scope.clients[0];
@@ -176,7 +188,9 @@ angular.module('expenseApp')
               });
       }
 
-      // opens the modal so the user can create a new submission
+      /**
+      * opens the modal so the user can create a new submission
+      */
       $scope.createNewSubmission = function () {
 
           $scope.disableCreate = true;
@@ -221,8 +235,10 @@ angular.module('expenseApp')
           );
       };
 
-      // if user selects to delete the submission they are currently viewing or editing,
-      // display the confirmation modal asking if they are certain they want to delete it
+      /**
+      * if user selects to delete the submission they are currently viewing or editing,
+      * display the confirmation modal asking if they are certain they want to delete it
+      */
       $scope.deleteSubmission = function () {
           MessageService.setMessage("Are you sure you want to delete this submission?");
           MessageService.setBroadCastMessage("confirmDeleteSubmissionUnderEdit");
@@ -238,8 +254,10 @@ angular.module('expenseApp')
           });
       };
 
-      // this will recieve the broadcast message if user confirms their desire
-      // to delete the current submission and remove it from the db
+      /**
+      * this will recieve the broadcast message if user confirms their desire
+      * to delete the current submission and remove it from the db
+      */
       $scope.$on("confirmDeleteSubmissionUnderEdit", function () {
           MessageService.setMessage("");
           MessageService.setBroadCastMessage("");
@@ -249,8 +267,10 @@ angular.module('expenseApp')
 
       });
 
-      //prepares LineItemService to create a new line item
-      //then opens the LineItem modal
+      /**
+      * prepares LineItemService to create a new line item
+      * then opens the LineItem modal
+      */
       $scope.addNewLineItem = function () {
           LineItemService.resetLineItem();
           LineItemService.setUnderEdit(false);
@@ -272,7 +292,9 @@ angular.module('expenseApp')
           $scope.openModal();
       };
 
-      // edit the selected expense line
+      /**
+      * edit the selected expense line
+      */
       $scope.editExpenseLine = function (lineItem, index) {
           Application.setLineItemIndex(index);
           LineItemService.resetLineItem();
@@ -292,9 +314,11 @@ angular.module('expenseApp')
       $scope.openDetailsView = function () {
       };
 
-      //internal function used by the editExpenseLine function above
-      //to parse the MetaData string stored in a line item for display 
-      //on the modal when editing the line item
+      /**
+      * internal function used by the editExpenseLine function above
+      * to parse the MetaData string stored in a line item for display 
+      * on the modal when editing the line item
+      */
       function parseMetaData(string) {
           var days = {
               sunday: {},
@@ -336,8 +360,10 @@ angular.module('expenseApp')
           LineItemService.setDays(days);
       }
 
-      //opens receiptModal.html to show all the receipts for all the line items 
-      //in a particular submission
+      /**
+      * opens receiptModal.html to show all the receipts for all the line items 
+      * in a particular submission
+      */
       $scope.showAllReceipts = function () {
           ReceiptService.setReceipts( ReceiptService.getAllReceipts() );
           ReceiptService.setShowAllReceipts( true );
@@ -370,13 +396,17 @@ angular.module('expenseApp')
           $scope.receiptsAmount = ReceiptService.getAllReceipts().length;
       });
 
-      // populate the manager in the view for the client selected from the dropdown
+      /**
+      * populate the manager in the view for the client selected from the dropdown
+      */
       $scope.getManager = function () {
           $scope.clientManager = $scope.selectedClient.RepliconManagerName + "@catalystitservices.com";
       };
 
-      // functions for interacting with the modal pages
-      // pulling expense items from modals and displaying them in the submissionTable
+      /** 
+      * functions for interacting with the modal pages
+      * pulling expense items from modals and displaying them in the submissionTable
+      */
       $scope.openModal = function (index) {
 
           var modalInstance = $modal.open({
@@ -465,6 +495,10 @@ angular.module('expenseApp')
         );
       };
 
+      /**
+      * submit the submissionTable, checking to see that the submission has at least one
+      * line item, then updating the submission with the correct status id
+      */
       $scope.submitTable = function () {
           if ($scope.submission.LineItems.length > 0) {
               $scope.submission.Status["StatusName"] = 'Submitted'
@@ -498,16 +532,19 @@ angular.module('expenseApp')
 
       };
 
-      //recieves broadcast message from MessageService confirming
-      //that user can not submit an empty table
+      /** recieves broadcast message from MessageService confirming
+      * that user can not submit an empty table
+      */
       $scope.$on("confirmNoEmptyLineItems", function () {
           MessageService.setMessage("");
           MessageService.setBroadCastMessage("");
           $route.reload();
       });
 
-      //changes submission status from 2 back to 1 so that 
-      //user may update the line items in their submission
+      /**
+      * changes submission status from 2 back to 1 so that 
+      * user may update the line items in their submission
+      */
       $scope.unSubmit = function () {
 
           $scope.submission.Status["StatusName"] = 'In Progress'
@@ -527,7 +564,10 @@ angular.module('expenseApp')
               });
       }
 
-
+      /**
+      * if user chooses to save a table, not submit it,
+      * status will be set to 1, in progress
+      */
       $scope.saveTable = function () {
 
           //Update the updatable fields
