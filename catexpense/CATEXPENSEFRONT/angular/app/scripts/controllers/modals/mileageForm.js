@@ -7,7 +7,7 @@
  * # MainCtrl
  * Controller of the expenseApp
  */
-angular.module( 'expenseApp' )
+angular.module( 'expenseApp.Controllers' )
   .controller( 'MileageCtrl', function ( $scope, LineItemService, MapQuestService, ValidationService ) {
 
       //this variable will be responsible for disabling the 'Get Distance' button when clicked

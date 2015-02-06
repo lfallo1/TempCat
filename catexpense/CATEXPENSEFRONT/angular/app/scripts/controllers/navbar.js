@@ -1,6 +1,6 @@
 ﻿'use strict';
 
-angular.module('expenseApp')
+angular.module( 'expenseApp.Controllers' )
     .controller('NavController', function ($scope, $location, $timeout, Application, $route, $rootScope, Authentication, LoginService, SubmissionService, RepliconProjectService) {
         $scope.isLoggedIn = Authentication.exists();
         $scope.$on("refresh", function () {

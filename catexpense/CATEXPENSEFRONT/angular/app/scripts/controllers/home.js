@@ -7,7 +7,7 @@
  * # MainCtrl
  * Controller of the expenseApp
  */
-angular.module('expenseApp')
+angular.module( 'expenseApp.Controllers' )
   .controller('HomeController', function ($scope, $route, $timeout, $rootScope, Application, SubmissionService) {
       $scope.timeOut = true;
       $scope.title = 'Home';      

@@ -7,7 +7,7 @@
  * # MainCtrl
  * Controller of the expenseApp
  */
-angular.module('expenseApp')
+angular.module( 'expenseApp.Controllers' )
   .controller('PolicyCtrl', function ($scope, $modalInstance, selectedType) {
 
       $scope.policyType = selectedType;

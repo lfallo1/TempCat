@@ -1,6 +1,6 @@
 ﻿'use strict';
 
-angular.module('expenseApp')
+angular.module( 'expenseApp.Controllers' )
     .controller('DatepickerCtrl', function ($scope) {
         
         $scope.today = function () {

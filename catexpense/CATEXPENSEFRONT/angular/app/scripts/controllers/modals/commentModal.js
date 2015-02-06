@@ -1,6 +1,6 @@
 ﻿'use strict';
 
-angular.module('expenseApp')
+angular.module( 'expenseApp.Controllers' )
   .controller('CommentController', function ($scope, $modalInstance, $rootScope, Application) {
       $scope.comment = Application.getComment().ExpenseComment;
       $scope.cancel = function () {

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('expenseApp')
+angular.module( 'expenseApp.Controllers' )
   .controller( 'EmployeeTableController', function ( $scope, $location, $modal, $route, $rootScope, $filter, Application, SubmissionService, MessageService, ReceiptService ) {
 
       // statuses is used for the drop down filter

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('expenseApp')
+angular.module( 'expenseApp.Controllers' )
 
   .controller('SubmissionCtrl', function ($scope, $modal, $window, $location, $route, $rootScope, $timeout, LineItemService, SubmissionService, RepliconProjectService, MessageService, DateService, Application, Authentication, ReceiptService) {
 
