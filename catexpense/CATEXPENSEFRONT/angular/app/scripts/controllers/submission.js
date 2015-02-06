@@ -598,6 +598,9 @@ angular.module('expenseApp')
           'dt1',
           function (newValue, oldValue) {
               if (newValue != '') {
+                  if (typeof newValue == 'string') {
+                      return;
+                  }
                   if (newValue.getDay() === 6) {
                       $scope.dt = newValue;
                       $scope.dt1 = newValue;
