@@ -7,7 +7,7 @@
  * # MainCtrl
  * Controller of the expenseApp
  */
-angular.module('expenseApp')
+angular.module( 'expenseApp.Controllers' )
   .controller('OtherCtrl', function ($scope, LineItemService, ValidationService) {
 
       //determine if the modal is editing an existing lineitem or creating new one(s)

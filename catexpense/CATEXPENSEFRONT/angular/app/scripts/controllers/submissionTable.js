@@ -1,4 +1,4 @@
-﻿angular.module('expenseApp')
+﻿angular.module( 'expenseApp.Controllers' )
     .controller( 'submissionTableCtrl', function ( $scope, $route, $modal, $location, $rootScope, $filter, Application, ReceiptService, LineItemService, MessageService, CommentService, SubmissionService, Authentication ) {
         $scope.receipts = true;
         var orderBy = $filter('orderBy');

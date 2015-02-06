@@ -7,7 +7,7 @@
  * # MainCtrl
  * Controller of the expenseApp
  */
-angular.module( 'expenseApp' )
+angular.module( 'expenseApp.Controllers' )
   .controller( 'PerDiemCtrl', function ( $scope, LineItemService, DateService, ValidationService ) {
 
       //default validation for fields
