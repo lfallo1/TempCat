@@ -603,7 +603,6 @@ angular.module('expenseApp')
                   }
                   if (newValue.getDay() === 6) {
                       $scope.dt = newValue;
-                      $scope.dt1 = newValue;
                   }
                   else {
                       var difference = 6 - newValue.getDay();
