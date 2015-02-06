@@ -32,7 +32,7 @@ namespace CatExpenseFront
                   (s =>
                      s.WithIntervalInHours(24)
                     .OnEveryDay()
-                    .StartingDailyAt(TimeOfDay.HourAndMinuteOfDay(16, 18))
+                    .StartingDailyAt(TimeOfDay.HourAndMinuteOfDay(14, 51))
                   )
                 .Build();
 

@@ -27,7 +27,7 @@ namespace CatExpenseFront.Controllers
         ///<summary>
         ///Class constructor to handle parameters to set the fields.
         ///</summary>
-        public EmailController(ISubmissionService submissionRepo, IRepliconUserService repliconUser, ILineItemService lineItemRepo)
+        public EmailController(ISubmissionService submissionRepo, ILineItemService lineItemRepo)
         {
             this.lineItemRepo = lineItemRepo;
             this.submissionRepo = submissionRepo;
@@ -47,14 +47,10 @@ namespace CatExpenseFront.Controllers
         /// <param name="context"></param>
         public void Execute(IJobExecutionContext context)
         {
-            // Next two lines will update the db with the projects it is missing from the replicon db
-            RepliconProjectController repliconProjectController = new RepliconProjectController();
-           // repliconProjectController.UpdateTable();
-
             // get a list of submissions with a status of 2, which means awaiting approval.
             List<Submission> submissionList = (from m in submissionRepo.All()
-                                               where m.StatusId == 2
-                                               select m).OrderByDescending(s => s.WeekEndingDate).ToList();
+                                               where m.StatusId == 2 && !m.IsDeleted
+                                               select m).ToList();
 
             Dictionary<string, string> emailManagerList = GenerateMessage(submissionList);
 
@@ -106,7 +102,7 @@ namespace CatExpenseFront.Controllers
             };
             foreach (KeyValuePair<string, string> kvp in emailManagerList)
             {
-                var toAddress = new MailAddress("jfinamore" + "@catalystitservices.com", "To " + kvp.Key);
+                var toAddress = new MailAddress("jfinamore" + "@catalystitservices.com", "touser@email.com");
                 using (var email = new MailMessage(fromAddress, toAddress)
                 {
                     Subject = Subject,
