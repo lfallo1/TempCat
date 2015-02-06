@@ -15,7 +15,7 @@ using NUnit.Framework;
 namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
 {
     [TestFixture]
-    public class LineItemCommentControllerTests
+    public class CommentControllerTests
     {
         private Mock<ICommentService> mockService = new Mock<ICommentService>();
         private Mock<IRepliconUserService> mockUserService = new Mock<IRepliconUserService>();
@@ -28,12 +28,12 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
         private List<Comment> comments;
 
         [TestFixtureSetUp]
-        public void LineItemCommentControllerTestsSetUp()
+        public void CommentControllerTestsSetUp()
         {
             controller = new CommentController(mockService.Object, mockUserService.Object);
             controller.Request = new HttpRequestMessage()
             {
-                RequestUri = new Uri("http://localhost/api/lineitemcomment"),
+                RequestUri = new Uri("http://localhost/api/comment"),
                 Properties = { { HttpPropertyKeys.HttpConfigurationKey, new HttpConfiguration() } }
             };
             controller.Configuration = new HttpConfiguration();
@@ -43,7 +43,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
                 defaults: new { id = RouteParameter.Optional });
             controller.RequestContext.RouteData = new HttpRouteData(
                 route: new HttpRoute(),
-                values: new HttpRouteValueDictionary { { "controller", "lineitemcomment" } });
+                values: new HttpRouteValueDictionary { { "controller", "comment" } });
 
             comment1 = new Comment();
             comment1.SubmissionId = 1;
@@ -78,7 +78,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
         }
 
         [Test]
-        public void EmptyLineItemCommentControllerConstructorTest()
+        public void EmptyCommentControllerConstructorTest()
         {
             // Arrange
             var emptyController = new CommentController();
@@ -105,7 +105,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
         }
 
         [Test]
-        public void FailGetLineItemCommentTest()
+        public void FailGetCommentTest()
         {
             // Arrange
             Comment nullComment = null;

@@ -37,11 +37,11 @@
                 $scope.showComments = submission.LineItems.length != 0;
                 if ($scope.currentSubmission.LineItems.length != 0) {
                     //this for loop will determine which comments you can edit
-                    for (var i = 0; i < $scope.currentSubmission.LineItemComments.length; i++) {
-                        if ($scope.currentSubmission.LineItemComments[i].RepliconUserName.toUpperCase() == $scope.userName.toUpperCase()) {
-                            $scope.currentSubmission.LineItemComments[i]["commentIsMine"] = true;
+                    for (var i = 0; i < $scope.currentSubmission.Comments.length; i++) {
+                        if ($scope.currentSubmission.Comments[i].RepliconUserName.toUpperCase() == $scope.userName.toUpperCase()) {
+                            $scope.currentSubmission.Comments[i]["commentIsMine"] = true;
                         } else {
-                            $scope.currentSubmission.LineItemComments[i]["commentIsMine"] = false;
+                            $scope.currentSubmission.Comments[i]["commentIsMine"] = false;
                         }
                     }
                 }
@@ -103,7 +103,7 @@
         $scope.$on("editCommentFromSubmission", function (response, index) {
             if (index != -1) {
                 commentIndex = index;
-                Application.setComment($scope.currentSubmission.LineItemComments[index]);
+                Application.setComment($scope.currentSubmission.Comments[index]);
             } else {
                 Application.setComment("");
             }
@@ -116,7 +116,7 @@
         $scope.editComment = function (index) {
             if (index != -1) {
                 commentIndex = index;
-                Application.setComment($scope.currentSubmission.LineItemComments[index]);
+                Application.setComment($scope.currentSubmission.Comments[index]);
             } else {
                 Application.setComment("");
             }
@@ -170,11 +170,11 @@
             }
             $scope.editExistingSubmission = true;
             if ($scope.currentSubmission.LineItems.length != 0) {
-                for (var i = 0; i < $scope.currentSubmission.LineItemComments.length; i++) {
-                    if ($scope.currentSubmission.LineItemComments[i].RepliconUserName.toUpperCase() == $scope.userName.toUpperCase()) {
-                        $scope.currentSubmission.LineItemComments[i]["commentIsMine"] = true;
+                for (var i = 0; i < $scope.currentSubmission.Comments.length; i++) {
+                    if ($scope.currentSubmission.Comments[i].RepliconUserName.toUpperCase() == $scope.userName.toUpperCase()) {
+                        $scope.currentSubmission.Comments[i]["commentIsMine"] = true;
                     } else {
-                        $scope.currentSubmission.LineItemComments[i]["commentIsMine"] = false;
+                        $scope.currentSubmission.Comments[i]["commentIsMine"] = false;
                     }
                 }
             }
@@ -265,9 +265,9 @@
             }
 
             $scope.currentSubmission.Status["StatusName"] = statusName;
-            $scope.currentSubmission.LineItemComments = new Array();
-            $scope.currentSubmission.LineItemComments[0] = {};
-            $scope.currentSubmission.LineItemComments[0]["ExpenseComment"] = comment;
+            $scope.currentSubmission.Comments = new Array();
+            $scope.currentSubmission.Comments[0] = {};
+            $scope.currentSubmission.Comments[0]["ExpenseComment"] = comment;
             SubmissionService.updateSubmission($scope.currentSubmission.SubmissionId, $scope.currentSubmission).then(function (data) {
                 if (statusName == "Manager Rejected") {
 
@@ -287,12 +287,12 @@
         $scope.$on("saveComment", function (response, comment) {
             if (Application.getComment().ExpenseComment) {
                 CommentService.PutComment( Application.getComment().CommentId, comment ).then( function ( success ) {
-                    $scope.currentSubmission.LineItemComments[commentIndex]['ExpenseComment'] = comment;
+                    $scope.currentSubmission.Comments[commentIndex]['ExpenseComment'] = comment;
                 });
             } else {
                 CommentService.CreateComment($scope.currentSubmission.SubmissionId, comment).then(function (success) {
                     success.data["commentIsMine"] = true;
-                    $scope.currentSubmission.LineItemComments.push(success.data);
+                    $scope.currentSubmission.Comments.push(success.data);
                 });
             }
 
@@ -303,8 +303,8 @@
         * removes the comment from the line item in the database
         */
         $scope.$on("confirmDeleteComment", function () {
-            CommentService.DeleteComment($scope.currentSubmission.LineItemComments[commentIndex].CommentId).then(function (success) {
-                $scope.currentSubmission.LineItemComments.splice(commentIndex, 1);;
+            CommentService.DeleteComment($scope.currentSubmission.Comments[commentIndex].CommentId).then(function (success) {
+                $scope.currentSubmission.Comments.splice(commentIndex, 1);;
             });
         });
 
