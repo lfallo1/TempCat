@@ -19,9 +19,6 @@
                     <th></th>
                     <th></th>
                     <th>
-                        <a href="" id="empSubmitted" ng-click="employeeOrder('DateCreated')">Submitted</a>
-                    </th>
-                    <th>
                         <a href="" id="empClient" ng-click="employeeOrder('RepliconProject.RepliconProjectName')">
                             Client
                         </a>
@@ -33,9 +30,6 @@
                     </th>
                     <th>
                         <a href="" id="empStatus" ng-click="employeeOrder('Status.StatusName')">Status</a>
-                    </th>
-                    <th>
-                        <a href="" id="empLastUpdated" ng-click="employeeOrder('DateUpdated')">Last Updated</a>
                     </th>
                     <th><a href="" id="Receipts" ng-click="employeeOrder('ReceiptPresent')">Receipts</a></th>
                 </tr>
@@ -58,13 +52,11 @@
                                   data-toggle="tooltip" data-placement="left" title="Delete Submission"></span>
                         </div>
                     </td>
-                    <td>{{submission.DateCreated | date:'yyyy/MM/dd'}}</td>
                     <td>{{submission.RepliconProject.RepliconProjectName}}</td>
                     <td>{{submission.Description}}</td>
                     <td>{{("$" + (submission.TotalAmount).toFixed( 2 ))}}</td>
                     <td>{{submission.WeekEndingDate | date:'yyyy/MM/dd'}}</td>
                     <td>{{submission.Status.StatusName}}</td>
-                    <td>{{submission.DateUpdated | date:'yyyy/MM/dd'}}</td>
                     <td class="row">
                         <span class="col-md-2 glyphicon" style="display: table-cell" ng-class="{ 'glyphicon-remove': submission.allSubmissionReceipts.length == 0, 'glyphicon-ok': submission.allSubmissionReceipts.length > 0 }" ng-sty ng-style="{ 'color': submission.allSubmissionReceipts.length > 0 ? 'green' : 'red'}"></span>
                         <span title="View all receipts" style="cursor: pointer" class="col-md-2 pull-left btn-link glyphicon glyphicon-file" ng-click="showAllAvailableReceipts(submission.allSubmissionReceipts, submission, $index)" ng-show="submission.allSubmissionReceipts.length > 0"></span>

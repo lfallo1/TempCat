@@ -37,8 +37,6 @@ angular.module('expenseApp')
       $scope.$on("confirmDeleteReceipt", function () {
           MessageService.setMessage("");
           MessageService.setBroadCastMessage("");
-          var lineItems = ReceiptService.getReceipts().LineItems;
-          var indexId = Application.getLineItemIndex();
           $http({
               method: "DELETE",
               url: "/api/Receipts/",
@@ -72,8 +70,7 @@ angular.module('expenseApp')
                     if ($scope.userReceipts.length == 0) {
                         $modalInstance.dismiss("dismiss receipt modal");
                     }
-                    Application.setAllUserSubmissions(submissions)
-                    $route.reload();
+                    Application.setAllUserSubmissions(submissions);
                 });
 
 
@@ -115,8 +112,4 @@ angular.module('expenseApp')
               $scope.noReceipt = true;
           }
       }
-
-      $scope.$on("refreshReceipts", function () {
-          $route.reload();
-      });
   });

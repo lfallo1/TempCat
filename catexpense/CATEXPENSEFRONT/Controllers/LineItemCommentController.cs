@@ -47,7 +47,7 @@ namespace CatExpenseFront.Controllers
         }
 
 
-        
+
         /// <summary>
         /// Returns Line item comment by line item comment id
         /// GET api/LineItemComment?id={id}
@@ -59,7 +59,7 @@ namespace CatExpenseFront.Controllers
         {
             //Checks the session to see if it is valid
             this.checkSession();
-            
+
             LineItemComment lineItemComment = service.Find(id);
             if (lineItemComment == null)
             {
@@ -69,7 +69,7 @@ namespace CatExpenseFront.Controllers
             return Ok(lineItemComment);
         }
 
-        
+
         /// <summary>
         /// returns Comments by line Item Id
         /// GET api/LineItem/GetLineItemsByLineItemId?id={id}
@@ -83,7 +83,7 @@ namespace CatExpenseFront.Controllers
         {
             //Checks the session to see if it is valid
             this.checkSession();
-           
+
             List<LineItemComment> lineItemComments = new List<LineItemComment>();
 
             lineItemComments = (from m in service.All()
@@ -95,8 +95,8 @@ namespace CatExpenseFront.Controllers
         }
 
 
-       
-        
+
+
         /// <summary>
         /// Updates a single line item comment.
         /// PUT api/LineItemComment?id={id}&comment={comment}
@@ -111,7 +111,7 @@ namespace CatExpenseFront.Controllers
         {
             //Checks the session to see if it is valid
             this.checkSession();
-            
+
             LineItemComment lineItemComment = service.Find(id);
             string currentUser = (null == HttpContext.Current.Session["UserName"]
                                                           ? ""
@@ -123,11 +123,11 @@ namespace CatExpenseFront.Controllers
                 service.Update(lineItemComment);
                 service.SaveChanges();
             }
-            
+
             return Request.CreateResponse(HttpStatusCode.OK);
         }
 
-        
+
         /// <summary>
         /// Creates a new line item comment
         /// POST api/LineItem/CreateLineItemComment?submissionId={submissionId}&comment={comment}
@@ -142,9 +142,9 @@ namespace CatExpenseFront.Controllers
         {
             //Checks the session to see if it is valid
             this.checkSession();
-            
+
             LineItemComment lineItemComment = new LineItemComment();
-           
+
             lineItemComment.SubmissionId = submissionId;
             var userName = (null == HttpContext.Current.Session["UserName"]
                                                           ? ""
@@ -153,7 +153,7 @@ namespace CatExpenseFront.Controllers
             lineItemComment.RepliconUserName = userName;
             lineItemComment.ExpenseComment = comment;
             lineItemComment.DateCreated = DateTime.Now;
-            lineItemComment.DateUpdated = DateTime.Now;           
+            lineItemComment.DateUpdated = DateTime.Now;
             service.Create(lineItemComment);
             service.SaveChanges();
             return lineItemComment;
@@ -173,19 +173,23 @@ namespace CatExpenseFront.Controllers
         {
             //Checks the session to see if it is valid
             this.checkSession();
-            
+
             LineItemComment lineItemComment = service.Find(id);
             string currentUser = (null == HttpContext.Current.Session["UserName"]
                                                           ? ""
-                                                          : HttpContext.Current.Session["UserName"].ToString().ToLower());
+                                                          : HttpContext.Current.Session["UserName"].ToString().ToUpper());
             if (lineItemComment == null)
             {
                 return Request.CreateResponse(HttpStatusCode.NotFound);
             }
-            if (lineItemComment.RepliconUserName.ToLower() == currentUser)
+            if (lineItemComment.RepliconUserName.ToUpper() == currentUser)
             {
                 service.Delete(lineItemComment);
                 service.SaveChanges();
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.Forbidden);
             }
             return Request.CreateResponse(HttpStatusCode.OK, lineItemComment);
         }

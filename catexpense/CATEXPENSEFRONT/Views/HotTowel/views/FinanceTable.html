@@ -21,8 +21,6 @@
                 <tr>
                     <th></th>
                     <th></th>
-                    <th><a href="" id="finSubmitted" ng-click="financeOrder('DateCreated')">Submitted</a>
-                    </th>
                     <th><a href="" id="finSubmittedBy" ng-click="financeOrder('ActiveDirectoryUser')">Submitted
                         By</a></th>
                     <th><a href="" id="finWeekEnding" ng-click="financeOrder('WeekEndingDate')">Week Ending</a>
@@ -48,7 +46,6 @@
                                 data-toggle="tooltip" data-placement="left" title="Delete Submission"></span>
                         </div>
                     </td>
-                    <td>{{submission.DateCreated | date:'yyyy/MM/dd'}}</td>
                     <td>{{submission.ActiveDirectoryUser}}</td>
                     <td>{{submission.WeekEndingDate | date:'yyyy/MM/dd'}}</td>
                     <td>{{submission.RepliconProject.RepliconProjectName}}</td>
