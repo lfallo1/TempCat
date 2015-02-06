@@ -126,7 +126,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             mockService.Setup(s => s.All()).Returns(comments);
 
             // Act
-            var response = controller.GetLineItemsByLineItemId(1);
+            var response = controller.GetLineItemCommentsBySubmissionId(1);
 
             // Assert
             Assert.IsNotNull(response);
