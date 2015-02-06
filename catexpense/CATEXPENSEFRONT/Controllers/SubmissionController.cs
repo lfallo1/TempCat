@@ -40,7 +40,7 @@ namespace CatExpenseFront.Controllers
         private ISubmissionService service;
         private IRepliconUserProjectService userProjectService;
         private IRepliconProjectService projectService;
-        private ICommentService lineItemCommentsService;
+        private ICommentService commentsService;
         private IFinanceApproverService financeApproverService;
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace CatExpenseFront.Controllers
                 this.service = service;
                 projectService = new RepliconProjectService(new Repository<RepliconProject>());
                 userProjectService = new RepliconUserProjectService(new Repository<RepliconUserProject>());
-                lineItemCommentsService = new CommentService();
+                commentsService = new CommentService();
                 financeApproverService = new FinanceApproverService(new Repository<FinanceApprover>());
             }
         }
@@ -71,7 +71,7 @@ namespace CatExpenseFront.Controllers
             {
                 this.service = service;
                 projectService = new RepliconProjectService(new Repository<RepliconProject>());
-                lineItemCommentsService = iService;
+                commentsService = iService;
                 userProjectService = new RepliconUserProjectService(new Repository<RepliconUserProject>());
                 financeApproverService = new FinanceApproverService(new Repository<FinanceApprover>());
             }
@@ -85,7 +85,7 @@ namespace CatExpenseFront.Controllers
         public SubmissionController()
         {
             this.service = new SubmissionService();
-            lineItemCommentsService = new CommentService();
+            commentsService = new CommentService();
             userProjectService = new RepliconUserProjectService(new Repository<RepliconUserProject>());
             financeApproverService = new FinanceApproverService(new Repository<FinanceApprover>());
         }
@@ -265,7 +265,7 @@ namespace CatExpenseFront.Controllers
             //Checks the session to see if it is valid
             this.checkSession();
 
-            Comment lineItemComment = new Comment();
+            Comment comment = new Comment();
             HttpResponseMessage message = Request.CreateResponse(HttpStatusCode.OK);
             Submission mergedSubmission = service.Find(id);
 
@@ -317,13 +317,13 @@ namespace CatExpenseFront.Controllers
                         {
                             mergedSubmission.StatusId = APPROVAL_STATUS_MANAGER_REJECTED_ID;
                             mergedSubmission.RepliconManagerApproverDate = DateTime.Now;
-                            lineItemComment.SubmissionId = id;
-                            lineItemComment.RepliconUserName = userName;
-                            lineItemComment.ExpenseComment = submission.LineItemComments.First<Comment>().ExpenseComment;
-                            lineItemComment.DateCreated = DateTime.Now;
-                            lineItemComment.DateUpdated = DateTime.Now;
-                            lineItemCommentsService.Create(lineItemComment);
-                            lineItemCommentsService.SaveChanges();
+                            comment.SubmissionId = id;
+                            comment.RepliconUserName = userName;
+                            comment.ExpenseComment = submission.Comments.First<Comment>().ExpenseComment;
+                            comment.DateCreated = DateTime.Now;
+                            comment.DateUpdated = DateTime.Now;
+                            commentsService.Create(comment);
+                            commentsService.SaveChanges();
                         }
                         break;
                     }
@@ -343,13 +343,13 @@ namespace CatExpenseFront.Controllers
                         {
                             mergedSubmission.StatusId = APPROVAL_STATUS_FINANCE_REJECTED_ID;
                             mergedSubmission.RepliconFinanceApproverDate = DateTime.Now;
-                            lineItemComment.SubmissionId = id;
-                            lineItemComment.RepliconUserName = userName;
-                            lineItemComment.ExpenseComment = submission.LineItemComments.First<Comment>().ExpenseComment;
-                            lineItemComment.DateCreated = DateTime.Now;
-                            lineItemComment.DateUpdated = DateTime.Now;
-                            lineItemCommentsService.Create(lineItemComment);
-                            lineItemCommentsService.SaveChanges();
+                            comment.SubmissionId = id;
+                            comment.RepliconUserName = userName;
+                            comment.ExpenseComment = submission.Comments.First<Comment>().ExpenseComment;
+                            comment.DateCreated = DateTime.Now;
+                            comment.DateUpdated = DateTime.Now;
+                            commentsService.Create(comment);
+                            commentsService.SaveChanges();
                         }
                         break;
                     }

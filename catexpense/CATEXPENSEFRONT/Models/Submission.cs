@@ -14,7 +14,7 @@ namespace CatExpenseFront.Models
         public Submission()
         {
             this.LineItems = new HashSet<LineItem>();
-            this.LineItemComments = new HashSet<Comment>();
+            this.Comments = new HashSet<Comment>();
         }
 
         public int SubmissionId { get; set; }
@@ -32,7 +32,7 @@ namespace CatExpenseFront.Models
 
        
         public virtual ICollection<LineItem> LineItems { get; set; }
-        public virtual ICollection<Comment> LineItemComments { get; set; }
+        public virtual ICollection<Comment> Comments { get; set; }
 
         [ForeignKey("RepliconProjectId")]
         public virtual RepliconProject RepliconProject { get; set; }
