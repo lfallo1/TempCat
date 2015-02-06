@@ -372,6 +372,11 @@ angular.module( 'expenseApp.Controllers' )
               controller: 'receiptController'
           });
       }
+
+      /**
+      * receives broadcast message from submissionTable.js
+      * if there is a submission found, check for receipts related to it
+      */
       $scope.$on("checkReceipts", function () {
           if ( ReceiptService.getAllReceipts() && ReceiptService.getAllReceipts().length != 0 ) {
               $scope.receipts = false;
@@ -593,6 +598,10 @@ angular.module( 'expenseApp.Controllers' )
 
       };
 
+      /**
+      * if user clicks current week on datepicker,
+      * set $scope.dt1 to the saturday of the current week
+      */
       $scope.$watch(
           'dt1',
           function (newValue, oldValue) {
