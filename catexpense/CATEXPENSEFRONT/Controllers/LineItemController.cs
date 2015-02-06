@@ -11,6 +11,7 @@ using CatExpenseFront.Services.Interfaces;
 using CatExpenseFront.Services;
 using CatExpenseFront.Repository;
 using CatExpenseFront.Controllers.Base;
+using System.Web;
 
 
 namespace CatExpenseFront.Controllers
@@ -22,6 +23,7 @@ namespace CatExpenseFront.Controllers
     {
         private ILineItemService service;
         private IReceiptService receiptService;
+        private ISubmissionService submissionService;
 
         /// <summary>
         /// Default Construcor
@@ -30,18 +32,20 @@ namespace CatExpenseFront.Controllers
         {
             service = new LineItemService();
             receiptService = new ReceiptService();
+            submissionService = new SubmissionService();
         }
 
         /// <summary>
         /// Construcor that accepts line item service
         /// </summary>
         /// <param name="iService"></param>
-        public LineItemController(ILineItemService iService)
+        public LineItemController(ILineItemService iService, ISubmissionService iSubmissionService)
         {
             if (this.service == null)
             {
                 service = iService;
                 receiptService = new ReceiptService(new Repository<Receipt>());
+                submissionService = iSubmissionService;
             }
         }
 
@@ -171,23 +175,32 @@ namespace CatExpenseFront.Controllers
             this.checkSession();
 
             LineItem lineitem = service.Find(id);
+            Submission submission = submissionService.Find(lineitem.SubmissionId);
+            string currentUser = (null == HttpContext.Current.Session["UserName"]
+                                 ? "" : HttpContext.Current.Session["UserName"].ToString().ToUpper());
             if (lineitem == null)
             {
-                return Request.CreateResponse(HttpStatusCode.NotFound);
+                return Request.CreateResponse(HttpStatusCode.NotFound);                
             }
-            List<Receipt> receiptList = (from m in receiptService.All()
-                                         where m.LineItemId == lineitem.LineItemId
-                                         select m).ToList<Receipt>();
-            foreach (Receipt receipt in receiptList)
+            if (submission.ActiveDirectoryUser.ToUpper() == currentUser)
             {
-                receiptService.Delete(receipt);
-                receiptService.SaveChanges();
+                List<Receipt> receiptList = (from m in receiptService.All()
+                                             where m.LineItemId == lineitem.LineItemId
+                                             select m).ToList<Receipt>();
+                foreach (Receipt receipt in receiptList)
+                {
+                    receiptService.Delete(receipt);
+                    receiptService.SaveChanges();
+                }
+                service.Delete(lineitem);
+                service.SaveChanges();
             }
-            service.Delete(lineitem);
-            service.SaveChanges();
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.Forbidden);
+            }            
 
             return Request.CreateResponse(HttpStatusCode.OK, lineitem);
         }
-
     }
 }
