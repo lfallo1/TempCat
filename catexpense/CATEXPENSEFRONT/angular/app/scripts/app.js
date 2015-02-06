@@ -66,18 +66,18 @@ angular
             redirectTo: '/home'
         } );
   } )
-    .run( function ( $rootScope, $location, Authentication, $route, Application, RouteFilter, SubmissionService ) {;
+    .run( function ( $rootScope, $location, Authentication, $route, Application, RouteFilter, LoginService, SubmissionService ) {;
         $location.path( '/login' );
         if ( Authentication.getUser() !== null ) {
             Application.makeReady();
         }
 
-        SubmissionService.isLoggedIn().then( function ( isLoggedIn ) {
+        LoginService.isLoggedIn().then( function ( isLoggedIn ) {
             if ( !isLoggedIn.data.isLoggedIn ) {
                 Authentication.logout();
                 Application.logout();
                 $location.path( '/login' );
-                SubmissionService.userLogout();
+                LoginService.userLogout();
             } else {
                 Authentication.login( isLoggedIn.data );
                 Application.makeReady();
@@ -93,13 +93,13 @@ angular
             }
             // if application is not ready then check if user is logged in
             if ( !Application.isReady() ) {
-                SubmissionService.isLoggedIn().then( function ( isLoggedIn ) {
+                LoginService.isLoggedIn().then( function ( isLoggedIn ) {
                     // if the user is not logged in then destroy the front end and send the user to login page
                     if ( !isLoggedIn.data.isLoggedIn ) {
                         Authentication.logout();
                         Application.logout();
                         $location.path( '/login' );
-                        SubmissionService.userLogout();
+                        LoginService.userLogout();
                     } else {
                         Authentication.login( isLoggedIn.data );
                         Application.makeReady();

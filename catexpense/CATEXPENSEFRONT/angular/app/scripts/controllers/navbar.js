@@ -1,7 +1,7 @@
 ﻿'use strict';
 
 angular.module('expenseApp')
-    .controller('NavController', function ($scope, $location, $timeout, Application, $route, $rootScope, Authentication, SubmissionService, RepliconProjectService) {
+    .controller('NavController', function ($scope, $location, $timeout, Application, $route, $rootScope, Authentication, LoginService, SubmissionService, RepliconProjectService) {
         $scope.isLoggedIn = Authentication.exists();
         $scope.$on("refresh", function () {
             $scope.isLoggedIn = true;
@@ -19,7 +19,7 @@ angular.module('expenseApp')
             Authentication.logout();
             Application.logout();
             $location.path('/login');
-            SubmissionService.userLogout();
+            LoginService.userLogout();
         }
 
         // sync the projects in the replicon database with the project database

@@ -1,11 +1,11 @@
 'use strict';
 
 angular.module('expenseApp')
-  .controller('LoginController', function ($scope, $location, $rootScope, Authentication, SubmissionService) {
+  .controller('LoginController', function ($scope, $location, $rootScope, Authentication, LoginService) {
       
       $scope.ErrorMessage = "";
       $scope.doLogin = function (user) {
-          SubmissionService.userlogin(user.username, user.password).then(function (results) {
+          LoginService.userlogin(user.username, user.password).then(function (results) {
               if (results.data.isLoggedIn) {
                   $scope.ErrorMessage = "";
                   Authentication.login(results.data);
