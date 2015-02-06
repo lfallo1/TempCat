@@ -113,29 +113,6 @@ angular.module( 'expenseApp.Services' )
       //
       //=====================================================================//
 
-
-      /**
-      * Gets receipt of the submission that the submission id belongs to
-      */
-      self.GetReceiptsBySubmissionId = function ( SubmissionId ) {
-          return $http( {
-              method: "GET",
-              url: '/api/Receipt/GetReceiptsBySubmissionId',
-              params: { id: SubmissionId }
-          } )
-      };
-
-      /**
-      * Gets receipt of the submission that the submission id belongs to with the image
-      */
-      self.GetReceiptsWithImageBySubmissionId = function ( SubmissionId ) {
-          return $http( {
-              method: "GET",
-              url: '/api/Receipt/GetReceiptsWithImageBySubmissionId',
-              params: { id: SubmissionId }
-          } )
-      };
-
       /**
       * This will check to see if the user is logged in.
       */

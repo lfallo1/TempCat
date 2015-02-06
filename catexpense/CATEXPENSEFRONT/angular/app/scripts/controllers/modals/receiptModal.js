@@ -101,7 +101,7 @@ angular.module('expenseApp')
                   "Type": $scope.image.file.type
               };
               $http({
-                  url: '/api/Receipts/',
+                  url: '/api/Receipts',
                   method: 'POST',
                   data: receipt
               }).then(function (receipt) {

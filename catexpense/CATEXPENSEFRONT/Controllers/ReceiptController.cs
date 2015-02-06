@@ -87,7 +87,7 @@ namespace CatExpenseFront.Controllers
         /// </summary>
         [HttpPost]
         [ActionName("CreateReceipt")]
-        [Route("api/Receipts/")]
+        [Route("api/Receipts")]
         public Receipt FileUpload(Receipt receipt)
         {
             //Checks the session to see if it is valid
@@ -187,7 +187,7 @@ namespace CatExpenseFront.Controllers
         /// <returns></returns>
         [HttpDelete]
         [ActionName("DeleteReceipt")]
-        [Route("api/Receipts/")]
+        [Route("api/Receipts")]
         [ResponseType(typeof(Receipt))]
         public HttpResponseMessage DeleteReceipt(int id, int lineItemId)
         {

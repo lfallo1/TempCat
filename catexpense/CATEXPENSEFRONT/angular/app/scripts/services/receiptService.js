@@ -48,6 +48,14 @@ angular.module( 'expenseApp.Services' )
       //
       //=====================================================================//
 
+      self.getReceiptById = function ( id ) {
+          return $http( {
+              method: "GET",
+              url: '/api/Receipts',
+              params: { id: id }
+          } )
+      };
+
       /**
       * Gets receipt of the submission that the submission id belongs to
       */
@@ -67,6 +75,41 @@ angular.module( 'expenseApp.Services' )
               method: "GET",
               url: '/api/Receipt/GetReceiptsWithImageBySubmissionId',
               params: { id: SubmissionId }
+          } )
+      };
+
+
+      //=====================================================================//
+      //
+      //  list of POST methods
+      //
+      //=====================================================================//
+
+      self.submitReceipt = function ( data ) {
+          return $http( {
+              method: "POST",
+              url: '/api/Receipts',
+              data: data
+          } )
+      };
+
+      //=====================================================================//
+      //
+      //  list of PUT methods
+      //
+      //=====================================================================//
+
+      //=====================================================================//
+      //
+      //  list of DELETE methods
+      //
+      //=====================================================================//
+
+      self.deleteReceipt = function ( receiptID, lineitemID ) {
+          return $http( {
+              method: "DELETE",
+              url: "/api/Receipts",
+              params: { id: receiptID, lineItemId: lineitemID }
           } )
       };
 
