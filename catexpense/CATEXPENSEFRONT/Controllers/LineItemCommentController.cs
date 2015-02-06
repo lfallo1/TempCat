@@ -72,14 +72,14 @@ namespace CatExpenseFront.Controllers
         
         /// <summary>
         /// returns Comments by line Item Id
-        /// GET api/LineItem/GetLineItemsByLineItemId?id={id}
+        /// GET api/LineItem/GetLineItemCommentsBySubmissionId?id={id}
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
-        [ActionName("GetLineItemsByLineItemId")]
-        [Route("api/LineItem/GetLineItemsByLineItemId")]
-        public IEnumerable<LineItemComment> GetLineItemsByLineItemId(int id)
+        [ActionName("GetLineItemCommentsBySubmissionId")]
+        [Route("api/LineItem/GetLineItemCommentsBySubmissionId")]
+        public IEnumerable<LineItemComment> GetLineItemCommentsBySubmissionId(int id)
         {
             //Checks the session to see if it is valid
             this.checkSession();
