@@ -101,13 +101,11 @@ namespace CatExpenseFront.Controllers
         {
             //Checks the session to see if it is valid
             this.checkSession();
-
-            List<Submission> submissionList = new List<Submission>();
-            submissionList = (from m in service.All()
-                              where m.ActiveDirectoryUser.ToUpper() == (null == HttpContext.Current.Session["UserName"]
-                                                               ? ""
-                                                               : HttpContext.Current.Session["UserName"].ToString().ToUpper()) && !m.IsDeleted
-                              select m).OrderByDescending(s => s.WeekEndingDate).ToList();
+            List<Submission> submissionList = (from m in service.All()
+                                               where m.ActiveDirectoryUser.ToUpper() == (null == HttpContext.Current.Session["UserName"]
+                                                                                ? ""
+                                                                                : HttpContext.Current.Session["UserName"].ToString().ToUpper()) && !m.IsDeleted
+                                               select m).OrderByDescending(s => s.WeekEndingDate).ToList();
 
             CalculateTotalsForList(submissionList);
 

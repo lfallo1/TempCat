@@ -8,7 +8,7 @@
             <div>
                 <h4 class="col-sm-6 col-md-6">
                     Manager Table
-                    <small style="font-weight: lighter" class="bg-warning">Awaiting Approval: {{managerTotal}}</small></h4>
+                    <small class="lightWeight bg-warning">Awaiting Approval: {{managerTotal}}</small></h4>
             </div>
         </div>
         <table class="panel-body table table-hover table-striped table-condensed" ng-if="expanded">
@@ -31,13 +31,13 @@
                 <tr>
                     <td>
                         <div ng-if="Status.StatusName !== 'Finance Rejected' || Status.StatusName !== 'Finance Approved'">
-                            <span style="cursor: pointer" class="glyphicon glyphicon-edit" ng-click="loadManagerSubmission(submission, $index)"
+                            <span class="pointer glyphicon glyphicon-edit" ng-click="loadManagerSubmission(submission, $index)"
                                   data-toggle="tooltip" data-placement="left" title="Edit Report"></span>
                         </div>
                     </td>
                     <td>
                         <div>
-                            <span style="cursor: pointer" class="glyphicon glyphicon-trash" ng-click="deleteSubmission(submission, $index)"
+                            <span class="pointer glyphicon glyphicon-trash" ng-click="deleteSubmission(submission, $index)"
                                 data-toggle="tooltip" data-placement="left" title="Delete Submission"></span>
                         </div>
                     </td>

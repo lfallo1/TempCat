@@ -36,12 +36,12 @@
                 <tbody ng-repeat="expense in currentSubmission.LineItems">
                     <tr>
                         <td ng-if="createNewItemLoad">
-                            <span style="cursor: pointer" class="glyphicon glyphicon-edit" ng-click="editExpenseLine(expense, $index)"
+                            <span class="pointer glyphicon glyphicon-edit" ng-click="editExpenseLine(expense, $index)"
                                   data-toggle="tooltip" data-placement="left" title="Edit Report"></span>
 
                         </td>
                         <td ng-if="createNewItemLoad">
-                            <span style="cursor: pointer" class="glyphicon glyphicon-trash" ng-click="confirmLineRemove(expense, $index)"
+                            <span class="pointer glyphicon glyphicon-trash" ng-click="confirmLineRemove(expense, $index)"
                                   data-toggle="tooltip" data-placement="left" title="Delete Report"></span>
                         </td>
                         <td>{{expense.LineItemDate | date:'yyyy/MM/dd'}}</td>
@@ -52,8 +52,8 @@
                                   ng-style="{'color' : {{expense.Billable}} ? 'green' : 'red' }"></span>
                         </td>
                         <td class="row">
-                            <span class="col-md-2 glyphicon" style="display: table-cell" ng-class="{ 'glyphicon-remove': expense.Receipts.length == 0, 'glyphicon-ok': expense.Receipts.length > 0 }" ng-st ng-style="{ 'color': expense.Receipts.length > 0 ? 'green' : 'red'}"></span>
-                            <span title="View receipt" style="cursor: pointer" class="col-md-2 pull-left btn-link glyphicon glyphicon-file" ng-click="viewReceipts({{expense.LineItemId}}, $index)" ng-show="expense.Receipts.length > 0"></span>
+                            <span class="col-md-2 glyphicon" ng-class="{ 'glyphicon-remove': expense.Receipts.length == 0, 'glyphicon-ok': expense.Receipts.length > 0 }" ng-st ng-style="{ 'color': expense.Receipts.length > 0 ? 'green' : 'red'}"></span>
+                            <span title="View receipt" class="pointer col-md-2 pull-left btn-link glyphicon glyphicon-file" ng-click="viewReceipts({{expense.LineItemId}}, $index)" ng-show="expense.Receipts.length > 0"></span>
                         </td>
                     </tr>
                 </tbody>
@@ -93,12 +93,12 @@
                         <tbody ng-repeat="expenseComments in currentSubmission.Comments">
                             <tr>
                                 <td>
-                                    <span ng-if="expenseComments.commentIsMine" style="cursor: pointer" class="glyphicon glyphicon-edit"
+                                    <span ng-if="expenseComments.commentIsMine" class="pointer glyphicon glyphicon-edit"
                                           ng-click="editComment($index)"
                                           data-toggle="tooltip" data-placement="left" title="Edit Comment"></span>
                                 </td>
                                 <td>
-                                    <span ng-if="expenseComments.commentIsMine" style="cursor: pointer" class="glyphicon glyphicon-trash"
+                                    <span ng-if="expenseComments.commentIsMine" class="pointer glyphicon glyphicon-trash"
                                           ng-click="deleteComment($index)"
                                           data-toggle="tooltip" data-placement="left" title="Delete Comment"></span>
                                 </td>

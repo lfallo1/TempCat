@@ -8,7 +8,7 @@
             <div>
                 <h4 class="col-sm-6 col-md-6">
                     Finance Table
-                    <small style="font-weight: lighter" class="bg-warning">Awaiting Approval: {{financeTotal}}</small></h4>
+                    <small class="lightWeight bg-warning">Awaiting Approval: {{financeTotal}}</small></h4>
             </div>
             <div class="col-sm-4 col-md-4 pull-right">
                 <select class="form-control col-sm-5 col-md-5 pull-right" ng-change="loadFinanceTableStatusX(selectedFinanceStatus.value)"
@@ -36,13 +36,13 @@
                 <tr>
                     <td>
                         <div ng-if="Status.StatusName !== 'Finance Rejected' || Status.StatusName !== 'Finance Approved'">
-                            <span style="cursor: pointer" class="glyphicon glyphicon-edit" ng-click="loadFinaceSubmission(submission, $index)"
+                            <span class="pointer glyphicon glyphicon-edit" ng-click="loadFinaceSubmission(submission, $index)"
                                   data-toggle="tooltip" data-placement="left" title="Edit Report"></span>
                         </div>
                     </td>
                     <td>
                         <div>
-                            <span style="cursor: pointer" class="glyphicon glyphicon-trash" ng-click="deleteSubmission(submission, $index)"
+                            <span class="pointer glyphicon glyphicon-trash" ng-click="deleteSubmission(submission, $index)"
                                 data-toggle="tooltip" data-placement="left" title="Delete Submission"></span>
                         </div>
                     </td>

@@ -83,6 +83,24 @@ body {
     height: 14px;
     width: 14px;
 }
+
+.pointer {
+    cursor: pointer;
+}
+
+.lightWeight {
+    font-weight: lighter;
+}
+
+.infoButtonMaxSize {
+    max-width: 95px;
+    width: 95px;
+}
+
+.progressbarsize {
+    height: 34px;
+    width: 130px;
+}
 /* Supporting marketing content */
 .marketing {
     margin: 40px 0;

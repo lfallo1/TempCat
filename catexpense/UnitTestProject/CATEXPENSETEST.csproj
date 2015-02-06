@@ -155,7 +155,7 @@
     <Compile Include="BackEnd_UnitTests\ControllerTests\EmailControllerTests.cs" />
     <Compile Include="BackEnd_UnitTests\ControllerTests\ExpenseCategoryControllerTests.cs" />
     <Compile Include="BackEnd_UnitTests\ControllerTests\HotTowelControllerTests.cs" />
-    <Compile Include="BackEnd_UnitTests\ControllerTests\LineItemCommentControllerTests.cs" />
+    <Compile Include="BackEnd_UnitTests\ControllerTests\CommentControllerTests.cs" />
     <Compile Include="BackEnd_UnitTests\ControllerTests\LineItemControllerTests.cs" />
     <Compile Include="BackEnd_UnitTests\ControllerTests\ReceiptControllerTests.cs" />
     <Compile Include="BackEnd_UnitTests\ControllerTests\RepliconControllerTests.cs" />

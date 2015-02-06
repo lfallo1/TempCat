@@ -156,11 +156,11 @@
                                 <tbody>
                                     <tr ng-repeat="expense in mileageArray">
                                         <td>
-                                            <span style="cursor: pointer" class="glyphicon glyphicon-edit" ng-click="editMileage($index)"
+                                            <span class="pointer glyphicon glyphicon-edit" ng-click="editMileage($index)"
                                                   data-toggle="tooltip" data-placement="right" title="Edit Mileage"></span>
                                         </td>
                                         <td>
-                                            <span style="cursor: pointer" class="glyphicon glyphicon-trash" ng-click="deleteMileage($index)"
+                                            <span class="pointer glyphicon glyphicon-trash" ng-click="deleteMileage($index)"
                                                   data-toggle="tooltip" data-placement="right" title="Delete Mileage"></span>
                                         </td>
                                         <td ng-bind="expense.origin"></td>
