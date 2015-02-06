@@ -594,4 +594,20 @@ angular.module('expenseApp')
 
       };
 
+      $scope.$watch(
+          'dt1',
+          function (newValue, oldValue) {
+              if (newValue.getDay() === 6) {
+                  $scope.dt = date;
+              }
+              else {
+                  var difference = 6 - newValue.getDay();
+                  var weekEnding = new Date();
+                  $scope.dt = weekEnding.setDate(newValue.getDate() + difference);
+                  $scope.dt1 = new Date($scope.dt);
+              }
+          },
+          true
+      );
+
   });

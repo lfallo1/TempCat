@@ -8,5 +8,6 @@ angular.module('expenseApp')
             transclude: true,
             controller: 'DatepickerCtrl',
             controllerAs: 'picker'
+      
         }
     });
