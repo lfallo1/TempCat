@@ -296,7 +296,7 @@
     <Compile Include="Controllers\HotTowelController.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Controllers\LineItemCommentController.cs">
+    <Compile Include="Controllers\CommentController.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Controllers\LineItemController.cs">
@@ -323,7 +323,7 @@
     <Compile Include="Models\RepliconProjectContainer.cs" />
     <Compile Include="Models\ExpenseCategory.cs" />
     <Compile Include="Models\LineItem.cs" />
-    <Compile Include="Models\LineItemComment.cs" />
+    <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\SubmissionMetadata.cs" />
     <Compile Include="Services\RepliconUserProjectService.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
@@ -344,7 +344,7 @@
     <Compile Include="Services\Interfaces\IExpenseCategoryService.cs" />
     <Compile Include="Services\Interfaces\IExpenseService.cs" />
     <Compile Include="Services\Interfaces\IFinanceApproverService.cs" />
-    <Compile Include="Services\Interfaces\ILineItemCommentService.cs" />
+    <Compile Include="Services\Interfaces\ICommentService.cs" />
     <Compile Include="Services\Interfaces\ILineItemService.cs" />
     <Compile Include="Services\Interfaces\IRepliconUserProjectService.cs" />
     <Compile Include="Services\Interfaces\IReceiptService.cs" />
@@ -355,7 +355,7 @@
     <Compile Include="Services\Interfaces\ISubmissionPageService.cs" />
     <Compile Include="Services\Interfaces\ISubmissionService.cs" />
     <Compile Include="Services\Interfaces\IValidationDictionary.cs" />
-    <Compile Include="Services\LineItemCommentService.cs" />
+    <Compile Include="Services\CommentService.cs" />
     <Compile Include="Services\LineItemService.cs" />
     <Compile Include="Services\ReceiptService.cs" />
     <Compile Include="Services\RepliconService.cs" />
@@ -426,7 +426,7 @@
     <Content Include="angular\app\scripts\services\Application.js" />
     <Content Include="angular\app\scripts\services\Authentication.js" />
     <Content Include="angular\app\scripts\services\DateService.js" />
-    <Content Include="angular\app\scripts\services\LineItemCommentService.js" />
+    <Content Include="angular\app\scripts\services\CommentService.js" />
     <Content Include="angular\app\scripts\services\LineItemService.js" />
     <Content Include="angular\app\scripts\services\LoginService.js" />
     <Content Include="angular\app\scripts\services\MapQuestService.js" />

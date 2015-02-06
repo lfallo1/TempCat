@@ -2,7 +2,7 @@
 
 namespace CatExpenseFront.Services.Interfaces
 {
-    public interface ILineItemCommentService : IService<LineItemComment>
+    public interface ICommentService : IService<Comment>
     {
     }
 }

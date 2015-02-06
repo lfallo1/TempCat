@@ -87,3 +87,12 @@ DROP CONSTRAINT FK_Receipts_Receipts
 
 ALTER TABLE Expense12.dbo.Receipts
 DROP COLUMN SubmissionId
+
+--change name of lineItemComments to just Comments
+USE expense12; 
+GO
+EXEC sp_rename 'LineItemComments', 'Comments';
+--change name of LineItemCommentId column to just CommentId
+USE expense12;
+GO
+EXEC sp_rename 'Comments.LineItemCommentId', 'CommentId', 'COLUMN';

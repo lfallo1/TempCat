@@ -9,9 +9,9 @@ using Newtonsoft.Json;
 namespace CatExpenseFront.Models
 {
     [JsonObject(IsReference = false)]
-    public class LineItemComment
+    public class Comment
     {
-        public int LineItemCommentId { get; set; }
+        public int CommentId { get; set; }
         public int SubmissionId { get; set; }
         public string ExpenseComment { get; set; }
         public System.DateTime DateCreated { get; set; }

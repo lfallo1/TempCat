@@ -41,7 +41,7 @@ namespace CatExpenseFront
                 container.RegisterType<IRepository<Expense>, Repository<Expense>>();
                 container.RegisterType<IRepository<FinanceApprover>, Repository<FinanceApprover>>();
                 container.RegisterType<IRepository<LineItem>, Repository<LineItem>>();
-                container.RegisterType<IRepository<LineItemComment>, Repository<LineItemComment>>();
+                container.RegisterType<IRepository<Comment>, Repository<Comment>>();
                 container.RegisterType<IRepository<Submission>, Repository<Submission>>();
                 container.RegisterType<IRepository<RepliconProject>, Repository<RepliconProject>>();
                 container.RegisterType<IRepository<RepliconUser>, Repository<RepliconUser>>();
@@ -56,7 +56,7 @@ namespace CatExpenseFront
                 container.RegisterType<IExpenseCategoryService, ExpenseCategoryService>();
                 container.RegisterType<IExpenseService, ExpenseService>();
                 container.RegisterType<IFinanceApproverService, FinanceApproverService>();
-                container.RegisterType<ILineItemCommentService, LineItemCommentService>();
+                container.RegisterType<ICommentService, CommentService>();
                 container.RegisterType<IReceiptService, ReceiptService>();
                 container.RegisterType<ISubmissionPageService, SubmissionPageService>();
                 container.RegisterType<IRepliconService, RepliconService>();

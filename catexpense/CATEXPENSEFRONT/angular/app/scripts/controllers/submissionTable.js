@@ -1,5 +1,5 @@
 ﻿angular.module('expenseApp')
-    .controller( 'submissionTableCtrl', function ( $scope, $route, $modal, $location, $rootScope, $filter, Application, ReceiptService, LineItemService, MessageService, LineItemCommentService, SubmissionService, Authentication ) {
+    .controller( 'submissionTableCtrl', function ( $scope, $route, $modal, $location, $rootScope, $filter, Application, ReceiptService, LineItemService, MessageService, CommentService, SubmissionService, Authentication ) {
         $scope.receipts = true;
         var orderBy = $filter('orderBy');
         var sortColumn = { field: 'DateCreated', reverse: false };
@@ -286,11 +286,11 @@
         */
         $scope.$on("saveComment", function (response, comment) {
             if (Application.getComment().ExpenseComment) {
-                LineItemCommentService.PutLineItemComment( Application.getComment().LineItemCommentId, comment ).then( function ( success ) {
+                CommentService.PutComment( Application.getComment().CommentId, comment ).then( function ( success ) {
                     $scope.currentSubmission.LineItemComments[commentIndex]['ExpenseComment'] = comment;
                 });
             } else {
-                LineItemCommentService.CreateLineItemComment($scope.currentSubmission.SubmissionId, comment).then(function (success) {
+                CommentService.CreateComment($scope.currentSubmission.SubmissionId, comment).then(function (success) {
                     success.data["commentIsMine"] = true;
                     $scope.currentSubmission.LineItemComments.push(success.data);
                 });
@@ -303,7 +303,7 @@
         * removes the comment from the line item in the database
         */
         $scope.$on("confirmDeleteComment", function () {
-            LineItemCommentService.DeleteLineItemComment($scope.currentSubmission.LineItemComments[commentIndex].LineItemCommentId).then(function (success) {
+            CommentService.DeleteComment($scope.currentSubmission.LineItemComments[commentIndex].CommentId).then(function (success) {
                 $scope.currentSubmission.LineItemComments.splice(commentIndex, 1);;
             });
         });

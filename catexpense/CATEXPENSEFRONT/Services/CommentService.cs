@@ -5,29 +5,29 @@ using CatExpenseFront.Services.Interfaces;
 
 namespace CatExpenseFront.Services
 {
-    public class LineItemCommentService : ILineItemCommentService
+    public class CommentService : ICommentService
     {
-        private IRepository<LineItemComment> repository;
+        private IRepository<Comment> repository;
 
-        public LineItemCommentService()
+        public CommentService()
         { }
 
-        public LineItemCommentService(IRepository<LineItemComment> iRepository)
+        public CommentService(IRepository<Comment> iRepository)
         {
             this.repository = iRepository;
 
         }
-        public IEnumerable<Models.LineItemComment> All()
+        public IEnumerable<Models.Comment> All()
         {
             return this.repository.All();
         }
 
-        public Models.LineItemComment Create(Models.LineItemComment tobject)
+        public Models.Comment Create(Models.Comment tobject)
         {
             return this.repository.Create(tobject);
         }
 
-        public int Update(Models.LineItemComment tobject)
+        public int Update(Models.Comment tobject)
         {
             return this.repository.Update(tobject);
         }
@@ -37,17 +37,17 @@ namespace CatExpenseFront.Services
             this.repository.SaveChanges();
         }
 
-        public Models.LineItemComment Find(int id)
+        public Models.Comment Find(int id)
         {
             return this.repository.Find(id);
         }
 
-        public int Delete(Models.LineItemComment tobject)
+        public int Delete(Models.Comment tobject)
         {
             return this.repository.Delete(tobject);
         }
 
-        public IEnumerable<Models.LineItemComment> CreateAll(IEnumerable<Models.LineItemComment> tobjects)
+        public IEnumerable<Models.Comment> CreateAll(IEnumerable<Models.Comment> tobjects)
         {
             return this.repository.CreateAll(tobjects);
         }

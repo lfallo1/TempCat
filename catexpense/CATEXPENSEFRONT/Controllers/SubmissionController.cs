@@ -40,7 +40,7 @@ namespace CatExpenseFront.Controllers
         private ISubmissionService service;
         private IRepliconUserProjectService userProjectService;
         private IRepliconProjectService projectService;
-        private ILineItemCommentService lineItemCommentsService;
+        private ICommentService lineItemCommentsService;
         private IFinanceApproverService financeApproverService;
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace CatExpenseFront.Controllers
                 this.service = service;
                 projectService = new RepliconProjectService(new Repository<RepliconProject>());
                 userProjectService = new RepliconUserProjectService(new Repository<RepliconUserProject>());
-                lineItemCommentsService = new LineItemCommentService();
+                lineItemCommentsService = new CommentService();
                 financeApproverService = new FinanceApproverService(new Repository<FinanceApprover>());
             }
         }
@@ -65,7 +65,7 @@ namespace CatExpenseFront.Controllers
         /// <param name="service"></param>
         /// <param name="userService"></param>
         /// <param name="iService"></param>
-        public SubmissionController(ISubmissionService service, IRepliconUserService userService, ILineItemCommentService iService)
+        public SubmissionController(ISubmissionService service, IRepliconUserService userService, ICommentService iService)
         {
             if (this.service == null)
             {
@@ -85,7 +85,7 @@ namespace CatExpenseFront.Controllers
         public SubmissionController()
         {
             this.service = new SubmissionService();
-            lineItemCommentsService = new LineItemCommentService();
+            lineItemCommentsService = new CommentService();
             userProjectService = new RepliconUserProjectService(new Repository<RepliconUserProject>());
             financeApproverService = new FinanceApproverService(new Repository<FinanceApprover>());
         }
@@ -265,7 +265,7 @@ namespace CatExpenseFront.Controllers
             //Checks the session to see if it is valid
             this.checkSession();
 
-            LineItemComment lineItemComment = new LineItemComment();
+            Comment lineItemComment = new Comment();
             HttpResponseMessage message = Request.CreateResponse(HttpStatusCode.OK);
             Submission mergedSubmission = service.Find(id);
 
@@ -319,7 +319,7 @@ namespace CatExpenseFront.Controllers
                             mergedSubmission.RepliconManagerApproverDate = DateTime.Now;
                             lineItemComment.SubmissionId = id;
                             lineItemComment.RepliconUserName = userName;
-                            lineItemComment.ExpenseComment = submission.LineItemComments.First<LineItemComment>().ExpenseComment;
+                            lineItemComment.ExpenseComment = submission.LineItemComments.First<Comment>().ExpenseComment;
                             lineItemComment.DateCreated = DateTime.Now;
                             lineItemComment.DateUpdated = DateTime.Now;
                             lineItemCommentsService.Create(lineItemComment);
@@ -345,7 +345,7 @@ namespace CatExpenseFront.Controllers
                             mergedSubmission.RepliconFinanceApproverDate = DateTime.Now;
                             lineItemComment.SubmissionId = id;
                             lineItemComment.RepliconUserName = userName;
-                            lineItemComment.ExpenseComment = submission.LineItemComments.First<LineItemComment>().ExpenseComment;
+                            lineItemComment.ExpenseComment = submission.LineItemComments.First<Comment>().ExpenseComment;
                             lineItemComment.DateCreated = DateTime.Now;
                             lineItemComment.DateUpdated = DateTime.Now;
                             lineItemCommentsService.Create(lineItemComment);

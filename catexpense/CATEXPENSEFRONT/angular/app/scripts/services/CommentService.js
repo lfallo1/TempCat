@@ -1,14 +1,14 @@
 ﻿'use strict';
 
 /**
- * This service will primarily deal with any functions and ajax calls related to line item comments.
+ * This service will primarily deal with any functions and ajax calls related to comments.
  *
  * @ngdoc service
- * @name LineItemService
- * @description # LineItemComment Service 
+ * @name Service
+ * @description # Comment Service 
  */
-angular.module( 'expenseApp.Services' )
-  .service( 'LineItemCommentService', function LineItemCommentService( $http ) {
+angular.module('expenseApp.Services')
+  .service('CommentService', function CommentService($http) {
       var self = this;
 
       //=====================================================================//
@@ -17,20 +17,20 @@ angular.module( 'expenseApp.Services' )
       //
       //=====================================================================//
 
-      self.getLineItemCommentById = function ( id ) {
-          return $http( {
+      self.getCommentById = function (id) {
+          return $http({
               method: "GET",
-              url: "/api/LineItemComment",
+              url: "/api/Comment",
               params: { id: id }
-          } );
+          });
       };
 
-      self.getLineItemCommentsBySubmissionId = function ( id ) {
-          return $http( {
+      self.getCommentsBySubmissionId = function (id) {
+          return $http({
               method: "GET",
-              url: "/api/LineItem/GetLineItemCommentsBySubmissionId",
+              url: "/api/Comment/GetCommentsBySubmissionId",
 
-          } );
+          });
       };
 
       //=====================================================================//
@@ -39,12 +39,12 @@ angular.module( 'expenseApp.Services' )
       //
       //=====================================================================//
 
-      self.CreateLineItemComment = function ( id, comment ) {
-          return $http( {
-              url: '/api/LineItem/CreateLineItemComment',
+      self.CreateComment = function (id, comment) {
+          return $http({
+              url: '/api/Comment/CreateComment',
               method: 'POST',
               params: { submissionId: id, comment: comment }
-          } );
+          });
       };
 
       //=====================================================================//
@@ -53,12 +53,12 @@ angular.module( 'expenseApp.Services' )
       //
       //=====================================================================//
 
-      self.PutLineItemComment = function ( id, comment ) {
-          return $http( {
-              url: '/api/LineItem/PutLineItemComment',
+      self.PutComment = function (id, comment) {
+          return $http({
+              url: '/api/Comment/PutComment',
               method: 'PUT',
               params: { id: id, comment: comment }
-          } );
+          });
       };
 
       //=====================================================================//
@@ -67,12 +67,12 @@ angular.module( 'expenseApp.Services' )
       //
       //=====================================================================//
 
-      self.DeleteLineItemComment = function ( id ) {
-          return $http( {
-              url: '/api/LineItem/DeleteLineItemComment',
+      self.DeleteComment = function (id) {
+          return $http({
+              url: '/api/Comment/DeleteComment',
               method: 'DELETE',
               params: { "id": id }
-          } );
+          });
       };
 
-  } );
+  });
