@@ -426,7 +426,9 @@
     <Content Include="angular\app\scripts\services\Application.js" />
     <Content Include="angular\app\scripts\services\Authentication.js" />
     <Content Include="angular\app\scripts\services\DateService.js" />
+    <Content Include="angular\app\scripts\services\LineItemCommentService.js" />
     <Content Include="angular\app\scripts\services\LineItemService.js" />
+    <Content Include="angular\app\scripts\services\LoginService.js" />
     <Content Include="angular\app\scripts\services\MapQuestService.js" />
     <Content Include="angular\app\scripts\services\MessageService.js" />
     <Content Include="angular\app\scripts\services\NavService.js" />

@@ -1,7 +1,7 @@
 ﻿'use strict';
 
 angular.module( 'expenseApp' )
-  .controller( 'receiptController', function ( $scope, $modalInstance, ReceiptService, $http, $rootScope, MessageService, $modal, Application, $route, LineItemService ) {
+  .controller( 'receiptController', function ( $scope, $modalInstance, ReceiptService, $rootScope, MessageService, $modal, Application, $route, LineItemService ) {
       var allReceipts = false;
       $scope.canDelete = true;
       if ( ReceiptService.getShowAllReceipts() ) {
@@ -38,11 +38,7 @@ angular.module( 'expenseApp' )
           ReceiptService.deleteReceipt( receiptId, $scope.userReceipts[receiptIndexId].LineItemId ).then(
             function ( success ) {
                 var submissions = Application.getAllUserSubmissions();
-                $http( {
-                    method: "GET",
-                    url: "/api/LineItem/GetLineItemsBySubmissionId",
-                    params: { id: Application.getSubmission().SubmissionId }
-                } ).then( function ( LineItems ) {
+                LineItemService.getLineItemsBySubmissionId( Application.getSubmission().SubmissionId ).then( function ( LineItems ) {
                     $scope.userReceipts.splice( receiptIndexId, 1 );
                     var lineItems = LineItems.data;
                     submissions[Application.getSubmissionIndex()].LineItems = lineItems;
