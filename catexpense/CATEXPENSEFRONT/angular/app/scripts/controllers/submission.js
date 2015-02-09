@@ -18,16 +18,30 @@ angular.module( 'expenseApp.Controllers' )
       $scope.currentDescription = '';
       $scope.editExistingSubmission = false;
       $scope.receiptsAmount = 0;
+
+      var afClient;
+      var afDate;
+
+      /**
+      * initialize variables upon page load 
+      * if a submission has been set in the Application service
+      */
       if ( Application.getSubmission() ) {
           $scope.submittedNotApproved = Application.getSubmissionStatus() === 2
         && Application.getSubmission().ActiveDirectoryUser.toUpperCase() == Authentication.getUserName().toUpperCase();
           $scope.createNewItemLoad = $scope.submission.StatusId == 1 || $scope.submission.StatusId == 4 || $scope.submission.StatusId == 6
       }
 
-      //this variable stores the date string chosen from the datepicker
+      /**
+      * this variable stores the date string chosen from the datepicker
+      */
       $scope.dt1 = '';
-      //this variable stores a boolean which determines if the 'create submission' button appears or the 'add new line item'
-      //Also, if true, the submission table will be visible
+
+      /**
+      * this variable stores a boolean which determines if the 'create submission' 
+      * button appears or the 'add new line item'
+      * Also, if true, the submission table will be visible
+      */
       $scope.submissionExists = false;
 
       /**
@@ -38,6 +52,9 @@ angular.module( 'expenseApp.Controllers' )
           return $scope.submissionExists;
       };
 
+      /**
+      * send broadcast message to edit comment with the index of the comment in its array
+      */
       $scope.editComment = function ( index ) {
           $rootScope.$broadcast( "editCommentFromSubmission", index );
       }
@@ -76,8 +93,6 @@ angular.module( 'expenseApp.Controllers' )
           return submission;
       };
 
-      var afClient;
-      var afDate;
       /**
       * this variable is used in front end validation,
       * determining the current state of the application
@@ -161,6 +176,10 @@ angular.module( 'expenseApp.Controllers' )
           // load replicon projects into clients array upon page load
           getAllProjects();
       }
+
+      /**
+      * listen for broadcast message signaling the completion of database sync
+      */
       $scope.$on( "syncComplete", function () {
           $scope.syncComplete = true;
           //populates the drop down list with projects.
@@ -540,7 +559,8 @@ angular.module( 'expenseApp.Controllers' )
 
       };
 
-      /** recieves broadcast message from MessageService confirming
+      /** 
+      * recieves broadcast message from MessageService confirming
       * that user can not submit an empty table
       */
       $scope.$on( "confirmNoEmptyLineItems", function () {

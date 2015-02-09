@@ -10,6 +10,9 @@ angular.module( 'expenseApp.Controllers' )
 
       var sortColumn = { field: 'DateCreated', reverse: false };
 
+      /**
+      * allow user to sort submissions in table by any column
+      */
       $scope.managerOrder = function (field) {
           if (field === sortColumn.field) {
               sortColumn.reverse = !sortColumn.reverse;
@@ -21,12 +24,21 @@ angular.module( 'expenseApp.Controllers' )
           };
       };
 
+      /**
+      * allow user to expand and contract manager table view
+      */
       $scope.expandContract = function (value) {
           $scope.expanded = value;
       };
 
-      // container for the submissions
+      /**
+      * container for the submissions
+      */
       var managerSubmissionsContainer = [];
+
+      /**
+      * if user is a manager, load managerTable with submissions awaiting approval
+      */
       if (Authentication.getIsManager()) {
           $scope.loadManagerTable = function () {
               if (Application.getPendingSubmissionsByManagerName() != undefined) {
@@ -49,7 +61,9 @@ angular.module( 'expenseApp.Controllers' )
           $scope.loadManagerTable();
       }
 
-      // redirect to submission page with the submission id to allow the table to populate
+      /**
+      * redirect to submission page with the submission id to allow the table to populate
+      */
       $scope.loadManagerSubmission = function (submission, index) {
           Application.setSubmission(submission);
           Application.setSubmissionStatus(submission.Status.StatusId);
@@ -68,7 +82,9 @@ angular.module( 'expenseApp.Controllers' )
           $location.path('/submission');
       }
 
-      // Delete a submission by id
+      /**
+      * Delete a submission by id
+      */
       $scope.deleteSubmission = function (submission, index) {
           Application.setSubmissionIndex(index);
           MessageService.setMessage("Are you sure you want to delete this submission?");
@@ -86,7 +102,9 @@ angular.module( 'expenseApp.Controllers' )
       }
 
 
-      //Listens for a delete broadcast message
+      /**
+      * Listens for a delete broadcast message
+      */
       $scope.$on("confirmManagerDeleteSubmission", function () {
           MessageService.setMessage("");
           MessageService.setBroadCastMessage("");
