@@ -484,13 +484,10 @@ namespace Selenium.PageObjects
 
         #endregion
 
-        public ConfirmModal DeleteSubmission(int submissionRow)
+        public void DeleteSubmission()
         {
-            var buttonPath = string.Format(_deleteClientButtonByRow, submissionRow);
-            var deleteButton = Find(By.XPath(buttonPath));
-            deleteButton.Click();
-
-            return new ConfirmModal(Driver);
+            var deleteButton = Find(DeleteSubmissionButton);
+            deleteButton.Click();            
         }
 
         public ExpenseReportHomePage FilterEmployeeTable(int selection)

@@ -127,6 +127,9 @@ namespace Selenium.Tests
             var content = thisPage.ReadSubmissionDescription();
             Assert.IsNotNullOrEmpty(content);
             Assert.AreEqual("test for description", content);
+            thisPage.OpenDatePicker();
+            thisPage.DatePickerClickToday();
+            thisPage.DeleteSubmission();
         }
 
          //<summary>
