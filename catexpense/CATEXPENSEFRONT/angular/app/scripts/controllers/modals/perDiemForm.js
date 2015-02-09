@@ -10,7 +10,9 @@
 angular.module( 'expenseApp.Controllers' )
   .controller( 'PerDiemCtrl', function ( $scope, LineItemService, DateService, ValidationService ) {
 
-      //default validation for fields
+      /**
+      * default validation for fields
+      */
       $scope.perDiemValidation = {
           days: {
               valid: true,
@@ -19,6 +21,12 @@ angular.module( 'expenseApp.Controllers' )
           validInput: true
       };
 
+      /**
+      * for new item being created, set fields from page input directly in LineItemService,
+      * which will later be passed to submission.js for post to database when modal closes
+      *
+      * for item under edit, set these fields in the perDiemForm with their existing values
+      */
       $scope.perDiemValues = {
           daysString: {
               sunday: LineItemService.getDaysString().sunday.toString(),
@@ -39,7 +47,6 @@ angular.module( 'expenseApp.Controllers' )
       /**
        * Calculates the total based on which of the days were checked in the form.
        * Currently is hard coded to be 30.
-       *
        */
       $scope.calculateTotal = function () {
           var perDiem = 30;
@@ -52,6 +59,9 @@ angular.module( 'expenseApp.Controllers' )
           LineItemService.setLineItemAmount( $scope.perDiemValues.amount );
       };
 
+      /**
+      * setter functions
+      */
       $scope.updateDays = function () {
           LineItemService.setDays( $scope.perDiemValues.days );
           $scope.perDiemArray[0] = $scope.perDiemValues;

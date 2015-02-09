@@ -15,7 +15,9 @@ angular.module( 'expenseApp.Controllers' )
 
       $scope.divShow = false;
 
-      // contains the list of the different types of expenses
+      /**
+      * contains the list of the different types of expenses
+      */
       $scope.formTypes = [
           'Mileage',
           'Per Diem',
@@ -28,17 +30,25 @@ angular.module( 'expenseApp.Controllers' )
           'Other'
       ];
 
-      // these array will store the list of expenses that will be submitted
-      // they will be modified by MileageCtrl, PerDiemCtrl, and OtherCtrl
+      /** 
+      * these arrays will store the list of expenses that will be submitted
+      * they will be modified by MileageCtrl, PerDiemCtrl, and OtherCtrl
+      */
       $scope.mileageArray = [];
       $scope.perDiemArray = [];
       $scope.otherArray = [];
 
-      //default expense category chosen
+      /**
+      * default expense category chosen
+      */
       $scope.selectedType = LineItemService.getExpenseCategoryName();
-
+      /**
+      * is the user currently editing a line item?
+      */
       $scope.editingLineItem = LineItemService.getUnderEdit();
+
       $scope.addNewReceipt = false;
+
       /**
        * Determines if the mileage form will display in the modal.
        * Returns true if the dropdown has 'Mileage' selected.
@@ -68,7 +78,6 @@ angular.module( 'expenseApp.Controllers' )
 
       /**
        * Reset the submission values to their defaults.
-       *
        */
       $scope.resetValues = function () {
           LineItemService.setExpenseCategoryName( $scope.selectedType );
