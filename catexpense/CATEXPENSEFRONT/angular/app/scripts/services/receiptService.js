@@ -9,6 +9,9 @@ angular.module( 'expenseApp.Services' )
       var allReceipts;
       var showAllReceipts;
 
+      /**
+      * getters and setters 
+      */
       self.getReceipts = function () {
           return receipts;
       };

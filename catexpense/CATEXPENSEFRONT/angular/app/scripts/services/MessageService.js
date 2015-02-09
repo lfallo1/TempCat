@@ -9,6 +9,9 @@ angular.module( 'expenseApp.Services' )
       var index = 0;
       var addCommit = false;
 
+      /**
+      * getter and setter methods
+      */
       return {
           setMessage: function ( messageValue ) {
               message = messageValue;
