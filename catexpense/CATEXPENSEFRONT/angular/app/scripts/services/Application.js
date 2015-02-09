@@ -15,6 +15,8 @@ angular.module('expenseApp.Services')
       var submissionIndex;
       var lineItemIndex;
       var repliconProjects;
+      var commentIndex;
+      var isNewComment;
 
       var callListeners = function () {
           for (var i = registeredListeners.length - 1; i >= 0; i--) {
@@ -101,6 +103,22 @@ angular.module('expenseApp.Services')
               return comment;
           },
 
+          setCommentIndex: function (index) {
+              commentIndex = index;
+          },
+
+          getCommentIndex: function () {
+              return commentIndex;
+          },
+
+          getIsNewComment: function(){
+              return isNewComment;
+          },
+
+          setIsNewComment: function(isResponse){
+              isNewComment = isResponse;
+          },
+          
           setPendingSubmissionsByManagerName: function(pendingSubmissions){
               pendingSubmissionsByManagerName = pendingSubmissions;
           },

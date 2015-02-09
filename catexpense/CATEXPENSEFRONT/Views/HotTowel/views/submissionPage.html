@@ -41,17 +41,7 @@
 
         </div>
     </div>
-    <div ng-show="clientAndDate() && se() || !submissionLoad">
-        <div class="col-sm-12">
-            <button class="btn btn-primary" id="addLineItemButton" ng-click="addNewLineItem()" ng-disabled="!createNewItemLoad">
-                <i class="glyphicon glyphicon-plus"></i>
-                <span>Add Line Item</span>
-            </button>
-            <button class="btn btn-danger" id="deleteSubmissionButton" ng-click="deleteSubmission()" ng-disabled="!createNewItemLoad">
-                <i class="glyphicon glyphicon-trash"></i>
-                <span>Delete Submission</span>
-            </button>
-        </div>
+    <div ng-show="clientAndDate() && se() || !submissionLoad">        
         <div>
             <submission-table></submission-table>
         </div>
