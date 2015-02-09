@@ -119,6 +119,10 @@ namespace Selenium.Tests
         [Test]
         public void AddDescriptionToSubmissionTest()
         {
+            thisPage.OpenDatePicker();
+            thisPage.DatePickerClickToday();
+            thisPage.ClickCreateSubmission();
+            thisPage.CreateTestSubmission();
             thisPage.AddDescriptionToSubmission();
             var content = thisPage.ReadSubmissionDescription();
             Assert.IsNotNullOrEmpty(content);
