@@ -10,20 +10,30 @@
 angular.module( 'expenseApp.Controllers' )
   .controller( 'MileageCtrl', function ( $scope, LineItemService, MapQuestService, ValidationService ) {
 
-      //this variable will be responsible for disabling the 'Get Distance' button when clicked
+      /**
+      * this variable will be responsible for disabling the 'Get Distance' button when clicked
+      */
       $scope.calculatingDistance = false;
 
-      //determine if the modal is editing an existing lineitem or creating new one(s)
+      /**
+      * determine if the modal is editing an existing lineitem or creating new one(s)
+      */
       $scope.editingExistingMileage = LineItemService.getUnderEdit();
 
-      //disables the 'Save Changes' and 'Cancel Changes' buttons if the user is not editing an item from the array
+      /**
+      * disables the 'Save Changes' and 'Cancel Changes' buttons if the user is not editing an item from the array
+      */
       $scope.editingNewMileage = false;
 
-      //stores the ides of the mileageArray of the item that is being edited
+      /** 
+      * stores the ides of the mileageArray of the item that is being edited
+      */
       var mileageIndex = 0;
 
 
-      //default validation for fields
+      /**
+      * default validation for fields
+      */
       $scope.mileageValidation = {
           date: {
               valid: true,
@@ -49,7 +59,9 @@ angular.module( 'expenseApp.Controllers' )
       };
 
 
-      // default values when the modal is opened
+      /**
+      * default values when the modal is opened
+      */
       $scope.mileageValues = {
           date: LineItemService.getLineItemDate(),
           origin: LineItemService.getOrigin(),
@@ -60,7 +72,9 @@ angular.module( 'expenseApp.Controllers' )
           billable: LineItemService.getBillable()
       };
 
-      //determine whether the user is editing the form
+      /**
+      * determine whether the user is editing the form
+      */
       /* var isUnderEdit = function () {
            if ( $scope.editForm ) {
                setFormValuesForEdit();
@@ -240,12 +254,18 @@ angular.module( 'expenseApp.Controllers' )
           }
       };
 
+      /**
+      * do not save the changes made to the line item
+      */
       $scope.discardChanges = function () {
           //discard changes
           resetValues();
           $scope.editingNewMileage = false;
       };
 
+      /**
+      * reset the values related to mileage
+      */
       function resetMileage() {
           $scope.mileageValues = {
               date: '',
@@ -260,6 +280,9 @@ angular.module( 'expenseApp.Controllers' )
           resetValidation();
       };
 
+      /**
+      * reset fields in mileage validation object to their default values
+      */
       function resetValidation() {
           $scope.mileageValidation = {
               date: {
@@ -289,7 +312,6 @@ angular.module( 'expenseApp.Controllers' )
       /**
        * Watch the form and updates the mileage values based on what is inputted in the fields
        * Note: this only applies when editing an existing line item
-       *
        */
       $scope.$watch(
           'mileageValues',
@@ -333,31 +355,43 @@ angular.module( 'expenseApp.Controllers' )
       // IDEALLY WILL BE REFACTORED LATER ON
       //==============================================================================//
 
-      //sets the date to today
+      /**
+      * set the date to today
+      */
       $scope.today = function () {
           $scope.otherValues.date = new Date();
       };
 
-      //clears the date field
+      /**
+      * clear the date field
+      */
       $scope.clear = function () {
           $scope.$scope.otherValues.date = null;
       };
 
-      //sets the minimum date selectable
-      //currently set to make sunday of the week the minumum
+      /**
+      * sets the minimum date selectable
+      * currently set to make sunday of the week the minumum
+      * call this function upon page load
+      */
       $scope.toggleMin = function () {
           $scope.minDate = LineItemService.getDaysString().sunday;
       };
       $scope.toggleMin();
 
-      //sets the maximum date selectable
-      //currently sets the saturday of the week the maximum
+      /**
+      * sets the maximum date selectable
+      * currently sets the saturday of the week the maximum
+      * call this function upon page load
+      */
       $scope.toggleMax = function () {
           $scope.maxDate = LineItemService.getDaysString().saturday;
       };
       $scope.toggleMax();
 
-      //opens the datepicker modal
+      /**
+      * opens the datepicker modal
+      */
       $scope.open = function ( $event ) {
           $event.preventDefault();
           $event.stopPropagation();
@@ -365,13 +399,18 @@ angular.module( 'expenseApp.Controllers' )
           $scope.opened = true;
       };
 
+      /**
+      * the display format for dates from mileageForm datepicker
+      */
       $scope.dateOptions = {
           formatYear: 'yy',
           startingDay: 1
       };
 
-      //displays the date in the selected format
-      //currently defaults to 'dd-MMMM-yyyy' ie: 01-January-2015
+      /**
+      * displays the date in the selected format
+      * currently defaults to 'dd-MMMM-yyyy' ie: 01-January-2015
+      */
       $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
       $scope.format = $scope.formats[0];
 
