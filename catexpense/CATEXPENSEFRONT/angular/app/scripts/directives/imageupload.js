@@ -62,6 +62,9 @@
             image.src = url;
         };
 
+        /**
+        * read url of receipt image file
+        */
         var fileToDataURL = function (file) {
             var deferred = $q.defer();
             var reader = new FileReader();

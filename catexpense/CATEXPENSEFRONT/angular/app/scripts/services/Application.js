@@ -18,6 +18,9 @@ angular.module('expenseApp.Services')
       var commentIndex;
       var isNewComment;
 
+      /**
+      * execute all functions sin registeredListeners array
+      */
       var callListeners = function () {
           for (var i = registeredListeners.length - 1; i >= 0; i--) {
               registeredListeners[i]();
@@ -50,11 +53,17 @@ angular.module('expenseApp.Services')
               repliconProjects = undefined;
           },
 
+          /**
+          * register a new listener
+          */
           registerListener: function (callback) {
               if (ready) callback();
               else registeredListeners.push(callback);
           },
 
+          /**
+          * getters and setters
+          */
           setSubmission: function (currentSubmission) {
               submission = currentSubmission;
           },

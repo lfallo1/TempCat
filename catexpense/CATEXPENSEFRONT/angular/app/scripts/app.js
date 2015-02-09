@@ -9,14 +9,20 @@
  * Main module of the application.
  */
 
-//this module will store all of the services
+/**
+* this module will store all of the services
+*/
 angular.module( 'expenseApp.Services', [] );
 
-//this module will store all of the controllers
-//currently not used
+/**
+* this module will store all of the controllers
+* currently not used
+*/
 angular.module( 'expenseApp.Controllers', [] );
 
-//this is the main module
+/**
+* this is the main module
+*/
 angular
   .module( 'expenseApp', [
     'ngAnimate',

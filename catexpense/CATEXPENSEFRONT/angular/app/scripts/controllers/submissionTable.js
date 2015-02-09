@@ -215,7 +215,6 @@
 
         /** 
         * a Manager can approve a submission which will call this mehtod
-        *
         */
         $scope.approve = function () {
             // the manager does not need a comment when approving
@@ -258,6 +257,10 @@
                 controller: 'receiptController'
             });
         };
+
+        /**
+        * listen for broadcast message and set scope variable
+        */
         $scope.$on("refreshCreateNewItemLoad", function () {
             $scope.editExistingSubmission = false;
         });

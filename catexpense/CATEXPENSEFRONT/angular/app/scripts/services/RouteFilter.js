@@ -5,6 +5,9 @@ angular.module('expenseApp.Services')
 
       var filters = [];
 
+      /**
+      * match passed in route with those stored in filters array
+      */
       var getFilter = function (route) {
           for (var i = filters.length - 1; i >= 0; i--) {
               for (var j = filters[i].routes.length - 1; j >= 0; j--) {
@@ -16,6 +19,9 @@ angular.module('expenseApp.Services')
           };
       }
 
+      /**
+      * variable used by getFilter function above
+      */
       var matchRoute = function (filterRoute, route) {
           if (route instanceof RegExp) {
               return route.test(filterRoute);
@@ -26,6 +32,9 @@ angular.module('expenseApp.Services')
           }
       }
 
+      /**
+      * methods made accessable outside of factory
+      */
       return {
           canAccess: function (route) {
               var filter = getFilter(route);
