@@ -5,7 +5,7 @@ body {
 }
 
 .sizedTable {
-    max-height: 250px;
+    max-height: 450px;
     overflow-y: auto;
 }
 
