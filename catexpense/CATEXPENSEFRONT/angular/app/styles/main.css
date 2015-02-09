@@ -85,7 +85,12 @@ body {
 }
 
 .pointer {
-    cursor: pointer;
+    cursor: pointer;    
+}
+
+.cursorText {
+    cursor: text;
+    background-color: #fff;
 }
 
 .lightWeight {

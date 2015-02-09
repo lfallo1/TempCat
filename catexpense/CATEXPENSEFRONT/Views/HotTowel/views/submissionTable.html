@@ -9,7 +9,7 @@
                                 <tr>
                                     <td>
                                         <strong>{{expenseComments.RepliconUserName}}</strong> <small>added a comment</small> - {{expenseComments.DateUpdated | date:'yyyy/MM/dd h:mm a'}}<br />
-                                        <span ng-click="editComment($index)">{{expenseComments.ExpenseComment}}</span>
+                                        <div class="cursorText well well-sm col-md-5" ng-click="editComment($index)">{{expenseComments.ExpenseComment}}</div>
                                     </td>
                                 </tr>
                             </tbody>
