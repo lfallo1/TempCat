@@ -8,6 +8,9 @@ angular.module('expenseApp.Services')
       var isManager;
       var isFinanceApprover;
 
+      /**
+      * methods made accessable outside the Authentication service
+      */
       return {
           requestUser: function () {
               var deferred = $q.defer();
