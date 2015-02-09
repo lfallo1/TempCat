@@ -76,25 +76,22 @@ angular.module( 'expenseApp.Controllers' )
           return submission;
       };
 
-      var oldClient;
-      var oldDate;
+      var afClient;
+      var afDate;
       /**
       * this variable is used in front end validation,
       * determining the current state of the application
       * and displaying or hiding elements accordingly
       */
       $scope.clientAndDate = function () {
-          if(oldClient === $scope.selectedClient && oldDate === $scope.dt1){
-              return true;
-          };
 
           if ( $scope.selectedClient !== null && ( $scope.dt1 instanceof Date && !isNaN( $scope.dt1.valueOf() ) ) ) {
-              oldClient = $scope.selectedClient;
-              oldDate = $scope.dt1;
               //gets the submission that matches the date and client
               $scope.submission = $scope.findSpecificSubmission();
               $scope.createNewItemLoad = false;
-              $rootScope.$broadcast( "submissionFound", $scope.submission );
+              if ( afDate !== $scope.dt1 && $scope.afClient !== $scope.selectedClient ) {
+                  $rootScope.$broadcast( "submissionFound", $scope.submission );
+              }
               Application.setAllUserSubmissions( $scope.totalSubmissions );
               if ( $scope.submission ) {
                   $scope.missingLineItems = $scope.submission.LineItems.length < 1;
@@ -104,6 +101,8 @@ angular.module( 'expenseApp.Controllers' )
                   $scope.currentDescription = '';
                   $scope.submissionExists = false;
               }
+              afClient = $scope.selectedClient;
+              afDate = $scope.dt1;
               return true;
           } else {
               return false;
@@ -620,7 +619,7 @@ angular.module( 'expenseApp.Controllers' )
                   else {
                       var difference = 6 - newValue.getDay();
                       var weekEnding = new Date();
-                      $scope.dt1 = new Date(weekEnding.setDate( newValue.getDate() + difference ));
+                      $scope.dt1 = new Date( weekEnding.setDate( newValue.getDate() + difference ) );
                       //$scope.dt1 = new Date( $scope.dt );
                   }
               } else {
