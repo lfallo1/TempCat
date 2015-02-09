@@ -101,6 +101,7 @@ angular.module( 'expenseApp.Controllers' )
                   $scope.submissionExists = true;
                   $scope.createNewItemLoad = $scope.submission.StatusId == 1 || $scope.submission.StatusId == 4 || $scope.submission.StatusId == 6;
               } else {
+                  $scope.currentDescription = '';
                   $scope.submissionExists = false;
               }
               return true;
