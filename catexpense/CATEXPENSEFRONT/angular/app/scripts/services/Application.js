@@ -1,7 +1,7 @@
 ﻿'use strict';
 
 angular.module('expenseApp.Services')
-  .factory('Application', function Application() {
+  .factory('Application', [function Application() {
 
       var ready = false, registeredListeners = [];
       var submission;
@@ -120,15 +120,15 @@ angular.module('expenseApp.Services')
               return commentIndex;
           },
 
-          getIsNewComment: function(){
+          getIsNewComment: function () {
               return isNewComment;
           },
 
-          setIsNewComment: function(isResponse){
+          setIsNewComment: function (isResponse) {
               isNewComment = isResponse;
           },
-          
-          setPendingSubmissionsByManagerName: function(pendingSubmissions){
+
+          setPendingSubmissionsByManagerName: function (pendingSubmissions) {
               pendingSubmissionsByManagerName = pendingSubmissions;
           },
 
@@ -136,7 +136,7 @@ angular.module('expenseApp.Services')
               return pendingSubmissionsByManagerName;
           },
 
-          setPendingSubmissionsByFinanceApprover: function(pendingSubmissions){
+          setPendingSubmissionsByFinanceApprover: function (pendingSubmissions) {
               PendingSubmissionsByFinanceApprover = pendingSubmissions;
           },
 
@@ -144,7 +144,7 @@ angular.module('expenseApp.Services')
               return PendingSubmissionsByFinanceApprover;
           },
 
-          setSubmissionIndex: function(index){
+          setSubmissionIndex: function (index) {
               submissionIndex = index;
           },
 
@@ -152,7 +152,7 @@ angular.module('expenseApp.Services')
               return submissionIndex;
           },
 
-          setLineItemIndex: function(index){
+          setLineItemIndex: function (index) {
               lineItemIndex = index;
           },
 
@@ -168,4 +168,4 @@ angular.module('expenseApp.Services')
               return repliconProjects;
           }
       }
-  });
+  }]);

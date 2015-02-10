@@ -7,8 +7,8 @@
  * # MainCtrl
  * Controller of the expenseApp
  */
-angular.module( 'expenseApp.Controllers' )
-  .controller( 'PerDiemCtrl', function ( $scope, LineItemService, DateService, ValidationService ) {
+angular.module('expenseApp.Controllers')
+  .controller('PerDiemCtrl', ["$scope", "LineItemService", "DateService", "ValidationService", function ($scope, LineItemService, DateService, ValidationService) {
 
       $scope.perDiemValues = {
           daysString: {
@@ -56,22 +56,22 @@ angular.module( 'expenseApp.Controllers' )
       $scope.calculateTotal = function () {
           var perDiem = 30;
           $scope.perDiemValues.amount = 0;
-          for ( var key in $scope.perDiemValues.days ) {
-              if ( $scope.perDiemValues.days.hasOwnProperty( key ) ) {
+          for (var key in $scope.perDiemValues.days) {
+              if ($scope.perDiemValues.days.hasOwnProperty(key)) {
                   $scope.perDiemValues.amount += $scope.perDiemValues.days[key] ? perDiem : 0;
               }
           };
-          LineItemService.setLineItemAmount( $scope.perDiemValues.amount );
+          LineItemService.setLineItemAmount($scope.perDiemValues.amount);
       };
 
       $scope.updateDays = function () {
-          LineItemService.setDays( $scope.perDiemValues.days );
-          perDiemValidation = ValidationService.validatePerDiem( LineItemService.getLineItem() );
-          LineItemService.setValidity( $scope.perDiemIsValid() );
+          LineItemService.setDays($scope.perDiemValues.days);
+          perDiemValidation = ValidationService.validatePerDiem(LineItemService.getLineItem());
+          LineItemService.setValidity($scope.perDiemIsValid());
       };
 
       $scope.updateBillable = function () {
-          LineItemService.setBillable( $scope.perDiemValues.billable );
+          LineItemService.setBillable($scope.perDiemValues.billable);
       };
 
-  } );
+  }]);

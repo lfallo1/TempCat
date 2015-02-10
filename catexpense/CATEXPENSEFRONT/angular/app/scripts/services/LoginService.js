@@ -1,7 +1,7 @@
 ﻿'use strict';
 
-angular.module( 'expenseApp.Services' )
-  .service( 'LoginService', function LoginService( $http ) {
+angular.module('expenseApp.Services')
+  .service('LoginService', ["$http", function LoginService($http) {
       var self = this;
 
       //=====================================================================//
@@ -14,10 +14,10 @@ angular.module( 'expenseApp.Services' )
       * This will check to see if the user is logged in.
       */
       self.isLoggedIn = function () {
-          return $http( {
+          return $http({
               url: '/api/login/isLoggedIn',
               method: 'GET'
-          } );
+          });
       };
 
       //=====================================================================//
@@ -29,25 +29,25 @@ angular.module( 'expenseApp.Services' )
       /**
        * This will attempt to log the user in with the given user name and password
        */
-      self.userlogin = function ( username, password ) {
-          return $http( {
+      self.userlogin = function (username, password) {
+          return $http({
               method: "POST",
               url: "/api/login/userlogin",
               data: {
                   Username: username,
                   Password: password
               }
-          } );
+          });
       };
 
       /**
        * This will log the user out and destroy the session
        */
       self.userLogout = function () {
-          return $http( {
+          return $http({
               method: "POST",
               url: "/api/login/userLogout"
-          } );
+          });
       };
 
       //=====================================================================//
@@ -62,4 +62,4 @@ angular.module( 'expenseApp.Services' )
       //
       //=====================================================================//
 
-  } );
+  }]);

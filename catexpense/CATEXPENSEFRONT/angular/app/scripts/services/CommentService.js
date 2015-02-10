@@ -8,7 +8,7 @@
  * @description # Comment Service 
  */
 angular.module('expenseApp.Services')
-  .service('CommentService', function CommentService($http) {
+  .service('CommentService', ["$http", function CommentService($http) {
       var self = this;
 
       //=====================================================================//
@@ -75,4 +75,4 @@ angular.module('expenseApp.Services')
           });
       };
 
-  });
+  }]);

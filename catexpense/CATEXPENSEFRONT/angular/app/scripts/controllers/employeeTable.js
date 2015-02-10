@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module( 'expenseApp.Controllers' )
-  .controller( 'EmployeeTableController', function ( $scope, $location, $modal, $route, $rootScope, $filter, Application, SubmissionService, MessageService, ReceiptService ) {
+  .controller('EmployeeTableController', ["$scope", "$location", "$modal", "$route", "$rootScope", "$filter", "Application", "SubmissionService", "MessageService", "ReceiptService", function ($scope, $location, $modal, $route, $rootScope, $filter, Application, SubmissionService, MessageService, ReceiptService) {
 
       /**
       * statuses used for the drop down filter
@@ -204,4 +204,4 @@ angular.module( 'expenseApp.Controllers' )
           $scope.employeeSubmissions = Application.getAllUserSubmissions();
       });
 
-  });
+  }]);
