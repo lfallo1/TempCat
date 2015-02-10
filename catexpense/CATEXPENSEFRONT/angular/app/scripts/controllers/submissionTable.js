@@ -251,7 +251,6 @@
             ReceiptService.setAddReceipt(false);
             ReceiptService.setShowAllReceipts(false);
             ReceiptService.setReceipts($scope.currentSubmission.LineItems[index].Receipts);
-            console.log();
             var modalInstance = $modal.open({
                 templateUrl: 'Views/HotTowel/views/modals/receiptModal.html',
                 controller: 'receiptController'
