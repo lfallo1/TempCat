@@ -5,12 +5,13 @@
     <div class="modal-body">
         <div class="row">
             <div class="col-md-12">
-                <label class="col-md-5">Add a comment:</label>
-                <textarea id="commentTextArea" placeholder="Add a comment." ng-model="comment" class="form-control col-md-6"></textarea>
+                <label>Add a comment:</label>
+                <textarea rows="4" id="commentTextArea" placeholder="Add a comment." ng-model="comment" class="form-control col-md-6"></textarea>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12">                
+            <div class="col-md-12">
+                <br />
                 <button id="cancelButton" class="btn btn-warning col-md-2 pull-right" ng-click="cancel()">Cancel</button>
                 <button id="yesButton" ng-disabled="!comment" class="btn btn-success col-md-2 pull-right" ng-click="save()">Save</button>
                 <button ng-if="!isNewComment" id="deleteComment" class="btn btn-danger col-md-2 pull-left" title="Delete Comment" ng-click="deleteComment()">Delete</button>

@@ -251,7 +251,6 @@
             ReceiptService.setAddReceipt(false);
             ReceiptService.setShowAllReceipts(false);
             ReceiptService.setReceipts($scope.currentSubmission.LineItems[index].Receipts);
-            console.log();
             var modalInstance = $modal.open({
                 templateUrl: 'Views/HotTowel/views/modals/receiptModal.html',
                 controller: 'receiptController'
@@ -327,11 +326,13 @@
         * recieves broadcast message from commentModal.js
         */
         $scope.$on("saveComment", function (response, comment) {
+            // edit comment
             if (Application.getComment().ExpenseComment) {
                 CommentService.PutComment(Application.getComment().CommentId, comment).then(function (success) {
                     $scope.currentSubmission.Comments[commentIndex]['ExpenseComment'] = comment;
                 });
             } else {
+                // create new comment
                 CommentService.CreateComment($scope.currentSubmission.SubmissionId, comment).then(function (success) {
                     success.data["commentIsMine"] = true;
                     $scope.currentSubmission.Comments.push(success.data);
