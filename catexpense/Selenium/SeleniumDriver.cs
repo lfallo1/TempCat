@@ -20,7 +20,7 @@ namespace Selenium
                 if (driver == null)
                 {
                     string browser;
-                    using (var sr = new StreamReader("C:/CatExpenseInfo.txt"))
+                    using (var sr = new StreamReader(@"../../../Selenium/App.config"))
                     {
                         browser = sr.ReadLine();
                     }
