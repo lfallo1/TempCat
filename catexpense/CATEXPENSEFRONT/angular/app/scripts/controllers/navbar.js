@@ -1,7 +1,7 @@
 ﻿'use strict';
 
-angular.module( 'expenseApp.Controllers' )
-    .controller('NavController', function ($scope, $location, $timeout, Application, $route, $rootScope, Authentication, LoginService, SubmissionService, RepliconProjectService) {
+angular.module('expenseApp.Controllers')
+    .controller('NavController', ["$scope", "$location", "$timeout", "Application", "$route", "$rootScope", "Authentication", "LoginService", "SubmissionService", "RepliconProjectService", function ($scope, $location, $timeout, Application, $route, $rootScope, Authentication, LoginService, SubmissionService, RepliconProjectService) {
         $scope.isLoggedIn = Authentication.exists();
 
         $scope.$on("refresh", function () {
@@ -10,7 +10,7 @@ angular.module( 'expenseApp.Controllers' )
         $scope.isActive = function (view) {
             return view === $location.path();
         };
-        $scope.navToSubmissionPage = function () {           
+        $scope.navToSubmissionPage = function () {
             Application.setSubmission(undefined);
             $route.reload();
             $location.path('/submission');
@@ -56,4 +56,4 @@ angular.module( 'expenseApp.Controllers' )
             }, 28000);
 
         };
-    });
+    }]);

@@ -7,8 +7,8 @@
  * # MainCtrl
  * Controller of the expenseApp
  */
-angular.module( 'expenseApp.Controllers' )
-  .controller( 'OtherCtrl', function ( $scope, LineItemService, ValidationService ) {
+angular.module('expenseApp.Controllers')
+  .controller('OtherCtrl', ["$scope", "LineItemService", "ValidationService", function ($scope, LineItemService, ValidationService) {
 
       //determine if the modal is editing an existing lineitem or creating new one(s)
       //$scope.editingExistingOther = LineItemService.getUnderEdit();
@@ -85,29 +85,29 @@ angular.module( 'expenseApp.Controllers' )
       * setter methods for otherValidation field values
       */
       $scope.updateDate = function () {
-          LineItemService.setLineItemDate( $scope.otherValues.date );
-          otherValidation = ValidationService.validateOther( LineItemService.getLineItem() );
+          LineItemService.setLineItemDate($scope.otherValues.date);
+          otherValidation = ValidationService.validateOther(LineItemService.getLineItem());
           $scope.otherArray[0] = LineItemService.getLineItem();
           $scope.otherArray[0].valid = $scope.otherIsValid();
       };
 
       $scope.updateDescription = function () {
-          LineItemService.setLineItemDesc( $scope.otherValues.description );
-          otherValidation = ValidationService.validateOther( LineItemService.getLineItem() );
+          LineItemService.setLineItemDesc($scope.otherValues.description);
+          otherValidation = ValidationService.validateOther(LineItemService.getLineItem());
           $scope.otherArray[0] = LineItemService.getLineItem();
           $scope.otherArray[0].valid = $scope.otherIsValid();
       };
 
       $scope.updateAmount = function () {
-          LineItemService.setLineItemAmount( $scope.otherValues.amount );
-          otherValidation = ValidationService.validateOther( LineItemService.getLineItem() );
+          LineItemService.setLineItemAmount($scope.otherValues.amount);
+          otherValidation = ValidationService.validateOther(LineItemService.getLineItem());
           $scope.otherArray[0] = LineItemService.getLineItem();
           $scope.otherArray[0].valid = $scope.otherIsValid();
       };
 
       $scope.updateBillable = function () {
-          LineItemService.setBillable( $scope.otherValues.billable );
-          otherValidation = ValidationService.validateOther( LineItemService.getLineItem() );
+          LineItemService.setBillable($scope.otherValues.billable);
+          otherValidation = ValidationService.validateOther(LineItemService.getLineItem());
           $scope.otherArray[0] = LineItemService.getLineItem();
           $scope.otherArray[0].valid = $scope.otherIsValid();
       };
@@ -154,7 +154,7 @@ angular.module( 'expenseApp.Controllers' )
       /**
       * opens the datepicker modal
       */
-      $scope.open = function ( $event ) {
+      $scope.open = function ($event) {
           $event.preventDefault();
           $event.stopPropagation();
 
@@ -176,4 +176,4 @@ angular.module( 'expenseApp.Controllers' )
       $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
       $scope.format = $scope.formats[0];
 
-  } );
+  }]);

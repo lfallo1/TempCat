@@ -1,5 +1,5 @@
 ﻿angular.module('expenseApp')
-    .directive('image', function ($q) {
+    .directive('image', ["$q", function ($q) {
         'use strict'
 
         var URL = window.URL || window.webkitURL;
@@ -138,4 +138,4 @@
                 });
             }
         };
-    });
+    }]);

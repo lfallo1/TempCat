@@ -764,6 +764,7 @@
     <Content Include="angular\test\spec\factories\RouteFilter.js" />
     <Content Include="angular\test\spec\services\SubmissionService.js" />
     <Content Include="angular\test\spec\services\ValidationService.js" />
+    <Content Include="angular\concat\concatUglify.js" />
     <Content Include="App_Start\EntityFrameworkProfilerBootstrapper.vb" />
     <Content Include="DBScripts\Sprint19.sql" />
     <Content Include="Views\HotTowel\views\about.html" />
@@ -818,7 +819,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="angular\concat\" />
     <Folder Include="angular\two\" />
     <Folder Include="angular\uglify\" />
   </ItemGroup>

@@ -7,10 +7,10 @@
  * # MainCtrl
  * Controller of the expenseApp
  */
-angular.module( 'expenseApp.Controllers' )
-  .controller('HomeController', function ($scope, $route, $timeout, $rootScope, Application, SubmissionService) {
+angular.module('expenseApp.Controllers')
+  .controller('HomeController', ["$scope", "$route", "$timeout", "$rootScope", "Application", "SubmissionService", function ($scope, $route, $timeout, $rootScope, Application, SubmissionService) {
       $scope.timeOut = true;
-      $scope.title = 'Home';      
+      $scope.title = 'Home';
       $scope.employeeRejectedTotal = 0;
       $scope.managerTotal = 0;
       $scope.financeTotal = 0;
@@ -43,4 +43,4 @@ angular.module( 'expenseApp.Controllers' )
       $timeout(function () {
           $scope.timeOut = false;
       }, 6000);
-  });
+  }]);

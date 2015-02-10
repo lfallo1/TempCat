@@ -1,7 +1,7 @@
 ﻿'use strict';
 
-angular.module( 'expenseApp.Controllers' )
-  .controller('confirmModalController', function ($scope, $modalInstance, MessageService, $rootScope) {
+angular.module('expenseApp.Controllers')
+  .controller('confirmModalController', ["$scope", "$modalInstance", "MessageService", "$rootScope", function ($scope, $modalInstance, MessageService, $rootScope) {
 
       $scope.message = MessageService.getMessage();
       $scope.addComment = MessageService.getAddComment();
@@ -16,7 +16,7 @@ angular.module( 'expenseApp.Controllers' )
       /**
       * send broadcase message stored in MessageService to submissionTable.js
       */
-      $scope.confirm = function () {          
+      $scope.confirm = function () {
           $rootScope.$broadcast(MessageService.getBroadCastMessage(), $scope.comment);
           $modalInstance.dismiss();
       }
@@ -28,4 +28,4 @@ angular.module( 'expenseApp.Controllers' )
           $modalInstance.dismiss("dismiss confirm modal");
           MessageService.setAddComment(false);
       }
-  });
+  }]);

@@ -1,7 +1,7 @@
 ﻿'use strict';
 
 angular.module( 'expenseApp.Controllers' )
-    .controller('DatepickerCtrl', function ($scope) {
+    .controller('DatepickerCtrl', ["$scope", function ($scope) {
         
         /**
         * the current day's date
@@ -69,4 +69,4 @@ angular.module( 'expenseApp.Controllers' )
         $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
         $scope.format = $scope.formats[0];
 
-    });
+    }]);

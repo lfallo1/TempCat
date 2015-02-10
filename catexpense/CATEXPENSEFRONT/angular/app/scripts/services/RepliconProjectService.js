@@ -5,8 +5,8 @@
  * @name RepliconProjectService
  * @description # RepliconProject Service 
  */
-angular.module( 'expenseApp.Services' )
-  .service( 'RepliconProjectService', function RepliconProjectService( $http ) {
+angular.module('expenseApp.Services')
+  .service('RepliconProjectService', ["$http", function RepliconProjectService($http) {
       var self = this;
 
       //=====================================================================//
@@ -15,12 +15,12 @@ angular.module( 'expenseApp.Services' )
       //
       //=====================================================================//
 
-      self.getAllRepliconProjects = function ( data ) {
-          return $http( {
+      self.getAllRepliconProjects = function (data) {
+          return $http({
               method: 'GET',
               url: '/api/RepliconProject',
               params: data
-          } );
+          });
       };
 
       //=====================================================================//
@@ -30,10 +30,10 @@ angular.module( 'expenseApp.Services' )
       //=====================================================================//
 
       self.updateRepliconProjects = function () {
-          return $http( {
+          return $http({
               method: 'POST',
               url: '/api/RepliconProject/UpdateRepliconProjectTable'
-          } );
+          });
       };
 
       //=====================================================================//
@@ -48,4 +48,4 @@ angular.module( 'expenseApp.Services' )
       //
       //=====================================================================//
 
-  } );
+  }]);

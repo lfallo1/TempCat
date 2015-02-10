@@ -7,8 +7,8 @@
  * # MainCtrl
  * Controller of the expenseApp
  */
-angular.module( 'expenseApp.Controllers' )
-  .controller( 'PerDiemCtrl', function ( $scope, LineItemService, DateService, ValidationService ) {
+angular.module('expenseApp.Controllers')
+  .controller('PerDiemCtrl', ["$scope", "LineItemService", "DateService", "ValidationService", function ($scope, LineItemService, DateService, ValidationService) {
 
       /**
       * default validation for fields
@@ -51,28 +51,28 @@ angular.module( 'expenseApp.Controllers' )
       $scope.calculateTotal = function () {
           var perDiem = 30;
           $scope.perDiemValues.amount = 0;
-          for ( var key in $scope.perDiemValues.days ) {
-              if ( $scope.perDiemValues.days.hasOwnProperty( key ) ) {
+          for (var key in $scope.perDiemValues.days) {
+              if ($scope.perDiemValues.days.hasOwnProperty(key)) {
                   $scope.perDiemValues.amount += $scope.perDiemValues.days[key] ? perDiem : 0;
               }
           };
-          LineItemService.setLineItemAmount( $scope.perDiemValues.amount );
+          LineItemService.setLineItemAmount($scope.perDiemValues.amount);
       };
 
       /**
       * setter functions
       */
       $scope.updateDays = function () {
-          LineItemService.setDays( $scope.perDiemValues.days );
+          LineItemService.setDays($scope.perDiemValues.days);
           $scope.perDiemArray[0] = $scope.perDiemValues;
-          $scope.perDiemValidation = ValidationService.validatePerDiem( LineItemService.getLineItem() );
+          $scope.perDiemValidation = ValidationService.validatePerDiem(LineItemService.getLineItem());
           $scope.perDiemArray[0].valid = $scope.perDiemValidation.validInput;
       };
 
       $scope.updateBillable = function () {
-          LineItemService.setBillable( $scope.perDiemValues.billable );
+          LineItemService.setBillable($scope.perDiemValues.billable);
           $scope.perDiemArray[0] = $scope.perDiemValues;
-          $scope.perDiemValidation = ValidationService.validatePerDiem( LineItemService.getLineItem() );
+          $scope.perDiemValidation = ValidationService.validatePerDiem(LineItemService.getLineItem());
           $scope.perDiemArray[0].valid = $scope.perDiemValidation.validInput;
       };
-  } );
+  }]);
