@@ -92,7 +92,8 @@ module.exports = function (grunt) {
       'karma-jasmine',
       'karma-coverage',
       'karma-phantomjs-launcher',
-      'karma-chrome-launcher'
+      'karma-chrome-launcher',
+      'karma-junit-reporter'
                 ],
             }
         }
