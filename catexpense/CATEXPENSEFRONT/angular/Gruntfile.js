@@ -29,8 +29,8 @@ module.exports = function (grunt) {
         yeoman: appConfig,
         concat: {
             target: {
-                src: ['uglify/**/*.js'],
-                dest: 'concat/concatUglify.js',
+                src: ['UglifiedScripts/**/*.js'],
+                dest: 'CombinedScripts/CompactScripts.js',
             },
         },
         uglify: {
@@ -44,7 +44,7 @@ module.exports = function (grunt) {
                       expand: true,     // Enable dynamic expansion.
                       cwd: 'app/scripts/',      // Src matches are relative to this path.
                       src: ['**/*.js'], // Actual pattern(s) to match.
-                      dest: 'uglify/',   // Destination path prefix.
+                      dest: 'UglifiedScripts/',   // Destination path prefix.
                       ext: '.min.js',   // Dest filepaths will have this extension.
                       extDot: 'first'   // Extensions in filenames begin after the first dot
                   },
