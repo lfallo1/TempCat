@@ -23,7 +23,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
         public void EmailControllerTestsSetUp()
         {
             controller = new EmailController(
-                mockSubmission.Object, mockUser.Object, mockLineItem.Object);
+                mockSubmission.Object, mockLineItem.Object);
 
             Submission submission1 = new Submission();
             submission1.DateUpdated = DateTime.Today - TimeSpan.FromDays(3);

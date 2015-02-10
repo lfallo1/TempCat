@@ -8,12 +8,23 @@
  * Controller of the expenseApp
  */
 angular.module('expenseApp.Controllers')
-  .controller('HomeController', ["$scope", "$route", "$timeout", "$rootScope", "Application", "SubmissionService", function ($scope, $route, $timeout, $rootScope, Application, SubmissionService) {
+  .controller('HomeController', ["$scope", "$route", "$timeout", "$rootScope", "$location", "$anchorScroll", "Application", "SubmissionService", function ($scope, $route, $timeout, $rootScope, $location, $anchorScroll, Application, SubmissionService) {
+
       $scope.timeOut = true;
       $scope.title = 'Home';
       $scope.employeeRejectedTotal = 0;
       $scope.managerTotal = 0;
       $scope.financeTotal = 0;
+
+      $scope.goToManagerTable = function () {
+          $location.hash('manager-short-table');
+          $anchorScroll();
+      };
+
+      $scope.goToFinanceTable = function () {
+          $location.hash('finance-short-table');
+          $anchorScroll();
+      };
 
       /**
       * receive broadcast message and set employeeRejectedTotal value
