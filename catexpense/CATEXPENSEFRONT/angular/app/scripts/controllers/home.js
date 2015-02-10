@@ -16,12 +16,12 @@ angular.module( 'expenseApp.Controllers' )
       $scope.financeTotal = 0;
 
       $scope.goToManagerTable = function () {
-          $ocation.hash( 'manager-short-table' );
+          $location.hash( 'manager-short-table' );
           $anchorScroll();
       };
 
       $scope.goToFinanceTable = function () {
-          $ocation.hash( 'finance-short-table' );
+          $location.hash( 'finance-short-table' );
           $anchorScroll();
       };
 
