@@ -66,7 +66,7 @@ angular.module( 'expenseApp.Controllers' )
             startingDay: 1
         };
 
-        $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
-        $scope.format = $scope.formats[0];
+        $scope.formats = ['dd-MMMM-yyyy', 'EEEE - MMM. dd/yyyy', 'dd.MM.yyyy', 'shortDate'];
+        $scope.format = $scope.formats[1];
 
     }]);

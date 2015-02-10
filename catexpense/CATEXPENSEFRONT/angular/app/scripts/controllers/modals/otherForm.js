@@ -160,7 +160,7 @@ angular.module('expenseApp.Controllers')
 
       //displays the date in the selected format
       //currently defaults to 'dd-MMMM-yyyy' ie: 01-January-2015
-      $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
-      $scope.format = $scope.formats[0];
+      $scope.formats = ['yyyy/MM/dd', 'EEEE - MMM. dd/yyyy', 'dd.MM.yyyy', 'shortDate'];
+      $scope.format = $scope.formats[1];
 
   }]);

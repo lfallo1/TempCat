@@ -485,9 +485,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="angular\concat\" />
     <Folder Include="angular\two\" />
-    <Folder Include="angular\uglify\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
