@@ -85,11 +85,14 @@ body {
 }
 
 .pointer {
-    cursor: pointer;    
+    cursor: pointer;
 }
 
 .cursorText {
     cursor: text;
+}
+
+.whiteBackground {
     background-color: #fff;
 }
 

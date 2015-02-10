@@ -29,13 +29,13 @@ angular.module( 'expenseApp.Controllers' )
       */
       $scope.perDiemValues = {
           daysString: {
-              sunday: LineItemService.getDaysString().sunday.toString(),
-              monday: LineItemService.getDaysString().monday.toString(),
-              tuesday: LineItemService.getDaysString().tuesday.toString(),
-              wednesday: LineItemService.getDaysString().wednesday.toString(),
-              thursday: LineItemService.getDaysString().thursday.toString(),
-              friday: LineItemService.getDaysString().friday.toString(),
-              saturday: LineItemService.getDaysString().saturday.toString()
+              sunday: LineItemService.getDaysString().sunday,
+              monday: LineItemService.getDaysString().monday,
+              tuesday: LineItemService.getDaysString().tuesday,
+              wednesday: LineItemService.getDaysString().wednesday,
+              thursday: LineItemService.getDaysString().thursday,
+              friday: LineItemService.getDaysString().friday,
+              saturday: LineItemService.getDaysString().saturday
           },
           lineItemDate: LineItemService.getEndingWeek(),
           days: LineItemService.getDays(),
