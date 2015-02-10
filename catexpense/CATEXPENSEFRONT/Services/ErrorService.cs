@@ -24,15 +24,9 @@ namespace CatExpenseFront.Services
             return this.repository.Create(tobject);
         }
 
-
-        public void SaveChanges()
+        public Models.Error Find(int id)
         {
-            this.repository.SaveChanges();
-        }
-
-        public IEnumerable<Models.Error> All()
-        {
-            return this.repository.All();
+            return this.repository.Find(id);
         }
 
         public int Update(Models.Error tobject)
@@ -40,19 +34,24 @@ namespace CatExpenseFront.Services
             return this.repository.Update(tobject);
         }
 
-        public Models.Error Find(int id)
-        {
-            return this.repository.Find(id);
-        }
-
         public int Delete(Models.Error tobject)
         {
             return this.repository.Delete(tobject);
         }
 
+        public IEnumerable<Models.Error> All()
+        {
+            return this.repository.All();
+        }
+
         public IEnumerable<Models.Error> CreateAll(IEnumerable<Models.Error> tobjects)
         {
             return this.repository.CreateAll(tobjects);
+        }
+
+        public void SaveChanges()
+        {
+            this.repository.SaveChanges();
         }
     }
 }

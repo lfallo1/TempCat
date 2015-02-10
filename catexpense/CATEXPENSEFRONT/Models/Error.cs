@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Newtonsoft.Json;
 
 namespace CatExpenseFront.Models
 {
+    [JsonObject(IsReference = false)]
     public class Error
     {
         public Error() { }
