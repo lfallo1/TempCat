@@ -453,11 +453,6 @@
     <Content Include="angular\app\bower_components\es5-shim\es5-shim.js" />
     <Content Include="angular\app\bower_components\es5-shim\es5-shim.min.js" />
     <Content Include="angular\app\bower_components\jquery\dist\jquery.js" />
-    <Content Include="angular\app\scripts\libraries\angular-animate.js" />
-    <Content Include="angular\app\scripts\libraries\angular-cookies.js" />
-    <Content Include="angular\app\scripts\libraries\angular.js" />
-    <Content Include="angular\app\scripts\libraries\bootstrap.js" />
-    <Content Include="angular\app\scripts\libraries\jquery.js" />
     <Content Include="angular\app\bower_components\jquery\dist\jquery.min.js" />
     <Content Include="angular\app\bower_components\jquery\MIT-LICENSE.txt" />
     <Content Include="angular\app\bower_components\jquery\src\ajax.js" />
