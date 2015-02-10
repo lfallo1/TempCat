@@ -250,6 +250,7 @@ angular.module('expenseApp.Controllers')
                   $scope.submission["ReceiptPresent"] = false;
                   userSubmission.push($scope.submission);
                   Application.setAllUserSubmissions(userSubmission);
+                  Application.setSubmission($scope.submission);
                   $rootScope.$broadcast("addSubmissionEmployeeTable");
                   $scope.openModal();
               }, function (error) {

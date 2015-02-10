@@ -42,7 +42,7 @@ module.exports = function (grunt) {
                 files: [
                   {
                       expand: true,     // Enable dynamic expansion.
-                      cwd: 'app/',      // Src matches are relative to this path.
+                      cwd: 'app/scripts/',      // Src matches are relative to this path.
                       src: ['**/*.js'], // Actual pattern(s) to match.
                       dest: 'uglify/',   // Destination path prefix.
                       ext: '.min.js',   // Dest filepaths will have this extension.
