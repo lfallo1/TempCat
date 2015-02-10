@@ -121,8 +121,8 @@ angular.module( 'expenseApp.Controllers' )
                   _SaveNewMileage( returnArray, errorMsg );
                   break;
               case 'Per Diem':
-                  returnArray = _ConvertPerDiemArrayContents( $scope.perDiemArray );
-                  _SaveNewPerDiem( returnArray, errorMsg );
+                  //returnArray = _ConvertPerDiemArrayContents( $scope.perDiemArray );
+                  _SaveNewPerDiem( LineItemService.getLineItem(), LineItemService.isLineItemValid(), errorMsg );
                   break;
               case 'Transportation':
               case 'Lodging':
@@ -131,11 +131,11 @@ angular.module( 'expenseApp.Controllers' )
               case 'Meals':
               case 'Airfare':
               case 'Other':
-                  returnArray = _ConvertOtherArrayContents( LineItemService.getLineItem(), $scope.otherArray[0].valid );
-                  _SaveNewOther( returnArray, errorMsg );
+                  //returnArray = _ConvertOtherArrayContents( LineItemService.getLineItem(), LineItemService.isLineItemValid() );
+                  _SaveNewOther( LineItemService.getLineItem(), LineItemService.isLineItemValid(), errorMsg );
                   break;
               default:
-                  returnArray = [{ msg: 'something went wrong' }];
+                  console.log( 'something went wrong' );
           };
       };
 
@@ -161,15 +161,14 @@ angular.module( 'expenseApp.Controllers' )
       * then proceed to close the modal upon which 
       * line item will be saved to db in submission.js
       */
-      function _SaveNewPerDiem( returnArray, errorMsg ) {
-          if ( returnArray.length === 0 ) {
+      function _SaveNewPerDiem( lineitem, valid, errorMsg ) {
+          var obj = [];
+          obj.push( lineitem );
+          if ( !valid ) {
               console.log( errorMsg );
-          } else if ( !returnArray[0].valid ) {
-              console.log( 'invalid per diem' );
           } else {
               console.log( 'Successfully saved report(s)' );
-              delete returnArray[0].valid;
-              $modalInstance.close( returnArray );
+              $modalInstance.close( obj );
           }
 
       };
@@ -179,17 +178,15 @@ angular.module( 'expenseApp.Controllers' )
       * then proceed to close the modal upon which 
       * line item will be saved to db in submission.js
       */
-      function _SaveNewOther( returnArray, errorMsg ) {
-          if ( returnArray.length === 0 ) {
+      function _SaveNewOther( lineitem, valid, errorMsg ) {
+          var obj = [];
+          obj.push( lineitem );
+          if ( !valid ) {
               console.log( errorMsg );
-          } else if ( !returnArray[0].valid ) {
-              console.log( 'invalid other' );
           } else {
               console.log( 'Successfully saved report(s)' );
-              delete returnArray[0].valid;
-              $modalInstance.close( returnArray );
+              $modalInstance.close( obj );
           }
-
       };
 
       /**

@@ -64,7 +64,8 @@ angular.module( 'expenseApp.Services' )
               thursday: '',
               friday: '',
               saturday: ''
-          }
+          },
+          valid: false
       };
 
 
@@ -574,6 +575,20 @@ angular.module( 'expenseApp.Services' )
       };
 
       /**
+       * If the LineItem is valid, return true, else return false
+       */
+      self.isLineItemValid = function () {
+          return extraData.valid;
+      };
+
+      /**
+       * Sets the validity of the LineItem
+       */
+      self.setValidity = function ( value ) {
+          extraData.valid = !!value;
+      };
+
+      /**
        * Gets the current days of the week.
        */
       self.getDaysString = function () {
@@ -622,6 +637,7 @@ angular.module( 'expenseApp.Services' )
           );
           self.setLineItemAmount( 0 );
           self.setBillable( false );
+          self.setValidity( false );
       };
 
       /**
