@@ -18,7 +18,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
     public class CommentControllerTests
     {
         private Mock<ICommentService> mockService = new Mock<ICommentService>();
-        private Mock<IRepliconUserService> mockUserService = new Mock<IRepliconUserService>();
+     
         private CommentController controller;
 
         private string comment = "im a comment";
@@ -30,7 +30,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
         [TestFixtureSetUp]
         public void CommentControllerTestsSetUp()
         {
-            controller = new CommentController(mockService.Object, mockUserService.Object);
+            controller = new CommentController(mockService.Object);
             controller.Request = new HttpRequestMessage()
             {
                 RequestUri = new Uri("http://localhost/api/comment"),

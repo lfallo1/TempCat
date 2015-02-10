@@ -2,10 +2,10 @@
 using System.Web.Http.ModelBinding;
 using CatExpenseFront.Models;
 using CatExpenseFront.Repository;
-using CatExpenseFront.Utilities;
 using Moq;
 using NUnit.Framework;
 using CatExpenseFront.Services;
+using CatExpenseFront.Services.Interfaces.Base;
 
 namespace UnitTestProject.BackEnd_UnitTests.ServiceTests
 {
@@ -13,7 +13,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ServiceTests
     public class RepliconUserServiceTests
     {
         private Mock<IRepository<RepliconUser>> mockRepository;
-        private ModelStateDictionary modelState;
+     
         private IService<RepliconUser> service;
 
 
@@ -21,10 +21,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ServiceTests
         public void Initialize()
         {
             mockRepository = new Mock<IRepository<RepliconUser>>();
-            modelState = new ModelStateDictionary();
-            service = new Service<RepliconUser>(
-                new ModelStateWrapper(modelState),
-                mockRepository.Object);
+          
         }
 
         [Test]

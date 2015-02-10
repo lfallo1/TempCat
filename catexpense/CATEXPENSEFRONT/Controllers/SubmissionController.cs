@@ -10,7 +10,7 @@ using System.Web.Http;
 using System.Web.Http.Description;
 using CatExpenseFront.Models;
 using CatExpenseFront.Repository;
-using CatExpenseFront.Utilities;
+
 using CatExpenseFront.Services.Interfaces;
 using System.Web;
 using CatExpenseFront.Services;
@@ -39,7 +39,7 @@ namespace CatExpenseFront.Controllers
 
         private ISubmissionService service;
         private IRepliconUserProjectService userProjectService;
-        private IRepliconProjectService projectService;
+     
         private ICommentService commentsService;
         private IFinanceApproverService financeApproverService;
 
@@ -52,7 +52,7 @@ namespace CatExpenseFront.Controllers
             if (this.service == null)
             {
                 this.service = service;
-                projectService = new RepliconProjectService(new Repository<RepliconProject>());
+               
                 userProjectService = new RepliconUserProjectService(new Repository<RepliconUserProject>());
                 commentsService = new CommentService();
                 financeApproverService = new FinanceApproverService(new Repository<FinanceApprover>());
@@ -65,12 +65,12 @@ namespace CatExpenseFront.Controllers
         /// <param name="service"></param>
         /// <param name="userService"></param>
         /// <param name="iService"></param>
-        public SubmissionController(ISubmissionService service, IRepliconUserService userService, ICommentService iService)
+        public SubmissionController(ISubmissionService service, ICommentService iService)
         {
             if (this.service == null)
             {
                 this.service = service;
-                projectService = new RepliconProjectService(new Repository<RepliconProject>());
+              
                 commentsService = iService;
                 userProjectService = new RepliconUserProjectService(new Repository<RepliconUserProject>());
                 financeApproverService = new FinanceApproverService(new Repository<FinanceApprover>());

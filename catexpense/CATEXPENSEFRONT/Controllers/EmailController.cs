@@ -7,7 +7,7 @@ using System.Text;
 using CatExpenseFront.Models;
 using CatExpenseFront.Repository;
 using Quartz;
-using CatExpenseFront.Utilities;
+
 using CatExpenseFront.Services.Interfaces;
 using CatExpenseFront.Services;
 
@@ -33,11 +33,15 @@ namespace CatExpenseFront.Controllers
             this.submissionRepo = submissionRepo;
         }
 
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
         public EmailController()
         {
             submissionRepo = new SubmissionService();
             lineItemRepo = new LineItemService();
         }
+
         /// <summary>
         /// This method is used to search through the DB and find all submissions with a status of 2.
         /// Once the records are collected, it searches through to find all the records with an updated date of
@@ -56,6 +60,12 @@ namespace CatExpenseFront.Controllers
 
             SendEmails(emailManagerList);
         }
+        
+        /// <summary>
+        /// Creates the email messages.
+        /// </summary>
+        /// <param name="submissionList"></param>
+        /// <returns></returns>
         public Dictionary<string, string> GenerateMessage(List<Submission> submissionList)
         {
             // get the current date.
@@ -89,6 +99,11 @@ namespace CatExpenseFront.Controllers
             }
             return emailManagerList;
         }
+
+        /// <summary>
+        /// Send the emails.
+        /// </summary>
+        /// <param name="emailManagerList"></param>
         public void SendEmails(Dictionary<string, string> emailManagerList)
         {
             var fromAddress = new MailAddress("CatalystExpense@catalystitservices.com", "From Catalyst");

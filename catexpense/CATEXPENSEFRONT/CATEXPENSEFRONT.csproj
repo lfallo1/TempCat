@@ -336,41 +336,26 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="Services\ClientService.cs" />
     <Compile Include="Services\ExpenseCategoryService.cs" />
-    <Compile Include="Services\ExpenseService.cs" />
     <Compile Include="Services\FinanceApproverService.cs" />
-    <Compile Include="Services\Interfaces\IClientService.cs" />
     <Compile Include="Services\Interfaces\IExpenseCategoryService.cs" />
-    <Compile Include="Services\Interfaces\IExpenseService.cs" />
     <Compile Include="Services\Interfaces\IFinanceApproverService.cs" />
     <Compile Include="Services\Interfaces\ICommentService.cs" />
     <Compile Include="Services\Interfaces\ILineItemService.cs" />
     <Compile Include="Services\Interfaces\IRepliconUserProjectService.cs" />
     <Compile Include="Services\Interfaces\IReceiptService.cs" />
-    <Compile Include="Services\Interfaces\IRepliconProjectService.cs" />
     <Compile Include="Services\Interfaces\IRepliconService.cs" />
-    <Compile Include="Services\Interfaces\IRepliconUserService.cs" />
-    <Compile Include="Services\Interfaces\IService.cs" />
-    <Compile Include="Services\Interfaces\ISubmissionPageService.cs" />
+    <Compile Include="Services\Interfaces\Base\IService.cs" />
     <Compile Include="Services\Interfaces\ISubmissionService.cs" />
-    <Compile Include="Services\Interfaces\IValidationDictionary.cs" />
     <Compile Include="Services\CommentService.cs" />
     <Compile Include="Services\LineItemService.cs" />
     <Compile Include="Services\ReceiptService.cs" />
     <Compile Include="Services\RepliconService.cs" />
-    <Compile Include="Services\SubmissionPageService.cs" />
-    <Compile Include="Services\RepliconProjectService.cs" />
-    <Compile Include="Services\RepliconUserService.cs" />
-    <Compile Include="Services\Service.cs" />
     <Compile Include="Services\SubmissionService.cs" />
     <Compile Include="Utilities\DB.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Utilities\IRepository.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Utilities\ModelStateWrapper.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Utilities\Repository.cs">
