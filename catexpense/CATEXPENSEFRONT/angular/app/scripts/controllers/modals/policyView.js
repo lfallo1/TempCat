@@ -12,6 +12,9 @@ angular.module( 'expenseApp.Controllers' )
 
       $scope.policyType = selectedType;
 
+      /**
+      * show policy depending on the expense type chosen
+      */
       $scope.policyIs = {
           mileage: selectedType === 'Mileage',
           perdiem: selectedType === 'Per Diem',

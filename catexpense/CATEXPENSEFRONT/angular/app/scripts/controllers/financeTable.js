@@ -10,10 +10,16 @@ angular.module( 'expenseApp.Controllers' )
 
       var sortColumn = { field: 'TotalAmount', reverse: false };
 
+      /**
+      * expand and contract financeTable view
+      */
       $scope.expandContract = function (value) {
           $scope.expanded = value;
       };
 
+      /**
+      * allow user to sort the submissions in the table by values in each column
+      */
       $scope.financeOrder = function (field) {
           if (field === sortColumn.field) {
               sortColumn.reverse = !sortColumn.reverse;
@@ -26,15 +32,28 @@ angular.module( 'expenseApp.Controllers' )
       };
 
 
-      // financeStatuses is used for the drop down filter
+      /**
+      * finance tatuses is used for the drop down filter
+      */
       $scope.financeStatuses = [
         { name: 'All', value: '0' },
         { name: 'Manager Approved', value: '3' }
       ];
-      // set $scope.financeStatuses[1] to the default selected item in the list
+
+      /**
+      * set $scope.financeStatuses[1] to the default selected item in the list
+      */
       $scope.selectedFinanceStatus = $scope.financeStatuses[1];
-      // container for the submissions
+
+      /** 
+      * container for the submissions
+      */
       var financeSubmissionsContainer = [];
+
+      /**
+      * if the user is a finance approver, load the financeTable 
+      * with submissions awaiting their approval
+      */
       if (Authentication.getIsFinanceApprover()) {
           $scope.loadFinanceTable = function () {
               if (Application.getPendingSubmissionsByFinanceApprover() != undefined && Application.getPendingSubmissionsByFinanceApprover().length != 0) {
@@ -59,7 +78,10 @@ angular.module( 'expenseApp.Controllers' )
           }
           $scope.loadFinanceTable();
       }
-      // load the table with the filtered items
+
+      /**
+      * load the table with the filtered items
+      */
       $scope.loadFinanceTableStatusX = function (status) {
           var financeSubmissionsFilter = [];
           for (var i = 0; i < financeSubmissionsContainer.length; i++) {
@@ -71,7 +93,10 @@ angular.module( 'expenseApp.Controllers' )
               $scope.financeSubmissions = financeSubmissionsFilter;
           }
       }
-      // redirect to submission page with the submission id to allow the table to populate
+
+      /**
+      * redirect to submission page with the submission id to allow the table to populate
+      */
       $scope.loadFinaceSubmission = function (submission, index) {
           Application.setSubmission(submission);
           Application.setSubmissionStatus(submission.Status.StatusId);
@@ -90,7 +115,9 @@ angular.module( 'expenseApp.Controllers' )
           $location.path('/submission');
       }
 
-      // Delete a submission by id
+      /**
+      * Delete a submission by id
+      */
       $scope.deleteSubmission = function (submission, index) {
           Application.setSubmissionIndex(index);
           MessageService.setMessage("Are you sure you want to delete this submission?");
@@ -107,7 +134,11 @@ angular.module( 'expenseApp.Controllers' )
           });
       }
 
-
+      /**
+      * recieve broadcast message from MessageService
+      * confirming that the user would like to remove a submission from 
+      * view in their finance table
+      */
       $scope.$on("confirmFinanceDeleteSubmission", function () {
           MessageService.setMessage("");
           MessageService.setBroadCastMessage("");

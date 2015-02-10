@@ -4,6 +4,10 @@ angular.module('expenseApp.Controllers')
   .controller('LoginController', function ($scope, $location, $rootScope, Authentication, LoginService) {
       
       $scope.ErrorMessage = "";
+
+      /**
+      * log user in with username and password
+      */
       $scope.doLogin = function (user) {
           LoginService.userlogin(user.username, user.password).then(function (results) {
               if (results.data.isLoggedIn) {

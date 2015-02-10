@@ -20,7 +20,7 @@ namespace Selenium.PageObjects
         private static readonly By SubmissionDescription = By.Id("submissionDescription");
         private static readonly By DatePickerInput = By.Id("datePickerInput");
         private static readonly By DatePickerButton = By.Id("datePickerBtn");
-        private static readonly By DatePickerTodayButton = By.XPath("//button[.='Today']");
+        private static readonly By DatePickerTodayButton = By.XPath("//button[.='Current week']");
         private static readonly By DatePickerClearButton = By.XPath("//button[.='Clear']");
         private static readonly By DatePickerCloseButton = By.XPath("//button[.='Close']");
         private static readonly By RejectedAlert = By.Id("rejectedAlert");
@@ -219,6 +219,16 @@ namespace Selenium.PageObjects
             DatePickerClickToday();
             ClickCreateSubmission();
             return modal.CheckMileageDefault();
+        }
+
+        public void CreateTestSubmission()
+        {
+            ExpenseReportSubmissionBaseModal modal = new ExpenseReportSubmissionBaseModal(Driver);
+            SubmissionType type = SubmissionType.Other;
+            modal.ChangeSubmissionType(type);
+            modal.SetDescription("test submission");
+            modal.SetAmount("187");
+            modal.ClickSave();
         }
 
 
@@ -474,13 +484,10 @@ namespace Selenium.PageObjects
 
         #endregion
 
-        public ConfirmModal DeleteSubmission(int submissionRow)
+        public void DeleteSubmission()
         {
-            var buttonPath = string.Format(_deleteClientButtonByRow, submissionRow);
-            var deleteButton = Find(By.XPath(buttonPath));
-            deleteButton.Click();
-
-            return new ConfirmModal(Driver);
+            var deleteButton = Find(DeleteSubmissionButton);
+            deleteButton.Click();            
         }
 
         public ExpenseReportHomePage FilterEmployeeTable(int selection)

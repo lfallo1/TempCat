@@ -3,7 +3,9 @@
 angular.module( 'expenseApp.Controllers' )
   .controller( 'EmployeeTableController', function ( $scope, $location, $modal, $route, $rootScope, $filter, Application, SubmissionService, MessageService, ReceiptService ) {
 
-      // statuses is used for the drop down filter
+      /**
+      * statuses used for the drop down filter
+      */
       $scope.statuses = [
         { name: 'All', value: '0' },
         { name: 'In Progress', value: '1' },
@@ -20,10 +22,16 @@ angular.module( 'expenseApp.Controllers' )
 
       var sortColumn = { field: 'DateCreated', reverse: false };
 
+      /**
+      * allow expansion and contraction of employeeTable
+      */
       $scope.expandContract = function (value) {
           $scope.expanded = value;
       };
 
+      /**
+      * allow for sorting of submissions displayed in employeeTable
+      */
       $scope.employeeOrder = function (field) {
           if (field === sortColumn.field) {
               sortColumn.reverse = !sortColumn.reverse;
@@ -35,10 +43,20 @@ angular.module( 'expenseApp.Controllers' )
           };
       };
 
-      // set $scope.statuses[0] to the default selected item in the list
+      /**
+      * set $scope.statuses[0] to the default selected item in the list
+      */
       $scope.selectedStatus = $scope.statuses[0];
-      // container for the submissions
+
+      /**
+      * container for the submissions
+      */
       var employeeSubmissionsContainer = [];
+
+      /**
+      * load the user's submissions from the database into the table
+      * upon page load
+      */
       $scope.loadEmployeeTable = function () {
           if (Application.getAllUserSubmissions() != undefined) {
               var rejected = 0;
@@ -104,7 +122,10 @@ angular.module( 'expenseApp.Controllers' )
           }
       }
       $scope.loadEmployeeTable();
-      // load the table with the filtered items
+
+      /**
+      * load the table with the filtered items
+      */
       $scope.loadEmployeeTableStatusX = function (status) {
           var employeeSubmissionsFilter = [];
           for (var i = 0; i < employeeSubmissionsContainer.length; i++) {
@@ -114,7 +135,10 @@ angular.module( 'expenseApp.Controllers' )
           }
           $scope.employeeSubmissions = employeeSubmissionsFilter;
       }
-      // redirect to submission page with the submission id to allow the table to populate
+
+      /**
+      * redirect to submission page with the submission id to allow the table to populate
+      */
       $scope.loadEmployeeSubmission = function (submission, index) {
           $scope.dt1 = "";
           Application.setSubmission(submission);
@@ -124,7 +148,10 @@ angular.module( 'expenseApp.Controllers' )
           ReceiptService.setAllReceipts( submission.allSubmissionReceipts );
           $location.path('/submission');
       }
-      // redirect to submission page with the submission id to allow the table to populate
+
+      /**
+      * redirect to submission page with the submission id to allow the table to populate
+      */
       $scope.deleteSubmission = function (submission, index) {
           Application.setSubmissionIndex(index);
           MessageService.setMessage("Are you sure you want to delete this submission?");
@@ -141,6 +168,9 @@ angular.module( 'expenseApp.Controllers' )
           });
       }
 
+      /**
+      * show all the receipts related to expense items in the particular submission
+      */
       $scope.showAllAvailableReceipts = function (allReceipts, submission, submissionIndex) {
           ReceiptService.setReceipts( allReceipts );
           ReceiptService.setShowAllReceipts( true );
@@ -153,6 +183,9 @@ angular.module( 'expenseApp.Controllers' )
           });
       }
 
+      /**
+      * recieves broadcast message from MessageService confirming user would like to delete submission
+      */
       $scope.$on("confirmDeleteSubmission", function () {
           MessageService.setMessage("");
           MessageService.setBroadCastMessage("");
@@ -162,6 +195,11 @@ angular.module( 'expenseApp.Controllers' )
           }, function (error) { });
 
       });
+
+      /**
+      * recieves broadcast message from MessageService
+      * adds newly created submission as row in employeeTable
+      */
       $scope.$on("addSubmissionEmployeeTable", function (message) {
           $scope.employeeSubmissions = Application.getAllUserSubmissions();
       });

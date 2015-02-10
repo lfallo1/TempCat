@@ -2,24 +2,41 @@
 
 angular.module( 'expenseApp.Controllers' )
   .controller('receiptController', function ($scope, $modalInstance, ReceiptService, $rootScope, MessageService, $modal, Application, $route, LineItemService) {
+
       var allReceipts = false;
       $scope.canDelete = true;
+      $scope.hover = false;
+
+      var receiptId = 0;
+      var receiptIndexId = 0;
+
+      $scope.userReceipts = ReceiptService.getReceipts();
+      $scope.createNewReceipt = ReceiptService.getAddReceipt();
+
+      /**
+      * set boolean based on value stored in ReceiptService
+      */
       if (ReceiptService.getShowAllReceipts()) {
           allReceipts = true;
       }
-      $scope.userReceipts = ReceiptService.getReceipts();
+
+      /**
+      * only the user who added the receipt can delete it, not that user's manager or finance approver
+      */
       if (Application.getOrigin() == "ManagerTable" || Application.getOrigin() == "FinanceTable") {
           $scope.canDelete = false;
       }
-      //if ($scope.userReceipts[0].)
 
-      $scope.createNewReceipt = ReceiptService.getAddReceipt();
-      $scope.hover = false;
+      /**
+      * download the receipt from the database
+      */
       $scope.downloadFile = function (receiptId) {
           ReceiptService.getReceiptById(receiptId);
       }
-      var receiptId = 0;
-      var receiptIndexId = 0;
+
+      /**
+      * before receipt is removed from database, display confirmation modal to user
+      */
       $scope.deleteReceipt = function (receipt, index) {
           receiptId = receipt;
           receiptIndexId = index;
@@ -31,6 +48,10 @@ angular.module( 'expenseApp.Controllers' )
           });
       }
 
+      /**
+      * receives broadcast message from MessageService that
+      * user has confirmed their wish to delete the receipt in question
+      */
       $scope.$on("confirmDeleteReceipt", function () {
           MessageService.setMessage("");
           MessageService.setBroadCastMessage("");
@@ -67,6 +88,7 @@ angular.module( 'expenseApp.Controllers' )
                 //console.log(fail);
             });
       });
+
       /**
       * Disables the submit button based on info.
       */
@@ -75,6 +97,10 @@ angular.module( 'expenseApp.Controllers' )
           $scope.divShow = false;
       };
 
+      /**
+      * upload a receipt and add it to the information stored 
+      * in the database for the expense it is related to 
+      */
       $scope.upload = function () {
           $scope.noReceipt = false;
           if ($scope.image) {

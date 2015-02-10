@@ -3,21 +3,31 @@
 angular.module( 'expenseApp.Controllers' )
     .controller('DatepickerCtrl', function ($scope) {
         
+        /**
+        * the current day's date
+        */
         $scope.today = function () {
             $scope.dt = new Date();
         };
         $scope.today();
 
+        /**
+        * clear the selected date field
+        */
         $scope.clear = function () {
             $scope.dt = null;
         };
 
-        // Disable weekend selection
+        /**
+        * Disable weekend selection
+        */
         $scope.disabled = function (date, mode) {
             return (mode === 'day' && !(date.getDay() === 6));
         };
 
-        // Insert the date object string into the text attribute of the html
+        /**
+        * Insert the date object string into the text attribute of the html
+        */
         $scope.formatDate = function () {
             var monthNames = [ "January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"];
@@ -28,12 +38,19 @@ angular.module( 'expenseApp.Controllers' )
             };
         };
 
+        /**
+        * users can only submit expense items from 30 days 
+        * into the past at maximum
+        */
         $scope.toggleMin = function () {
             var date = new Date();
             $scope.minDate = date.setDate((new Date()).getDate() - 30);
         };
         $scope.toggleMin();
 
+        /**
+        * open the datepicker calendar view
+        */
         $scope.open = function ($event) {
             $event.preventDefault();
             $event.stopPropagation();
@@ -41,6 +58,9 @@ angular.module( 'expenseApp.Controllers' )
             $scope.opened = true;
         };
 
+        /**
+        * display format of selected date
+        */
         $scope.dateOptions = {
             formatYear: 'yy',
             startingDay: 1

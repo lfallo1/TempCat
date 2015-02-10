@@ -12,11 +12,16 @@ angular.module( 'expenseApp.Services' )
   .service( 'LineItemService', function LineItemService( $http ) {
       var self = this;
 
-      //used by modals to determine whether an expense line
-      //is being edited and respond accordingly
+      /*
+      * used by modals to determine whether an expense line
+      * is being edited and respond accordingly
+      */
       var underEdit = false;
 
-      //This variable will store the necessary fields and values for a lineitem as required to pass into the database
+      /*
+      * This variable will store the necessary fields and values for a 
+      * lineitem as required to pass into the database
+      */
       var lineItem = {
           LineItemId: '',
           SubmissionId: '',
@@ -32,7 +37,10 @@ angular.module( 'expenseApp.Services' )
           FinanceApproverDate: null
       };
 
-      //This variable will store data that is not needed to pass into the database but might be necessary to compute the necessary data
+      /**
+      * This variable will store data that is not needed to pass
+      * into the database but might be necessary to compute the necessary data
+      */
       var extraData = {
           expenseCategoryName: 'Mileage',
           endingWeek: '',

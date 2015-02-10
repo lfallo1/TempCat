@@ -1,6 +1,36 @@
 ﻿<div>
     <div class="col-md-12">
         <div class="panel panel-default">
+            <div>
+                <fieldset class="fieldset">
+                    <div class="sizedTable col-sm-12">
+                        <table class="panel-body table table-condensed table-hover">
+                            <tbody ng-repeat="expenseComments in currentSubmission.Comments">
+                                <tr>
+                                    <td>
+                                        <strong>{{expenseComments.RepliconUserName}}</strong> <small>added a comment</small> - {{expenseComments.DateUpdated | date:'yyyy/MM/dd h:mm a'}}<br />
+                                        <div class="cursorText col-md-5" ng-class="{'well': {{expenseComments.commentIsMine}}, 'well-sm': {{expenseComments.commentIsMine}}, 'whiteBackground': {{expenseComments.commentIsMine}} }" ng-click="editComment($index)">{{expenseComments.ExpenseComment}}</div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-sm-12">
+                        <button id="newCommentButton" class="btn btn-primary" ng-click="editComment(-1)">
+                            <i class="glyphicon glyphicon-comment"></i>
+                            <span>New comment</span>
+                        </button>
+                        <button class="btn btn-primary" id="addLineItemButton" ng-click="addNewLineItem()" ng-disabled="!createNewItemLoad">
+                            <i class="glyphicon glyphicon-plus"></i>
+                            <span>Add Line Item</span>
+                        </button>
+                        <button class="btn btn-danger" id="deleteSubmissionButton" ng-click="deleteSubmission()" ng-disabled="!createNewItemLoad">
+                            <i class="glyphicon glyphicon-trash"></i>
+                            <span>Delete Submission</span>
+                        </button>
+                    </div>
+                </fieldset>
+            </div>
             <div class="panel-heading">
                 <div class="row">
                     <h4 class="col-sm-12">Submission Information</h4>
@@ -84,40 +114,6 @@
                     <span>Approve</span>
                 </button>
             </div>
-        </div>
-        <div ng-show="showComments">
-            <fieldset class="fieldset">
-                <legend>Comments:</legend>
-                <div class="sizedTable">
-                    <table class="panel-body table table-condensed table-hover">
-                        <tbody ng-repeat="expenseComments in currentSubmission.Comments">
-                            <tr>
-                                <td>
-                                    <span ng-if="expenseComments.commentIsMine" class="pointer glyphicon glyphicon-edit"
-                                          ng-click="editComment($index)"
-                                          data-toggle="tooltip" data-placement="left" title="Edit Comment"></span>
-                                </td>
-                                <td>
-                                    <span ng-if="expenseComments.commentIsMine" class="pointer glyphicon glyphicon-trash"
-                                          ng-click="deleteComment($index)"
-                                          data-toggle="tooltip" data-placement="left" title="Delete Comment"></span>
-                                </td>
-                                <td class="span4">
-                                    <strong>{{expenseComments.RepliconUserName}}</strong>
-                                </td>
-                                <td class="span4">{{expenseComments.DateUpdated | date:'yyyy/MM/dd'}}</td>
-                                <td class="span4">{{expenseComments.ExpenseComment}}</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div>
-                    <button id="newCommentButton" class="btn btn-primary" ng-click="editComment(-1)">
-                        <i class="glyphicon glyphicon-comment"></i>
-                        <span>New comment</span>
-                    </button>
-                </div>
-            </fieldset>
         </div>
     </div>
 </div>

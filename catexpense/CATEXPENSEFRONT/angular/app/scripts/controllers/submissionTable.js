@@ -1,5 +1,5 @@
-﻿angular.module( 'expenseApp.Controllers' )
-    .controller( 'submissionTableCtrl', function ( $scope, $route, $modal, $location, $rootScope, $filter, Application, ReceiptService, LineItemService, MessageService, CommentService, SubmissionService, Authentication ) {
+﻿angular.module('expenseApp.Controllers')
+    .controller('submissionTableCtrl', function ($scope, $route, $modal, $location, $rootScope, $filter, Application, ReceiptService, LineItemService, MessageService, CommentService, SubmissionService, Authentication) {
         $scope.receipts = true;
         var orderBy = $filter('orderBy');
         var sortColumn = { field: 'DateCreated', reverse: false };
@@ -23,15 +23,15 @@
         * recieves the broadcast message from submission.js clientAndDate function
         */
         $scope.$on('submissionFound', function (message, submission) {
-            ReceiptService.setAllReceipts( [] )
+            ReceiptService.setAllReceipts([])
             //when the orgin is employee table the submission cannot be approved or rejected
             Application.setOrigin("EmployeeTable");
             // get username
             $scope.userName = Authentication.getUserName();
             //if the submission is valid set the submission in the application service
-            if (submission) {                
+            if (submission) {
                 $rootScope.$broadcast("checkReceipts");
-                $scope.currentDescription = submission.Description;                
+                $scope.currentDescription = submission.Description;
                 $scope.createNewItemLoad = submission.StatusId == 1 || submission.StatusId == 4 || submission.StatusId == 6;
                 //set the current submission being editted
                 $scope.currentSubmission = submission;
@@ -110,7 +110,7 @@
         */
         if (Application.getOrigin() !== "EmployeeTable") {
             if (Authentication.getIsManager || Authentication.getIsFinanceApprover) {
-                 $scope.isApprover = true;
+                $scope.isApprover = true;
             } else {
                 $scope.isApprover = false;
             }
@@ -144,27 +144,21 @@
         */
         $scope.editComment = function (index) {
             if (index != -1) {
-                commentIndex = index;
-                Application.setComment($scope.currentSubmission.Comments[index]);
+                Application.setIsNewComment(false);
+                if ($scope.currentSubmission.Comments[index].commentIsMine) {
+                    commentIndex = index;
+                    Application.setComment($scope.currentSubmission.Comments[index]);
+                    Application.setCommentIndex(index);
+                } else {
+                    return;
+                }
             } else {
+                Application.setIsNewComment(true);
                 Application.setComment("");
             }
             var modalInstance = $modal.open({
                 templateUrl: 'Views/HotTowel/views/modals/commentModal.html',
                 controller: 'CommentController'
-            });
-        }
-
-        /**
-        * delete a comment, will pop up a confirmation modal before delete is performed
-        */
-        $scope.deleteComment = function (index) {
-            commentIndex = index;
-            MessageService.setMessage("Are you sure you want to delete this comment?");
-            MessageService.setBroadCastMessage("confirmDeleteComment");
-            var modalInstance = $modal.open({
-                templateUrl: 'Views/HotTowel/views/modals/confirmModal.html',
-                controller: 'confirmModalController'
             });
         }
 
@@ -175,12 +169,12 @@
             var submissions = Application.getAllUserSubmissions();
             var allReceipt = ReceiptService.getAllReceipts();
             allReceipt.push(receipt);
-            ReceiptService.setAllReceipts( allReceipt );
+            ReceiptService.setAllReceipts(allReceipt);
             submissions[Application.getSubmissionIndex()].allSubmissionReceipts = allReceipt;
             submissions[Application.getSubmissionIndex()].ReceiptPresent = true;
             submissions[Application.getSubmissionIndex()].LineItems[Application.getLineItemIndex()].ReceiptPresent = true;
             submissions[Application.getSubmissionIndex()].LineItems[Application.getLineItemIndex()].Receipts.push(receipt);
-            ReceiptService.setReceipts( allReceipt );
+            ReceiptService.setReceipts(allReceipt);
             Application.setAllUserSubmissions(submissions);
             $scope.currentSubmission = submissions[Application.getSubmissionIndex()];
             $rootScope.$broadcast("addSubmissionEmployeeTable");
@@ -221,7 +215,6 @@
 
         /** 
         * a Manager can approve a submission which will call this mehtod
-        *
         */
         $scope.approve = function () {
             // the manager does not need a comment when approving
@@ -255,15 +248,18 @@
         $scope.viewReceipts = function (id, index) {
             Application.setLineItemId(id);
             Application.setLineItemIndex(index);
-            ReceiptService.setAddReceipt( false );
-            ReceiptService.setShowAllReceipts( false );
-            ReceiptService.setReceipts( $scope.currentSubmission.LineItems[index].Receipts );
-            console.log();
+            ReceiptService.setAddReceipt(false);
+            ReceiptService.setShowAllReceipts(false);
+            ReceiptService.setReceipts($scope.currentSubmission.LineItems[index].Receipts);
             var modalInstance = $modal.open({
                 templateUrl: 'Views/HotTowel/views/modals/receiptModal.html',
                 controller: 'receiptController'
             });
         };
+
+        /**
+        * listen for broadcast message and set scope variable
+        */
         $scope.$on("refreshCreateNewItemLoad", function () {
             $scope.editExistingSubmission = false;
         });
@@ -330,27 +326,17 @@
         * recieves broadcast message from commentModal.js
         */
         $scope.$on("saveComment", function (response, comment) {
+            // edit comment
             if (Application.getComment().ExpenseComment) {
-                CommentService.PutComment( Application.getComment().CommentId, comment ).then( function ( success ) {
+                CommentService.PutComment(Application.getComment().CommentId, comment).then(function (success) {
                     $scope.currentSubmission.Comments[commentIndex]['ExpenseComment'] = comment;
                 });
             } else {
+                // create new comment
                 CommentService.CreateComment($scope.currentSubmission.SubmissionId, comment).then(function (success) {
                     success.data["commentIsMine"] = true;
                     $scope.currentSubmission.Comments.push(success.data);
                 });
             }
-
         });
-
-        /**
-        * receives confirmation from confirmModal that a comment would like to be deleted
-        * removes the comment from the line item in the database
-        */
-        $scope.$on("confirmDeleteComment", function () {
-            CommentService.DeleteComment($scope.currentSubmission.Comments[commentIndex].CommentId).then(function (success) {
-                $scope.currentSubmission.Comments.splice(commentIndex, 1);;
-            });
-        });
-
     });

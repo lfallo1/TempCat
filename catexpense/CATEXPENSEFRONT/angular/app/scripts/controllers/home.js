@@ -14,17 +14,32 @@ angular.module( 'expenseApp.Controllers' )
       $scope.employeeRejectedTotal = 0;
       $scope.managerTotal = 0;
       $scope.financeTotal = 0;
+
+      /**
+      * receive broadcast message and set employeeRejectedTotal value
+      */
       $scope.$on("employeeTotal", function (message, total) {
           $scope.employeeRejectedTotal = total;
           $rootScope.$broadcast("refreshCreateNewItemLoad");
       });
+
+      /**
+      * receive broadcast message and set financeTotal value
+      */
       $scope.$on("financeTotal", function (message, total) {
           $scope.financeTotal = total;
       });
+
+      /**
+      * receive broadcast message and set managerTotal value
+      */
       $scope.$on("managerTotal", function (message, total) {
           $scope.managerTotal = total;
       });
 
+      /**
+      * alert message timeout function
+      */
       $timeout(function () {
           $scope.timeOut = false;
       }, 6000);

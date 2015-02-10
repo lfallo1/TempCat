@@ -5,7 +5,7 @@ body {
 }
 
 .sizedTable {
-    max-height: 250px;
+    max-height: 450px;
     overflow-y: auto;
 }
 
@@ -86,6 +86,14 @@ body {
 
 .pointer {
     cursor: pointer;
+}
+
+.cursorText {
+    cursor: text;
+}
+
+.whiteBackground {
+    background-color: #fff;
 }
 
 .lightWeight {
