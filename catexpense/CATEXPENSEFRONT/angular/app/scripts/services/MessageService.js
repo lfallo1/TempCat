@@ -1,7 +1,7 @@
 ﻿'use strict';
 
-angular.module( 'expenseApp.Services' )
-  .factory( 'MessageService', function MessageService() {
+angular.module('expenseApp.Services')
+  .factory('MessageService', [function MessageService() {
 
       var message = "";
       var broadCastMessage = "";
@@ -13,7 +13,7 @@ angular.module( 'expenseApp.Services' )
       * getter and setter methods
       */
       return {
-          setMessage: function ( messageValue ) {
+          setMessage: function (messageValue) {
               message = messageValue;
           },
 
@@ -21,7 +21,7 @@ angular.module( 'expenseApp.Services' )
               return message;
           },
 
-          setBroadCastMessage: function ( message ) {
+          setBroadCastMessage: function (message) {
               broadCastMessage = message;
           },
 
@@ -33,11 +33,11 @@ angular.module( 'expenseApp.Services' )
               return id;
           },
 
-          setId: function ( newId ) {
+          setId: function (newId) {
               id = newId;
           },
 
-          setIndex: function ( newIndex ) {
+          setIndex: function (newIndex) {
               index = newIndex;
           },
 
@@ -45,7 +45,7 @@ angular.module( 'expenseApp.Services' )
               return index;
           },
 
-          setAddComment: function ( result ) {
+          setAddComment: function (result) {
               addCommit = result;
           },
 
@@ -53,4 +53,4 @@ angular.module( 'expenseApp.Services' )
               return addCommit;
           }
       }
-  } );
+  }]);

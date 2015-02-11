@@ -1,7 +1,7 @@
 ﻿'use strict';
 
-angular.module( 'expenseApp.Controllers' )
-  .controller('receiptController', function ($scope, $modalInstance, ReceiptService, $rootScope, MessageService, $modal, Application, $route, LineItemService) {
+angular.module('expenseApp.Controllers')
+  .controller('receiptController', ["$scope", "$modalInstance", "ReceiptService", "$rootScope", "MessageService", "$modal", "Application", "$route", "LineItemService", function ($scope, $modalInstance, ReceiptService, $rootScope, MessageService, $modal, Application, $route, LineItemService) {
 
       var allReceipts = false;
       $scope.canDelete = true;
@@ -123,4 +123,4 @@ angular.module( 'expenseApp.Controllers' )
               $scope.noReceipt = true;
           }
       }
-  });
+  }]);

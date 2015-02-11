@@ -7,8 +7,8 @@
  * # MainCtrl
  * Controller of the expenseApp
  */
-angular.module( 'expenseApp.Controllers' )
-  .controller('PolicyCtrl', function ($scope, $modalInstance, selectedType) {
+angular.module('expenseApp.Controllers')
+  .controller('PolicyCtrl', ["$scope", "$modalInstance", "selectedType", function ($scope, $modalInstance, selectedType) {
 
       $scope.policyType = selectedType;
 
@@ -34,4 +34,4 @@ angular.module( 'expenseApp.Controllers' )
           $modalInstance.dismiss('Form was cancelled.');
       };
 
-  });
+  }]);

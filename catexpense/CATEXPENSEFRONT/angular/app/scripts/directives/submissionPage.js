@@ -1,7 +1,7 @@
 ﻿'use strict';
 
 angular.module('expenseApp')
-    .directive('submissionPage', function () {
+    .directive('submissionPage', [function () {
         return {
             restrict: 'E',
             templateUrl: 'Views/HotTowel/views/submissionPage.html',
@@ -9,4 +9,4 @@ angular.module('expenseApp')
             controller: 'SubmissionCtrl',
             controllerAs: 'submission'
         }
-    });
+    }]);

@@ -64,11 +64,17 @@ module.exports = function ( config ) {
 
         reporters: [
             'progress',
-            'coverage'
+            'coverage',
+            'junit'
         ],
         preprocessors: {
             'app/scripts/**/*.js': ['coverage']
         },
+
+        junitReporter: {
+            outputFile: 'test/test-results.xml'
+        },
+
         coverageReporter: {
             reporters: [
                 {
@@ -78,13 +84,16 @@ module.exports = function ( config ) {
                 {
                     type: 'html',
                     dir: 'test/coverage/'
+                },
+                {
+                    type: 'text-summary'
                 }
             ]
         },
 
         // Continuous Integration mode
         // if true, it capture browsers, run tests and exit
-        singleRun: false,
+        singleRun: true,
 
         colors: true,
 

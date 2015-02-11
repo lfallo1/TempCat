@@ -1,7 +1,7 @@
 ﻿'use strict';
 
 angular.module('expenseApp.Services')
-  .factory('RouteFilter', function Routefilter($location) {
+  .factory('RouteFilter', ["$location", function Routefilter($location) {
 
       var filters = [];
 
@@ -64,4 +64,4 @@ angular.module('expenseApp.Services')
               }
           }
       }
-  });
+  }]);

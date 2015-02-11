@@ -7,46 +7,70 @@
 // use this if you want to recursively match all subfolders:
 // 'test/spec/**/*.js'
 
-module.exports = function ( grunt ) {
-
+module.exports = function (grunt) {
+    grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-contrib-concat');
     // Load grunt tasks automatically
-    require( 'load-grunt-tasks' )( grunt );
+    require('load-grunt-tasks')(grunt);
 
     // Time how long tasks take. Can help when optimizing build times
-    require( 'time-grunt' )( grunt );
+    require('time-grunt')(grunt);
 
     // Configurable paths for the application
     var appConfig = {
         app: 'app',
         dist: 'dist'
     };
-
+    
     // Define the configuration for all the tasks
-    grunt.initConfig( {
+    grunt.initConfig({
 
         // Project settings
         yeoman: appConfig,
-
+        concat: {
+            target: {
+                src: ['UglifiedScripts/**/*.js'],
+                dest: 'CombinedScripts/CompactScripts.js',
+            },
+        },
+        uglify: {
+            // uglify task configuration goes here.
+            target: {
+                // Grunt will search for "**/*.js" under "app/" when the "uglify" task
+                // runs and build the appropriate src-dest file mappings then, so you
+                // don't need to update the Gruntfile when files are added or removed.
+                files: [
+                  {
+                      expand: true,     // Enable dynamic expansion.
+                      cwd: 'app/scripts/',      // Src matches are relative to this path.
+                      src: ['**/*.js'], // Actual pattern(s) to match.
+                      dest: 'UglifiedScripts/',   // Destination path prefix.
+                      ext: '.min.js',   // Dest filepaths will have this extension.
+                      extDot: 'first'   // Extensions in filenames begin after the first dot
+                  },
+                ],
+            },
+        },
         // The actual grunt server settings
         connect: {
             test: {
                 options: {
                     port: 40218,
-                    middleware: function ( connect ) {
+                    middleware: function (connect) {
                         return [
-                          connect.static( '.tmp' ),
-                          connect.static( 'test' ),
+                          connect.static('.tmp'),
+                          connect.static('test'),
                           connect().use(
                             '/app/bower_components',
-                            connect.static( './app/bower_components' )
+                            connect.static('./app/bower_components')
                           ),
-                          connect.static( appConfig.app )
+                          connect.static(appConfig.app)
                         ];
                     }
                 }
             }
         },
-
+        
         // Empties folders to start fresh
         clean: {
             server: '.tmp'
@@ -68,17 +92,18 @@ module.exports = function ( grunt ) {
       'karma-jasmine',
       'karma-coverage',
       'karma-phantomjs-launcher',
-      'karma-chrome-launcher'
+      'karma-chrome-launcher',
+      'karma-junit-reporter'
                 ],
             }
         }
-    } );
-
-    grunt.registerTask( 'test', [
+    });
+    
+    grunt.registerTask('test', [
       'clean:server',
       'concurrent:test',
       'autoprefixer',
       'connect:test',
       'karma'
-    ] );
+    ]);
 };

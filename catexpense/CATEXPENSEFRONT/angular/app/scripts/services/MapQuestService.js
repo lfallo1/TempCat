@@ -5,8 +5,8 @@
  * @name MapQuestService
  * @description # MapQuest Service 
  */
-angular.module( 'expenseApp.Services' )
-  .service( 'MapQuestService', function MapQuestService( $http ) {
+angular.module('expenseApp.Services')
+  .service('MapQuestService', ["$http", function MapQuestService($http) {
 
       var self = this;
 
@@ -21,30 +21,30 @@ angular.module( 'expenseApp.Services' )
        * data passed in must be ~ { from : locationA, to: locationB }
        *
        */
-      self.getDistance = function ( data ) {
+      self.getDistance = function (data) {
           var myKey = "Fmjtd%7Cluurnu6tn1%2Ca2%3Do5-9wbw0y";
           var url = "https://open.mapquestapi.com/directions/v2/route?key="
           var submissionApi = url + myKey + "&from=" + data.from
               + "&to=" + data.to;
 
-          return $http( {
+          return $http({
               url: submissionApi,
               method: 'GET'
-          } );
+          });
       };
 
       /**
        * Call to the Mapquest api to get a list of results matching the location given as a parameter by the user.
        * data pass in must be ~ { location : locationA }
        */
-      self.getLocation = function ( data ) {
+      self.getLocation = function (data) {
           var myKey = "Fmjtd%7Cluurnu6tn1%2Ca2%3Do5-9wbw0y";
           var url = "https://open.mapquestapi.com/geocoding/v1/address?key="
           var submissionApi = url + myKey + "&location=" + data.location;
 
-          return $http( {
+          return $http({
               url: submissionApi,
               method: 'GET'
-          } );
+          });
       };
-  } );
+  }]);
