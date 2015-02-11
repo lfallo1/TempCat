@@ -286,12 +286,13 @@ angular.module('expenseApp.Controllers')
 
           var returnObj;
           var errorMsg = 'please fix your ' + $scope.selectedType + ' expense.';
+
           switch ($scope.selectedType) {
               case 'Mileage':
                   returnObj = _ConvertMileageArrayContents($scope.mileageArray);
                   break;
               case 'Per Diem':
-                  returnObj = _ConvertPerDiemArrayContents($scope.perDiemArray);
+                  returnObj = LineItemService.getLineItem();
                   break;
               case 'Transportation':
               case 'Lodging':
@@ -300,7 +301,7 @@ angular.module('expenseApp.Controllers')
               case 'Meals':
               case 'Airfare':
               case 'Other':
-                  returnObj = _ConvertOtherArrayContents(LineItemService.getLineItem(), $scope.otherArray[0].valid);
+                  returnObj = LineItemService.getLineItem();
                   break;
               default:
                   returnObj = { msg: 'something went wrong' };
@@ -308,13 +309,10 @@ angular.module('expenseApp.Controllers')
           if (undefined === returnObj) {
               console.log('you didnt make any changes');
           }
-          else if (!returnObj[0].valid) {
+          else if (!LineItemService.isLineItemValid()) {
               console.log('invalid expense');
           } else {
               console.log('Successfully edited report');
-              for (var i = 0; i < returnObj.length; i++) {
-                  delete returnObj[i].valid;
-              }
               $modalInstance.close(LineItemService.getLineItem());
           }
       };
