@@ -10,6 +10,10 @@
                     Manager Table
                     <small class="lightWeight bg-warning">Awaiting Approval: {{managerTotal}}</small></h4>
             </div>
+            <div class="col-sm-4 col-md-4 pull-right">
+                <select class="form-control col-sm-4 col-md-4 pull-right" ng-change="filterTableBySubmissionStatus(selectedStatus.value)"
+                        ng-model="selectedStatus" ng-options="status.name for status in statuses"></select>
+            </div>
         </div>
         <table class="panel-body table table-hover table-striped table-condensed" ng-if="expanded">
             <thead>
