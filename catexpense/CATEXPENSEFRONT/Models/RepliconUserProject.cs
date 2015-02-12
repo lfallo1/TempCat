@@ -24,11 +24,11 @@ namespace CatExpenseFront.Models
         /// <summary>
         /// Constructor that expects all fields
         /// </summary>
-        /// <param name="userName"></param>
+        /// <param name="Username"></param>
         /// <param name="projectId"></param>
-        public RepliconUserProject(string userName, int projectId)
+        public RepliconUserProject(string Username, int projectId)
         {
-            this.UserName = userName;
+            this.UserName = Username;
             this.ProjectId = projectId;
 
         }
@@ -36,11 +36,11 @@ namespace CatExpenseFront.Models
         /// <summary>
         /// Constructor that expects all fields
         /// </summary>
-        /// <param name="userName"></param>
+        /// <param name="Username"></param>
         /// <param name="projectId"></param>
-        public RepliconUserProject(int id, string userName, int projectId)
+        public RepliconUserProject(int id, string Username, int projectId)
         {
-            this.UserName = userName;
+            this.UserName = Username;
             this.ProjectId = projectId;
             this.ID = id;
 

@@ -270,11 +270,11 @@ namespace CatExpenseFront.Controllers
             HttpResponseMessage message = Request.CreateResponse(HttpStatusCode.OK);
             Submission mergedSubmission = service.Find(id);
 
-            string userName = (null == HttpContext.Current.Session["UserName"]
+            string Username = (null == HttpContext.Current.Session["Username"]
             ? ""
             : HttpContext.Current.Session["UserName"].ToString().ToUpper());
             int userId = (from m in userProjectService.All()
-                          where m.UserName.ToUpper() == userName
+                          where m.UserName.ToUpper() == Username
                           select m.ID).First();
 
             mergedSubmission.Description = submission.Description;
@@ -285,7 +285,7 @@ namespace CatExpenseFront.Controllers
 
                 case APPROVAL_STATUS_IN_PROGRESS:
                     {
-                        if (userName == submission.ActiveDirectoryUser.ToUpper())
+                        if (Username == submission.ActiveDirectoryUser.ToUpper())
                         {
                             mergedSubmission.StatusId = APPROVAL_STATUS_IN_PROGRESS_ID;
                             mergedSubmission.DateUpdated = DateTime.Now;
@@ -295,7 +295,7 @@ namespace CatExpenseFront.Controllers
                     }
                 case APPROVAL_STATUS_SUBMITTED:
                     {
-                        if (userName == mergedSubmission.ActiveDirectoryUser.ToUpper())
+                        if (Username == mergedSubmission.ActiveDirectoryUser.ToUpper())
                         {
                             mergedSubmission.StatusId = APPROVAL_STATUS_SUBMITTED_ID;
                             mergedSubmission.DateUpdated = DateTime.Now;
@@ -304,7 +304,7 @@ namespace CatExpenseFront.Controllers
                     }
                 case APPROVAL_STATUS_MANAGER_APPROVED:
                     {
-                        if (userName == mergedSubmission.ManagerName.ToUpper())
+                        if (Username == mergedSubmission.ManagerName.ToUpper())
                         {
                             mergedSubmission.StatusId = APPROVAL_STATUS_MANAGER_APPROVED_ID;
                             mergedSubmission.RepliconManagerApproverDate = DateTime.Now;
@@ -314,12 +314,12 @@ namespace CatExpenseFront.Controllers
                     }
                 case APPROVAL_STATUS_MANAGER_REJECTED:
                     {
-                        if (userName == mergedSubmission.ManagerName.ToUpper())
+                        if (Username == mergedSubmission.ManagerName.ToUpper())
                         {
                             mergedSubmission.StatusId = APPROVAL_STATUS_MANAGER_REJECTED_ID;
                             mergedSubmission.RepliconManagerApproverDate = DateTime.Now;
                             comment.SubmissionId = id;
-                            comment.RepliconUserName = userName;
+                            comment.RepliconUserName = Username;
                             comment.ExpenseComment = submission.Comments.First<Comment>().ExpenseComment;
                             comment.DateCreated = DateTime.Now;
                             comment.DateUpdated = DateTime.Now;
@@ -330,7 +330,7 @@ namespace CatExpenseFront.Controllers
                     }
                 case APPROVAL_STATUS_FINANCE_APPROVED:
                     {
-                        if (IsFinanceApprover(userName))
+                        if (IsFinanceApprover(Username))
                         {
                             mergedSubmission.StatusId = APPROVAL_STATUS_FINANCE_APPROVED_ID;
                             mergedSubmission.RepliconFinanceApproverDate = DateTime.Now;
@@ -340,12 +340,12 @@ namespace CatExpenseFront.Controllers
                     }
                 case APPROVAL_STATUS_FINANCE_REJECTED:
                     {
-                        if (IsFinanceApprover(userName))
+                        if (IsFinanceApprover(Username))
                         {
                             mergedSubmission.StatusId = APPROVAL_STATUS_FINANCE_REJECTED_ID;
                             mergedSubmission.RepliconFinanceApproverDate = DateTime.Now;
                             comment.SubmissionId = id;
-                            comment.RepliconUserName = userName;
+                            comment.RepliconUserName = Username;
                             comment.ExpenseComment = submission.Comments.First<Comment>().ExpenseComment;
                             comment.DateCreated = DateTime.Now;
                             comment.DateUpdated = DateTime.Now;
@@ -403,7 +403,7 @@ namespace CatExpenseFront.Controllers
         {
             //Check to see if the user is a finace approver
             return (from m in financeApproverService.All()
-                    where (m.userName.ToUpper() == currentUser)
+                    where (m.Username.ToUpper() == currentUser)
                     select m).Count() > 0;
         }
     }

@@ -141,9 +141,9 @@ namespace CatExpenseFront.Controllers
         private bool isFinanceApprover()
         {
             return (from m in approverService.All()
-                         where (m.userName.ToUpper() == (null == HttpContext.Current.Session["UserName"]
+                    where (m.Username.ToUpper() == (null == HttpContext.Current.Session["Username"]
                                                           ? ""
-                                                          : HttpContext.Current.Session["UserName"].ToString()).ToUpper())
+                                                          : HttpContext.Current.Session["Username"].ToString()).ToUpper())
                          select m).Count() > 0;
         }
     }

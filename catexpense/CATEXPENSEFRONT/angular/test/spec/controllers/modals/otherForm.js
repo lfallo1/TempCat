@@ -96,7 +96,7 @@ describe( 'Controller: OtherCtrl', function () {
         spyOn( scope, 'toggleMax' );
 
         $httpBackend.when( 'GET', '/api/login/isLoggedIn' ).respond( {
-            userName: 'testUser',
+            Username: 'testUser',
             isApprover: false,
             isLoggedIn: true,
             isFinanceApprover: false,

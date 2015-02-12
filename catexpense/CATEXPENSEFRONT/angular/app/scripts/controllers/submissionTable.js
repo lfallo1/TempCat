@@ -29,7 +29,7 @@ angular.module('expenseApp.Controllers')
             //when the orgin is employee table the submission cannot be approved or rejected
             Application.setOrigin("EmployeeTable");
             // get username
-            $scope.userName = Authentication.getUserName();
+            $scope.Username = Authentication.getUserName();
             //if the submission is valid set the submission in the application service
             if (submission) {
                 $rootScope.$broadcast("checkReceipts");
@@ -43,7 +43,7 @@ angular.module('expenseApp.Controllers')
                 if ($scope.currentSubmission.LineItems.length != 0) {
                     //this for loop will determine which comments you can edit
                     for (var i = 0; i < $scope.currentSubmission.Comments.length; i++) {
-                        if ($scope.currentSubmission.Comments[i].RepliconUserName.toUpperCase() == $scope.userName.toUpperCase()) {
+                        if ($scope.currentSubmission.Comments[i].RepliconUserName.toUpperCase() == $scope.Username.toUpperCase()) {
                             $scope.currentSubmission.Comments[i]["commentIsMine"] = true;
                         } else {
                             $scope.currentSubmission.Comments[i]["commentIsMine"] = false;
@@ -121,7 +121,7 @@ angular.module('expenseApp.Controllers')
         /**
         * pulls current user name from session
         */
-        $scope.userName = Authentication.getUserName();
+        $scope.Username = Authentication.getUserName();
 
 
         /**
@@ -188,7 +188,7 @@ angular.module('expenseApp.Controllers')
         */
         if (Application.getSubmission()) {
             $scope.currentSubmission = Application.getSubmission();
-            $scope.userName = Authentication.getUserName();
+            $scope.Username = Authentication.getUserName();
             $scope.showComments = $scope.currentSubmission.LineItems.length != 0;
             //if the submission id is 1 the user can edit the submission
             $scope.createNewItemLoad = $scope.currentSubmission.StatusId == 1 || $scope.currentSubmission.StatusId == 4 || $scope.currentSubmission.StatusId == 6;
@@ -206,7 +206,7 @@ angular.module('expenseApp.Controllers')
             $scope.editExistingSubmission = true;
             if ($scope.currentSubmission.LineItems.length != 0) {
                 for (var i = 0; i < $scope.currentSubmission.Comments.length; i++) {
-                    if ($scope.currentSubmission.Comments[i].RepliconUserName.toUpperCase() == $scope.userName.toUpperCase()) {
+                    if ($scope.currentSubmission.Comments[i].RepliconUserName.toUpperCase() == $scope.Username.toUpperCase()) {
                         $scope.currentSubmission.Comments[i]["commentIsMine"] = true;
                     } else {
                         $scope.currentSubmission.Comments[i]["commentIsMine"] = false;

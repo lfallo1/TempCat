@@ -6,9 +6,7 @@
                     <i class="glyphicon glyphicon-retweet"></i>
                     <span>Sync Projects</span>
                 </button>
-                <progressbar class="progressbarsize progress-striped active pull-right" animate="true" max="100" value="progressValue" type="primary" ng-hide="!flag">
-
-                </progressbar>
+                <span ng-hide="!flag" id="spinner" class="pull-right" us-spinner="{radius:10, width:5, length: 12}"></span>
             </div>
         </li>
         <li>

@@ -4,7 +4,7 @@ angular.module('expenseApp.Services')
   .factory('Authentication', ["$q", "$http", "$timeout", "Application", function Authentication($q, $http, $timeout, Application) {
 
       var authenticatedUser = null;
-      var userName;
+      var Username;
       var isManager;
       var isFinanceApprover;
 
@@ -42,8 +42,8 @@ angular.module('expenseApp.Services')
 
           login: function (userLoginSuccess) {
               if (userLoginSuccess) {
-                  authenticatedUser = userLoginSuccess.userName;
-                  userName = userLoginSuccess.userName;
+                  authenticatedUser = userLoginSuccess.Username;
+                  Username = userLoginSuccess.Username;
                   isManager = userLoginSuccess.isManager;
                   isFinanceApprover = userLoginSuccess.isFinanceApprover;
                   Application.makeReady();
@@ -52,7 +52,7 @@ angular.module('expenseApp.Services')
 
           logout: function () {
               authenticatedUser = undefined;
-              userName = undefined;
+              Username = undefined;
               isManager = undefined;
               isFinanceApprover = undefined;
           },
@@ -62,12 +62,12 @@ angular.module('expenseApp.Services')
           },
 
           setUserName: function (name) {
-              userName = name;
+              Username = name;
               authenticatedUser = name;
           },
 
           getUserName: function () {
-              return userName;
+              return Username;
           },
 
           getIsManager: function () {
