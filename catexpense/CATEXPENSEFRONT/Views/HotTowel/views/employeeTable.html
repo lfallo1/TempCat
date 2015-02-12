@@ -58,7 +58,7 @@
                     <td>{{submission.WeekEndingDate | date:'yyyy/MM/dd'}}</td>
                     <td>{{submission.Status.StatusName}}</td>
                     <td class="row">
-                        <span class="col-md-2 glyphicon" ng-class="{ 'glyphicon-remove': submission.allSubmissionReceipts.length == 0, 'glyphicon-ok': submission.allSubmissionReceipts.length > 0 }" ng-style="{ 'color': submission.allSubmissionReceipts.length > 0 ? 'green' : 'red'}"></span>
+                        <span ng-if="submission.allSubmissionReceipts.length == 0" class="col-md-2 glyphicon glyphicon-remove" style="color: red"></span>
                         <span title="View all receipts" class="pointer col-md-2 pull-left btn-link glyphicon glyphicon-file" ng-click="showAllAvailableReceipts(submission.allSubmissionReceipts, submission, $index)" ng-show="submission.allSubmissionReceipts.length > 0"></span>
                     </td>
                 </tr>

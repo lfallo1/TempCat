@@ -82,7 +82,7 @@
                                   ng-style="{'color' : {{expense.Billable}} ? 'green' : 'red' }"></span>
                         </td>
                         <td class="row">
-                            <span class="col-md-2 glyphicon" ng-class="{ 'glyphicon-remove': expense.Receipts.length == 0, 'glyphicon-ok': expense.Receipts.length > 0 }" ng-st ng-style="{ 'color': expense.Receipts.length > 0 ? 'green' : 'red'}"></span>
+                            <span ng-if="expense.Receipts.length == 0" class="col-md-2 glyphicon glyphicon-remove" style="color: red"></span>
                             <span title="View receipt" class="pointer col-md-2 pull-left btn-link glyphicon glyphicon-file" ng-click="viewReceipts({{expense.LineItemId}}, $index)" ng-show="expense.Receipts.length > 0"></span>
                         </td>
                     </tr>

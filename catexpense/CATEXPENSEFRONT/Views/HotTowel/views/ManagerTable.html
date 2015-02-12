@@ -25,6 +25,7 @@
                     </th>
                      <th><a href="" id="manDescription" ng-click="managerOrder('Description')">Description</a></th>
                     <th><a href="" id="manAmount" ng-click="managerOrder('TotalAmount')">Amount</a></th>
+                    <th><a href="" id="Receipts" ng-click="employeeOrder('ReceiptPresent')">Receipts</a></th>
                 </tr>
             </thead>
             <tbody ng-repeat="submission in managerSubmissions">
@@ -46,6 +47,10 @@
                     <td>{{submission.RepliconProject.RepliconProjectName}}</td>
                     <td>{{submission.Description}}</td>
                     <td>{{("$" + (submission.TotalAmount).toFixed( 2 ))}}</td>
+                    <td class="row">
+                        <span ng-if="submission.allSubmissionReceipts.length == 0" class="col-md-2 glyphicon glyphicon-remove" style="color: red"></span>
+                        <span title="View all receipts" class="pointer col-md-2 pull-left btn-link glyphicon glyphicon-file" ng-click="showAllAvailableReceipts(submission.allSubmissionReceipts, submission, $index)" ng-show="submission.allSubmissionReceipts.length > 0"></span>
+                    </td>
                 </tr>
             </tbody>
         </table>

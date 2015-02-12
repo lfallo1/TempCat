@@ -2,13 +2,14 @@
 
 angular.module('expenseApp.Controllers')
   .controller('ManagerTableController', ["$scope", "$location", "$modal", "$route", "$rootScope", "$filter", "Application", "SubmissionService", "MessageService", "Authentication", "ReceiptService", function ($scope, $location, $modal, $route, $rootScope, $filter, Application, SubmissionService, MessageService, Authentication, ReceiptService) {
-      $scope.isManager = Authentication.getIsManager();
-
-      $scope.expanded = true;
-
+      /**
+      * container for the submissions
+      */
+      var managerSubmissionsContainer = [];
       var orderBy = $filter('orderBy');
-
       var sortColumn = { field: 'DateCreated', reverse: false };
+      $scope.expanded = true;
+      $scope.isManager = Authentication.getIsManager();
 
       /**
       * allow user to sort submissions in table by any column
@@ -31,34 +32,64 @@ angular.module('expenseApp.Controllers')
           $scope.expanded = value;
       };
 
-      /**
-      * container for the submissions
-      */
-      var managerSubmissionsContainer = [];
+      var loadManagerTable = function () {
+          if (Application.getPendingSubmissionsByManagerName() != undefined) {
+              $scope.managerSubmissions = Application.getPendingSubmissionsByManagerName();
+              $rootScope.$broadcast("managerTotal", $scope.managerSubmissions.length);
+          } else {
+              // get all the submissions for the manager
+              SubmissionService.getPendingSubmissionsByManagerName().then(
+                  function (submissions) {
+                      var userSubmissions = submissions.data;
+                      for (var i = 0; i < userSubmissions.length; i++) {
+                          // a status of 4 and 6 means the submission was rejected
+                          if (userSubmissions[i].StatusId == 4 || userSubmissions[i].StatusId == 6) {
+                              rejected++;
+                          }
+                          var receipts = [];
+                          //get all receipts in that submission
+                          for (var b = 0; b < userSubmissions[i].LineItems.length; b++) {
+                              for (var c = 0; c < userSubmissions[i].LineItems[b].Receipts.length; c++) {
+                                  receipts.push(userSubmissions[i].LineItems[b].Receipts[c]);
+                              }
+                          }
+                          userSubmissions[i]["allSubmissionReceipts"] = receipts;
+                          if (receipts.length > 0) {
+                              userSubmissions[i]["ReceiptPresent"] = true;
+                          } else {
+                              userSubmissions[i]["ReceiptPresent"] = false;
+                          }
+                      }
+                      if (userSubmissions.length > 0) {
+                          Application.setPendingSubmissionsByManagerName(userSubmissions);
+                      }
+                      $scope.managerSubmissions = userSubmissions;
+                      $rootScope.$broadcast("managerTotal", $scope.managerSubmissions.length);
+                  });
+          }
+      };
 
       /**
       * if user is a manager, load managerTable with submissions awaiting approval
       */
       if (Authentication.getIsManager()) {
-          $scope.loadManagerTable = function () {
-              if (Application.getPendingSubmissionsByManagerName() != undefined) {
-                  $scope.managerSubmissions = Application.getPendingSubmissionsByManagerName();
-                  $rootScope.$broadcast("managerTotal", $scope.managerSubmissions.length);
-              } else {
-                  // get all the submissions for the manager
-                  SubmissionService.getPendingSubmissionsByManagerName().then(
-                      function (submissions) {
-                          if (submissions.data.length > 0) {
-                              Application.setPendingSubmissionsByManagerName(submissions.data);
-                          }
-                          $scope.managerSubmissions = submissions.data
-                          $rootScope.$broadcast("managerTotal", $scope.managerSubmissions.length);
-                      }, function (fail) {
-                          //console.log(fail);
-                      });
-              }
-          };
-          $scope.loadManagerTable();
+          loadManagerTable();
+      }
+
+      /**
+      * show all the receipts related to expense items in the particular submission
+      */
+      $scope.showAllAvailableReceipts = function (allReceipts, submission, submissionIndex) {
+          Application.setOrigin("ManagerTable");
+          ReceiptService.setReceipts(allReceipts);
+          ReceiptService.setShowAllReceipts(true);
+          Application.setSubmission(submission);
+          Application.setSubmissionIndex(submissionIndex);
+          ReceiptService.setAddReceipt(false);
+          var modalInstance = $modal.open({
+              templateUrl: 'Views/HotTowel/views/modals/receiptModal.html',
+              controller: 'receiptController'
+          });
       }
 
       /**
@@ -111,7 +142,7 @@ angular.module('expenseApp.Controllers')
           SubmissionService.deleteExpenseReport(MessageService.getId()).then(function (success) {
               $scope.managerSubmissions.splice(Application.getSubmissionIndex(), 1);
               Application.setPendingSubmissionsByManagerName($scope.managerSubmissions);
-          }, function (error) { });
+          });
 
       });
 

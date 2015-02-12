@@ -28,7 +28,8 @@ angular.module('expenseApp.Controllers')
       */
       if (Application.getSubmission()) {
           $scope.submittedNotApproved = Application.getSubmissionStatus() === 2
-        && Application.getSubmission().ActiveDirectoryUser.toUpperCase() == Authentication.getUserName().toUpperCase();
+        && Application.getSubmission().ActiveDirectoryUser.toUpperCase() == Authentication.getUserName().toUpperCase()
+          && (Application.getOrigin() == "FinanceTable" || Application.getOrigin() == "ManagerTable");
           $scope.createNewItemLoad = $scope.submission.StatusId == 1 || $scope.submission.StatusId == 4 || $scope.submission.StatusId == 6
       }
 
@@ -215,7 +216,7 @@ angular.module('expenseApp.Controllers')
       * opens the modal so the user can create a new submission
       */
       $scope.createNewSubmission = function () {
-
+          Application.setOrigin("createSubmission");
           $scope.disableCreate = true;
 
           var submission = {

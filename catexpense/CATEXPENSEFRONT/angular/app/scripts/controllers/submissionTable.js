@@ -285,11 +285,12 @@ angular.module('expenseApp.Controllers')
                 if (statusName == "Manager Approved") {
                     var submissions = Application.getPendingSubmissionsByManagerName();
                     submissions.splice(Application.getSubmissionIndex(), 1);
+                    Application.setPendingSubmissionsByManagerName(submissions);
                 } else {
                     var submissions = Application.getPendingSubmissionsByFinanceApprover();
                     submissions.splice(Application.getSubmissionIndex(), 1);
+                    Application.setPendingSubmissionsByFinanceApprover(submissions);
                 }
-                Application.setPendingSubmissionsByFinanceApprover(submissions);
                 $location.path('/home');
             });
         });
