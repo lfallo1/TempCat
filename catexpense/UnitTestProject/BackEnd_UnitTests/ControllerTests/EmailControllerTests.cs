@@ -11,7 +11,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
     [TestFixture]
     public class EmailControllerTests
     {
-        private Mock<IRepliconUserService> mockUser = new Mock<IRepliconUserService>();
+    
         private Mock<ISubmissionService> mockSubmission = new Mock<ISubmissionService>();
         private Mock<ILineItemService> mockLineItem = new Mock<ILineItemService>();
         private EmailController controller;
@@ -23,7 +23,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
         public void EmailControllerTestsSetUp()
         {
             controller = new EmailController(
-                mockSubmission.Object, mockLineItem.Object);
+               mockSubmission.Object, mockLineItem.Object);
 
             Submission submission1 = new Submission();
             submission1.DateUpdated = DateTime.Today - TimeSpan.FromDays(3);
@@ -76,7 +76,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
         {
             // Arrange
             mockLineItem.Setup(m => m.All()).Returns(lineItems);
-            mockUser.Setup(m => m.All()).Returns(users);
+           
             
             // Act
             var response = controller.GenerateMessage(submissions);

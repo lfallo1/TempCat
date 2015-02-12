@@ -317,7 +317,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\UserWithSession.cs" />
     <Compile Include="Models\Login.cs" />
     <Compile Include="Models\RepliconUserProject.cs" />
     <Compile Include="Models\RepliconProjectContainer.cs" />
@@ -336,41 +335,26 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="Services\ClientService.cs" />
     <Compile Include="Services\ExpenseCategoryService.cs" />
-    <Compile Include="Services\ExpenseService.cs" />
     <Compile Include="Services\FinanceApproverService.cs" />
-    <Compile Include="Services\Interfaces\IClientService.cs" />
     <Compile Include="Services\Interfaces\IExpenseCategoryService.cs" />
-    <Compile Include="Services\Interfaces\IExpenseService.cs" />
     <Compile Include="Services\Interfaces\IFinanceApproverService.cs" />
     <Compile Include="Services\Interfaces\ICommentService.cs" />
     <Compile Include="Services\Interfaces\ILineItemService.cs" />
     <Compile Include="Services\Interfaces\IRepliconUserProjectService.cs" />
     <Compile Include="Services\Interfaces\IReceiptService.cs" />
-    <Compile Include="Services\Interfaces\IRepliconProjectService.cs" />
     <Compile Include="Services\Interfaces\IRepliconService.cs" />
-    <Compile Include="Services\Interfaces\IRepliconUserService.cs" />
-    <Compile Include="Services\Interfaces\IService.cs" />
-    <Compile Include="Services\Interfaces\ISubmissionPageService.cs" />
+    <Compile Include="Services\Interfaces\Base\IService.cs" />
     <Compile Include="Services\Interfaces\ISubmissionService.cs" />
-    <Compile Include="Services\Interfaces\IValidationDictionary.cs" />
     <Compile Include="Services\CommentService.cs" />
     <Compile Include="Services\LineItemService.cs" />
     <Compile Include="Services\ReceiptService.cs" />
     <Compile Include="Services\RepliconService.cs" />
-    <Compile Include="Services\SubmissionPageService.cs" />
-    <Compile Include="Services\RepliconProjectService.cs" />
-    <Compile Include="Services\RepliconUserService.cs" />
-    <Compile Include="Services\Service.cs" />
     <Compile Include="Services\SubmissionService.cs" />
     <Compile Include="Utilities\DB.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Utilities\IRepository.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Utilities\ModelStateWrapper.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Utilities\Repository.cs">
@@ -383,13 +367,11 @@
     <Compile Include="Models\Submission.cs" />
     <Compile Include="Models\FinanceApprover.cs" />
     <Compile Include="Models\Client.cs" />
-    <Compile Include="Models\Expense.cs" />
     <Compile Include="Models\Receipt.cs" />
     <Compile Include="Models\RepliconRequest.cs" />
     <Compile Include="Models\RepliconResponse.cs" />
     <Compile Include="Models\SubmissionPage.cs" />
     <Compile Include="Models\TempCatExpenseContext.cs" />
-    <Compile Include="Models\ActiveDirectoryUser.cs" />
     <Compile Include="Models\UserPrincipalExt.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -428,6 +410,10 @@
     <Content Include="angular\app\bower_components\bootstrap\dist\css\bootstrap-theme.min.css" />
     <Content Include="angular\app\bower_components\bootstrap\dist\css\bootstrap.css" />
     <Content Include="angular\app\bower_components\bootstrap\dist\css\bootstrap.min.css" />
+    <Content Include="angular\app\bower_components\bootstrap\dist\css\datepicker.css" />
+    <Content Include="angular\app\bower_components\bootstrap\dist\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="angular\app\bower_components\bootstrap\dist\js\angular-resource.js" />
+    <Content Include="angular\app\bower_components\bootstrap\dist\js\bootstrap-datepicker.js" />
     <Content Include="angular\app\bower_components\bootstrap\dist\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="angular\app\bower_components\bootstrap\dist\js\bootstrap.js" />
     <Content Include="angular\app\bower_components\bootstrap\dist\js\bootstrap.min.js" />
@@ -645,6 +631,8 @@
     <Content Include="angular\.jshintrc" />
     <Content Include="angular\.travis.yml" />
     <Content Include="angular\package.json" />
+    <Content Include="angular\app\.buildignore" />
+    <Content Include="angular\app\.htaccess" />
     <Content Include="angular\app\bower_components\angular-animate\.bower.json" />
     <Content Include="angular\app\bower_components\angular-animate\angular-animate.min.js.map" />
     <Content Include="angular\app\bower_components\angular-animate\bower.json" />
@@ -704,6 +692,7 @@
     <Content Include="angular\app\bower_components\bootstrap\grunt\sauce_browsers.yml" />
     <Content Include="angular\app\bower_components\bootstrap\less\alerts.less" />
     <Content Include="angular\app\bower_components\bootstrap\less\badges.less" />
+    <Content Include="angular\app\bower_components\bootstrap\less\bootstrap-datepicker.less" />
     <Content Include="angular\app\bower_components\bootstrap\less\bootstrap.less" />
     <Content Include="angular\app\bower_components\bootstrap\less\breadcrumbs.less" />
     <Content Include="angular\app\bower_components\bootstrap\less\button-groups.less" />
