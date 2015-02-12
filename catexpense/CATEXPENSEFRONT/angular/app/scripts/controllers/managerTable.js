@@ -12,6 +12,15 @@ angular.module('expenseApp.Controllers')
       $scope.isManager = Authentication.getIsManager();
 
       /**
+      * statuses used for the drop down filter
+      */
+      $scope.statuses = [
+        { name: 'Submitted', value: '2' },
+        { name: 'Manager Approved', value: '3' },
+        { name: 'Manager Rejected', value: '4' }
+      ];
+
+      /**
       * allow user to sort submissions in table by any column
       */
       $scope.managerOrder = function (field) {
@@ -90,6 +99,19 @@ angular.module('expenseApp.Controllers')
               templateUrl: 'Views/HotTowel/views/modals/receiptModal.html',
               controller: 'receiptController'
           });
+      }
+
+      /**
+      * load the table with the filtered items
+      */
+      $scope.filterTableBySubmissionStatus = function (status) {
+          var managerSubmissionsFilter = [];
+          for (var i = 0; i < managerSubmissionsContainer.length; i++) {
+              if (managerSubmissionsContainer[i].StatusId == status || status == 0) {
+                  managerSubmissionsFilter.push(managerSubmissionsContainer[i]);
+              }
+          }
+          $scope.managerSubmissions = managerSubmissionsFilter;
       }
 
       /**
