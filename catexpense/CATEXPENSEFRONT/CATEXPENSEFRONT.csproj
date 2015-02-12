@@ -317,7 +317,6 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\UserWithSession.cs" />
     <Compile Include="Models\Login.cs" />
     <Compile Include="Models\RepliconUserProject.cs" />
     <Compile Include="Models\RepliconProjectContainer.cs" />
@@ -368,13 +367,11 @@
     <Compile Include="Models\Submission.cs" />
     <Compile Include="Models\FinanceApprover.cs" />
     <Compile Include="Models\Client.cs" />
-    <Compile Include="Models\Expense.cs" />
     <Compile Include="Models\Receipt.cs" />
     <Compile Include="Models\RepliconRequest.cs" />
     <Compile Include="Models\RepliconResponse.cs" />
     <Compile Include="Models\SubmissionPage.cs" />
     <Compile Include="Models\TempCatExpenseContext.cs" />
-    <Compile Include="Models\ActiveDirectoryUser.cs" />
     <Compile Include="Models\UserPrincipalExt.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

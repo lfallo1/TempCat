@@ -38,7 +38,7 @@ namespace CatExpenseFront
             
                 container.RegisterType<IRepository<SubmissionPage>, Repository<SubmissionPage>>();
                 container.RegisterType<IRepository<Client>, Repository<Client>>();
-                container.RegisterType<IRepository<Expense>, Repository<Expense>>();
+              
                 container.RegisterType<IRepository<FinanceApprover>, Repository<FinanceApprover>>();
                 container.RegisterType<IRepository<LineItem>, Repository<LineItem>>();
                 container.RegisterType<IRepository<Comment>, Repository<Comment>>();
