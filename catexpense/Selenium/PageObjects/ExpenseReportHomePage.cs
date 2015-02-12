@@ -13,8 +13,7 @@ namespace Selenium.PageObjects
         private static readonly string url = ConfigurationManager.AppSettings["testUrl"];
         private static readonly By ClientList = By.Id("clientDropDownList");
         private static readonly By EmployeeTable = By.Id("employee-short-table");
-        private static readonly By EmployeeTableNoContentsWarning = By.XPath(
-            "//div[@id='employee-short-table']//div[@class='alert alert-warning fade in']");
+        private static readonly By EmployeeTableNoContentsWarning = By.Id("empNoSubmissions");
         private static readonly By ManagerTable = By.Id("manager-short-table");
         private static readonly By FinanceTable = By.Id("finance-short-table");
         private static readonly By SubmissionDescription = By.Id("submissionDescription");
@@ -33,8 +32,7 @@ namespace Selenium.PageObjects
         private static readonly By ProjectSyncButton = By.Id("syncProjectsButton");
         private static readonly By SubmissionModal = By.XPath("//div[@class='modal-content']"); 
 
-        private static readonly By EmployeeTableSelect = By.XPath(
-            "//div[@id='employee-short-table']//select");
+        private static readonly By EmployeeTableSelect = By.Id("empSelectStatus");
         private static readonly By FinanceTableSelect = By.XPath(
             "//div[@id='finance-short-table']//select");
 
