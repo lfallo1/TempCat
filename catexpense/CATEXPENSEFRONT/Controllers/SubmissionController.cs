@@ -177,7 +177,10 @@ namespace CatExpenseFront.Controllers
                               where (m.ManagerName.ToUpper() == (null == HttpContext.Current.Session["UserName"]
                                                                ? ""
                                                                : HttpContext.Current.Session["UserName"].ToString().ToUpper())
-                              && (m.Status.StatusName.ToUpper() == APPROVAL_STATUS_SUBMITTED.ToUpper()) && !m.IsDeleted)
+                              && (m.Status.StatusName.ToUpper() == APPROVAL_STATUS_SUBMITTED.ToUpper()
+                              || m.Status.StatusName.ToUpper() == APPROVAL_STATUS_MANAGER_APPROVED.ToUpper()
+                              || m.Status.StatusName.ToUpper() == APPROVAL_STATUS_MANAGER_REJECTED.ToUpper())
+                              && !m.IsDeleted)
                               select m).OrderBy(s => s.WeekEndingDate).ToList();
 
             CalculateTotalsForList(submissionList);
