@@ -157,3 +157,8 @@ body {
             display: block;
         }
 }
+
+#spinner {
+    margin-top: 30px;
+    margin-right: 50px;
+}

@@ -550,6 +550,8 @@
     <Content Include="angular\app\scripts\directives\imageupload.js" />
     <Content Include="angular\app\scripts\directives\submission-table.js" />
     <Content Include="angular\app\scripts\directives\submissionPage.js" />
+    <Content Include="angular\app\scripts\libraries\angular-spin.min.js" />
+    <Content Include="angular\app\scripts\libraries\spin.min.js" />
     <Content Include="angular\app\scripts\services\Application.js" />
     <Content Include="angular\app\scripts\services\Authentication.js" />
     <Content Include="angular\app\scripts\services\CommentService.js" />

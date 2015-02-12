@@ -32,12 +32,9 @@ angular.module('expenseApp.Controllers')
         */
         $scope.syncProjects = function () {
             $scope.flag = true;
-            $scope.countFrom = 0;
-            $scope.progressValue = 0;
 
             RepliconProjectService.updateRepliconProjects().then(
              function (success) {
-                 $scope.progressValue = 98;
                  $scope.flag = false;
                  $rootScope.$broadcast("syncComplete");
              },
@@ -45,15 +42,6 @@ angular.module('expenseApp.Controllers')
                  alert(error);
                  $scope.flag = false;
              });
-
-            $scope.onTimeout = function () {
-                $scope.progressValue += .325;
-                mytimeout = $timeout($scope.onTimeout, 100);
-            }
-            var mytimeout = $timeout($scope.onTimeout, 100);
-            $timeout(function () {
-                $timeout.cancel(mytimeout);
-            }, 28000);
 
         };
     }]);
