@@ -9,7 +9,7 @@
                 <h4 class="col-sm-6 col-md-6">My Submissions</h4>
             </div>
             <div class="col-sm-4 col-md-4 pull-right">
-                <select class="form-control col-sm-4 col-md-4 pull-right" ng-change="loadEmployeeTableStatusX(selectedStatus.value)"
+                <select id="empSelectStatus" class="form-control col-sm-4 col-md-4 pull-right" ng-change="loadEmployeeTableStatusX(selectedStatus.value)"
                         ng-model="selectedStatus" ng-options="status.name for status in statuses"></select>
             </div>
         </div>
@@ -65,7 +65,7 @@
             </tbody>
         </table>
         <div ng-if="employeeSubmissions == undefined || employeeSubmissions.length == 0">
-            <div class="alert alert-warning fade in">
+            <div id="empNoSubmissions" class="alert alert-warning fade in">
                 You have no submissions!
             </div>
         </div>
