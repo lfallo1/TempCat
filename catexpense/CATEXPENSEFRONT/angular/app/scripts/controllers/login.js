@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('expenseApp.Controllers')
-  .controller('LoginController', function ($scope, $location, $rootScope, Authentication, LoginService) {
-      
+  .controller('LoginController', ["$scope", "$location", "$rootScope", "Authentication", "LoginService", function ($scope, $location, $rootScope, Authentication, LoginService) {
+
       $scope.ErrorMessage = "";
 
       /**
@@ -21,4 +21,4 @@ angular.module('expenseApp.Controllers')
               }
           });
       };
-  });
+  }]);

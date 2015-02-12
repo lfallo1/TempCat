@@ -1,33 +1,39 @@
 ﻿<div id="homeContainer">
     <div class="alert alert-danger animate-show" ng-show="employeeRejectedTotal !== 0 && timeOut">
         <i class="glyphicon glyphicon-warning-sign"></i>
-        <button type="button" id="rejectedAlert" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-        <a href="#employee-short-tabl" class="alert alert-link">
-            You have <span ng-bind="employeeRejectedTotal"></span> rejected submission<span ng-show="employeeRejectedTotal !== 1">s</span>!
+        <button type="button" id="rejectedAlert" class="close" data-dismiss="alert" aria-hidden="true">
+            &times;</button>
+        <a href="#employee-short-tabl" class="alert alert-link">You have <span ng-bind="employeeRejectedTotal">
+        </span> rejected submission<span ng-show="employeeRejectedTotal !== 1">s</span>!
         </a>
     </div>
     <div class="alert alert-danger animate-show" ng-show="managerTotal !== 0 && timeOut">
         <i class="glyphicon glyphicon-warning-sign"></i>
-        <button type="button" id="awaitingAlert" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-        <a href="#manager-short-table" class="alert alert-link">
-            You have <span ng-bind="managerTotal"></span> submission<span ng-show="managerTotal !== 1">s</span> awaiting approval!
+        <button type="button" id="awaitingAlert" class="close" data-dismiss="alert" aria-hidden="true">
+            &times;</button>
+        <a href="" ng-click="goToManagerTable()" class="alert alert-link">You have <span ng-bind="managerTotal">
+        </span> submission<span ng-show="managerTotal !== 1">s</span> awaiting approval!
         </a>
     </div>
     <div class="alert alert-danger animate-show" ng-show="financeTotal !== 0 && timeOut">
         <i class="glyphicon glyphicon-warning-sign"></i>
-        <button type="button" id="financeAlert" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-        <a href="#finance-short-table" class="alert alert-link">
-            You have <span ng-bind="financeTotal"></span> finance submission<span ng-show="financeTotal !== 1">s</span> awaiting approval!
+        <button type="button" id="financeAlert" class="close" data-dismiss="alert" aria-hidden="true">
+            &times;</button>
+        <a href="" ng-click="goToFinanceTable()" class="alert alert-link">You have <span ng-bind="financeTotal">
+        </span> finance submission<span ng-show="financeTotal !== 1">s</span> awaiting approval!
         </a>
     </div>
     <div class="alert alert-warning animate-show" ng-show="hasNoProjects">
         <i class="glyphicon glyphicon-warning-sign"></i>
-        <button type="button" id="noProjectAlert" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-        <strong>Warning!</strong> You have no projects assigned.  Please click the Sync Projects button.
+        <button type="button" id="noProjectAlert" class="close" data-dismiss="alert" aria-hidden="true">
+            &times;</button>
+        <strong>Warning!</strong> You have no projects assigned.  Please click the Sync
+        Projects button.
     </div>
     <div class="alert alert-success animate-show" ng-show="syncComplete">
         <i class="glyphicon glyphicon-ok"></i>
-        <button type="button" id="syncComplete" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <button type="button" id="syncComplete" class="close" data-dismiss="alert" aria-hidden="true">
+            &times;</button>
         <strong>Complete!</strong> Your projects are up to date.
     </div>
 
@@ -35,8 +41,11 @@
     <submission-page></submission-page>
     <br />
     <div>
-        <div id="employee-short-table" ng-include="'Views/HotTowel/views/employeeTable.html'"></div>
-        <div id="manager-short-table" ng-include="'Views/HotTowel/views/managerTable.html'"></div>
-        <div id="finance-short-table" ng-include="'Views/HotTowel/views/financeTable.html'"></div>
+        <div id="employee-short-table" ng-include="'Views/HotTowel/views/employeeTable.html'">
+        </div>
+        <div id="manager-short-table" ng-include="'Views/HotTowel/views/managerTable.html'">
+        </div>
+        <div id="finance-short-table" ng-include="'Views/HotTowel/views/financeTable.html'">
+        </div>
     </div>
 </div>

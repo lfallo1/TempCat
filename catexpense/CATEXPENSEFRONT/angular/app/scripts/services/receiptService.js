@@ -1,7 +1,7 @@
 ﻿'use strict';
 
-angular.module( 'expenseApp.Services' )
-  .service( 'ReceiptService', function ReceiptService( $http ) {
+angular.module('expenseApp.Services')
+  .service('ReceiptService', ["$http", function ReceiptService($http) {
       var self = this;
 
       var receipts;
@@ -16,7 +16,7 @@ angular.module( 'expenseApp.Services' )
           return receipts;
       };
 
-      self.setReceipts = function ( data ) {
+      self.setReceipts = function (data) {
           receipts = data;
       };
 
@@ -24,7 +24,7 @@ angular.module( 'expenseApp.Services' )
           return showAllReceipts;
       };
 
-      self.setShowAllReceipts = function ( data ) {
+      self.setShowAllReceipts = function (data) {
           showAllReceipts = data;
       };
 
@@ -32,7 +32,7 @@ angular.module( 'expenseApp.Services' )
           return allReceipts;
       };
 
-      self.setAllReceipts = function ( data ) {
+      self.setAllReceipts = function (data) {
           allReceipts = data;
       };
 
@@ -40,7 +40,7 @@ angular.module( 'expenseApp.Services' )
           return addReceipt;
       };
 
-      self.setAddReceipt = function ( data ) {
+      self.setAddReceipt = function (data) {
           addReceipt = data;
       };
 
@@ -51,34 +51,34 @@ angular.module( 'expenseApp.Services' )
       //
       //=====================================================================//
 
-      self.getReceiptById = function ( id ) {
-          return $http( {
+      self.getReceiptById = function (id) {
+          return $http({
               method: "GET",
               url: '/api/Receipts',
               params: { id: id }
-          } )
+          })
       };
 
       /**
       * Gets receipt of the submission that the submission id belongs to
       */
-      self.GetReceiptsBySubmissionId = function ( SubmissionId ) {
-          return $http( {
+      self.GetReceiptsBySubmissionId = function (SubmissionId) {
+          return $http({
               method: "GET",
               url: '/api/Receipt/GetReceiptsBySubmissionId',
               params: { id: SubmissionId }
-          } )
+          })
       };
 
       /**
       * Gets receipt of the submission that the submission id belongs to with the image
       */
-      self.GetReceiptsWithImageBySubmissionId = function ( SubmissionId ) {
-          return $http( {
+      self.GetReceiptsWithImageBySubmissionId = function (SubmissionId) {
+          return $http({
               method: "GET",
               url: '/api/Receipt/GetReceiptsWithImageBySubmissionId',
               params: { id: SubmissionId }
-          } )
+          })
       };
 
 
@@ -88,12 +88,12 @@ angular.module( 'expenseApp.Services' )
       //
       //=====================================================================//
 
-      self.submitReceipt = function ( data ) {
-          return $http( {
+      self.submitReceipt = function (data) {
+          return $http({
               method: "POST",
               url: '/api/Receipts',
               data: data
-          } )
+          })
       };
 
       //=====================================================================//
@@ -108,12 +108,12 @@ angular.module( 'expenseApp.Services' )
       //
       //=====================================================================//
 
-      self.deleteReceipt = function ( receiptID, lineitemID ) {
-          return $http( {
+      self.deleteReceipt = function (receiptID, lineitemID) {
+          return $http({
               method: "DELETE",
               url: "/api/Receipts",
               params: { id: receiptID, lineItemId: lineitemID }
-          } )
+          })
       };
 
-  } );
+  }]);

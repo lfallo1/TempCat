@@ -10,8 +10,8 @@
  * # FormDetailsCtrl
  * Controller of the expenseApp
  */
-angular.module( 'expenseApp.Controllers' )
-  .controller( 'FormDetailsCtrl', function ( $scope, $modalInstance, $modal, $rootScope, LineItemService, ValidationService, Application, ReceiptService ) {
+angular.module('expenseApp.Controllers')
+  .controller('FormDetailsCtrl', ["$scope", "$modalInstance", "$modal", "$rootScope", "LineItemService", "ValidationService", "Application", "ReceiptService", function ($scope, $modalInstance, $modal, $rootScope, LineItemService, ValidationService, Application, ReceiptService) {
 
       $scope.divShow = false;
 
@@ -80,14 +80,14 @@ angular.module( 'expenseApp.Controllers' )
        * Reset the submission values to their defaults.
        */
       $scope.resetValues = function () {
-          LineItemService.setExpenseCategoryName( $scope.selectedType );
+          LineItemService.setExpenseCategoryName($scope.selectedType);
       };
 
       /**
        * Display the policy modal depending on the expense category chosen.
        */
       $scope.getPolicy = function () {
-          var modalInstance = $modal.open( {
+          var modalInstance = $modal.open({
               //templateUrl: 'views/modals/policyView.html',
               templateUrl: 'Views/HotTowel/views/modals/policyView.html',
               controller: 'PolicyCtrl',
@@ -96,13 +96,13 @@ angular.module( 'expenseApp.Controllers' )
                       return $scope.selectedType;
                   }
               }
-          } );
+          });
 
           modalInstance.result.then(
-              function ( successMessage ) {
+              function (successMessage) {
                   //console.log( successMessage );
               },
-              function ( errorMessage ) {
+              function (errorMessage) {
                   //console.log( errorMessage );
               }
           );
@@ -114,15 +114,15 @@ angular.module( 'expenseApp.Controllers' )
       $scope.saveNew = function () {
           var returnArray = [];
           var errorMsg = 'please create a ' + $scope.selectedType + ' expense.';
-          ReceiptService.setAddReceipt( $scope.addNewReceipt );
-          switch ( $scope.selectedType ) {
+          ReceiptService.setAddReceipt($scope.addNewReceipt);
+          switch ($scope.selectedType) {
               case 'Mileage':
-                  returnArray = _ConvertMileageArrayContents( $scope.mileageArray );
-                  _SaveNewMileage( returnArray, errorMsg );
+                  returnArray = _ConvertMileageArrayContents($scope.mileageArray);
+                  _SaveNewMileage(returnArray, errorMsg);
                   break;
               case 'Per Diem':
-                  returnArray = _ConvertPerDiemArrayContents( $scope.perDiemArray );
-                  _SaveNewPerDiem( returnArray, errorMsg );
+                  //returnArray = _ConvertPerDiemArrayContents( $scope.perDiemArray );
+                  _SaveNewPerDiem(LineItemService.getLineItem(), LineItemService.isLineItemValid(), errorMsg);
                   break;
               case 'Transportation':
               case 'Lodging':
@@ -131,11 +131,11 @@ angular.module( 'expenseApp.Controllers' )
               case 'Meals':
               case 'Airfare':
               case 'Other':
-                  returnArray = _ConvertOtherArrayContents( LineItemService.getLineItem(), $scope.otherArray[0].valid );
-                  _SaveNewOther( returnArray, errorMsg );
+                  //returnArray = _ConvertOtherArrayContents( LineItemService.getLineItem(), LineItemService.isLineItemValid() );
+                  _SaveNewOther(LineItemService.getLineItem(), LineItemService.isLineItemValid(), errorMsg);
                   break;
               default:
-                  returnArray = [{ msg: 'something went wrong' }];
+                  console.log('something went wrong');
           };
       };
 
@@ -144,15 +144,15 @@ angular.module( 'expenseApp.Controllers' )
       * then proceed to close the modal upon which 
       * line item will be saved to db in submission.js
       */
-      function _SaveNewMileage( returnArray, errorMsg ) {
-          if ( returnArray.length === 0 ) {
-              console.log( errorMsg );
+      function _SaveNewMileage(returnArray, errorMsg) {
+          if (returnArray.length === 0) {
+              console.log(errorMsg);
           } else {
-              console.log( 'Successfully saved report(s)' );
-              for ( var i = 0; i < returnArray.length; i++ ) {
+              console.log('Successfully saved report(s)');
+              for (var i = 0; i < returnArray.length; i++) {
                   delete returnArray[i].valid;
               }
-              $modalInstance.close( returnArray );
+              $modalInstance.close(returnArray);
           }
       };
 
@@ -161,15 +161,14 @@ angular.module( 'expenseApp.Controllers' )
       * then proceed to close the modal upon which 
       * line item will be saved to db in submission.js
       */
-      function _SaveNewPerDiem( returnArray, errorMsg ) {
-          if ( returnArray.length === 0 ) {
-              console.log( errorMsg );
-          } else if ( !returnArray[0].valid ) {
-              console.log( 'invalid per diem' );
+      function _SaveNewPerDiem(lineitem, valid, errorMsg) {
+          var obj = [];
+          obj.push(lineitem);
+          if (!valid) {
+              console.log(errorMsg);
           } else {
-              console.log( 'Successfully saved report(s)' );
-              delete returnArray[0].valid;
-              $modalInstance.close( returnArray );
+              console.log('Successfully saved report(s)');
+              $modalInstance.close(obj);
           }
 
       };
@@ -179,17 +178,15 @@ angular.module( 'expenseApp.Controllers' )
       * then proceed to close the modal upon which 
       * line item will be saved to db in submission.js
       */
-      function _SaveNewOther( returnArray, errorMsg ) {
-          if ( returnArray.length === 0 ) {
-              console.log( errorMsg );
-          } else if ( !returnArray[0].valid ) {
-              console.log( 'invalid other' );
+      function _SaveNewOther(lineitem, valid, errorMsg) {
+          var obj = [];
+          obj.push(lineitem);
+          if (!valid) {
+              console.log(errorMsg);
           } else {
-              console.log( 'Successfully saved report(s)' );
-              delete returnArray[0].valid;
-              $modalInstance.close( returnArray );
+              console.log('Successfully saved report(s)');
+              $modalInstance.close(obj);
           }
-
       };
 
       /**
@@ -197,9 +194,9 @@ angular.module( 'expenseApp.Controllers' )
        * 
        * NOTE: this is a private method
        */
-      function _ConvertMileageArrayContents( oldArray ) {
+      function _ConvertMileageArrayContents(oldArray) {
           var newArray = [];
-          for ( var i = 0; i < oldArray.length; i++ ) {
+          for (var i = 0; i < oldArray.length; i++) {
 
               var item = {};
               item.Billable = oldArray[i].billable;
@@ -215,7 +212,7 @@ angular.module( 'expenseApp.Controllers' )
               item.StatusId = 1;
               item.SubmissionId = LineItemService.getSubmissionId();
               item.valid = oldArray[i].valid;
-              newArray.push( item );
+              newArray.push(item);
 
 
 
@@ -242,15 +239,15 @@ angular.module( 'expenseApp.Controllers' )
        * 
        * NOTE: this is a private method
        */
-      function _ConvertPerDiemArrayContents( oldArray ) {
+      function _ConvertPerDiemArrayContents(oldArray) {
           var newArray = [];
-          for ( var i = 0; i < oldArray.length; i++ ) {
-              LineItemService.setExpenseCategoryName( $scope.selectedType );
-              LineItemService.setDays( oldArray[i].days );
-              LineItemService.setLineItemAmount( oldArray[i].amount );
-              LineItemService.setBillable( oldArray[i].billable );
-              LineItemService.setLineItemDate( oldArray[i].lineItemDate );
-              newArray.push( LineItemService.getLineItem() );
+          for (var i = 0; i < oldArray.length; i++) {
+              LineItemService.setExpenseCategoryName($scope.selectedType);
+              LineItemService.setDays(oldArray[i].days);
+              LineItemService.setLineItemAmount(oldArray[i].amount);
+              LineItemService.setBillable(oldArray[i].billable);
+              LineItemService.setLineItemDate(oldArray[i].lineItemDate);
+              newArray.push(LineItemService.getLineItem());
               newArray[i].valid = oldArray[i].valid;
           };
           return newArray;
@@ -261,7 +258,7 @@ angular.module( 'expenseApp.Controllers' )
        * 
        * NOTE: this is a private method
        */
-      function _ConvertOtherArrayContents( oldArray, valid ) {
+      function _ConvertOtherArrayContents(oldArray, valid) {
           var newArray = [];
           /*var item = {};
           item.Billable = oldArray[i].billable;
@@ -277,7 +274,7 @@ angular.module( 'expenseApp.Controllers' )
           //LineItemService.setLineItemDesc(oldArray[i].description);
           //LineItemService.setLineItemAmount(oldArray[i].amount);
           //LineItemService.setBillable(oldArray[i].billable);
-          newArray.push( LineItemService.getLineItem() );
+          newArray.push(LineItemService.getLineItem());
           newArray[0].valid = valid;
           return newArray;
       };
@@ -289,12 +286,13 @@ angular.module( 'expenseApp.Controllers' )
 
           var returnObj;
           var errorMsg = 'please fix your ' + $scope.selectedType + ' expense.';
-          switch ( $scope.selectedType ) {
+
+          switch ($scope.selectedType) {
               case 'Mileage':
-                  returnObj = _ConvertMileageArrayContents( $scope.mileageArray );
+                  returnObj = _ConvertMileageArrayContents($scope.mileageArray);
                   break;
               case 'Per Diem':
-                  returnObj = _ConvertPerDiemArrayContents( $scope.perDiemArray );
+                  returnObj = LineItemService.getLineItem();
                   break;
               case 'Transportation':
               case 'Lodging':
@@ -303,22 +301,19 @@ angular.module( 'expenseApp.Controllers' )
               case 'Meals':
               case 'Airfare':
               case 'Other':
-                  returnObj = _ConvertOtherArrayContents( LineItemService.getLineItem(), $scope.otherArray[0].valid );
+                  returnObj = LineItemService.getLineItem();
                   break;
               default:
                   returnObj = { msg: 'something went wrong' };
           };
-          if ( undefined === returnObj ) {
-              console.log( 'you didnt make any changes' );
+          if (undefined === returnObj) {
+              console.log('you didnt make any changes');
           }
-          else if ( !returnObj[0].valid ) {
-              console.log( 'invalid expense' );
+          else if (!LineItemService.isLineItemValid()) {
+              console.log('invalid expense');
           } else {
-              console.log( 'Successfully edited report' );
-              for ( var i = 0; i < returnObj.length; i++ ) {
-                  delete returnObj[i].valid;
-              }
-              $modalInstance.close( LineItemService.getLineItem() );
+              console.log('Successfully edited report');
+              $modalInstance.close(LineItemService.getLineItem());
           }
       };
 
@@ -327,7 +322,7 @@ angular.module( 'expenseApp.Controllers' )
        * Close out of the modal without sending in any of the information to the submission page.
        */
       $scope.cancel = function () {
-          $modalInstance.dismiss( 'Form was cancelled.' );
+          $modalInstance.dismiss('Form was cancelled.');
       };
 
 
@@ -335,7 +330,7 @@ angular.module( 'expenseApp.Controllers' )
       * Disables the submit button based on info.
       */
       $scope.checkFile = function () {
-          $( '#upload' ).prop( 'disabled', !"" === $( 'input:file' ).val() );
+          $('#upload').prop('disabled', !"" === $('input:file').val());
           $scope.divShow = false;
       };
 
@@ -344,24 +339,24 @@ angular.module( 'expenseApp.Controllers' )
       */
       $scope.upload = function () {
           $scope.noReceipt = false;
-          if ( $scope.image ) {
+          if ($scope.image) {
               var datauri = $scope.image.dataURL + "";
-              var base64 = datauri.substring( datauri.indexOf( ',' ) + 1 );
+              var base64 = datauri.substring(datauri.indexOf(',') + 1);
               var receipt = {
                   "LineItemId": LineItemService.getLineItemId(),
                   "Base64String": base64,
                   "Name": $scope.image.file.name,
                   "Type": $scope.image.file.type
               };
-              ReceiptService.submitReceipt( receipt ).then( function ( receipt ) {
-                  $( '#upload' ).prop( 'disabled', true );
+              ReceiptService.submitReceipt(receipt).then(function (receipt) {
+                  $('#upload').prop('disabled', true);
                   $scope.divShow = true;
-                  $rootScope.$broadcast( "addNewReceipt", receipt.data );
+                  $rootScope.$broadcast("addNewReceipt", receipt.data);
                   $scope.image = undefined;
-              } );
+              });
           } else {
-              $( '#upload' ).prop( 'disabled', true );
+              $('#upload').prop('disabled', true);
               $scope.noReceipt = true;
           }
       }
-  } );
+  }]);

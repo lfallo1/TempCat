@@ -8,8 +8,8 @@
  * @name LineItemService
  * @description # LineItem Service 
  */
-angular.module( 'expenseApp.Services' )
-  .service( 'LineItemService', function LineItemService( $http ) {
+angular.module('expenseApp.Services')
+  .service('LineItemService', ["$http", function LineItemService($http) {
       var self = this;
 
       /*
@@ -64,7 +64,8 @@ angular.module( 'expenseApp.Services' )
               thursday: '',
               friday: '',
               saturday: ''
-          }
+          },
+          valid: false
       };
 
 
@@ -104,28 +105,28 @@ angular.module( 'expenseApp.Services' )
        *
        * NOTE: this is a private method
        */
-      function _GetDaysOfThisWeekGivenDate( thisdate ) {
+      function _GetDaysOfThisWeekGivenDate(thisdate) {
 
-          var sunday = new Date( thisdate );
-          sunday.setDate( thisdate.getDate() - thisdate.getDay() );
+          var sunday = new Date(thisdate);
+          sunday.setDate(thisdate.getDate() - thisdate.getDay());
 
-          var monday = new Date( sunday );
-          monday.setDate( sunday.getDate() + 1 );
+          var monday = new Date(sunday);
+          monday.setDate(sunday.getDate() + 1);
 
-          var tuesday = new Date( sunday );
-          tuesday.setDate( sunday.getDate() + 2 );
+          var tuesday = new Date(sunday);
+          tuesday.setDate(sunday.getDate() + 2);
 
-          var wednesday = new Date( sunday );
-          wednesday.setDate( sunday.getDate() + 3 );
+          var wednesday = new Date(sunday);
+          wednesday.setDate(sunday.getDate() + 3);
 
-          var thursday = new Date( sunday );
-          thursday.setDate( sunday.getDate() + 4 );
+          var thursday = new Date(sunday);
+          thursday.setDate(sunday.getDate() + 4);
 
-          var friday = new Date( sunday );
-          friday.setDate( sunday.getDate() + 5 );
+          var friday = new Date(sunday);
+          friday.setDate(sunday.getDate() + 5);
 
-          var saturday = new Date( sunday );
-          saturday.setDate( sunday.getDate() + 6 );
+          var saturday = new Date(sunday);
+          saturday.setDate(sunday.getDate() + 6);
 
           var datesOfWeek = {
               sunday: sunday,
@@ -146,12 +147,12 @@ angular.module( 'expenseApp.Services' )
        * NOTE: this is a private method
        */
       function _GetMilesFromMetaData() {
-          var result = lineItem.LineItemMetadata.split( ',' );
+          var result = lineItem.LineItemMetadata.split(',');
           /*
           result = [ 'Miles:10', 'Origin:A', 'Destination:B', etc...]
           */
 
-          var nextResult = result[0].split( ':' );
+          var nextResult = result[0].split(':');
           /*
            nextResult = ['Miles', '10'];
           */
@@ -165,12 +166,12 @@ angular.module( 'expenseApp.Services' )
        * NOTE: this is a private method
        */
       function _GetOriginFromMetaData() {
-          var result = lineItem.LineItemMetadata.split( ',' );
+          var result = lineItem.LineItemMetadata.split(',');
           /*
           result = [ 'Miles:10', 'Origin:A', 'Destination:B', etc...]
           */
 
-          var nextResult = result[1].split( ':' );
+          var nextResult = result[1].split(':');
           /*
            nextResult = ['Origin', 'A'];
           */
@@ -184,12 +185,12 @@ angular.module( 'expenseApp.Services' )
        * NOTE: this is a private method
        */
       function _GetDestinationFromMetaData() {
-          var result = lineItem.LineItemMetadata.split( ',' );
+          var result = lineItem.LineItemMetadata.split(',');
           /*
           result = [ 'Miles:10', 'Origin:A', 'Destination:B', etc...]
           */
 
-          var nextResult = result[2].split( ':' );
+          var nextResult = result[2].split(':');
           /*
            nextResult = ['Destination', 'B'];
           */
@@ -203,27 +204,27 @@ angular.module( 'expenseApp.Services' )
        * NOTE: this is a private method
        */
       function _GetDaysFromMetaData() {
-          var result = lineItem.LineItemMetadata.split( ',' );
+          var result = lineItem.LineItemMetadata.split(',');
           /*
           result = [ 'Miles:10', 'Origin:A', 'Destination:B', 'Sunday:false', etc...]
           */
 
-          var nextResult = result[3].split( ':' );
+          var nextResult = result[3].split(':');
           /*
            nextResult = ['Sunday', 'false'];
           */
           extraData.days.sunday = 'true' === nextResult[1];
-          nextResult = result[4].split( ':' );
+          nextResult = result[4].split(':');
           extraData.days.monday = 'true' === nextResult[1];
-          nextResult = result[5].split( ':' );
+          nextResult = result[5].split(':');
           extraData.days.tuesday = 'true' === nextResult[1];
-          nextResult = result[6].split( ':' );
+          nextResult = result[6].split(':');
           extraData.days.wednesday = 'true' === nextResult[1];
-          nextResult = result[7].split( ':' );
+          nextResult = result[7].split(':');
           extraData.days.thursday = 'true' === nextResult[1];
-          nextResult = result[8].split( ':' );
+          nextResult = result[8].split(':');
           extraData.days.friday = 'true' === nextResult[1];
-          nextResult = result[9].split( ':' );
+          nextResult = result[9].split(':');
           extraData.days.saturday = 'true' === nextResult[1];
 
           return extraData.days;
@@ -239,7 +240,7 @@ angular.module( 'expenseApp.Services' )
           return underEdit;
       };
 
-      self.setUnderEdit = function ( value ) {
+      self.setUnderEdit = function (value) {
           underEdit = !!value;
       };
 
@@ -250,8 +251,8 @@ angular.module( 'expenseApp.Services' )
           return lineItem.LineItemId;
       };
 
-      self.setLineItemId = function ( id ) {
-          if ( !isNaN( parseInt( id ) ) ) {
+      self.setLineItemId = function (id) {
+          if (!isNaN(parseInt(id))) {
               lineItem.LineItemId = id;
           } else {
               lineItem.LineItemId = '';
@@ -268,8 +269,8 @@ angular.module( 'expenseApp.Services' )
       /**
        * Sets the lineItem's SubmissionId
        */
-      self.setSubmissionId = function ( value ) {
-          if ( !isNaN( parseInt( value ) ) ) {
+      self.setSubmissionId = function (value) {
+          if (!isNaN(parseInt(value))) {
               lineItem.SubmissionId = value;
           } else {
               lineItem.SubmissionId = '';
@@ -286,7 +287,7 @@ angular.module( 'expenseApp.Services' )
       /**
        * Sets the lineItem's Billable
        */
-      self.setBillable = function ( value ) {
+      self.setBillable = function (value) {
           lineItem.Billable = !!value;
       };
 
@@ -300,8 +301,8 @@ angular.module( 'expenseApp.Services' )
       /**
        * Sets the lineItem's ExpenseCategoryId
        */
-      self.setExpenseCategoryId = function ( value ) {
-          if ( !isNaN( parseInt( value ) ) && value >= 1 && value <= 9 ) {
+      self.setExpenseCategoryId = function (value) {
+          if (!isNaN(parseInt(value)) && value >= 1 && value <= 9) {
               lineItem.ExpenseCategoryId = value;
           } else {
               lineItem.ExpenseCategoryId = 0;
@@ -318,9 +319,9 @@ angular.module( 'expenseApp.Services' )
       /**
        * Sets the lineItem's LineItemDate
        */
-      self.setLineItemDate = function ( value ) {
-          var date = new Date( value );
-          if ( date instanceof Date && !isNaN( date.valueOf() ) ) {
+      self.setLineItemDate = function (value) {
+          var date = new Date(value);
+          if (date instanceof Date && !isNaN(date.valueOf())) {
               lineItem.LineItemDate = date;
           } else {
               lineItem.LineItemDate = '';
@@ -337,7 +338,7 @@ angular.module( 'expenseApp.Services' )
       /**
        * Sets the lineItem's LineItemDesc
        */
-      self.setLineItemDesc = function ( value ) {
+      self.setLineItemDesc = function (value) {
           lineItem.LineItemDesc = value;
       };
 
@@ -351,8 +352,8 @@ angular.module( 'expenseApp.Services' )
       /**
        * Sets the lineItem's LineItemAmount
        */
-      self.setLineItemAmount = function ( value ) {
-          if ( !isNaN( parseInt( value ) ) && value > 0 ) {
+      self.setLineItemAmount = function (value) {
+          if (!isNaN(parseInt(value)) && value > 0) {
               lineItem.LineItemAmount = value;
           } else {
               lineItem.LineItemAmount = 0;
@@ -376,7 +377,7 @@ angular.module( 'expenseApp.Services' )
       /**
        * Sets the lineItem's ReceiptPresent
        */
-      self.setReceiptPresent = function ( value ) {
+      self.setReceiptPresent = function (value) {
           lineItem.ReceiptPresent = !!value;
       };
 
@@ -390,8 +391,8 @@ angular.module( 'expenseApp.Services' )
       /**
        * Sets the lineItem's StatusId
        */
-      self.setStatusId = function ( value ) {
-          if ( !isNaN( parseInt( value ) ) && value >= 1 && value <= 6 && value % 1 === 0 ) {
+      self.setStatusId = function (value) {
+          if (!isNaN(parseInt(value)) && value >= 1 && value <= 6 && value % 1 === 0) {
               lineItem.StatusId = value;
           } else {
               lineItem.StatusId = 0;
@@ -410,8 +411,8 @@ angular.module( 'expenseApp.Services' )
        * Sets the lineItem's expense category name.
        * NOTE: these values is not part of the lineItem object
        */
-      self.setExpenseCategoryName = function ( value ) {
-          switch ( value ) {
+      self.setExpenseCategoryName = function (value) {
+          switch (value) {
               case 'Mileage':
                   extraData.expenseCategoryName = 'Mileage';
                   lineItem.ExpenseCategoryId = 1;
@@ -467,11 +468,11 @@ angular.module( 'expenseApp.Services' )
        * Also sets the object containing the days of the week as strings.
        * NOTE: these values is not part of the lineItem object
        */
-      self.setEndingWeek = function ( value ) {
-          var date = new Date( value );
-          if ( date instanceof Date && !isNaN( date.valueOf() ) ) {
+      self.setEndingWeek = function (value) {
+          var date = new Date(value);
+          if (date instanceof Date && !isNaN(date.valueOf())) {
               extraData.endingWeek = date;
-              extraData.daysString = _GetDaysOfThisWeekGivenDate( date );
+              extraData.daysString = _GetDaysOfThisWeekGivenDate(date);
               lineItem.LineItemDate = date;
           } else {
               extraData.endingWeek = '';
@@ -498,7 +499,7 @@ angular.module( 'expenseApp.Services' )
       /**
        * Sets the lineItem's Origin.
        */
-      self.setOrigin = function ( value ) {
+      self.setOrigin = function (value) {
           extraData.origin = value;
           _GenerateMetaData();
       };
@@ -513,7 +514,7 @@ angular.module( 'expenseApp.Services' )
       /**
        * Sets the lineItem's Destination.
        */
-      self.setDestination = function ( value ) {
+      self.setDestination = function (value) {
           extraData.destination = value;
           _GenerateMetaData();
       };
@@ -522,14 +523,14 @@ angular.module( 'expenseApp.Services' )
        * Gets the lineItem's Miles.
        */
       self.getMiles = function () {
-          return parseFloat( _GetMilesFromMetaData() );
+          return parseFloat(_GetMilesFromMetaData());
       };
 
       /**
        * Sets the current travel miles.
        */
-      self.setMiles = function ( value ) {
-          if ( !isNaN( parseInt( value ) ) && value >= 0 ) {
+      self.setMiles = function (value) {
+          if (!isNaN(parseInt(value)) && value >= 0) {
               extraData.miles = value;
           } else {
               extraData.miles = 0;
@@ -547,10 +548,10 @@ angular.module( 'expenseApp.Services' )
       /**
        * Sets the lineItem's Days that were checked for the per diem.
        */
-      self.setDays = function ( value ) {
-          if ( typeof value !== 'undefined' && value !== null && value.hasOwnProperty( 'sunday' ) && value.hasOwnProperty( 'monday' ) && value.hasOwnProperty( 'tuesday' )
-              && value.hasOwnProperty( 'wednesday' ) && value.hasOwnProperty( 'thursday' ) && value.hasOwnProperty( 'friday' )
-              && value.hasOwnProperty( 'saturday' ) ) {
+      self.setDays = function (value) {
+          if (typeof value !== 'undefined' && value !== null && value.hasOwnProperty('sunday') && value.hasOwnProperty('monday') && value.hasOwnProperty('tuesday')
+              && value.hasOwnProperty('wednesday') && value.hasOwnProperty('thursday') && value.hasOwnProperty('friday')
+              && value.hasOwnProperty('saturday')) {
 
               extraData.days.sunday = !!value.sunday;
               extraData.days.monday = !!value.monday;
@@ -571,6 +572,20 @@ angular.module( 'expenseApp.Services' )
               };
           };
           _GenerateMetaData();
+      };
+
+      /**
+       * If the LineItem is valid, return true, else return false
+       */
+      self.isLineItemValid = function () {
+          return extraData.valid;
+      };
+
+      /**
+       * Sets the validity of the LineItem
+       */
+      self.setValidity = function (value) {
+          extraData.valid = !!value;
       };
 
       /**
@@ -604,11 +619,11 @@ angular.module( 'expenseApp.Services' )
        * Resets the lineItem values to their defaults.
        */
       self.resetLineItem = function () {
-          self.setLineItemDate( '' );
-          self.setOrigin( '' );
-          self.setDestination( '' );
-          self.setMiles( 0 );
-          self.setLineItemDesc( '' );
+          self.setLineItemDate('');
+          self.setOrigin('');
+          self.setDestination('');
+          self.setMiles(0);
+          self.setLineItemDesc('');
           self.setDays(
               {
                   sunday: false,
@@ -620,18 +635,19 @@ angular.module( 'expenseApp.Services' )
                   saturday: false
               }
           );
-          self.setLineItemAmount( 0 );
-          self.setBillable( false );
+          self.setLineItemAmount(0);
+          self.setBillable(false);
+          self.setValidity(false);
       };
 
       /**
        * This function will take in an expense category id and return its cooresponding expensecategory name.
        *
        */
-      self.getExpenseCategoryNameById = function ( id ) {
+      self.getExpenseCategoryNameById = function (id) {
           var name = '';
 
-          switch ( id ) {
+          switch (id) {
               case 1:
                   name = 'Mileage';
                   break;
@@ -678,23 +694,23 @@ angular.module( 'expenseApp.Services' )
       /**
        * GETS a line item by id
        */
-      self.getLineItemById = function ( id ) {
-          return $http( {
+      self.getLineItemById = function (id) {
+          return $http({
               url: '/api/LineItem',
               method: 'GET',
               params: { id: id }
-          } );
+          });
       };
 
       /**
        * GETS all line items by submission ID
        */
-      self.getLineItemsBySubmissionId = function ( id ) {
-          return $http( {
+      self.getLineItemsBySubmissionId = function (id) {
+          return $http({
               url: '/api/LineItem/GetLineItemsBySubmissionId',
               method: 'GET',
               params: { id: id }
-          } );
+          });
       };
 
 
@@ -708,12 +724,12 @@ angular.module( 'expenseApp.Services' )
       /**
        * POSTS a new line item
        */
-      self.submitLineItem = function ( data ) {
-          return $http( {
+      self.submitLineItem = function (data) {
+          return $http({
               url: '/api/LineItem',
               method: 'POST',
               data: data
-          } );
+          });
       };
 
       //=====================================================================//
@@ -725,13 +741,13 @@ angular.module( 'expenseApp.Services' )
       /**
        * PUTS an existing line item
        */
-      self.updateLineItem = function ( id, data ) {
-          return $http( {
+      self.updateLineItem = function (id, data) {
+          return $http({
               url: '/api/LineItem',
               method: 'PUT',
               params: { id: id },
               data: data
-          } );
+          });
       };
 
       //=====================================================================//
@@ -743,11 +759,11 @@ angular.module( 'expenseApp.Services' )
       /**
        * DELETES an existing line item
        */
-      self.deleteLineItem = function ( id ) {
-          return $http( {
+      self.deleteLineItem = function (id) {
+          return $http({
               url: '/api/LineItem',
               method: 'DELETE',
               params: { id: id }
-          } );
+          });
       };
-  } );
+  }]);

@@ -1,7 +1,7 @@
 ﻿'use strict';
 
 angular.module('expenseApp.Services')
-  .factory('Authentication', function Authentication($q, $http, $timeout, Application) {
+  .factory('Authentication', ["$q", "$http", "$timeout", "Application", function Authentication($q, $http, $timeout, Application) {
 
       var authenticatedUser = null;
       var userName;
@@ -78,4 +78,4 @@ angular.module('expenseApp.Services')
               return isFinanceApprover;
           },
       }
-  });
+  }]);

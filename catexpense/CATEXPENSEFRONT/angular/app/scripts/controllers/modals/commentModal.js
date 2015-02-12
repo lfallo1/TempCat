@@ -1,7 +1,7 @@
 ﻿'use strict';
 
 angular.module( 'expenseApp.Controllers' )
-  .controller('CommentController', function ($scope, $modalInstance, $modal, $rootScope, Application, CommentService, MessageService) {
+  .controller('CommentController', ["$scope", "$modalInstance", "$modal", "$rootScope", "Application", "CommentService", "MessageService", function ($scope, $modalInstance, $modal, $rootScope, Application, CommentService, MessageService) {
 
       $scope.comment = Application.getComment().ExpenseComment;
       $scope.isNewComment = Application.getIsNewComment();
@@ -46,4 +46,4 @@ angular.module( 'expenseApp.Controllers' )
               $modalInstance.dismiss("dismiss confirm modal");
           });
       });
-  });
+  }]);
