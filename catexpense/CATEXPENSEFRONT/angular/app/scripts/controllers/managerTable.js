@@ -15,6 +15,7 @@ angular.module('expenseApp.Controllers')
       * statuses used for the drop down filter
       */
       $scope.statuses = [
+        { name: 'All', value: '0' },
         { name: 'Submitted', value: '2' },
         { name: 'Manager Approved', value: '3' },
         { name: 'Manager Rejected', value: '4' }
@@ -44,16 +45,19 @@ angular.module('expenseApp.Controllers')
       var loadManagerTable = function () {
           if (Application.getPendingSubmissionsByManagerName() != undefined) {
               $scope.managerSubmissions = Application.getPendingSubmissionsByManagerName();
+              managerSubmissionsContainer = $scope.managerSubmissions;
               $rootScope.$broadcast("managerTotal", $scope.managerSubmissions.length);
           } else {
               // get all the submissions for the manager
               SubmissionService.getPendingSubmissionsByManagerName().then(
                   function (submissions) {
+                      console.log('manager submissions returned');
+                      console.log(submissions.data);
                       var userSubmissions = submissions.data;
                       for (var i = 0; i < userSubmissions.length; i++) {
                           // a status of 4 and 6 means the submission was rejected
                           if (userSubmissions[i].StatusId == 4 || userSubmissions[i].StatusId == 6) {
-                              rejected++;
+                              //rejected++;
                           }
                           var receipts = [];
                           //get all receipts in that submission
@@ -73,6 +77,7 @@ angular.module('expenseApp.Controllers')
                           Application.setPendingSubmissionsByManagerName(userSubmissions);
                       }
                       $scope.managerSubmissions = userSubmissions;
+                      managerSubmissionsContainer = $scope.managerSubmissions;
                       $rootScope.$broadcast("managerTotal", $scope.managerSubmissions.length);
                   });
           }
