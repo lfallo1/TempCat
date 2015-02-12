@@ -138,7 +138,7 @@ namespace CatExpenseFront.Controllers
             foreach (Principal principal in group.Members)
             {
                 FinanceApprover fa = new FinanceApprover();
-                fa.userName = principal.SamAccountName.ToUpper();
+                fa.Username = principal.SamAccountName.ToUpper();
                 financeApproverService.Create(fa);
 
             }

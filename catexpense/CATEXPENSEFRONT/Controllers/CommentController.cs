@@ -146,11 +146,11 @@ namespace CatExpenseFront.Controllers
             Comment Comment = new Comment();
 
             Comment.SubmissionId = submissionId;
-            var userName = (null == HttpContext.Current.Session["UserName"]
+            var Username = (null == HttpContext.Current.Session["UserName"]
                                                           ? ""
                                                           : HttpContext.Current.Session["UserName"].ToString());
 
-            Comment.RepliconUserName = userName;
+            Comment.RepliconUserName = Username;
             Comment.ExpenseComment = comment;
             Comment.DateCreated = DateTime.Now;
             Comment.DateUpdated = DateTime.Now;
