@@ -8,7 +8,7 @@ using System.Web;
 using System.Collections.Generic;
 using CatExpenseFront.Services.Interfaces;
 using System.Linq;
-using CatExpenseFront.Utilities;
+
 using System.Net.Http;
 using System.Net;
 using CatExpenseFront.Services;
@@ -52,9 +52,9 @@ namespace CatExpenseFront.Controllers
         [HttpPost]
         [ActionName("Login")]
         [Route("api/login/userlogin")]
-        public UserWithSession userLoginSetSession(Login login)
+        public Login userLoginSetSession(Login login)
         {
-            UserWithSession userWithSession = new UserWithSession();
+            Login userWithSession = new Login();
             try
             {
                 string domainPath = "LDAP://DC=catalystsolves,DC=com";
@@ -69,7 +69,7 @@ namespace CatExpenseFront.Controllers
                 search.PropertiesToLoad.Add("manager"); // manager
                 SearchResult result = search.FindOne();
                 HttpContext.Current.Session["UserName"] = result.Properties["samaccountname"][0].ToString();
-                userWithSession.userName = HttpContext.Current.Session["UserName"].ToString();
+                userWithSession.Username = HttpContext.Current.Session["UserName"].ToString();
                 userWithSession.isLoggedIn = true;
                 userWithSession.isFinanceApprover = isFinanceApprover();
                 userWithSession.isManager = isManager();
@@ -90,19 +90,19 @@ namespace CatExpenseFront.Controllers
         [HttpGet]
         [ActionName("isLoggedIn")]
         [Route("api/login/isLoggedIn")]
-        public UserWithSession isLoggedIn()
+        public Login isLoggedIn()
         {
-            UserWithSession userWithSession = new UserWithSession();
+            Login userWithSession = new Login();
             if (null != HttpContext.Current.Session["UserName"])
             {
-                userWithSession.userName = HttpContext.Current.Session["UserName"].ToString();
+                userWithSession.Username = HttpContext.Current.Session["UserName"].ToString();
                 userWithSession.isLoggedIn = true;
                 userWithSession.isFinanceApprover = isFinanceApprover();
                 userWithSession.isManager = isManager();
             }
             else
             {
-                userWithSession.userName = "";
+                userWithSession.Username = "";
                 userWithSession.isLoggedIn = false;
                 userWithSession.isFinanceApprover = false;
                 userWithSession.isManager = false;

@@ -13,7 +13,7 @@ using CatExpenseFront.Repository;
 using CatExpenseFront.Services.Interfaces;
 using CatExpenseFront.Services;
 using System.Web;
-using CatExpenseFront.Utilities;
+
 using CatExpenseFront.Controllers.Base;
 
 namespace CatExpenseFront.Controllers
@@ -38,7 +38,7 @@ namespace CatExpenseFront.Controllers
         /// </summary>
         /// <param name="iService"></param>
         /// <param name="userService"></param>
-        public CommentController(ICommentService iService, IRepliconUserService userService)
+        public CommentController(ICommentService iService)
         {
             if (service == null)
             {

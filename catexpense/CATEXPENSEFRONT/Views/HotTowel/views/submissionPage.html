@@ -1,6 +1,9 @@
 <div class="row">
     <div>
         <div class="col-sm-12">
+            <h4 ng-show="editExistingSubmission">Submission Details</h4>
+        </div>
+        <div class="col-sm-12">
             <div class="col-sm-6">
                 <datepicker-icon id="datePicker"></datepicker-icon>
             </div>
@@ -30,6 +33,17 @@
                     <div class="input-group">
                         <div class="input-group-addon">Manager:</div>
                         <input type="text" disabled class="form-control" id="managerName" ng-model="clientManager">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12" ng-show="editExistingSubmission">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label class="sr-only" for="submissionStatus">Status</label>
+                    <div class="input-group">
+                        <div class="input-group-addon">Status:</div>
+                        <input type="text" disabled class="form-control" id="submissionStatus" ng-model="submission.Status.StatusName"/>
                     </div>
                 </div>
             </div>

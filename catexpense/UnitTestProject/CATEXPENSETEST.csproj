@@ -159,7 +159,6 @@
     <Compile Include="BackEnd_UnitTests\ControllerTests\LineItemControllerTests.cs" />
     <Compile Include="BackEnd_UnitTests\ControllerTests\ReceiptControllerTests.cs" />
     <Compile Include="BackEnd_UnitTests\ControllerTests\RepliconControllerTests.cs" />
-    <Compile Include="BackEnd_UnitTests\ControllerTests\RepliconProjectControllerTests.cs" />
     <Compile Include="BackEnd_UnitTests\ModelTests\ClientTests.cs" />
     <Compile Include="BackEnd_UnitTests\ControllerTests\SubmissionControllerTest.cs" />
     <Compile Include="BackEnd_UnitTests\ModelTests\ExpenseCategoryTests.cs" />

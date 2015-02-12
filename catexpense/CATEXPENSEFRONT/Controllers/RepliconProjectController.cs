@@ -11,7 +11,7 @@ using System.Web.Http.Description;
 using CatExpenseFront.Models;
 using CatExpenseFront.Repository;
 using Newtonsoft.Json.Linq;
-using CatExpenseFront.Utilities;
+
 using CatExpenseFront.Services.Interfaces;
 using CatExpenseFront.Services;
 using System.Web;
@@ -26,7 +26,7 @@ namespace CatExpenseFront.Controllers
     /// </summary>
     public class RepliconProjectController : BaseController
     {
-        public IRepliconProjectService service;
+   
         public IRepliconUserProjectService userProjectService;
         public IFinanceApproverService financeApproverService;
 
@@ -35,25 +35,16 @@ namespace CatExpenseFront.Controllers
         /// Constructor that accepts service as a parameter
         /// </summary>
         /// <param name="service"></param>
-        public RepliconProjectController(IRepliconProjectService service)
+        public RepliconProjectController()
         {
-            if (this.service == null)
+            if (this.userProjectService == null)
             {
-                this.service = service;
                 this.userProjectService = new RepliconUserProjectService();
                 this.financeApproverService = new FinanceApproverService(new Repository<FinanceApprover>());
             }
         }
 
-        /// <summary>
-        /// Default Constructor
-        /// </summary>
-        public RepliconProjectController()
-        {
-            this.service = new RepliconProjectService();
-            this.userProjectService = new RepliconUserProjectService();
-            this.financeApproverService = new FinanceApproverService(new Repository<FinanceApprover>());
-        }
+        
 
         /// <summary>
         /// Returns all projects for the current user.
