@@ -569,6 +569,7 @@
     <Content Include="angular\app\scripts\services\ValidationService.js" />
     <Content Include="angular\app\styles\images\icon-undo-white.png" />
     <Content Include="angular\app\styles\images\icon-undo.png" />
+    <Content Include="angular\app\styles\images\spinner.png" />
     <Content Include="angular\app\styles\main.css" />
     <Content Include="angular\settingupFEtesting.txt" />
     <Content Include="angular\test\.gitignore" />
@@ -788,6 +789,7 @@
     <Content Include="angular\app\bower_components\json3\CONTRIBUTING.md" />
     <Content Include="angular\app\bower_components\json3\LICENSE" />
     <Content Include="angular\app\bower_components\json3\README.md" />
+    <Content Include="angular\app\scripts\libraries\angular-spinner.min.js.map" />
     <None Include="job_scheduling_data_2_0.xsd">
       <SubType>Designer</SubType>
     </None>

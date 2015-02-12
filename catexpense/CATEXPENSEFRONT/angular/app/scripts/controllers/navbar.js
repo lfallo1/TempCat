@@ -3,7 +3,8 @@
 angular.module('expenseApp.Controllers')
     .controller('NavController', ["$scope", "$location", "$timeout", "Application", "$route", "$rootScope", "Authentication", "LoginService", "SubmissionService", "RepliconProjectService", function ($scope, $location, $timeout, Application, $route, $rootScope, Authentication, LoginService, SubmissionService, RepliconProjectService) {
         $scope.isLoggedIn = Authentication.exists();
-
+        $scope.flag = false;
+        $scope.spinner = "";
         $scope.$on("refresh", function () {
             $scope.isLoggedIn = true;
         });
@@ -32,16 +33,16 @@ angular.module('expenseApp.Controllers')
         */
         $scope.syncProjects = function () {
             $scope.flag = true;
-
+            $scope.spinner = "spinner";
             RepliconProjectService.updateRepliconProjects().then(
              function (success) {
                  $scope.flag = false;
+                 $scope.spinner = "";
                  $rootScope.$broadcast("syncComplete");
              },
              function (error) {
                  alert(error);
                  $scope.flag = false;
              });
-
         };
     }]);
