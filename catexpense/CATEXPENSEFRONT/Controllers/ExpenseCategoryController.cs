@@ -51,6 +51,9 @@ namespace CatExpenseFront.Controllers
         /// GET api/ExpenseCategory
         /// </summary>
         /// <returns></returns>
+        [HttpGet]
+        [ActionName("GetAllExpenseCategories")]
+        [Route("api/ExpenseCategory/GetAllExpenseCategories")]
         public IEnumerable<ExpenseCategory> GetExpenseCategories()
         {
             return service.All();
