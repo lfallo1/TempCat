@@ -11,6 +11,17 @@ angular.module('expenseApp.Controllers')
       var sortColumn = { field: 'TotalAmount', reverse: false };
       $scope.isFinanceApprover = Authentication.getIsFinanceApprover();
       $scope.expanded = true;
+
+      /**
+      * finance tatuses is used for the drop down filter
+      */
+      $scope.financeStatuses = [
+        { name: 'All', value: '0' },
+        { name: 'Manager Approved', value: '3' },
+        { name: 'Finance Approved', value: '5' },
+        { name: 'Finance Rejected', value: '6' }
+      ];
+
       /**
       * set $scope.financeStatuses[1] to the default selected item in the list
       */
@@ -36,18 +47,6 @@ angular.module('expenseApp.Controllers')
               $scope.financeSubmissions = orderBy($scope.financeSubmissions, sortColumn.field, sortColumn.reverse);
           };
       };
-
-
-      /**
-      * finance tatuses is used for the drop down filter
-      */
-      $scope.financeStatuses = [
-        { name: 'All', value: '0' },
-        { name: 'Manager Approved', value: '3' },
-        { name: 'Finance Approved', value: '5' },
-        { name: 'Finance Rejected', value: '6' }
-      ];
-
 
       var loadFinanceTable = function () {
           if (Application.getPendingSubmissionsByFinanceApprover() != undefined && Application.getPendingSubmissionsByFinanceApprover().length != 0) {

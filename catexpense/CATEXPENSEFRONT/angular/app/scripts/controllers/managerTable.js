@@ -22,6 +22,11 @@ angular.module('expenseApp.Controllers')
       ];
 
       /**
+      * set $scope.statuses[0] to the default selected item in the list
+      */
+      $scope.selectedStatus = $scope.statuses[1];
+
+      /**
       * allow user to sort submissions in table by any column
       */
       $scope.managerOrder = function (field) {
