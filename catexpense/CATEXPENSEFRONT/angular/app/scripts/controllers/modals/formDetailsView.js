@@ -17,9 +17,9 @@ angular.module('expenseApp.Controllers')
 
       /**
       * contains the list of the different types of expenses
+      * set to current values in database upon page load by getExpenseCategories function
       */
       $scope.formTypes = [];
-        
 
       /** 
       * these arrays will store the list of expenses that will be submitted
@@ -111,11 +111,9 @@ angular.module('expenseApp.Controllers')
       function getExpenseCategories() {
           ExpenseCategory.getAllExpenseCategories().then(
               function (success) {
-                  console.log(success.data);
                   success.data.forEach(function (category) {
                       $scope.formTypes.push(category.ExpenseCategoryName);
                   });
-                  console.log($scope.formTypes);
               },
               function (error) {
                   console.log(error);
