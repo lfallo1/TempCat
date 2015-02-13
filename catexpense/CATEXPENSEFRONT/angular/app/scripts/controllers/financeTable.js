@@ -2,13 +2,30 @@
 
 angular.module('expenseApp.Controllers')
   .controller('FinanceTableController', ["$scope", "$location", "$modal", "$route", "$rootScope", "$filter", "Application", "SubmissionService", "MessageService", "Authentication", "ReceiptService", function ($scope, $location, $modal, $route, $rootScope, $filter, Application, SubmissionService, MessageService, Authentication, ReceiptService) {
-      $scope.isFinanceApprover = Authentication.getIsFinanceApprover();
 
+      /** 
+      * container for the submissions
+      */
+      var financeSubmissionsContainer = [];
+      var orderBy = $filter('orderBy');
+      var sortColumn = { field: 'TotalAmount', reverse: false };
+      $scope.isFinanceApprover = Authentication.getIsFinanceApprover();
       $scope.expanded = true;
 
-      var orderBy = $filter('orderBy');
+      /**
+      * finance tatuses is used for the drop down filter
+      */
+      $scope.financeStatuses = [
+        { name: 'All', value: '0' },
+        { name: 'Manager Approved', value: '3' },
+        { name: 'Finance Approved', value: '5' },
+        { name: 'Finance Rejected', value: '6' }
+      ];
 
-      var sortColumn = { field: 'TotalAmount', reverse: false };
+      /**
+      * set $scope.financeStatuses[1] to the default selected item in the list
+      */
+      $scope.selectedFinanceStatus = $scope.financeStatuses[1];
 
       /**
       * expand and contract financeTable view
@@ -31,58 +48,59 @@ angular.module('expenseApp.Controllers')
           };
       };
 
-
-      /**
-      * finance tatuses is used for the drop down filter
-      */
-      $scope.financeStatuses = [
-        { name: 'All', value: '0' },
-        { name: 'Manager Approved', value: '3' }
-      ];
-
-      /**
-      * set $scope.financeStatuses[1] to the default selected item in the list
-      */
-      $scope.selectedFinanceStatus = $scope.financeStatuses[1];
-
-      /** 
-      * container for the submissions
-      */
-      var financeSubmissionsContainer = [];
+      var loadFinanceTable = function () {
+          if (Application.getPendingSubmissionsByFinanceApprover() != undefined && Application.getPendingSubmissionsByFinanceApprover().length != 0) {
+              $scope.financeSubmissions = Application.getPendingSubmissionsByFinanceApprover();
+              financeSubmissionsContainer = $scope.financeSubmissions;
+              $scope.filterTableBySubmissionStatus(3);
+              $rootScope.$broadcast("financeTotal", $scope.financeSubmissions.length);
+          } else {
+              // get all the submissions for the finance approver
+              SubmissionService.getPendingSubmissionsByFinanceApprover().then(
+                function (submissions) {
+                    var userSubmissions = submissions.data;
+                    for (var i = 0; i < userSubmissions.length; i++) {
+                        // a status of 4 and 6 means the submission was rejected
+                        if (userSubmissions[i].StatusId == 4 || userSubmissions[i].StatusId == 6) {
+                            rejected++;
+                        }
+                        var receipts = [];
+                        //get all receipts in that submission
+                        for (var b = 0; b < userSubmissions[i].LineItems.length; b++) {
+                            for (var c = 0; c < userSubmissions[i].LineItems[b].Receipts.length; c++) {
+                                receipts.push(userSubmissions[i].LineItems[b].Receipts[c]);
+                            }
+                        }
+                        userSubmissions[i]["allSubmissionReceipts"] = receipts;
+                        if (receipts.length > 0) {
+                            userSubmissions[i]["ReceiptPresent"] = true;
+                        } else {
+                            userSubmissions[i]["ReceiptPresent"] = false;
+                        }
+                    }
+                    if (userSubmissions.length > 0) {
+                        Application.setPendingSubmissionsByFinanceApprover(userSubmissions);
+                    }
+                    $scope.financeSubmissions = userSubmissions;
+                    financeSubmissionsContainer = $scope.financeSubmissions;
+                    $scope.filterTableBySubmissionStatus(3);
+                    $rootScope.$broadcast("financeTotal", $scope.financeSubmissions.length);
+                });
+          }
+      }
 
       /**
       * if the user is a finance approver, load the financeTable 
       * with submissions awaiting their approval
       */
       if (Authentication.getIsFinanceApprover()) {
-          $scope.loadFinanceTable = function () {
-              if (Application.getPendingSubmissionsByFinanceApprover() != undefined && Application.getPendingSubmissionsByFinanceApprover().length != 0) {
-                  $scope.financeSubmissions = Application.getPendingSubmissionsByFinanceApprover();
-                  financeSubmissionsContainer = $scope.financeSubmissions;
-                  $rootScope.$broadcast("financeTotal", $scope.financeSubmissions.length);
-              } else {
-                  // get all the submissions for the finance approver
-                  SubmissionService.getPendingSubmissionsByFinanceApprover().then(
-                    function (submissions) {
-                        if (submissions.data.length > 0) {
-                            Application.setPendingSubmissionsByFinanceApprover(submissions.data);
-                        }
-                        $scope.financeSubmissions = submissions.data;
-                        financeSubmissionsContainer = $scope.financeSubmissions;
-                        $scope.loadFinanceTableStatusX(3);
-                        $rootScope.$broadcast("financeTotal", $scope.financeSubmissions.length);
-                    }, function (fail) {
-                        //console.log(fail);
-                    });
-              }
-          }
-          $scope.loadFinanceTable();
+          loadFinanceTable();
       }
 
       /**
       * load the table with the filtered items
       */
-      $scope.loadFinanceTableStatusX = function (status) {
+      $scope.filterTableBySubmissionStatus = function (status) {
           var financeSubmissionsFilter = [];
           for (var i = 0; i < financeSubmissionsContainer.length; i++) {
               if (financeSubmissionsContainer[i].StatusId == status || status == 0) {
@@ -92,6 +110,22 @@ angular.module('expenseApp.Controllers')
           if (financeSubmissionsFilter.length != 0) {
               $scope.financeSubmissions = financeSubmissionsFilter;
           }
+      }
+
+      /**
+      * show all the receipts related to expense items in the particular submission
+      */
+      $scope.showAllAvailableReceipts = function (allReceipts, submission, submissionIndex) {
+          Application.setOrigin("FinanceTable");
+          ReceiptService.setReceipts(allReceipts);
+          ReceiptService.setShowAllReceipts(true);
+          Application.setSubmission(submission);
+          Application.setSubmissionIndex(submissionIndex);
+          ReceiptService.setAddReceipt(false);
+          var modalInstance = $modal.open({
+              templateUrl: 'Views/HotTowel/views/modals/receiptModal.html',
+              controller: 'receiptController'
+          });
       }
 
       /**
@@ -105,10 +139,8 @@ angular.module('expenseApp.Controllers')
           var receipts = [];
           //get all receipts in that submission
           for (var i = 0; i < submission.LineItems.length; i++) {
-              if (submission.LineItems[i].Receipts.length != 0) {
-                  for (var b = 0; b < submission.LineItems[i].Receipts.length; b++) {
-                      receipts.push(submission.LineItems[i].Receipts[b]);
-                  }
+              for (var b = 0; b < submission.LineItems[i].Receipts.length; b++) {
+                  receipts.push(submission.LineItems[i].Receipts[b]);
               }
           }
           ReceiptService.setAllReceipts(receipts);
@@ -145,7 +177,7 @@ angular.module('expenseApp.Controllers')
           SubmissionService.deleteExpenseReport(MessageService.getId()).then(function (success) {
               $scope.financeSubmissions.splice(Application.getSubmissionIndex(), 1);
               Application.setPendingSubmissionsByFinanceApprover($scope.financeSubmissions);
-          }, function (error) { });
+          });
 
       });
 

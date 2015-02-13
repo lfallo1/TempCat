@@ -3,8 +3,10 @@
 angular.module( 'expenseApp.Controllers' )
   .controller('CommentController', ["$scope", "$modalInstance", "$modal", "$rootScope", "Application", "CommentService", "MessageService", function ($scope, $modalInstance, $modal, $rootScope, Application, CommentService, MessageService) {
 
+      var commentIndex = Application.getCommentIndex();
+
       $scope.comment = Application.getComment().ExpenseComment;
-      $scope.isNewComment = Application.getIsNewComment();
+      $scope.isNewComment = Application.getIsNewComment();     
 
       /**
       * cancel the addition of a comment and close the modal
@@ -21,7 +23,7 @@ angular.module( 'expenseApp.Controllers' )
           $rootScope.$broadcast("saveComment", $scope.comment);
           $modalInstance.dismiss();
       }
-      var commentIndex = Application.getCommentIndex();
+      
       /**
        * delete a comment, will pop up a confirmation modal before delete is performed
        */

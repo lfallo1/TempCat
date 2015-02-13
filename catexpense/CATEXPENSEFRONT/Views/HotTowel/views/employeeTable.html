@@ -9,7 +9,7 @@
                 <h4 class="col-sm-6 col-md-6">My Submissions</h4>
             </div>
             <div class="col-sm-4 col-md-4 pull-right">
-                <select class="form-control col-sm-4 col-md-4 pull-right" ng-change="loadEmployeeTableStatusX(selectedStatus.value)"
+                <select id="empSelectStatus" class="form-control col-sm-4 col-md-4 pull-right" ng-change="loadEmployeeTableStatusX(selectedStatus.value)"
                         ng-model="selectedStatus" ng-options="status.name for status in statuses"></select>
             </div>
         </div>
@@ -58,14 +58,14 @@
                     <td>{{submission.WeekEndingDate | date:'yyyy/MM/dd'}}</td>
                     <td>{{submission.Status.StatusName}}</td>
                     <td class="row">
-                        <span class="col-md-2 glyphicon" ng-class="{ 'glyphicon-remove': submission.allSubmissionReceipts.length == 0, 'glyphicon-ok': submission.allSubmissionReceipts.length > 0 }" ng-style="{ 'color': submission.allSubmissionReceipts.length > 0 ? 'green' : 'red'}"></span>
+                        <span ng-if="submission.allSubmissionReceipts.length == 0" class="col-md-2 glyphicon glyphicon-remove" style="color: red"></span>
                         <span title="View all receipts" class="pointer col-md-2 pull-left btn-link glyphicon glyphicon-file" ng-click="showAllAvailableReceipts(submission.allSubmissionReceipts, submission, $index)" ng-show="submission.allSubmissionReceipts.length > 0"></span>
                     </td>
                 </tr>
             </tbody>
         </table>
         <div ng-if="employeeSubmissions == undefined || employeeSubmissions.length == 0">
-            <div class="alert alert-warning fade in">
+            <div id="empNoSubmissions" class="alert alert-warning fade in">
                 You have no submissions!
             </div>
         </div>

@@ -10,6 +10,10 @@
 angular.module('expenseApp.Controllers')
   .controller('MileageCtrl', ["$scope", "LineItemService", "MapQuestService", "ValidationService", function ($scope, LineItemService, MapQuestService, ValidationService) {
 
+      /** 
+      * stores the ides of the mileageArray of the item that is being edited
+      */
+      var mileageIndex = 0;      
       /**
       * this variable will be responsible for disabling the 'Get Distance' button when clicked
       */
@@ -24,12 +28,6 @@ angular.module('expenseApp.Controllers')
       * disables the 'Save Changes' and 'Cancel Changes' buttons if the user is not editing an item from the array
       */
       $scope.editingNewMileage = false;
-
-      /** 
-      * stores the ides of the mileageArray of the item that is being edited
-      */
-      var mileageIndex = 0;
-
 
       /**
       * default validation for fields
@@ -71,18 +69,6 @@ angular.module('expenseApp.Controllers')
           amount: LineItemService.getLineItemAmount(),
           billable: LineItemService.getBillable()
       };
-
-      /**
-      * determine whether the user is editing the form
-      */
-      /* var isUnderEdit = function () {
-           if ( $scope.editForm ) {
-               setFormValuesForEdit();
-           } else {
-               return;
-           }
-       };
-       isUnderEdit();*/
 
       /**
        * Edit the mileage expense from the array
@@ -133,7 +119,6 @@ angular.module('expenseApp.Controllers')
                       $scope.mileageValidation.miles.message = success.data.info.messages[0];
                   } else {
                       $scope.mileageValues.miles = success.data.route.distance;
-                      //getAmount();
                       $scope.mileageValidation.miles.valid = true;
                       $scope.mileageValidation.miles.message = 'This field is valid.';
                   }
@@ -148,7 +133,7 @@ angular.module('expenseApp.Controllers')
        * Calulate the amount based on the distance and reimbursement amount
        */
       $scope.getAmount = function () {
-          $scope.mileageValues.amount = $scope.mileageValues.miles * 0.40;
+          $scope.mileageValues.amount = ($scope.mileageValues.miles * 0.40).toFixed(2);
       };
 
       /**
@@ -211,17 +196,6 @@ angular.module('expenseApp.Controllers')
               }, function (errorOrigin) {
                   console.log(errorOrigin);
               });
-
-
-
-
-          /*$scope.mileageValidation = ValidationService.validateMileage( lineitem );
-          if ( $scope.mileageValidation.validInput ) {
-              $scope.mileageValues.valid = $scope.mileageValidation.validInput;
-              $scope.mileageArray.push( $scope.mileageValues );
-
-              resetMileage();
-          }*/
       };
 
       /**
@@ -258,7 +232,6 @@ angular.module('expenseApp.Controllers')
       * do not save the changes made to the line item
       */
       $scope.discardChanges = function () {
-          //discard changes
           resetValues();
           $scope.editingNewMileage = false;
       };
@@ -334,21 +307,6 @@ angular.module('expenseApp.Controllers')
           },
           true
       );
-
-      //when user wants to edit their mileage form,
-      //set the values in the form to what was previously entered
-      //for the particular entry
-      /*function setFormValuesForEdit() {
-          $scope.mileageValues.date = LineItemService.getEndingWeek();
-          $scope.mileageValues.origin = LineItemService.getOrigin();
-          $scope.mileageValues.destination = LineItemService.getDestination();
-          $scope.mileageValues.distance = LineItemService.getMiles();
-          $scope.mileageValues.description = LineItemService.getLineItemDesc();
-          $scope.mileageValues.amount = LineItemService.getLineItemAmount();
-          $scope.mileageValues.billable = LineItemService.getBillable();
-          $scope.mileageValues.totalMiles = 0;
-      };*/
-
 
       //==============================================================================//
       // THESE FUNCTIONS ARE FOR THE DATEPICKER

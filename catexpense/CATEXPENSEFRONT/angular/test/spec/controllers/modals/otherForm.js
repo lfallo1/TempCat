@@ -6,15 +6,32 @@ describe( 'Controller: OtherCtrl', function () {
     var scope;
     var LineItemService;
     var LineItem;
+    var LineItemValidity;
     var underEdit;
     var ValidationService;
     var validationObj;
 
     // load the controller's module
-    beforeEach( module( 'expenseApp' ) );
+    beforeEach( module( 'expenseApp.Controllers' ) );
 
     // Initialize the controller and a mock scope
-    beforeEach( inject( function ( $controller, $rootScope, $httpBackend ) {
+    beforeEach( inject( function ( $controller, $rootScope ) {
+
+        validationObj = {
+            validInput: true,
+            date: {
+                valid: true,
+                message: 'This field is valid.'
+            },
+            description: {
+                valid: true,
+                message: 'This field is valid.'
+            },
+            amount: {
+                valid: true,
+                message: 'This field is valid.'
+            }
+        };
 
         LineItem = {
             LineItemDate: '',
@@ -22,6 +39,8 @@ describe( 'Controller: OtherCtrl', function () {
             LineItemAmount: 0,
             Billable: false
         };
+
+        LineItemValidity = false;
 
         underEdit = false;
 
@@ -36,6 +55,7 @@ describe( 'Controller: OtherCtrl', function () {
             getBillable: function () { },
             setBillable: function ( value ) { },
             getDaysString: function () { },
+            setValidity: function () { },
             resetLineItem: function () { }
         };
 
@@ -62,13 +82,17 @@ describe( 'Controller: OtherCtrl', function () {
             } );
         spyOn( LineItemService, 'getDaysString' ).and.returnValue(
             {
-                sunday: '',
-                monday: '',
-                tuesday: '',
-                wednesday: '',
-                thursday: '',
-                friday: '',
-                saturday: ''
+                sunday: 'test sunday',
+                monday: 'test monday',
+                tuesday: 'test tuesday',
+                wednesday: 'test wednesday',
+                thursday: 'test thursday',
+                friday: 'test friday',
+                saturday: 'test saturday'
+            } );
+        spyOn( LineItemService, 'setValidity' ).and.callFake(
+            function ( value ) {
+                LineItemValidity = value;
             } );
         spyOn( LineItemService, 'resetLineItem' ).and.callFake(
             function () {
@@ -92,29 +116,22 @@ describe( 'Controller: OtherCtrl', function () {
             ValidationService: ValidationService
         } );
 
-        spyOn( scope, 'toggleMin' );
-        spyOn( scope, 'toggleMax' );
-
-        $httpBackend.when( 'GET', '/api/login/isLoggedIn' ).respond( {
-            userName: 'testUser',
-            isApprover: false,
-            isLoggedIn: true,
-            isFinanceApprover: false,
-            isManager: false,
-        } );
-
     } ) );
 
     it( 'should get the default values for scope.otherValues. ', function () {
 
         var expectedResult = {
-            date: LineItemService.getLineItemDate(),
-            description: LineItemService.getLineItemDesc(),
-            amount: LineItemService.getLineItemAmount(),
-            billable: LineItemService.getBillable()
+            date: '',
+            description: '',
+            amount: 0,
+            billable: false
         };
 
         expect( scope.otherValues ).toEqual( expectedResult );
+        expect( LineItemService.getLineItemDate.calls.count() ).toBe( 1 );
+        expect( LineItemService.getLineItemDesc.calls.count() ).toBe( 1 );
+        expect( LineItemService.getLineItemAmount.calls.count() ).toBe( 1 );
+        expect( LineItemService.getBillable.calls.count() ).toBe( 1 );
     } );
 
     it( 'should get the default validation values.', function () {
@@ -130,80 +147,338 @@ describe( 'Controller: OtherCtrl', function () {
         expect( scope.otherIsValid() ).toBe( true );
     } );
 
-    it( 'should trigger the watch event while creating a new line item.', function () {
-        /*spyOn( ValidationService, 'validateOther' ).and.returnValue( {
-            date: {
-                valid: false,
-                message: 'something'
-            },
-            description: {
-                valid: false,
-                message: 'happened'
-            },
-            amount: {
-                valid: false,
-                message: 'here'
-            },
-            validInput: false
+    it( 'should update the date to the LineItemService and well as perform validation (valid date).', function () {
+        spyOn( ValidationService, 'validateOther' ).and.callFake( function ( testItem ) {
+            validationObj.date.valid = testItem.LineItemDate instanceof Date && !isNaN( testItem.LineItemDate.valueOf() );
+            if ( !validationObj.date.valid ) {
+                if ( testItem.LineItemDate === '' ) {
+                    validationObj.date.message = 'Please provide a date.';
+                } else {
+                    validationObj.date.message = 'Invalid date.';
+                }
+            };
+            validationObj.validInput = validationObj.date.valid;
+            return validationObj;
         } );
-        spyOn( scope, 'otherIsValid' ).and.returnValue( false );
 
+        spyOn( scope, 'isDateValid' ).and.callThrough();
+        spyOn( scope, 'dateValidationMessage' ).and.callThrough();
+        spyOn( scope, 'otherIsValid' ).and.callThrough();
 
+        var testDate = new Date();
+        scope.otherValues.date = testDate;
 
-        scope.$digest();
-        scope.otherValues.amount = 90;
-        //scope.$digest();
+        scope.updateDate();
 
+        expect( LineItemService.setLineItemDate.calls.count() ).toBe( 1 );
+        expect( LineItemService.setLineItemDate.calls.mostRecent().args[0] ).toEqual( testDate );
 
-         expect( scope.isDateValid() ).toBe( false );
-         expect( scope.dateValidationMessage() ).toBe( 'something' );
- 
-         expect( scope.isDescValid() ).toBe( false );
-         expect( scope.descValidationMessage() ).toBe( 'happened' );
- 
-         expect( scope.isAmountValid() ).toBe( false );
-         expect( scope.amountValidationMessage() ).toBe( 'here' );
- 
-         expect( scope.otherIsValid() ).toBe( false );
+        expect( ValidationService.validateOther.calls.count() ).toBe( 1 );
+        expect( ValidationService.validateOther.calls.mostRecent().args[0] ).toEqual( LineItem );
 
-        expect( true ).toBe( true );*/
+        expect( LineItemService.getLineItem.calls.count() ).toBe( 1 );
+        expect( scope.isDateValid() ).toBe( true );
+        expect( scope.dateValidationMessage() ).toBe( 'This field is valid.' );
+
+        expect( scope.otherIsValid.calls.count() ).toBe( 1 );
+        expect( scope.otherIsValid() ).toBe( true );
+        expect( LineItemService.setValidity.calls.count() ).toBe( 1 );
+        expect( LineItemService.setValidity.calls.mostRecent().args[0] ).toBe( true );
+        expect( LineItemService.setValidity.calls.mostRecent().args[0] ).toBe( scope.otherIsValid() );
 
     } );
 
-    it( 'should trigger the watch event when editing an existing line item.', function () {
+    it( 'should update the date to the LineItemService and well as perform validation (empty date).', function () {
+        spyOn( ValidationService, 'validateOther' ).and.callFake( function ( testItem ) {
+            validationObj.date.valid = testItem.LineItemDate instanceof Date && !isNaN( testItem.LineItemDate.valueOf() );
+            if ( !validationObj.date.valid ) {
+                if ( testItem.LineItemDate === '' ) {
+                    validationObj.date.message = 'Please provide a date.';
+                } else {
+                    validationObj.date.message = 'Invalid date.';
+                }
+            };
+            validationObj.validInput = validationObj.date.valid;
+            return validationObj;
+        } );
 
+        spyOn( scope, 'isDateValid' ).and.callThrough();
+        spyOn( scope, 'dateValidationMessage' ).and.callThrough();
+        spyOn( scope, 'otherIsValid' ).and.callThrough();
+
+        var testDate = '';
+        scope.otherValues.date = testDate;
+
+        scope.updateDate();
+
+        expect( LineItemService.setLineItemDate.calls.count() ).toBe( 1 );
+        expect( LineItemService.setLineItemDate.calls.mostRecent().args[0] ).toEqual( testDate );
+
+        expect( ValidationService.validateOther.calls.count() ).toBe( 1 );
+        expect( ValidationService.validateOther.calls.mostRecent().args[0] ).toEqual( LineItem );
+
+        expect( LineItemService.getLineItem.calls.count() ).toBe( 1 );
+        expect( scope.isDateValid() ).toBe( false );
+        expect( scope.dateValidationMessage() ).toBe( 'Please provide a date.' );
+
+        expect( scope.otherIsValid.calls.count() ).toBe( 1 );
+        expect( scope.otherIsValid() ).toBe( false );
+        expect( LineItemService.setValidity.calls.count() ).toBe( 1 );
+        expect( LineItemService.setValidity.calls.mostRecent().args[0] ).toBe( false );
+        expect( LineItemService.setValidity.calls.mostRecent().args[0] ).toBe( scope.otherIsValid() );
+
+    } );
+
+    it( 'should update the date to the LineItemService and well as perform validation (invalid date).', function () {
+        spyOn( ValidationService, 'validateOther' ).and.callFake( function ( testItem ) {
+            validationObj.date.valid = testItem.LineItemDate instanceof Date && !isNaN( testItem.LineItemDate.valueOf() );
+            if ( !validationObj.date.valid ) {
+                if ( testItem.LineItemDate === '' ) {
+                    validationObj.date.message = 'Please provide a date.';
+                } else {
+                    validationObj.date.message = 'Invalid date.';
+                }
+            };
+            validationObj.validInput = validationObj.date.valid;
+            return validationObj;
+        } );
+
+        spyOn( scope, 'isDateValid' ).and.callThrough();
+        spyOn( scope, 'dateValidationMessage' ).and.callThrough();
+        spyOn( scope, 'otherIsValid' ).and.callThrough();
+
+        var testDate = 'this is an invalid date';
+        scope.otherValues.date = testDate;
+
+        scope.updateDate();
+
+        expect( LineItemService.setLineItemDate.calls.count() ).toBe( 1 );
+        expect( LineItemService.setLineItemDate.calls.mostRecent().args[0] ).toEqual( testDate );
+
+        expect( ValidationService.validateOther.calls.count() ).toBe( 1 );
+        expect( ValidationService.validateOther.calls.mostRecent().args[0] ).toEqual( LineItem );
+
+        expect( LineItemService.getLineItem.calls.count() ).toBe( 1 );
+        expect( scope.isDateValid() ).toBe( false );
+        expect( scope.dateValidationMessage() ).toBe( 'Invalid date.' );
+
+        expect( scope.otherIsValid.calls.count() ).toBe( 1 );
+        expect( scope.otherIsValid() ).toBe( false );
+        expect( LineItemService.setValidity.calls.count() ).toBe( 1 );
+        expect( LineItemService.setValidity.calls.mostRecent().args[0] ).toBe( false );
+        expect( LineItemService.setValidity.calls.mostRecent().args[0] ).toBe( scope.otherIsValid() );
+
+    } );
+
+    it( 'should update the description to the LineItemService and well as perform validation (valid description).', function () {
+        spyOn( ValidationService, 'validateOther' ).and.callFake( function ( testItem ) {
+            validationObj.description.valid = testItem.LineItemDesc.length > 0;
+            if ( !validationObj.description.valid ) {
+                validationObj.description.message = 'Please input a description.';
+            };
+            validationObj.validInput = validationObj.description.valid;
+            return validationObj;
+        } );
+
+        spyOn( scope, 'isDescValid' ).and.callThrough();
+        spyOn( scope, 'descValidationMessage' ).and.callThrough();
+        spyOn( scope, 'otherIsValid' ).and.callThrough();
+
+        var testDesc = 'this is a test description';
+        scope.otherValues.description = testDesc;
+
+        scope.updateDescription();
+
+        expect( LineItemService.setLineItemDesc.calls.count() ).toBe( 1 );
+        expect( LineItemService.setLineItemDesc.calls.mostRecent().args[0] ).toEqual( testDesc );
+
+        expect( ValidationService.validateOther.calls.count() ).toBe( 1 );
+        expect( ValidationService.validateOther.calls.mostRecent().args[0] ).toEqual( LineItem );
+
+        expect( LineItemService.getLineItem.calls.count() ).toBe( 1 );
+        expect( scope.isDescValid() ).toBe( true );
+        expect( scope.descValidationMessage() ).toBe( 'This field is valid.' );
+
+        expect( scope.otherIsValid.calls.count() ).toBe( 1 );
+        expect( scope.otherIsValid() ).toBe( true );
+        expect( LineItemService.setValidity.calls.count() ).toBe( 1 );
+        expect( LineItemService.setValidity.calls.mostRecent().args[0] ).toBe( true );
+        expect( LineItemService.setValidity.calls.mostRecent().args[0] ).toBe( scope.otherIsValid() );
+
+    } );
+
+    it( 'should update the description to the LineItemService and well as perform validation (empty description).', function () {
+        spyOn( ValidationService, 'validateOther' ).and.callFake( function ( testItem ) {
+            validationObj.description.valid = testItem.LineItemDesc.length > 0;
+            if ( !validationObj.description.valid ) {
+                validationObj.description.message = 'Please input a description.';
+            };
+            validationObj.validInput = validationObj.description.valid;
+            return validationObj;
+        } );
+
+        spyOn( scope, 'isDescValid' ).and.callThrough();
+        spyOn( scope, 'descValidationMessage' ).and.callThrough();
+        spyOn( scope, 'otherIsValid' ).and.callThrough();
+
+        var testDesc = '';
+        scope.otherValues.description = testDesc;
+
+        scope.updateDescription();
+
+        expect( LineItemService.setLineItemDesc.calls.count() ).toBe( 1 );
+        expect( LineItemService.setLineItemDesc.calls.mostRecent().args[0] ).toEqual( testDesc );
+
+        expect( ValidationService.validateOther.calls.count() ).toBe( 1 );
+        expect( ValidationService.validateOther.calls.mostRecent().args[0] ).toEqual( LineItem );
+
+        expect( LineItemService.getLineItem.calls.count() ).toBe( 1 );
+        expect( scope.isDescValid() ).toBe( false );
+        expect( scope.descValidationMessage() ).toBe( 'Please input a description.' );
+
+        expect( scope.otherIsValid.calls.count() ).toBe( 1 );
+        expect( scope.otherIsValid() ).toBe( false );
+        expect( LineItemService.setValidity.calls.count() ).toBe( 1 );
+        expect( LineItemService.setValidity.calls.mostRecent().args[0] ).toBe( false );
+        expect( LineItemService.setValidity.calls.mostRecent().args[0] ).toBe( scope.otherIsValid() );
+
+    } );
+
+    it( 'should update the amount to the LineItemService and well as perform validation (valid amount).', function () {
+        spyOn( ValidationService, 'validateOther' ).and.callFake( function ( testItem ) {
+            var regExp = /^(\d*.?\d+)$/;
+            validationObj.amount.valid = regExp.test( testItem.LineItemAmount ) && testItem.LineItemAmount >= 0;
+            if ( !validationObj.amount.valid ) {
+                validationObj.amount.message = 'Please input a valid amount.';
+            };
+            validationObj.validInput = validationObj.amount.valid;
+            return validationObj;
+        } );
+
+        spyOn( scope, 'isAmountValid' ).and.callThrough();
+        spyOn( scope, 'amountValidationMessage' ).and.callThrough();
+        spyOn( scope, 'otherIsValid' ).and.callThrough();
+
+        var testAmount = 10;
+        scope.otherValues.amount = testAmount;
+
+        scope.updateAmount();
+
+        expect( LineItemService.setLineItemAmount.calls.count() ).toBe( 1 );
+        expect( LineItemService.setLineItemAmount.calls.mostRecent().args[0] ).toEqual( testAmount );
+
+        expect( ValidationService.validateOther.calls.count() ).toBe( 1 );
+        expect( ValidationService.validateOther.calls.mostRecent().args[0] ).toEqual( LineItem );
+
+        expect( LineItemService.getLineItem.calls.count() ).toBe( 1 );
+        expect( scope.isAmountValid() ).toBe( true );
+        expect( scope.amountValidationMessage() ).toBe( 'This field is valid.' );
+
+        expect( scope.otherIsValid.calls.count() ).toBe( 1 );
+        expect( scope.otherIsValid() ).toBe( true );
+        expect( LineItemService.setValidity.calls.count() ).toBe( 1 );
+        expect( LineItemService.setValidity.calls.mostRecent().args[0] ).toBe( true );
+        expect( LineItemService.setValidity.calls.mostRecent().args[0] ).toBe( scope.otherIsValid() );
+
+    } );
+
+    it( 'should update the amount to the LineItemService and well as perform validation (invalid amount).', function () {
+        spyOn( ValidationService, 'validateOther' ).and.callFake( function ( testItem ) {
+            var regExp = /^(\d*.?\d+)$/;
+            validationObj.amount.valid = regExp.test( testItem.LineItemAmount ) && testItem.LineItemAmount >= 0;
+            if ( !validationObj.amount.valid ) {
+                validationObj.amount.message = 'Please input a valid amount.';
+            };
+            validationObj.validInput = validationObj.amount.valid;
+            return validationObj;
+        } );
+
+        spyOn( scope, 'isAmountValid' ).and.callThrough();
+        spyOn( scope, 'amountValidationMessage' ).and.callThrough();
+        spyOn( scope, 'otherIsValid' ).and.callThrough();
+
+        var testAmount = 'a string';
+        scope.otherValues.amount = testAmount;
+
+        scope.updateAmount();
+
+        expect( LineItemService.setLineItemAmount.calls.count() ).toBe( 1 );
+        expect( LineItemService.setLineItemAmount.calls.mostRecent().args[0] ).toEqual( testAmount );
+
+        expect( ValidationService.validateOther.calls.count() ).toBe( 1 );
+        expect( ValidationService.validateOther.calls.mostRecent().args[0] ).toEqual( LineItem );
+
+        expect( LineItemService.getLineItem.calls.count() ).toBe( 1 );
+        expect( scope.isAmountValid() ).toBe( false );
+        expect( scope.amountValidationMessage() ).toBe( 'Please input a valid amount.' );
+
+        expect( scope.otherIsValid.calls.count() ).toBe( 1 );
+        expect( scope.otherIsValid() ).toBe( false );
+        expect( LineItemService.setValidity.calls.count() ).toBe( 1 );
+        expect( LineItemService.setValidity.calls.mostRecent().args[0] ).toBe( false );
+        expect( LineItemService.setValidity.calls.mostRecent().args[0] ).toBe( scope.otherIsValid() );
+
+    } );
+
+    it( 'should update the billable field in LineItemService.', function () {
+        scope.otherValues.billable = true;
+        scope.updateBillable();
+        expect( LineItemService.setBillable.calls.count() ).toBe( 1 );
+        expect( LineItemService.setBillable.calls.mostRecent().args[0] ).toBe( true );
+        expect( LineItemService.setBillable.calls.mostRecent().args[0] ).toBe( scope.otherValues.billable );
     } );
 
     it( 'should set the date object to today when clicking the \'today\' button.', function () {
-
+        expect( scope.otherValues.date ).toBe( '' );
+        scope.today();
+        expect( scope.otherValues.date ).toEqual( new Date() );
     } );
 
     it( 'should clear the date object when clicking the \'clear\' button.', function () {
-
+        expect( scope.otherValues.date ).toBe( '' );
+        scope.clear();
+        expect( scope.otherValues.date ).toBe( null );
     } );
 
-    it( 'should set the minumum date that is selectable.', function () {
-
+    it( 'should set the default minimum date.', function () {
+        expect( scope.minDate ).toBe( 'test sunday' );
+        //expect the count to be 2 because it is being called on load for both minDate and maxDate
+        expect( LineItemService.getDaysString.calls.count() ).toBe( 2 );
     } );
 
-    it( 'should set the maximum date selectable.', function () {
-
+    it( 'should set the default maximum date.', function () {
+        expect( scope.maxDate ).toBe( 'test saturday' );
+        //expect the count to be 2 because it is being called on load for both minDate and maxDate
+        expect( LineItemService.getDaysString.calls.count() ).toBe( 2 );
     } );
 
     it( 'should open the datepicker modal.', function () {
-
+        var event = {
+            preventDefault: jasmine.createSpy(),
+            stopPropagation: jasmine.createSpy()
+        };
+        scope.open( event );
+        expect( event.preventDefault.calls.count() ).toBe( 1 );
+        expect( event.stopPropagation.calls.count() ).toBe( 1 );
+        expect( scope.opened ).toBe( true );
     } );
 
     it( 'should set the default value for dateOptions.', function () {
-
+        expect( scope.dateOptions.formatYear ).toBe( 'yy' );
+        expect( scope.dateOptions.startingDay ).toBe( 1 );
     } );
 
     it( 'should set the default values for formats[].', function () {
-
+        expect( scope.formats.length ).toBe( 4 );
+        expect( scope.formats[0] ).toBe( 'yyyy/MM/dd' );
+        expect( scope.formats[1] ).toBe( 'EEEE - MMM. dd/yyyy' );
+        expect( scope.formats[2] ).toBe( 'dd.MM.yyyy' );
+        expect( scope.formats[3] ).toBe( 'shortDate' );
     } );
 
     it( 'should set the default value for format.', function () {
-
+        expect( scope.format ).toBe( 'EEEE - MMM. dd/yyyy' );
+        expect( scope.format ).toBe( scope.formats[1] );
     } );
 
 } );

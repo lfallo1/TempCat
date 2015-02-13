@@ -1,7 +1,11 @@
 'use strict';
 
-angular.module( 'expenseApp.Controllers' )
+angular.module('expenseApp.Controllers')
   .controller('EmployeeTableController', ["$scope", "$location", "$modal", "$route", "$rootScope", "$filter", "Application", "SubmissionService", "MessageService", "ReceiptService", function ($scope, $location, $modal, $route, $rootScope, $filter, Application, SubmissionService, MessageService, ReceiptService) {
+      /**
+      * container for the submissions
+      */
+      var employeeSubmissionsContainer = [];
 
       /**
       * statuses used for the drop down filter
@@ -49,11 +53,6 @@ angular.module( 'expenseApp.Controllers' )
       $scope.selectedStatus = $scope.statuses[0];
 
       /**
-      * container for the submissions
-      */
-      var employeeSubmissionsContainer = [];
-
-      /**
       * load the user's submissions from the database into the table
       * upon page load
       */
@@ -62,22 +61,15 @@ angular.module( 'expenseApp.Controllers' )
               var rejected = 0;
               var userSubmissions = Application.getAllUserSubmissions();
               $scope.employeeSubmissions = Application.getAllUserSubmissions();
-              for (var i = 0; i < userSubmissions.length; i++) {                  
+              for (var i = 0; i < userSubmissions.length; i++) {
                   var receipts = [];
                   //get all receipts in that submission
                   for (var b = 0; b < userSubmissions[i].LineItems.length; b++) {
-                      if (userSubmissions[i].LineItems[b].Receipts.length != 0) {
-                          for (var c = 0; c < userSubmissions[i].LineItems[b].Receipts.length; c++) {
-                              receipts.push(userSubmissions[i].LineItems[b].Receipts[c]);
-                          }
+                      for (var c = 0; c < userSubmissions[i].LineItems[b].Receipts.length; c++) {
+                          receipts.push(userSubmissions[i].LineItems[b].Receipts[c]);
                       }
                   }
                   userSubmissions[i]["allSubmissionReceipts"] = receipts;
-                  if (receipts.length > 0) {
-                      userSubmissions[i]["ReceiptPresent"] = true;
-                  } else {
-                      userSubmissions[i]["ReceiptPresent"] = false;
-                  }
               }
               employeeSubmissionsContainer = $scope.employeeSubmissions;
               for (var i = 0; i < $scope.employeeSubmissions.length; i++) {
@@ -89,32 +81,28 @@ angular.module( 'expenseApp.Controllers' )
               $rootScope.$broadcast("employeeTotal", rejected);
           } else {
               SubmissionService.getSubmissionsByUsername().then(function (submissions) {
-                  var rejected = 0;                  
+                  var rejected = 0;
                   var userSubmissions = submissions.data;
-                  if (userSubmissions.length > 0) {
-                      for (var i = 0; i < userSubmissions.length; i++) {
-                          // a status of 4 and 6 means the submission was rejected
-                          if (userSubmissions[i].StatusId == 4 || userSubmissions[i].StatusId == 6) {
-                              rejected++;
-                          }
-                          var receipts = [];
-                          //get all receipts in that submission
-                          for (var b = 0; b < userSubmissions[i].LineItems.length; b++) {                              
-                              if (userSubmissions[i].LineItems[b].Receipts.length != 0) {
-                                  for (var c = 0; c < userSubmissions[i].LineItems[b].Receipts.length; c++) {
-                                      receipts.push(userSubmissions[i].LineItems[b].Receipts[c]);
-                                  }
-                              }
-                          }
-                          userSubmissions[i]["allSubmissionReceipts"] = receipts;
-                          if (receipts.length > 0) {
-                              userSubmissions[i]["ReceiptPresent"] = true;
-                          } else {
-                              userSubmissions[i]["ReceiptPresent"] = false;
-                          }                         
+                  for (var i = 0; i < userSubmissions.length; i++) {
+                      // a status of 4 and 6 means the submission was rejected
+                      if (userSubmissions[i].StatusId == 4 || userSubmissions[i].StatusId == 6) {
+                          rejected++;
                       }
-                      Application.setAllUserSubmissions(userSubmissions);
+                      var receipts = [];
+                      //get all receipts in that submission
+                      for (var b = 0; b < userSubmissions[i].LineItems.length; b++) {
+                          for (var c = 0; c < userSubmissions[i].LineItems[b].Receipts.length; c++) {
+                              receipts.push(userSubmissions[i].LineItems[b].Receipts[c]);
+                          }
+                      }
+                      userSubmissions[i]["allSubmissionReceipts"] = receipts;
+                      if (receipts.length > 0) {
+                          userSubmissions[i]["ReceiptPresent"] = true;
+                      } else {
+                          userSubmissions[i]["ReceiptPresent"] = false;
+                      }
                   }
+                  Application.setAllUserSubmissions(userSubmissions);
                   $scope.employeeSubmissions = Application.getAllUserSubmissions();
                   $rootScope.$broadcast("employeeTotal", rejected);
                   employeeSubmissionsContainer = $scope.employeeSubmissions;
@@ -145,7 +133,7 @@ angular.module( 'expenseApp.Controllers' )
           Application.setSubmissionStatus(submission.Status.StatusId);
           Application.setOrigin("EmployeeTable");
           Application.setSubmissionIndex(index);
-          ReceiptService.setAllReceipts( submission.allSubmissionReceipts );
+          ReceiptService.setAllReceipts(submission.allSubmissionReceipts);
           $location.path('/submission');
       }
 
@@ -172,11 +160,12 @@ angular.module( 'expenseApp.Controllers' )
       * show all the receipts related to expense items in the particular submission
       */
       $scope.showAllAvailableReceipts = function (allReceipts, submission, submissionIndex) {
-          ReceiptService.setReceipts( allReceipts );
-          ReceiptService.setShowAllReceipts( true );
+          Application.setOrigin("EmployeeTable");
+          ReceiptService.setReceipts(allReceipts);
+          ReceiptService.setShowAllReceipts(true);
           Application.setSubmission(submission);
           Application.setSubmissionIndex(submissionIndex);
-          ReceiptService.setAddReceipt( false );
+          ReceiptService.setAddReceipt(false);
           var modalInstance = $modal.open({
               templateUrl: 'Views/HotTowel/views/modals/receiptModal.html',
               controller: 'receiptController'
@@ -193,7 +182,6 @@ angular.module( 'expenseApp.Controllers' )
               $scope.employeeSubmissions.splice(Application.getSubmissionIndex(), 1);
               Application.setAllUserSubmissions($scope.employeeSubmissions);
           }, function (error) { });
-
       });
 
       /**

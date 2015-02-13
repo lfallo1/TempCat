@@ -71,10 +71,10 @@ namespace CatExpenseFront.Controllers
                 SearchResult result = search.FindOne();
                 HttpContext.Current.Session["UserName"] = result.Properties["samaccountname"][0].ToString();
                 userWithSession.Username = HttpContext.Current.Session["UserName"].ToString();
-             
+
                 userWithSession.isFinanceApprover = isFinanceApprover();
                 userWithSession.isManager = isManager();
-             
+
             }
             catch (DirectoryServicesCOMException e)
             {
@@ -96,7 +96,7 @@ namespace CatExpenseFront.Controllers
             Login userWithSession = new Login();
 
             userWithSession.Username = HttpContext.Current.Session["UserName"].ToString();
-           
+
             userWithSession.isFinanceApprover = isFinanceApprover();
             userWithSession.isManager = isManager();
 
@@ -134,10 +134,12 @@ namespace CatExpenseFront.Controllers
         private bool isFinanceApprover()
         {
             return (from m in approverService.All()
-                    where (m.userName.ToUpper() == (null == HttpContext.Current.Session["UserName"]
+
+                    where (m.Username.ToUpper() == (null == HttpContext.Current.Session["UserName"]
                                                      ? ""
                                                      : HttpContext.Current.Session["UserName"].ToString()).ToUpper())
                     select m).Count() > 0;
+
         }
     }
 }

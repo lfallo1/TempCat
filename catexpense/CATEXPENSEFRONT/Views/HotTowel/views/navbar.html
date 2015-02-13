@@ -2,13 +2,11 @@
     <ul class="nav nav-pills pull-right" ng-if="isLoggedIn">
         <li>
             <div class="col-sm-12 pull-right">
-                <button id="syncProjectsButton" class="btn btn-primary pull-right" ng-click="syncProjects()" ng-disabled="flag" ng-hide="flag">
-                    <i class="glyphicon glyphicon-retweet"></i>
+                <button id="syncProjectsButton" class="btn btn-primary pull-right" ng-click="syncProjects()" ng-disabled="flag">
+                    <i ng-hide="flag" class="glyphicon glyphicon-retweet"></i>
+                    <i ng-attr-id="{{ spinner }}"></i>
                     <span>Sync Projects</span>
                 </button>
-                <progressbar class="progressbarsize progress-striped active pull-right" animate="true" max="100" value="progressValue" type="primary" ng-hide="!flag">
-
-                </progressbar>
             </div>
         </li>
         <li>

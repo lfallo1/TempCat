@@ -11,7 +11,7 @@
                     <small class="lightWeight bg-warning">Awaiting Approval: {{financeTotal}}</small></h4>
             </div>
             <div class="col-sm-4 col-md-4 pull-right">
-                <select class="form-control col-sm-5 col-md-5 pull-right" ng-change="loadFinanceTableStatusX(selectedFinanceStatus.value)"
+                <select class="form-control col-sm-5 col-md-5 pull-right" ng-change="filterTableBySubmissionStatus(selectedFinanceStatus.value)"
                     ng-model="selectedFinanceStatus" ng-options="status.name for status in financeStatuses">
                 </select>
             </div>
@@ -30,6 +30,7 @@
                     </th>
                     <th><a href="" id="finDescription" ng-click="financeOrder('Description')">Description</a></th>
                     <th><a href="" id="finAmount" ng-click="financeOrder('TotalAmount')">Amount</a></th>
+                    <th><a href="" id="Receipts" ng-click="employeeOrder('ReceiptPresent')">Receipts</a></th>
                 </tr>
             </thead>
             <tbody ng-repeat="submission in financeSubmissions">
@@ -51,6 +52,10 @@
                     <td>{{submission.RepliconProject.ProjectName}}</td>
                     <td>{{submission.Description}}</td>
                     <td>{{("$" + (submission.TotalAmount).toFixed( 2 ))}}</td>
+                    <td class="row">
+                        <span ng-if="submission.allSubmissionReceipts.length == 0" class="col-md-2 glyphicon glyphicon-remove" style="color: red"></span>
+                        <span title="View all receipts" class="pointer col-md-2 pull-left btn-link glyphicon glyphicon-file" ng-click="showAllAvailableReceipts(submission.allSubmissionReceipts, submission, $index)" ng-show="submission.allSubmissionReceipts.length > 0"></span>
+                    </td>
                 </tr>
             </tbody>
         </table>

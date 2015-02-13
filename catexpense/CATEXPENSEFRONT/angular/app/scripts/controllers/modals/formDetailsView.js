@@ -35,8 +35,6 @@ angular.module('expenseApp.Controllers')
       * they will be modified by MileageCtrl, PerDiemCtrl, and OtherCtrl
       */
       $scope.mileageArray = [];
-      $scope.perDiemArray = [];
-      $scope.otherArray = [];
 
       /**
       * default expense category chosen
@@ -88,7 +86,6 @@ angular.module('expenseApp.Controllers')
        */
       $scope.getPolicy = function () {
           var modalInstance = $modal.open({
-              //templateUrl: 'views/modals/policyView.html',
               templateUrl: 'Views/HotTowel/views/modals/policyView.html',
               controller: 'PolicyCtrl',
               resolve: {
@@ -97,15 +94,6 @@ angular.module('expenseApp.Controllers')
                   }
               }
           });
-
-          modalInstance.result.then(
-              function (successMessage) {
-                  //console.log( successMessage );
-              },
-              function (errorMessage) {
-                  //console.log( errorMessage );
-              }
-          );
       };
 
       /**
@@ -121,21 +109,11 @@ angular.module('expenseApp.Controllers')
                   _SaveNewMileage(returnArray, errorMsg);
                   break;
               case 'Per Diem':
-                  //returnArray = _ConvertPerDiemArrayContents( $scope.perDiemArray );
                   _SaveNewPerDiem(LineItemService.getLineItem(), LineItemService.isLineItemValid(), errorMsg);
                   break;
-              case 'Transportation':
-              case 'Lodging':
-              case 'Parking':
-              case 'Entertainment':
-              case 'Meals':
-              case 'Airfare':
-              case 'Other':
-                  //returnArray = _ConvertOtherArrayContents( LineItemService.getLineItem(), LineItemService.isLineItemValid() );
+              default:
                   _SaveNewOther(LineItemService.getLineItem(), LineItemService.isLineItemValid(), errorMsg);
                   break;
-              default:
-                  console.log('something went wrong');
           };
       };
 
@@ -213,69 +191,8 @@ angular.module('expenseApp.Controllers')
               item.SubmissionId = LineItemService.getSubmissionId();
               item.valid = oldArray[i].valid;
               newArray.push(item);
-
-
-
-              /*( function ( i ) {
-                  LineItemService.resetLineItem();
-                  LineItemService.setLineItemDate( oldArray[i].date );
-                  LineItemService.setLineItemDesc( oldArray[i].description );
-                  LineItemService.setOrigin( oldArray[i].origin );
-                  LineItemService.setDestination( oldArray[i].destination );
-                  LineItemService.setMiles( oldArray[i].miles );
-                  LineItemService.setLineItemAmount( oldArray[i].amount );
-                  LineItemService.setBillable( oldArray[i].billable );
-                  newArray.push( LineItemService.getLineItem() );
-              } )( i );*/
-
-
           };
 
-          return newArray;
-      };
-
-      /**
-       * Converts the contents of the perdiemArray into an array filled with 'LineItem's
-       * 
-       * NOTE: this is a private method
-       */
-      function _ConvertPerDiemArrayContents(oldArray) {
-          var newArray = [];
-          for (var i = 0; i < oldArray.length; i++) {
-              LineItemService.setExpenseCategoryName($scope.selectedType);
-              LineItemService.setDays(oldArray[i].days);
-              LineItemService.setLineItemAmount(oldArray[i].amount);
-              LineItemService.setBillable(oldArray[i].billable);
-              LineItemService.setLineItemDate(oldArray[i].lineItemDate);
-              newArray.push(LineItemService.getLineItem());
-              newArray[i].valid = oldArray[i].valid;
-          };
-          return newArray;
-      };
-
-      /**
-       * Converts the contents of the perdiemArray into an array filled with 'LineItem's
-       * 
-       * NOTE: this is a private method
-       */
-      function _ConvertOtherArrayContents(oldArray, valid) {
-          var newArray = [];
-          /*var item = {};
-          item.Billable = oldArray[i].billable;
-          item.LineItemAmount = oldArray[i].amount;
-          item.LineItemMetadata = 'Miles:0,Origin:,Destination:,Wednesday:false,Thursday:false,Friday:false,Saturday:false';
-          item.StatusId = 1;
-          item.SubmissionId = LineItemService.getSubmissionId();
-          newArray.push( item );*/
-
-          //LineItemService.resetLineItem();
-          //LineItemService.setExpenseCategoryName($scope.selectedType);
-          //LineItemService.setLineItemDate(oldArray[i].date);
-          //LineItemService.setLineItemDesc(oldArray[i].description);
-          //LineItemService.setLineItemAmount(oldArray[i].amount);
-          //LineItemService.setBillable(oldArray[i].billable);
-          newArray.push(LineItemService.getLineItem());
-          newArray[0].valid = valid;
           return newArray;
       };
 
@@ -289,27 +206,13 @@ angular.module('expenseApp.Controllers')
 
           switch ($scope.selectedType) {
               case 'Mileage':
-                  returnObj = _ConvertMileageArrayContents($scope.mileageArray);
-                  break;
-              case 'Per Diem':
-                  returnObj = LineItemService.getLineItem();
-                  break;
-              case 'Transportation':
-              case 'Lodging':
-              case 'Parking':
-              case 'Entertainment':
-              case 'Meals':
-              case 'Airfare':
-              case 'Other':
-                  returnObj = LineItemService.getLineItem();
+                  returnObj = _ConvertMileageArrayContents($scope.mileageArray);             
                   break;
               default:
-                  returnObj = { msg: 'something went wrong' };
+                  returnObj = LineItemService.getLineItem();
+                  break;
           };
-          if (undefined === returnObj) {
-              console.log('you didnt make any changes');
-          }
-          else if (!LineItemService.isLineItemValid()) {
+          if (!LineItemService.isLineItemValid()) {
               console.log('invalid expense');
           } else {
               console.log('Successfully edited report');

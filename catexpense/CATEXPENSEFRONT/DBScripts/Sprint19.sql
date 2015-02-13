@@ -18,11 +18,11 @@ ADD [Description] VARCHAR(MAX) null
 CREATE TABLE Expense12.dbo.FinanceApprovers
 (
 id int PRIMARY KEY NOT NULL IDENTITY(1,1),
-userName nvarchar(max) NOT NULL
+Username nvarchar(max) NOT NULL
 );
 
 /*populate FinanceApprover with all RepliconUsers who are finance approvers*/
-INSERT Expense12.dbo.FinanceApprovers (userName)
+INSERT Expense12.dbo.FinanceApprovers (Username)
 SELECT RepliconUserName
 FROM Expense12.dbo.RepliconUsers
 WHERE FinanceApprover = 1

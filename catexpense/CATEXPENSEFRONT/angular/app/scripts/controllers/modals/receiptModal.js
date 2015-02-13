@@ -2,14 +2,11 @@
 
 angular.module('expenseApp.Controllers')
   .controller('receiptController', ["$scope", "$modalInstance", "ReceiptService", "$rootScope", "MessageService", "$modal", "Application", "$route", "LineItemService", function ($scope, $modalInstance, ReceiptService, $rootScope, MessageService, $modal, Application, $route, LineItemService) {
-
+      var receiptId = 0;
+      var receiptIndexId = 0;
       var allReceipts = false;
       $scope.canDelete = true;
       $scope.hover = false;
-
-      var receiptId = 0;
-      var receiptIndexId = 0;
-
       $scope.userReceipts = ReceiptService.getReceipts();
       $scope.createNewReceipt = ReceiptService.getAddReceipt();
 
@@ -82,10 +79,6 @@ angular.module('expenseApp.Controllers')
                     }
                     Application.setAllUserSubmissions(submissions);
                 });
-
-
-            }, function (fail) {
-                //console.log(fail);
             });
       });
 

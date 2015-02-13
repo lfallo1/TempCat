@@ -18,12 +18,13 @@ namespace CatExpenseFront.Models
         /// </summary>
         [Key]
         public int id { get; set; }
-        
-        /// <summary>
-        /// The ad username of the finance approver
-        /// </summary>
-        public string userName { get; set; }
 
-       
+        /// <summary>
+        /// The username of the finance approver.
+        /// </summary>
+        public string Username { get; set; }
+
+
+  
     }
 }
