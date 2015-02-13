@@ -550,8 +550,6 @@
     <Content Include="angular\app\scripts\directives\imageupload.js" />
     <Content Include="angular\app\scripts\directives\submission-table.js" />
     <Content Include="angular\app\scripts\directives\submissionPage.js" />
-    <Content Include="angular\app\scripts\libraries\angular-spin.min.js" />
-    <Content Include="angular\app\scripts\libraries\spin.min.js" />
     <Content Include="angular\app\scripts\services\Application.js" />
     <Content Include="angular\app\scripts\services\Authentication.js" />
     <Content Include="angular\app\scripts\services\CommentService.js" />
@@ -569,6 +567,7 @@
     <Content Include="angular\app\scripts\services\ValidationService.js" />
     <Content Include="angular\app\styles\images\icon-undo-white.png" />
     <Content Include="angular\app\styles\images\icon-undo.png" />
+    <Content Include="angular\app\styles\images\spinner.png" />
     <Content Include="angular\app\styles\main.css" />
     <Content Include="angular\settingupFEtesting.txt" />
     <Content Include="angular\test\.gitignore" />
@@ -611,7 +610,6 @@
     <Content Include="Views\HotTowel\views\FinanceTable.html" />
     <Content Include="Views\HotTowel\views\home.html" />
     <Content Include="Views\HotTowel\views\login.html" />
-    <Content Include="Views\HotTowel\views\main.html" />
     <Content Include="Views\HotTowel\views\ManagerTable.html" />
     <Content Include="Views\HotTowel\views\modals\confirmModal.html" />
     <Content Include="Views\HotTowel\views\modals\formDetailsView.html" />

@@ -2,11 +2,11 @@
     <ul class="nav nav-pills pull-right" ng-if="isLoggedIn">
         <li>
             <div class="col-sm-12 pull-right">
-                <button id="syncProjectsButton" class="btn btn-primary pull-right" ng-click="syncProjects()" ng-disabled="flag" ng-hide="flag">
-                    <i class="glyphicon glyphicon-retweet"></i>
+                <button id="syncProjectsButton" class="btn btn-primary pull-right" ng-click="syncProjects()" ng-disabled="flag">
+                    <i ng-hide="flag" class="glyphicon glyphicon-retweet"></i>
+                    <i ng-attr-id="{{ spinner }}"></i>
                     <span>Sync Projects</span>
                 </button>
-                <span ng-hide="!flag" id="spinner" class="pull-right" us-spinner="{radius:10, width:5, length: 12}"></span>
             </div>
         </li>
         <li>

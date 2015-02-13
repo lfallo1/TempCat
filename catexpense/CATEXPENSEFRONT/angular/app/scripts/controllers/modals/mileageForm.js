@@ -13,7 +13,7 @@ angular.module('expenseApp.Controllers')
       /** 
       * stores the ides of the mileageArray of the item that is being edited
       */
-      var mileageIndex = 0;
+      var mileageIndex = 0;      
       /**
       * this variable will be responsible for disabling the 'Get Distance' button when clicked
       */
@@ -133,7 +133,7 @@ angular.module('expenseApp.Controllers')
        * Calulate the amount based on the distance and reimbursement amount
        */
       $scope.getAmount = function () {
-          $scope.mileageValues.amount = $scope.mileageValues.miles * 0.40;
+          $scope.mileageValues.amount = ($scope.mileageValues.miles * 0.40).toFixed(2);
       };
 
       /**

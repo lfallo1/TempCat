@@ -33,11 +33,9 @@ angular
     'ngTouch',
 	'ui.bootstrap',
     'expenseApp.Services',
-    'expenseApp.Controllers',
-    'angularSpinner'
+    'expenseApp.Controllers'
   ])
-  .config(["$routeProvider", 'usSpinnerConfigProvider', function ($routeProvider, usSpinnerConfigProvider) {
-      usSpinnerConfigProvider.setDefaults({ color: '#428bca' });
+  .config(["$routeProvider", function ($routeProvider) {
       $routeProvider
         .when('/', {
             templateUrl: 'Views/HotTowel/views/home.html',

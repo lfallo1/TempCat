@@ -159,6 +159,42 @@ body {
 }
 
 #spinner {
-    margin-top: 30px;
-    margin-right: 50px;
+    position: relative;
+    height: 14px;
+    width: 14px;
+    top: 1px;
+    display: inline-block;
+    font-family: 'Glyphicons Halflings';
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    overflow: hidden;
+    -webkit-mask-image: url(images/spinner.png);
+    background-color: #000;
+    -webkit-animation-name: spinnerRotate;
+    -webkit-animation-duration: 2s;
+    animation-name: spinnerRotate;
+    animation-duration: 0s;
+    -webkit-animation-iteration-count: infinite;
+    -webkit-animation-timing-function: linear;
+}
+
+@-webkit-keyframes spinnerRotate {
+    from {
+        -webkit-transform: rotate(0deg);
+    }
+
+    to {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@keyframes spinnerRotate {
+    from {
+        -transform: rotate(0deg);
+    }
+
+    to {
+        -transform: rotate(360deg);
+    }
 }
