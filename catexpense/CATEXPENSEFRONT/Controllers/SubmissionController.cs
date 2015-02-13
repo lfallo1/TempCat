@@ -210,8 +210,9 @@ namespace CatExpenseFront.Controllers
             if (count > 0)
             {
                 submissionList = (from m in service.All()
-                                  where (m.Status.StatusName.ToUpper() == APPROVAL_STATUS_MANAGER_APPROVED.ToUpper() && !m.IsDeleted ||
-                                  m.Status.StatusName.ToUpper() == APPROVAL_STATUS_FINANCE_REJECTED.ToUpper() && !m.IsDeleted)
+                                  where ((m.Status.StatusName.ToUpper() == APPROVAL_STATUS_MANAGER_APPROVED.ToUpper() ||
+                                  m.Status.StatusName.ToUpper() == APPROVAL_STATUS_FINANCE_REJECTED.ToUpper() ||
+                                  m.Status.StatusName.ToUpper() == APPROVAL_STATUS_FINANCE_APPROVED.ToUpper()) && !m.IsDeleted)
                                   select m).OrderBy(s => s.WeekEndingDate).ToList();
 
                 CalculateTotalsForList(submissionList);

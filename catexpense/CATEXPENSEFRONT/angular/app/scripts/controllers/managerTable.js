@@ -78,6 +78,7 @@ angular.module('expenseApp.Controllers')
                       }
                       $scope.managerSubmissions = userSubmissions;
                       managerSubmissionsContainer = $scope.managerSubmissions;
+                      $scope.filterTableBySubmissionStatus(2);
                       $rootScope.$broadcast("managerTotal", $scope.managerSubmissions.length);
                   });
           }

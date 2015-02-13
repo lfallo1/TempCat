@@ -3,10 +3,18 @@
 angular.module('expenseApp.Controllers')
   .controller('FinanceTableController', ["$scope", "$location", "$modal", "$route", "$rootScope", "$filter", "Application", "SubmissionService", "MessageService", "Authentication", "ReceiptService", function ($scope, $location, $modal, $route, $rootScope, $filter, Application, SubmissionService, MessageService, Authentication, ReceiptService) {
 
+      /** 
+      * container for the submissions
+      */
+      var financeSubmissionsContainer = [];
       var orderBy = $filter('orderBy');
       var sortColumn = { field: 'TotalAmount', reverse: false };
       $scope.isFinanceApprover = Authentication.getIsFinanceApprover();
       $scope.expanded = true;
+      /**
+      * set $scope.financeStatuses[1] to the default selected item in the list
+      */
+      $scope.selectedFinanceStatus = $scope.financeStatuses[1];
 
       /**
       * expand and contract financeTable view
@@ -35,18 +43,11 @@ angular.module('expenseApp.Controllers')
       */
       $scope.financeStatuses = [
         { name: 'All', value: '0' },
-        { name: 'Manager Approved', value: '3' }
+        { name: 'Manager Approved', value: '3' },
+        { name: 'Finance Approved', value: '5' },
+        { name: 'Finance Rejected', value: '6' }
       ];
 
-      /**
-      * set $scope.financeStatuses[1] to the default selected item in the list
-      */
-      $scope.selectedFinanceStatus = $scope.financeStatuses[1];
-
-      /** 
-      * container for the submissions
-      */
-      var financeSubmissionsContainer = [];
 
       var loadFinanceTable = function () {
           if (Application.getPendingSubmissionsByFinanceApprover() != undefined && Application.getPendingSubmissionsByFinanceApprover().length != 0) {
@@ -82,7 +83,7 @@ angular.module('expenseApp.Controllers')
                     }
                     $scope.financeSubmissions = userSubmissions;
                     financeSubmissionsContainer = $scope.financeSubmissions;
-                    $scope.loadFinanceTableStatusX(3);
+                    $scope.filterTableBySubmissionStatus(3);
                     $rootScope.$broadcast("financeTotal", $scope.financeSubmissions.length);
                 });
           }
@@ -99,7 +100,7 @@ angular.module('expenseApp.Controllers')
       /**
       * load the table with the filtered items
       */
-      $scope.loadFinanceTableStatusX = function (status) {
+      $scope.filterTableBySubmissionStatus = function (status) {
           var financeSubmissionsFilter = [];
           for (var i = 0; i < financeSubmissionsContainer.length; i++) {
               if (financeSubmissionsContainer[i].StatusId == status || status == 0) {
