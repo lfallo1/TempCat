@@ -20,7 +20,16 @@ angular.module('expenseApp.Controllers')
         { name: 'Finance Rejected', value: '6' }
       ];
 
-      //$scope.expenseCategories = ExpenseCategory.getAllExpenseCategories();
+      function getExpenseCategories() {
+          ExpenseCategory.getAllExpenseCategories().then(
+              function (success) {
+                  console.log(success.data);
+              },
+              function (error) {
+                  console.log(error);
+              });
+      }
+      getExpenseCategories();
 
       $scope.expanded = true;
 
@@ -59,8 +68,8 @@ angular.module('expenseApp.Controllers')
       * upon page load
       */
       $scope.loadEmployeeTable = function () {
-          console.log('this is what is returned from ExpenseCategory');
-          console.log($scope.expenseCategories);
+          //console.log('this is what is returned from ExpenseCategory');
+          //console.log($scope.expenseCategories);
           if (Application.getAllUserSubmissions() != undefined) {
               var rejected = 0;
               var userSubmissions = Application.getAllUserSubmissions();
