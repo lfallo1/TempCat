@@ -11,6 +11,9 @@ using Newtonsoft.Json.Linq;
 
 namespace CatExpenseFront.Models
 {
+    /// <summary>
+    /// Class used to make a request to the replicon api.  
+    /// </summary>
     public static class RepliconRequest
     {
         private const string APIURL = "https://na1.replicon.com/a/RemoteAPI/RemoteAPI.ashx/8.29.23/";

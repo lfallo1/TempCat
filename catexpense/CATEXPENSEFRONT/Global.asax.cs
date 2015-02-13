@@ -13,12 +13,16 @@ using System.Web.SessionState;
 
 namespace CatExpenseFront
 {
-    // Note: For instructions on enabling IIS6 or IIS7 classic mode, 
-    // visit http://go.microsoft.com/?LinkId=9394801
-
-
+   
+    /// <summary>
+    ///  Note: For instructions on enabling IIS6 or IIS7 classic mode, 
+    ///  visit http://go.microsoft.com/?LinkId=9394801
+    /// </summary>
     public class WebApiApplication : System.Web.HttpApplication
     {
+        /// <summary>
+        /// Runs when the application starts.
+        /// </summary>
         protected void Application_Start()
         {
             // scheduler for an email service
@@ -51,6 +55,9 @@ namespace CatExpenseFront
 
         }
 
+        /// <summary>
+        /// PostAuthorizeRequest
+        /// </summary>
         protected void Application_PostAuthorizeRequest()
         {
             if (IsWebApiRequest())
@@ -59,6 +66,10 @@ namespace CatExpenseFront
             }
         }
 
+        /// <summary>
+        /// IsWebApiRequest
+        /// </summary>
+        /// <returns></returns>
         private bool IsWebApiRequest()
         {
             return HttpContext.Current.Request.AppRelativeCurrentExecutionFilePath.StartsWith(WebApiConfig.UrlPrefixRelative);

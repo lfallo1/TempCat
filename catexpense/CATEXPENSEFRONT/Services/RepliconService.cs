@@ -62,35 +62,18 @@ namespace CatExpenseFront.Services
             return RepliconRequest.PerformApiRequest(actionObject);
         }
 
-        /// <summary>
-        /// returns a list of all users.
-        /// </summary>
-        /// <param name="users"></param>
-        /// <returns></returns>
-        public List<Models.RepliconUser> CreateAllUsersList(Newtonsoft.Json.Linq.JArray users)
-        {
-            return RepliconResponse.CreateAllUsersList(users);
-        }
 
         /// <summary>
         /// returns all projects.
         /// </summary>
         /// <param name="projects"></param>
         /// <returns></returns>
-        public List<Models.RepliconProjectContainer> CreateAllProjectsList(Newtonsoft.Json.Linq.JArray projects)
+        public List<RepliconUserProject> CreateAllProjectsList(Newtonsoft.Json.Linq.JArray projects)
         {
             return RepliconResponse.CreateAllProjectsList(projects);
         }
 
-        /// <summary>
-        /// returns all clients.
-        /// </summary>
-        /// <param name="projects"></param>
-        /// <returns></returns>
-        public List<Models.Client> CreateAllProjectsClientList(Newtonsoft.Json.Linq.JArray projects)
-        {
-            return RepliconResponse.CreateAllProjectsClientList(projects);
-        }
+       
 
         /// <summary>
         /// parses the response from the api.
@@ -107,7 +90,7 @@ namespace CatExpenseFront.Services
         /// </summary>
         /// <param name="projects"></param>
         /// <returns></returns>
-        List<RepliconProjectContainer> IRepliconService.CreateAllProjectsList(Newtonsoft.Json.Linq.JArray projects)
+        List<RepliconUserProject> IRepliconService.CreateAllProjectsList(Newtonsoft.Json.Linq.JArray projects)
         {
             throw new System.NotImplementedException();
         }

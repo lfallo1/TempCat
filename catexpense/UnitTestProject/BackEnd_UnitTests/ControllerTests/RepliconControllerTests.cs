@@ -33,11 +33,6 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             JArray responseValue = RepliconResponse.GetResponseValue(response);
             mockService.Setup(s => s.GetResponseValue(response)).Returns(responseValue);
 
-            List<Client> clientList = RepliconResponse.CreateAllProjectsClientList(responseValue);
-            mockService.Setup(s => s.CreateAllProjectsClientList(It.IsAny<JArray>())).Returns(new List<Client>());
-
-           
-
           
         }
     }

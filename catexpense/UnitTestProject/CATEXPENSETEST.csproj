@@ -159,18 +159,13 @@
     <Compile Include="BackEnd_UnitTests\ControllerTests\LineItemControllerTests.cs" />
     <Compile Include="BackEnd_UnitTests\ControllerTests\ReceiptControllerTests.cs" />
     <Compile Include="BackEnd_UnitTests\ControllerTests\RepliconControllerTests.cs" />
-    <Compile Include="BackEnd_UnitTests\ModelTests\ClientTests.cs" />
     <Compile Include="BackEnd_UnitTests\ControllerTests\SubmissionControllerTest.cs" />
     <Compile Include="BackEnd_UnitTests\ModelTests\ExpenseCategoryTests.cs" />
     <Compile Include="BackEnd_UnitTests\ModelTests\ExpenseTests.cs" />
     <Compile Include="BackEnd_UnitTests\ModelTests\LineItemTests.cs" />
-    <Compile Include="BackEnd_UnitTests\ModelTests\RepliconProjectTests.cs" />
     <Compile Include="BackEnd_UnitTests\ModelTests\RepliconRequestTests.cs" />
-    <Compile Include="BackEnd_UnitTests\ModelTests\RepliconUserTests.cs" />
     <Compile Include="BackEnd_UnitTests\ModelTests\StatusTests.cs" />
-    <Compile Include="BackEnd_UnitTests\ModelTests\SubmissionMetadataTest.cs" />
     <Compile Include="BackEnd_UnitTests\ModelTests\SubmissionsTest.cs" />
-    <Compile Include="BackEnd_UnitTests\ServiceTests\RepliconUserServiceTests.cs" />
     <Compile Include="Other_Tests\BootstrapperTests.cs" />
     <Compile Include="Other_Tests\BundleConfigTests.cs" />
     <Compile Include="Other_Tests\FilterConfigTests.cs" />
@@ -210,6 +205,9 @@
     <Content Include="Scripts\jquery-2.0.3.js" />
     <Content Include="Scripts\jquery-2.0.3.min.js" />
     <Content Include="Unity.Mvc4.README.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="BackEnd_UnitTests\ServiceTests\" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

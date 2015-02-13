@@ -319,11 +319,10 @@
     </Compile>
     <Compile Include="Models\Login.cs" />
     <Compile Include="Models\RepliconUserProject.cs" />
-    <Compile Include="Models\RepliconProjectContainer.cs" />
     <Compile Include="Models\ExpenseCategory.cs" />
     <Compile Include="Models\LineItem.cs" />
     <Compile Include="Models\Comment.cs" />
-    <Compile Include="Models\SubmissionMetadata.cs" />
+    <Compile Include="Models\TempCatExpenseContext.cs" />
     <Compile Include="Services\RepliconUserProjectService.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -351,27 +350,20 @@
     <Compile Include="Services\ReceiptService.cs" />
     <Compile Include="Services\RepliconService.cs" />
     <Compile Include="Services\SubmissionService.cs" />
-    <Compile Include="Utilities\DB.cs">
-      <SubType>Code</SubType>
-    </Compile>
+    <Compile Include="Utilities\DB.cs" />
     <Compile Include="Utilities\IRepository.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Utilities\Repository.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="ViewModels\ReceiptWithoutImage.cs" />
-    <Compile Include="Models\RepliconProject.cs" />
-    <Compile Include="Models\RepliconUser.cs" />
+    <Compile Include="Models\ReceiptWithoutImage.cs" />
     <Compile Include="Models\Status.cs" />
     <Compile Include="Models\Submission.cs" />
     <Compile Include="Models\FinanceApprover.cs" />
-    <Compile Include="Models\Client.cs" />
     <Compile Include="Models\Receipt.cs" />
     <Compile Include="Models\RepliconRequest.cs" />
     <Compile Include="Models\RepliconResponse.cs" />
-    <Compile Include="Models\SubmissionPage.cs" />
-    <Compile Include="Models\TempCatExpenseContext.cs" />
     <Compile Include="Models\UserPrincipalExt.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -805,6 +797,7 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
+    <Content Include="Views\HotTowel\index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="angular\two\" />

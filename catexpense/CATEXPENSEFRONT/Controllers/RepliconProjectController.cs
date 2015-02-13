@@ -26,7 +26,7 @@ namespace CatExpenseFront.Controllers
     /// </summary>
     public class RepliconProjectController : BaseController
     {
-   
+
         public IRepliconUserProjectService userProjectService;
         public IFinanceApproverService financeApproverService;
 
@@ -44,7 +44,7 @@ namespace CatExpenseFront.Controllers
             }
         }
 
-        
+
 
         /// <summary>
         /// Returns all projects for the current user.
@@ -53,24 +53,17 @@ namespace CatExpenseFront.Controllers
         [HttpGet]
         [ActionName("RepliconProject")]
         [Route("api/RepliconProject")]
-        public List<RepliconProjectContainer> GetRepliconProject()
+        public List<RepliconUserProject> GetRepliconProject()
         {
             //Checks the session to see if it is valid
             this.checkSession();
 
-            List<RepliconProjectContainer> returnContainer = new List<RepliconProjectContainer>();
-            List<RepliconUserProject> projects = (from m in userProjectService.All()
-                                                  where (m.UserName.ToUpper() == (null == HttpContext.Current.Session["UserName"]
-                                                                                 ? ""
-                                                                                 : HttpContext.Current.Session["UserName"].ToString().ToUpper()))
-                                                  select m).ToList<RepliconUserProject>();
 
-            foreach (RepliconUserProject project in projects)
-            {
-                returnContainer.Add(new RepliconProjectContainer(project));
-            }
-
-            return returnContainer;
+            return (from m in userProjectService.All()
+                    where (m.UserName.ToUpper() == (null == HttpContext.Current.Session["UserName"]
+                                                   ? ""
+                                                   : HttpContext.Current.Session["UserName"].ToString().ToUpper()))
+                    select m).ToList<RepliconUserProject>();
         }
 
 
@@ -90,7 +83,7 @@ namespace CatExpenseFront.Controllers
             JObject response = RepliconRequest.PerformApiRequest(apiAction);
             JArray responseValue = RepliconResponse.GetResponseValue(response);
             // gets all of the projects from the replicon db
-            List<RepliconProjectContainer> projectList = RepliconResponse.CreateAllProjectsList(responseValue);
+            List<RepliconUserProject> projectList = RepliconResponse.CreateAllProjectsList(responseValue);
 
             //Delete existing user projects
             List<RepliconUserProject> existingUserProjects = userProjectService.All().ToList<RepliconUserProject>();
@@ -103,14 +96,11 @@ namespace CatExpenseFront.Controllers
             //Commit the delete
             userProjectService.SaveChanges();
 
-            // loop through all of the projects in the replicon db
-            foreach (RepliconProjectContainer project in projectList)
-            {
-                //Update User projects
-                userProjectService.CreateAll(project.TeamMembers);
-                userProjectService.SaveChanges();
+            //Update User projects
+            userProjectService.CreateAll(projectList);
+            userProjectService.SaveChanges();
 
-            }
+
 
             UpdateFinanceApprovers();
         }

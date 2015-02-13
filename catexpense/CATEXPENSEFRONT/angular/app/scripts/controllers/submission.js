@@ -7,7 +7,7 @@ angular.module('expenseApp.Controllers')
       $scope.syncComplete = false;
       $scope.flag = false;
       $scope.hasNoProjects = false;
-      $scope.clients = [{ RepliconProjectName: "Loading..." }];
+      $scope.clients = [{ ProjectName: "Loading..." }];
       $scope.loading = true;
       $scope.lineItems = [];
       $scope.disabled = true;
@@ -83,7 +83,7 @@ angular.module('expenseApp.Controllers')
               var dbDate = new Date(dbdate.toUTCString().substring(0, 16));
               var datepickerDate = new Date($scope.dt1.toUTCString().substring(0, 16));
               if (dbDate.valueOf() === datepickerDate.valueOf()) {
-                  if (entry.RepliconProjectId === $scope.selectedClient.RepliconProjectId) {
+                  if (entry.RepliconProjectId === $scope.selectedClient.ProjectId) {
                       //return the matching submission
                       submission = entry;
                       Application.setSubmissionIndex(index);
@@ -171,7 +171,7 @@ angular.module('expenseApp.Controllers')
       if (Application.getRepliconProjects() != undefined) {
           $scope.clients = Application.getRepliconProjects();
           $scope.selectedClient = $scope.clients[0];
-          $scope.clientManager = $scope.selectedClient.RepliconManagerName + "@catalystitservices.com";
+          $scope.clientManager = $scope.selectedClient.ManagerName + "@catalystitservices.com";
           $scope.loading = false;
       } else {
           // load replicon projects into clients array upon page load
@@ -200,7 +200,7 @@ angular.module('expenseApp.Controllers')
                       Application.setRepliconProjects(allRepliconProjects.data);
                       $scope.clients = allRepliconProjects.data;
                       $scope.selectedClient = $scope.clients[0];
-                      $scope.clientManager = $scope.selectedClient.RepliconManagerName + "@catalystitservices.com";
+                      $scope.clientManager = $scope.selectedClient.ManagerName + "@catalystitservices.com";
                       $scope.loading = false;
                       $scope.hasNoProjects = false;
                   } else {
@@ -221,9 +221,9 @@ angular.module('expenseApp.Controllers')
 
           var submission = {
               statusId: 1,
-              RepliconProjectId: $scope.selectedClient.RepliconProjectId,
+              RepliconProjectId: $scope.selectedClient.ProjectId,
               WeekEndingDate: $scope.dt1,
-              ManagerName: $scope.selectedClient.RepliconManagerName,
+              ManagerName: $scope.selectedClient.ManagerName,
               Description: $scope.currentDescription
           };
 
@@ -429,7 +429,7 @@ angular.module('expenseApp.Controllers')
       * populate the manager in the view for the client selected from the dropdown
       */
       $scope.getManager = function () {
-          $scope.clientManager = $scope.selectedClient.RepliconManagerName + "@catalystitservices.com";
+          $scope.clientManager = $scope.selectedClient.ManagerName + "@catalystitservices.com";
       };
 
       /** 
@@ -602,7 +602,7 @@ angular.module('expenseApp.Controllers')
 
           //Update the updatable fields
           $scope.submission.Description = $scope.currentDescription;
-          $scope.submission.RepliconProjectId = $scope.selectedClient.RepliconProjectId,
+          $scope.submission.RepliconProjectId = $scope.selectedClient.ProjectId,
           $scope.submission.WeekEndingDate = $scope.dt1,
           $scope.submission.Status["StatusName"] = 'In Progress'
           $scope.submission.Status["StatusId"] = 1

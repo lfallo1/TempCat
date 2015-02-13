@@ -23,7 +23,7 @@
                     <label class="sr-only" for="clientDropDownList">Client</label>
                     <div class="input-group">
                         <div class="input-group-addon">Client:</div>
-                        <select class="form-control" id="clientDropDownList" ng-options="client.RepliconProjectName for client in clients" ng-model="selectedClient" ng-change="getManager()" ng-disabled="editExistingSubmission"></select>
+                        <select class="form-control" id="clientDropDownList" ng-options="client.ProjectName for client in clients" ng-model="selectedClient" ng-change="getManager()" ng-disabled="editExistingSubmission"></select>
                     </div>
                 </div>
             </div>

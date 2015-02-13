@@ -6,16 +6,30 @@ using System.Web;
 
 namespace CatExpenseFront.Models
 {
+    /// <summary>
+    /// Used to communicate with active directory.
+    /// </summary>
     [DirectoryRdnPrefix("CN")]
     [DirectoryObjectClass("Person")]
     public class UserPrincipalExt : UserPrincipal
     {
-        // Implement the constructor using the base class constructor
+        
+        /// <summary>
+        /// Implement the constructor using the base class constructor
+        /// </summary>
+        /// <param name="context"></param>
         public UserPrincipalExt(PrincipalContext context)
             : base(context)
         { }
 
-        // Implement the constructor with initialization parameters.
+       
+        /// <summary>
+        /// Implement the constructor with initialization parameters.
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="samAccountName"></param>
+        /// <param name="password"></param>
+        /// <param name="enabled"></param>
         public UserPrincipalExt(PrincipalContext context,
                                 string samAccountName,
                                 string password,
@@ -23,7 +37,10 @@ namespace CatExpenseFront.Models
             : base(context, samAccountName, password, enabled)
         { }
 
-        // Create the "Manager" property
+         
+        /// <summary>
+        /// Create the "Manager" property
+        /// </summary>
         [DirectoryProperty("manager")]
         public string Manager
         {
@@ -37,13 +54,26 @@ namespace CatExpenseFront.Models
             set { ExtensionSet("manager", value); }
         }
 
-        // Implement the overloaded search method FindByIdentity.
+       
+        /// <summary>
+        /// Implement the overloaded search method FindByIdentity.
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="identityValue"></param>
+        /// <returns></returns>
         public static new UserPrincipalExt FindByIdentity(PrincipalContext context, string identityValue)
         {
             return (UserPrincipalExt)FindByIdentityWithType(context, typeof(UserPrincipalExt), identityValue);
         }
 
-        // Implement the overloaded search method FindByIdentity.
+      
+        /// <summary>
+        /// Implement the overloaded search method FindByIdentity.
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="identityType"></param>
+        /// <param name="identityValue"></param>
+        /// <returns></returns>
         public static new UserPrincipalExt FindByIdentity(PrincipalContext context, IdentityType identityType, string identityValue)
         {
             return (UserPrincipalExt)FindByIdentityWithType(context, typeof(UserPrincipalExt), identityType, identityValue);

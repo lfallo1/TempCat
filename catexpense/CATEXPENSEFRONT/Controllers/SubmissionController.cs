@@ -376,12 +376,12 @@ namespace CatExpenseFront.Controllers
                                                 select m).ToList<RepliconUserProject>();
                 if (up.Count > 0)
                 {
-                    submission.RepliconProject = new RepliconProject(up[0]);
+                    submission.RepliconProject = up[0];
 
                 }
                 else
                 {
-                    submission.RepliconProject = new RepliconProject();
+                    submission.RepliconProject = new RepliconUserProject();
                 }
 
                 decimal total = 0;

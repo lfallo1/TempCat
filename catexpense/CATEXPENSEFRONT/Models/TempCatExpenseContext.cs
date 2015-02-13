@@ -11,40 +11,45 @@ namespace CatExpenseFront.Models
         // code to the Application_Start method in your Global.asax file.
         // Note: this will destroy and re-create your database with every model change.
 
+        /// <summary>
+        /// Constructor that sets the connection string.
+        /// </summary>
         public TempCatExpenseContext()
             : base("name=CATEXPENSEConnectionString")
         {
 
         }
 
+        /// <summary>
+        /// Loads the Finannce Approvers to the context.
+        /// </summary>
         public DbSet<FinanceApprover> FinanceApprovers { get; set; }
 
-        public DbSet<SubmissionPage> SubmissionPages { get; set; }
-
-
+        /// <summary>
+        /// Loasds Line Items to the Context.
+        /// </summary>
         public DbSet<LineItem> LineItems { get; set; }
 
+        /// <summary>
+        /// Loads submissions to the context.
+        /// </summary>
         public DbSet<Submission> Submissions { get; set; }
 
-        public DbSet<RepliconProject> RepliconProjects { get; set; }
-
-        public DbSet<RepliconUser> RepliconUsers { get; set; }
-
+        /// <summary>
+        /// Loads user projects to the context.
+        /// </summary>
         public DbSet<RepliconUserProject> RepliconUserProjects { get; set; }
 
+        /// <summary>
+        /// Loads categories to the context.
+        /// </summary>
         public DbSet<ExpenseCategory> ExpenseCategories { get; set; }
 
+        /// <summary>
+        /// Loads Reciepts to the context.
+        /// </summary>
         public DbSet<Receipt> Receipts { get; set; }
 
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<FinanceApprover>().ToTable("dbo.FinanceApprovers");
-
-            modelBuilder.Entity<SubmissionPage>().ToTable("dbo.Submission_V");
-            modelBuilder.Entity<SubmissionPage>().MapToStoredProcedures(s =>
-                s.Update(u => u.HasName("dbo.spSubmissionUpdate"))
-                 .Insert(i => i.HasName("dbo.spSubmissionInsert")));
-
-        }
+        
     }
 }
