@@ -534,7 +534,8 @@ describe( 'Service: LineItemService Getters & Setters', function () {
                 thursday: '',
                 friday: '',
                 saturday: ''
-            }
+            },
+            valid: false
         };
         expect( LineItemService.getExtraData() ).toEqual( extraData );
     } );

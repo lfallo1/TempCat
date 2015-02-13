@@ -26,27 +26,27 @@ describe( 'Service: ValidationService', function () {
             validInput: true,
             date: {
                 valid: true,
-                message: 'default message'
+                message: 'This field is valid.'
             },
             origin: {
                 valid: true,
-                message: 'default message'
+                message: 'This field is valid.'
             },
             destination: {
                 valid: true,
-                message: 'default message'
+                message: 'This field is valid.'
             },
             miles: {
                 valid: true,
-                message: 'default message'
+                message: 'This field is valid.'
             },
             description: {
                 valid: true,
-                message: 'default message'
+                message: 'This field is valid.'
             },
             amount: {
                 valid: true,
-                message: 'default message'
+                message: 'This field is valid.'
             }
         };
 
@@ -54,7 +54,7 @@ describe( 'Service: ValidationService', function () {
             validInput: true,
             days: {
                 valid: true,
-                message: 'default message'
+                message: 'This field is valid.'
             }
         };
 
@@ -62,15 +62,15 @@ describe( 'Service: ValidationService', function () {
             validInput: true,
             date: {
                 valid: true,
-                message: 'default message'
+                message: 'This field is valid.'
             },
             description: {
                 valid: true,
-                message: 'default message'
+                message: 'This field is valid.'
             },
             amount: {
                 valid: true,
-                message: 'default message'
+                message: 'This field is valid.'
             }
         };
 
