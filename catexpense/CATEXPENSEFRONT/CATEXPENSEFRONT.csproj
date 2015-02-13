@@ -550,8 +550,6 @@
     <Content Include="angular\app\scripts\directives\imageupload.js" />
     <Content Include="angular\app\scripts\directives\submission-table.js" />
     <Content Include="angular\app\scripts\directives\submissionPage.js" />
-    <Content Include="angular\app\scripts\libraries\angular-spin.min.js" />
-    <Content Include="angular\app\scripts\libraries\spin.min.js" />
     <Content Include="angular\app\scripts\services\Application.js" />
     <Content Include="angular\app\scripts\services\Authentication.js" />
     <Content Include="angular\app\scripts\services\CommentService.js" />
@@ -612,7 +610,6 @@
     <Content Include="Views\HotTowel\views\FinanceTable.html" />
     <Content Include="Views\HotTowel\views\home.html" />
     <Content Include="Views\HotTowel\views\login.html" />
-    <Content Include="Views\HotTowel\views\main.html" />
     <Content Include="Views\HotTowel\views\ManagerTable.html" />
     <Content Include="Views\HotTowel\views\modals\confirmModal.html" />
     <Content Include="Views\HotTowel\views\modals\formDetailsView.html" />
@@ -789,7 +786,6 @@
     <Content Include="angular\app\bower_components\json3\CONTRIBUTING.md" />
     <Content Include="angular\app\bower_components\json3\LICENSE" />
     <Content Include="angular\app\bower_components\json3\README.md" />
-    <Content Include="angular\app\scripts\libraries\angular-spinner.min.js.map" />
     <None Include="job_scheduling_data_2_0.xsd">
       <SubType>Designer</SubType>
     </None>
