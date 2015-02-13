@@ -344,21 +344,6 @@ describe( 'Controller: OtherCtrl', function () {
 
     } );
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     it( 'should update the amount to the LineItemService and well as perform validation (valid amount).', function () {
         spyOn( ValidationService, 'validateOther' ).and.callFake( function ( testItem ) {
             var regExp = /^(\d*.?\d+)$/;
@@ -485,15 +470,15 @@ describe( 'Controller: OtherCtrl', function () {
 
     it( 'should set the default values for formats[].', function () {
         expect( scope.formats.length ).toBe( 4 );
-        expect( scope.formats[0] ).toBe( 'dd-MMMM-yyyy' );
-        expect( scope.formats[1] ).toBe( 'yyyy/MM/dd' );
+        expect( scope.formats[0] ).toBe( 'yyyy/MM/dd' );
+        expect( scope.formats[1] ).toBe( 'EEEE - MMM. dd/yyyy' );
         expect( scope.formats[2] ).toBe( 'dd.MM.yyyy' );
         expect( scope.formats[3] ).toBe( 'shortDate' );
     } );
 
     it( 'should set the default value for format.', function () {
-        expect( scope.format ).toBe( 'dd-MMMM-yyyy' );
-        expect( scope.format ).toBe( scope.formats[0] );
+        expect( scope.format ).toBe( 'EEEE - MMM. dd/yyyy' );
+        expect( scope.format ).toBe( scope.formats[1] );
     } );
 
 } );
