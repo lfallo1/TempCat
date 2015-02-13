@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('expenseApp.Controllers')
-  .controller('EmployeeTableController', ["$scope", "$location", "$modal", "$route", "$rootScope", "$filter", "Application", "SubmissionService", "MessageService", "ReceiptService", "ExpenseCategory", function ($scope, $location, $modal, $route, $rootScope, $filter, Application, SubmissionService, MessageService, ReceiptService, ExpenseCategory) {
+  .controller('EmployeeTableController', ["$scope", "$location", "$modal", "$route", "$rootScope", "$filter", "Application", "SubmissionService", "MessageService", "ReceiptService", function ($scope, $location, $modal, $route, $rootScope, $filter, Application, SubmissionService, MessageService, ReceiptService) {
       /**
       * container for the submissions
       */
@@ -19,17 +19,6 @@ angular.module('expenseApp.Controllers')
         { name: 'Finance Approved', value: '5' },
         { name: 'Finance Rejected', value: '6' }
       ];
-
-      function getExpenseCategories() {
-          ExpenseCategory.getAllExpenseCategories().then(
-              function (success) {
-                  console.log(success.data);
-              },
-              function (error) {
-                  console.log(error);
-              });
-      }
-      getExpenseCategories();
 
       $scope.expanded = true;
 
