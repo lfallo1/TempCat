@@ -46,6 +46,7 @@ angular.module('expenseApp.Controllers')
           if (Application.getPendingSubmissionsByManagerName() != undefined) {
               $scope.managerSubmissions = Application.getPendingSubmissionsByManagerName();
               managerSubmissionsContainer = $scope.managerSubmissions;
+              $scope.filterTableBySubmissionStatus(2);
               $rootScope.$broadcast("managerTotal", $scope.managerSubmissions.length);
           } else {
               // get all the submissions for the manager

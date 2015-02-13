@@ -53,6 +53,7 @@ angular.module('expenseApp.Controllers')
           if (Application.getPendingSubmissionsByFinanceApprover() != undefined && Application.getPendingSubmissionsByFinanceApprover().length != 0) {
               $scope.financeSubmissions = Application.getPendingSubmissionsByFinanceApprover();
               financeSubmissionsContainer = $scope.financeSubmissions;
+              $scope.filterTableBySubmissionStatus(3);
               $rootScope.$broadcast("financeTotal", $scope.financeSubmissions.length);
           } else {
               // get all the submissions for the finance approver
