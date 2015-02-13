@@ -51,8 +51,6 @@ angular.module('expenseApp.Controllers')
               // get all the submissions for the manager
               SubmissionService.getPendingSubmissionsByManagerName().then(
                   function (submissions) {
-                      console.log('manager submissions returned');
-                      console.log(submissions.data);
                       var userSubmissions = submissions.data;
                       for (var i = 0; i < userSubmissions.length; i++) {
                           // a status of 4 and 6 means the submission was rejected
