@@ -12,13 +12,14 @@ using System.Linq;
 using System.Net.Http;
 using System.Net;
 using CatExpenseFront.Services;
+using CatExpenseFront.Controllers.Base;
 
 namespace CatExpenseFront.Controllers
 {
     /// <summary>
     /// Controller used to login and logout
     /// </summary>
-    public class LoginController : ApiController
+    public class LoginController : BaseController
     {
         private ISubmissionService service;
         private IFinanceApproverService approverService;
@@ -70,17 +71,16 @@ namespace CatExpenseFront.Controllers
                 SearchResult result = search.FindOne();
                 HttpContext.Current.Session["UserName"] = result.Properties["samaccountname"][0].ToString();
                 userWithSession.Username = HttpContext.Current.Session["UserName"].ToString();
-                userWithSession.isLoggedIn = true;
+             
                 userWithSession.isFinanceApprover = isFinanceApprover();
                 userWithSession.isManager = isManager();
-                return userWithSession;
+             
             }
             catch (DirectoryServicesCOMException e)
             {
-                // Bad Password/Username
-                LOGGER.GetLogger("StackTrace").LogError(e.ToString());
-                return userWithSession;
+                this.checkSession();
             }
+            return userWithSession;
         }
 
         /// <summary>
@@ -92,21 +92,14 @@ namespace CatExpenseFront.Controllers
         [Route("api/login/isLoggedIn")]
         public Login isLoggedIn()
         {
+            this.checkSession();
             Login userWithSession = new Login();
-            if (null != HttpContext.Current.Session["UserName"])
-            {
-                userWithSession.Username = HttpContext.Current.Session["UserName"].ToString();
-                userWithSession.isLoggedIn = true;
-                userWithSession.isFinanceApprover = isFinanceApprover();
-                userWithSession.isManager = isManager();
-            }
-            else
-            {
-                userWithSession.Username = "";
-                userWithSession.isLoggedIn = false;
-                userWithSession.isFinanceApprover = false;
-                userWithSession.isManager = false;
-            }
+
+            userWithSession.Username = HttpContext.Current.Session["UserName"].ToString();
+           
+            userWithSession.isFinanceApprover = isFinanceApprover();
+            userWithSession.isManager = isManager();
+
             return userWithSession;
         }
 
@@ -128,10 +121,10 @@ namespace CatExpenseFront.Controllers
         private bool isManager()
         {
             return (from m in service.All()
-                            where m.ManagerName.ToUpper() == (null == HttpContext.Current.Session["UserName"]
-                                                          ? ""
-                                                          : HttpContext.Current.Session["UserName"].ToString().ToUpper())
-                            select m).Count() > 0;
+                    where m.ManagerName.ToUpper() == (null == HttpContext.Current.Session["UserName"]
+                                                  ? ""
+                                                  : HttpContext.Current.Session["UserName"].ToString().ToUpper())
+                    select m).Count() > 0;
         }
 
         /// <summary>
@@ -141,10 +134,10 @@ namespace CatExpenseFront.Controllers
         private bool isFinanceApprover()
         {
             return (from m in approverService.All()
-                         where (m.userName.ToUpper() == (null == HttpContext.Current.Session["UserName"]
-                                                          ? ""
-                                                          : HttpContext.Current.Session["UserName"].ToString()).ToUpper())
-                         select m).Count() > 0;
+                    where (m.userName.ToUpper() == (null == HttpContext.Current.Session["UserName"]
+                                                     ? ""
+                                                     : HttpContext.Current.Session["UserName"].ToString()).ToUpper())
+                    select m).Count() > 0;
         }
     }
 }

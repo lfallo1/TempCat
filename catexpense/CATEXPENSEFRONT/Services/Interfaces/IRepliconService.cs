@@ -43,26 +43,15 @@ namespace CatExpenseFront.Services.Interfaces
         JObject PerformApiRequest(JObject actionObject);
 
 
-        /// <summary>
-        /// Returns all users.
-        /// </summary>
-        /// <param name="users"></param>
-        /// <returns></returns>
-        List<RepliconUser> CreateAllUsersList(JArray users);
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="projects"></param>
         /// <returns></returns>
-        List<RepliconProjectContainer> CreateAllProjectsList(JArray projects);
+        List<RepliconUserProject> CreateAllProjectsList(JArray projects);
 
-        /// <summary>
-        /// Returns all projects
-        /// </summary>
-        /// <param name="projects"></param>
-        /// <returns></returns>
-        List<Client> CreateAllProjectsClientList(JArray projects);
+      
 
         /// <summary>
         /// 

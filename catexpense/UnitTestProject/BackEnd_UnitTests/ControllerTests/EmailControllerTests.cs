@@ -17,7 +17,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
         private EmailController controller;
         private List<Submission> submissions;
         private List<LineItem> lineItems;
-        private List<RepliconUser> users;
+     
 
         [TestFixtureSetUp]
         public void EmailControllerTestsSetUp()
@@ -47,13 +47,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
                 lineItem1
             };
 
-            RepliconUser user1 = new RepliconUser();
-            user1.RepliconUserId = 47;
-            user1.RepliconUserName = "TestManager1";
-            users = new List<RepliconUser>
-            {
-                user1
-            };
+          
 
             // Assert
             Assert.IsNotNull(controller);

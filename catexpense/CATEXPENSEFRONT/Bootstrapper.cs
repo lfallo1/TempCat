@@ -10,8 +10,15 @@ using CatExpenseFront.Services;
 
 namespace CatExpenseFront
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public static class Bootstrapper
     {
+        /// <summary>
+        /// Iniialises the bootstrapper
+        /// </summary>
+        /// <returns></returns>
         public static IUnityContainer Initialise()
         {
             var container = BuildUnityContainer();
@@ -22,43 +29,40 @@ namespace CatExpenseFront
             return container;
         }
 
+        /// <summary>
+        /// Builds the container
+        /// </summary>
+        /// <returns></returns>
         private static IUnityContainer BuildUnityContainer()
         {
             var container = new UnityContainer();
 
             // register all your components with the container here
-               
+
             RegisterTypes(container);
 
             return container;
         }
 
+        /// <summary>
+        /// Registers the types.
+        /// </summary>
+        /// <param name="container"></param>
         public static void RegisterTypes(IUnityContainer container)
         {
-            
-                container.RegisterType<IRepository<SubmissionPage>, Repository<SubmissionPage>>();
-                container.RegisterType<IRepository<Client>, Repository<Client>>();
-              
-                container.RegisterType<IRepository<FinanceApprover>, Repository<FinanceApprover>>();
-                container.RegisterType<IRepository<LineItem>, Repository<LineItem>>();
-                container.RegisterType<IRepository<Comment>, Repository<Comment>>();
-                container.RegisterType<IRepository<Submission>, Repository<Submission>>();
-                container.RegisterType<IRepository<RepliconProject>, Repository<RepliconProject>>();
-                container.RegisterType<IRepository<RepliconUser>, Repository<RepliconUser>>();
-                container.RegisterType<IRepository<ExpenseCategory>, Repository<ExpenseCategory>>();
-                container.RegisterType<IRepository<Receipt>, Repository<Receipt>>();
-                container.RegisterType<IRepliconUserProjectService, RepliconUserProjectService>();
-              
-              
-                container.RegisterType<ISubmissionService, SubmissionService>();
-                container.RegisterType<ILineItemService, LineItemService>();
-                container.RegisterType<IExpenseCategoryService, ExpenseCategoryService>();
-          
-                container.RegisterType<IFinanceApproverService, FinanceApproverService>();
-                container.RegisterType<ICommentService, CommentService>();
-                container.RegisterType<IReceiptService, ReceiptService>();
-              
-                container.RegisterType<IRepliconService, RepliconService>();
+            container.RegisterType<IRepository<FinanceApprover>, Repository<FinanceApprover>>();
+            container.RegisterType<IRepository<LineItem>, Repository<LineItem>>();
+            container.RegisterType<IRepository<Comment>, Repository<Comment>>();
+            container.RegisterType<IRepository<Submission>, Repository<Submission>>();
+            container.RegisterType<IRepository<ExpenseCategory>, Repository<ExpenseCategory>>();
+            container.RegisterType<IRepliconUserProjectService, RepliconUserProjectService>();
+            container.RegisterType<ISubmissionService, SubmissionService>();
+            container.RegisterType<ILineItemService, LineItemService>();
+            container.RegisterType<IExpenseCategoryService, ExpenseCategoryService>();
+            container.RegisterType<IFinanceApproverService, FinanceApproverService>();
+            container.RegisterType<ICommentService, CommentService>();
+            container.RegisterType<IReceiptService, ReceiptService>();
+            container.RegisterType<IRepliconService, RepliconService>();
         }
 
     }

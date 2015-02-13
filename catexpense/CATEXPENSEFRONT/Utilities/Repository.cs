@@ -6,26 +6,43 @@ using LOGGER = Logger.Logger;
 
 namespace CatExpenseFront.Repository
 {
+    /// <summary>
+    /// Class used to access db resources.
+    /// </summary>
+    /// <typeparam name="TObject"></typeparam>
     public class Repository<TObject> : IDisposable, IRepository<TObject> where TObject : class
     {
         private DB context = null;
 
+        /// <summary>
+        /// Destructor
+        /// </summary>
         ~Repository()
         {
             Dispose(false);
         }
 
+        /// <summary>
+        /// Default Constructor
+        /// </summary>
         public Repository()
         {
             context = new DB();
         }
 
+        /// <summary>
+        /// Contructor that accepts a context
+        /// </summary>
+        /// <param name="context"></param>
         public Repository(DB context)
         {
             this.context = context;
             context.Configuration.ValidateOnSaveEnabled = false;
         }
 
+        /// <summary>
+        /// Returns the inialised context.
+        /// </summary>
         protected DbSet<TObject> DbSet
         {
             get
@@ -34,12 +51,19 @@ namespace CatExpenseFront.Repository
             }
         }
 
+        /// <summary>
+        /// destroy the instance
+        /// </summary>
         public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        /// Multiple Dispose 
+        /// </summary>
+        /// <param name="disposing"></param>
         protected virtual void Dispose(bool disposing)
         {
             // Multiple Dispose calls should be OK
@@ -61,12 +85,19 @@ namespace CatExpenseFront.Repository
             }
         }
 
+        /// <summary>
+        /// Returns a flag for disposed.
+        /// </summary>
         protected bool Disposed
         {
             get;
             private set;
         }
 
+        /// <summary>
+        /// Returns all of an object.
+        /// </summary>
+        /// <returns></returns>
         public virtual IQueryable<TObject> All()
         {
             // In general all public methods should throw ObjectDisposedException
@@ -78,6 +109,11 @@ namespace CatExpenseFront.Repository
             return DbSet.AsQueryable();
         }
 
+        /// <summary>
+        /// In general all public methods should throw ObjectDisposedException
+        /// if Dispose has been called.
+        /// </summary>
+        /// <returns></returns>
         public virtual IEnumerable<TObject> AsEnumerable()
         {
             // In general all public methods should throw ObjectDisposedException
@@ -89,6 +125,11 @@ namespace CatExpenseFront.Repository
             return DbSet.AsEnumerable();
         }
 
+        /// <summary>
+        /// Searches for a single entry by id.
+        /// </summary>
+        /// <param name="keys"></param>
+        /// <returns></returns>
         public virtual TObject Find(params object[] keys)
         {
             // In general all public methods should throw ObjectDisposedException
@@ -100,6 +141,11 @@ namespace CatExpenseFront.Repository
             return DbSet.Find(keys);
         }
 
+        /// <summary>
+        /// queries the database.
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <returns></returns>
         public virtual IEnumerable<TObject> SqlQuery(string sql)
         {
             // In general all public methods should throw ObjectDisposedException
@@ -111,6 +157,12 @@ namespace CatExpenseFront.Repository
             return DbSet.SqlQuery(sql).AsEnumerable();
         }
 
+        /// <summary>
+        /// Queries the database with parameters.
+        /// </summary>
+        /// <param name="sql"></param>
+        /// <param name="keys"></param>
+        /// <returns></returns>
         public virtual TObject SqlQuery(string sql, params object[] keys)
         {
             // In general all public methods should throw ObjectDisposedException
@@ -122,6 +174,11 @@ namespace CatExpenseFront.Repository
             return DbSet.SqlQuery(sql, keys).FirstOrDefault();
         }
 
+        /// <summary>
+        /// Creates a new Object.
+        /// </summary>
+        /// <param name="tobject"></param>
+        /// <returns></returns>
         public virtual TObject Create(TObject tobject)
         {
             // In general all public methods should throw ObjectDisposedException
@@ -133,6 +190,11 @@ namespace CatExpenseFront.Repository
             return DbSet.Add(tobject);
         }
 
+        /// <summary>
+        /// Creates a list of objects in the database.
+        /// </summary>
+        /// <param name="tobjects"></param>
+        /// <returns></returns>
         public virtual IEnumerable<TObject> CreateAll(IEnumerable<TObject> tobjects)
         {
             // In general all public methods should throw ObjectDisposedException
@@ -144,6 +206,9 @@ namespace CatExpenseFront.Repository
             return DbSet.AddRange(tobjects);
         }
 
+        /// <summary>
+        /// Returns a count.
+        /// </summary>
         public virtual int Count
         {
             get
@@ -152,6 +217,11 @@ namespace CatExpenseFront.Repository
             }
         }
 
+        /// <summary>
+        /// Removes an item from the database.
+        /// </summary>
+        /// <param name="tobject"></param>
+        /// <returns></returns>
         public virtual int Delete(TObject tobject)
         {
             // In general all public methods should throw ObjectDisposedException
@@ -164,6 +234,11 @@ namespace CatExpenseFront.Repository
             return 0;
         }
 
+        /// <summary>
+        /// Updates an item in the database.
+        /// </summary>
+        /// <param name="tobject"></param>
+        /// <returns></returns>
         public virtual int Update(TObject tobject)
         {
             // In general all public methods should throw ObjectDisposedException
@@ -178,6 +253,9 @@ namespace CatExpenseFront.Repository
             return 0;
         }
 
+        /// <summary>
+        /// commits the changes to the database.
+        /// </summary>
         public void SaveChanges()
         {
             // In general all public methods should throw ObjectDisposedException
