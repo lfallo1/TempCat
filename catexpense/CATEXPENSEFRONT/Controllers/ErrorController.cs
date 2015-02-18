@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Web;
 using System.Net;
@@ -23,6 +26,7 @@ namespace CatExpenseFront.Controllers
 
         [HttpPost]
         [ResponseType(typeof(Error))]
+        [Route("api/Error")]
         public HttpResponseMessage Post(Error error){
 
             this.checkSession();
