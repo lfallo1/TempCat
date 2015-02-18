@@ -32,6 +32,7 @@ angular
     'ngSanitize',
     'ngTouch',
 	'ui.bootstrap',
+    'scrollable-table',
     'expenseApp.Services',
     'expenseApp.Controllers'
   ])
