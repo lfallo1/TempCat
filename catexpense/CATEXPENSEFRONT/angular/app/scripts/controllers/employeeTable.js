@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('expenseApp.Controllers')
-  .controller('EmployeeTableController', ["$scope", "$location", "$modal", "$route", "$rootScope", "$filter", "Application", "SubmissionService", "MessageService", "ReceiptService", function ($scope, $location, $modal, $route, $rootScope, $filter, Application, SubmissionService, MessageService, ReceiptService) {
+  .controller('EmployeeTableController', ["$scope", "$location", "$modal", "$route", "$rootScope", "$filter", "Application", "Authentication", "SubmissionService", "MessageService", "ReceiptService", "LogError", function ($scope, $location, $modal, $route, $rootScope, $filter, Application, Authentication, SubmissionService, MessageService, ReceiptService, LogError) {
       /**
       * container for the submissions
       */
