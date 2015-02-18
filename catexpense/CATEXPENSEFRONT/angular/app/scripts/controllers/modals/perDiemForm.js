@@ -55,10 +55,10 @@ angular.module('expenseApp.Controllers')
        */
       $scope.calculateTotal = function () {
           var perDiem = 30;
-          $scope.perDiemValues.amount = 0;
+          $scope.perDiemValues.amount = '0.00';
           for (var key in $scope.perDiemValues.days) {
               if ($scope.perDiemValues.days.hasOwnProperty(key)) {
-                  $scope.perDiemValues.amount += $scope.perDiemValues.days[key] ? perDiem : 0;
+                  $scope.perDiemValues.amount += $scope.perDiemValues.days[key] ? perDiem : '0.00';
               }
           };
           LineItemService.setLineItemAmount($scope.perDiemValues.amount);
