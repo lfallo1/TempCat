@@ -32,7 +32,6 @@ angular
     'ngSanitize',
     'ngTouch',
 	'ui.bootstrap',
-    'scrollable-table',
     'expenseApp.Services',
     'expenseApp.Controllers'
   ])
@@ -81,18 +80,21 @@ angular
         }
 
         LoginService.isLoggedIn().then(function (isLoggedIn) {
-            if (!isLoggedIn.data.isLoggedIn) {
+           
+           Authentication.login(isLoggedIn.data);
+           Application.makeReady();
+           $rootScope.$broadcast("refresh");
+           $location.path('/home');
+            
+        }, function(error){
+           
                 Authentication.logout();
                 Application.logout();
                 $location.path('/login');
                 LoginService.userLogout();
-            } else {
-                Authentication.login(isLoggedIn.data);
-                Application.makeReady();
-                $rootScope.$broadcast("refresh");
-                $location.path('/home');
-            }
         });
+        
+        
 
         $rootScope.$on('$locationChangeStart', function (scope, next, current) {
 
