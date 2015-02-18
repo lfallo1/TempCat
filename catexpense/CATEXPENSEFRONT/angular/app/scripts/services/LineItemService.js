@@ -29,7 +29,7 @@ angular.module('expenseApp.Services')
           ExpenseCategoryId: 1,
           LineItemDate: '',
           LineItemDesc: '',
-          LineItemAmount: 0,
+          LineItemAmount: '0.00',
           LineItemMetadata: 'Miles:0,Origin:,Destination:,Sunday:false,Monday:false,Tuesday:false,Wednesday:false,Thursday:false,Friday:false,Saturday:false',
           ReceiptPresent: false,
           StatusId: 1,
@@ -356,7 +356,7 @@ angular.module('expenseApp.Services')
           if (!isNaN(parseInt(value)) && value > 0) {
               lineItem.LineItemAmount = value;
           } else {
-              lineItem.LineItemAmount = 0;
+              lineItem.LineItemAmount = '0.00';
           }
       };
 
@@ -635,7 +635,7 @@ angular.module('expenseApp.Services')
                   saturday: false
               }
           );
-          self.setLineItemAmount(0);
+          self.setLineItemAmount('0.00');
           self.setBillable(false);
           self.setValidity(false);
       };
