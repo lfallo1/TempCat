@@ -45,10 +45,10 @@ namespace Selenium.PageObjects
         {
         }
 
-        public ExpenseReportSubmissionBaseModal ClickAddNewLineItem()
+        public BaseSubmissionModal ClickAddNewLineItem()
         {
             Find(AddNewLineItemButton).Click();
-            return new ExpenseReportSubmissionBaseModal(Driver);
+            return new BaseSubmissionModal(Driver);
         }
 
         public ExpenseReportEditSubmissionPage ClickSubmitTableButton()
@@ -77,11 +77,11 @@ namespace Selenium.PageObjects
             return allRows.Count;
         }
 
-        public ExpenseReportSubmissionBaseModal ClickExpenseEditByRow(int row)
+        public BaseSubmissionModal ClickExpenseEditByRow(int row)
         {
             var icon = Find(By.XPath(string.Format(_editLineItemByRow, row)));
             icon.Click();
-            return new ExpenseReportSubmissionBaseModal(Driver);
+            return new BaseSubmissionModal(Driver);
         }
 
         public ExpenseReportEditSubmissionPage ClickExpenseDeleteByRow(int row)
