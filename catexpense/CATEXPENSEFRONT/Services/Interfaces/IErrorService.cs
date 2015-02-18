@@ -8,5 +8,6 @@ namespace CatExpenseFront.Services.Interfaces
 {
     public interface IErrorService: IService<Error>
     {
+
     }
 }
