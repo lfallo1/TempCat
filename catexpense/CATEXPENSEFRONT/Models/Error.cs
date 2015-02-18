@@ -9,6 +9,7 @@ namespace CatExpenseFront.Models
     [JsonObject(IsReference = false)]
     public class Error
     {
+
         public Error() { }
 
         public string username { get; set; }
