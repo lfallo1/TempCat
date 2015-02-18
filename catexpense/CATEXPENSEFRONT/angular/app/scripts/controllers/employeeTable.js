@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('expenseApp.Controllers')
-  .controller('EmployeeTableController', ["$scope", "$location", "$modal", "$route", "$rootScope", "$filter", "Application", "SubmissionService", "MessageService", "ReceiptService", function ($scope, $location, $modal, $route, $rootScope, $filter, Application, SubmissionService, MessageService, ReceiptService) {
+  .controller('EmployeeTableController', ["$scope", "$location", "$modal", "$route", "$rootScope", "$filter", "Application", "Authentication", "SubmissionService", "MessageService", "ReceiptService", "LogError", function ($scope, $location, $modal, $route, $rootScope, $filter, Application, Authentication, SubmissionService, MessageService, ReceiptService, LogError) {
       /**
       * container for the submissions
       */
@@ -57,6 +57,8 @@ angular.module('expenseApp.Controllers')
       * upon page load
       */
       $scope.loadEmployeeTable = function () {
+          //console.log('this is what is returned from ExpenseCategory');
+          //console.log($scope.expenseCategories);
           if (Application.getAllUserSubmissions() != undefined) {
               var rejected = 0;
               var userSubmissions = Application.getAllUserSubmissions();

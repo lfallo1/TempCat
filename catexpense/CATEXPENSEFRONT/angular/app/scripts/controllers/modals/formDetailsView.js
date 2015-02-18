@@ -11,24 +11,15 @@
  * Controller of the expenseApp
  */
 angular.module('expenseApp.Controllers')
-  .controller('FormDetailsCtrl', ["$scope", "$modalInstance", "$modal", "$rootScope", "LineItemService", "ValidationService", "Application", "ReceiptService", function ($scope, $modalInstance, $modal, $rootScope, LineItemService, ValidationService, Application, ReceiptService) {
+  .controller('FormDetailsCtrl', ["$scope", "$modalInstance", "$modal", "$rootScope", "LineItemService", "ValidationService", "Application", "ReceiptService", "ExpenseCategory", function ($scope, $modalInstance, $modal, $rootScope, LineItemService, ValidationService, Application, ReceiptService, ExpenseCategory) {
 
       $scope.divShow = false;
 
       /**
       * contains the list of the different types of expenses
+      * set to current values in database upon page load by getExpenseCategories function
       */
-      $scope.formTypes = [
-          'Mileage',
-          'Per Diem',
-          'Transportation',
-          'Lodging',
-          'Parking',
-          'Entertainment',
-          'Meals',
-          'Airfare',
-          'Other'
-      ];
+      $scope.formTypes = [];
 
       /** 
       * these arrays will store the list of expenses that will be submitted
@@ -116,6 +107,19 @@ angular.module('expenseApp.Controllers')
                   break;
           };
       };
+
+      function getExpenseCategories() {
+          ExpenseCategory.getAllExpenseCategories().then(
+              function (success) {
+                  success.data.forEach(function (category) {
+                      $scope.formTypes.push(category.ExpenseCategoryName);
+                  });
+              },
+              function (error) {
+                  console.log(error);
+              });
+      }
+      getExpenseCategories();
 
       /**
       * Called by saveNew function to perform validation

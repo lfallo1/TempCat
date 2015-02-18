@@ -246,7 +246,7 @@ angular.module('expenseApp.Controllers')
               destination: '',
               distance: 0,
               description: '',
-              amount: 0,
+              amount: '0.00',
               billable: false,
               totalMiles: 0
           };

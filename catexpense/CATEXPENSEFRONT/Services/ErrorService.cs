@@ -10,6 +10,7 @@ namespace CatExpenseFront.Services
 {
     public class ErrorService : IErrorService
     {
+
         private IRepository<Error> repository;
 
         public ErrorService() { }
