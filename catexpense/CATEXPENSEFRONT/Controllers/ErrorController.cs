@@ -27,7 +27,6 @@ namespace CatExpenseFront.Controllers
 
             this.checkSession();
 
-
             if( error != null){
                 error.DateCreated = DateTime.Now;
             }

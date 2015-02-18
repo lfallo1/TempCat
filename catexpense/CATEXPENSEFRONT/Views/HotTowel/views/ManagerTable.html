@@ -16,42 +16,42 @@
             </div>
         </div>
         <table class="panel-body table table-hover table-striped table-condensed" ng-if="expanded">
-            <thead>
+            <thead class="scrollTable">
                 <tr>
-                    <th></th>
-                    <th></th>
-                    <th><a href="" id="manSubmittedBy" ng-click="managerOrder('ActiveDirectoryUser')">Submitted
+                    <th class="col-md-1"></th>
+                    <th class="col-md-1"></th>
+                    <th class="col-md-2"><a href="" id="manSubmittedBy" ng-click="managerOrder('ActiveDirectoryUser')">Submitted
                         By</a></th>
-                    <th><a href="" id="manWeekEnding" ng-click="managerOrder('WeekEndingDate')">Week Ending</a>
+                    <th  class="col-md-2"><a href="" id="manWeekEnding" ng-click="managerOrder('WeekEndingDate')">Week Ending</a>
                     </th>
-                    <th><a href="" id="manClient" ng-click="managerOrder('RepliconProject.RepliconProjectName')">
+                    <th class="col-md-2"><a href="" id="manClient" ng-click="managerOrder('RepliconProject.RepliconProjectName')">
                         Client</a>
                     </th>
-                     <th><a href="" id="manDescription" ng-click="managerOrder('Description')">Description</a></th>
-                    <th><a href="" id="manAmount" ng-click="managerOrder('TotalAmount')">Amount</a></th>
-                    <th><a href="" id="Receipts" ng-click="employeeOrder('ReceiptPresent')">Receipts</a></th>
+                     <th class="col-md-2"><a href="" id="manDescription" ng-click="managerOrder('Description')">Description</a></th>
+                    <th  class="col-md-2"><a href="" id="manAmount" ng-click="managerOrder('TotalAmount')">Amount</a></th>
+                    <th  class="col-md-2"><a href="" id="Receipts" ng-click="employeeOrder('ReceiptPresent')">Receipts</a></th>
                 </tr>
             </thead>
-            <tbody ng-repeat="submission in managerSubmissions">
-                <tr>
-                    <td>
+            <tbody class="scrollTable">
+                <tr ng-repeat="submission in managerSubmissions" >
+                    <td class="col-md-1">
                         <div ng-if="Status.StatusName !== 'Finance Rejected' || Status.StatusName !== 'Finance Approved'">
                             <span class="pointer glyphicon glyphicon-edit" ng-click="loadManagerSubmission(submission, $index)"
                                   data-toggle="tooltip" data-placement="left" title="Edit Report"></span>
                         </div>
                     </td>
-                    <td>
+                    <td class="col-md-1">
                         <div>
                             <span class="pointer glyphicon glyphicon-trash" ng-click="deleteSubmission(submission, $index)"
                                 data-toggle="tooltip" data-placement="left" title="Delete Submission"></span>
                         </div>
                     </td>
-                    <td>{{submission.ActiveDirectoryUser}}</td>
-                    <td>{{submission.WeekEndingDate | date:'yyyy/MM/dd'}}</td>
-                    <td>{{submission.RepliconProject.ProjectName}}</td>
-                    <td>{{submission.Description}}</td>
-                    <td>{{("$" + (submission.TotalAmount).toFixed( 2 ))}}</td>
-                    <td class="row">
+                    <td class="col-md-2">{{submission.ActiveDirectoryUser}}</td>
+                    <td class="col-md-2">{{submission.WeekEndingDate | date:'yyyy/MM/dd'}}</td>
+                    <td class="col-md-2">{{submission.RepliconProject.ProjectName}}</td>
+                    <td class="col-md-2">{{submission.Description}}</td>
+                    <td class="col-md-2">{{("$" + (submission.TotalAmount).toFixed( 2 ))}}</td>
+                    <td class="row col-md-2">
                         <span ng-if="submission.allSubmissionReceipts.length == 0" class="col-md-2 glyphicon glyphicon-remove" style="color: red"></span>
                         <span title="View all receipts" class="pointer col-md-2 pull-left btn-link glyphicon glyphicon-file" ng-click="showAllAvailableReceipts(submission.allSubmissionReceipts, submission, $index)" ng-show="submission.allSubmissionReceipts.length > 0"></span>
                     </td>
