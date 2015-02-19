@@ -6,6 +6,7 @@ using OpenQA.Selenium.Support.UI;
 using LOGGER = Logger.Logger;
 using System.Collections.Generic;
 using Selenium.PageObjects;
+using System.Collections.ObjectModel;
 
 namespace Selenium
 {
@@ -72,6 +73,18 @@ namespace Selenium
         public IWebElement Find(By by)
         {
             return Driver.FindElement(by);
+        }
+
+        public ReadOnlyCollection<IWebElement> FindAll(By by)
+        {
+            if (DoesElementExist(by))
+            {
+                return Driver.FindElements(by);
+            }
+            else
+            {
+                return new ReadOnlyCollection<IWebElement>(new List<IWebElement>);
+            }
         }
 
         public bool DoesElementExist(By element)
