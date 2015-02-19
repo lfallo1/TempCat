@@ -46,6 +46,10 @@ angular.module( 'expenseApp.Controllers' )
               submission.Comments.splice(commentIndex, 1);
               Application.setSubmission(submission);
               $modalInstance.dismiss("dismiss confirm modal");
+          }, function (error) {
+              LogError.logError({ username: Authentication.getUser(), endpoint: error.config.url, error: error.statusText }).then(
+                  function (success) {},
+                  function (error) {});
           });
       });
   }]);

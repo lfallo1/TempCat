@@ -79,6 +79,10 @@ angular.module('expenseApp.Controllers')
                     }
                     Application.setAllUserSubmissions(submissions);
                 });
+            }, function (error) {
+                LogError.logError({ username: Authentication.getUser(), endpoint: error.config.url, error: error.statusText }).then(
+                  function (success) { },
+                  function (error) { });
             });
       });
 
@@ -110,6 +114,10 @@ angular.module('expenseApp.Controllers')
                   $scope.divShow = true;
                   $rootScope.$broadcast("addNewReceipt", receipt.data);
                   $scope.image = undefined;
+              }, function (error) {
+                  LogError.logError({ username: Authentication.getUser(), endpoint: error.config.url, error: error.statusText }).then(
+                    function (success) { },
+                    function (error) { });
               });
           } else {
               $('#upload').prop('disabled', true);

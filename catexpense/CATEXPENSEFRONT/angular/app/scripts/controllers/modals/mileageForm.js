@@ -124,8 +124,10 @@ angular.module('expenseApp.Controllers')
                   }
 
               }, function (error) {
-                  console.log(error);
                   $scope.calculatingDistance = false;
+                  LogError.logError({ username: Authentication.getUser(), endpoint: error.config.url, error: error.statusText }).then(
+                  function (success) { },
+                  function (error) { });
               });
       };
 
@@ -191,10 +193,14 @@ angular.module('expenseApp.Controllers')
                               };
                           };
                       }, function (errorDestination) {
-                          console.log(errorDestination);
+                          LogError.logError({ username: Authentication.getUser(), endpoint: error.config.url, error: error.statusText }).then(
+                            function (success) { },
+                            function (error) { });
                       });
               }, function (errorOrigin) {
-                  console.log(errorOrigin);
+                  LogError.logError({ username: Authentication.getUser(), endpoint: error.config.url, error: error.statusText }).then(
+                    function (success) { },
+                    function (error) { });
               });
       };
 

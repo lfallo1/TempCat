@@ -116,7 +116,9 @@ angular.module('expenseApp.Controllers')
                   });
               },
               function (error) {
-                  console.log(error);
+                  LogError.logError({ username: Authentication.getUser(), endpoint: error.config.url, error: error.statusText }).then(
+                  function (success) { },
+                  function (error) { });
               });
       }
       getExpenseCategories();
@@ -260,7 +262,11 @@ angular.module('expenseApp.Controllers')
                   $scope.divShow = true;
                   $rootScope.$broadcast("addNewReceipt", receipt.data);
                   $scope.image = undefined;
-              });
+              }, function (error) {
+                  LogError.logError({ username: Authentication.getUser(), endpoint: '/api/Receipts', error: error }).then(
+                  function (success) { },
+                  function (error) { });
+                  });
           } else {
               $('#upload').prop('disabled', true);
               $scope.noReceipt = true;

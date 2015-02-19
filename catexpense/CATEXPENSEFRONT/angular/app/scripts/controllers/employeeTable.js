@@ -31,9 +31,6 @@ angular.module('expenseApp.Controllers')
       */
       $scope.expandContract = function (value) {
           $scope.expanded = value;
-          LogError.logError({ username: Authentication.getUser(), endpoint: 'api/Error', error: 'successfully add errors to db' }).then(
-              function (success) { console.log(success); },
-              function (error) { console.log(error); });
       };
 
       /**
