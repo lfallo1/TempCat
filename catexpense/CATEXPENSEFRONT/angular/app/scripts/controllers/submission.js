@@ -659,12 +659,14 @@ angular.module('expenseApp.Controllers')
                   }
                   if (newValue.getDay() === 6) {
                       $scope.dt1 = newValue;
+                      console.log(newValue);
                   }
                   else {
                       var difference = 6 - newValue.getDay();
                       var weekEnding = new Date();
-                      $scope.dt1 = new Date(weekEnding.setDate(newValue.getDate() + difference));
-                      //$scope.dt1 = new Date( $scope.dt );
+                      weekEnding.setHours(0, 0, 0, 0);
+                      weekEnding = new Date(weekEnding.setDate(newValue.getDate() + difference));
+                      console.log(weekEnding);
                   }
               } else {
                   return;

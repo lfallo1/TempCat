@@ -7,7 +7,15 @@ angular.module( 'expenseApp.Controllers' )
         * the current day's date
         */
         $scope.today = function () {
-            $scope.dt = new Date();
+            var date = new Date();
+            if (date.getDay() === 6) {
+                $scope.dt = date;
+            }
+            else {
+                var difference = 6 - date.getDay();
+                var weekEnding = new Date();
+                $scope.dt = new Date(weekEnding.setDate(date.getDate() + difference));
+            }
         };
         $scope.today();
 
@@ -63,7 +71,8 @@ angular.module( 'expenseApp.Controllers' )
         */
         $scope.dateOptions = {
             formatYear: 'yy',
-            startingDay: 1
+            startingDay: 1,
+            showToday: 'false'
         };
 
         $scope.formats = ['dd-MMMM-yyyy', 'EEEE - MMM. dd/yyyy', 'dd.MM.yyyy', 'shortDate'];
