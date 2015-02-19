@@ -19,7 +19,7 @@ angular.module( 'expenseApp.Controllers' )
       };
 
       //custom placeholder directive for ng-model
-      app.directive("ngPlaceholder", function ($log, $timeout) {
+      /*app.directive("ngPlaceholder", function ($log, $timeout) {
           var txt;
           return {
               restrict: "A",
@@ -47,7 +47,7 @@ angular.module( 'expenseApp.Controllers' )
                   })
               }
           }
-      })
+      })*/
 
       //default validation for the values stored above
       var otherValidation = {

@@ -125,7 +125,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
 
        
 
-        [Test]
+        /*[Test]
         public void GetReceiptIdsBySubmissionIdTest()
         {
             // Arrange
@@ -137,6 +137,6 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             // Assert
             Assert.IsNotNull(response);
             Assert.AreEqual(1, (response as ICollection<ReceiptWithoutImage>).Count);
-        }
+        }*/
     }
 }
