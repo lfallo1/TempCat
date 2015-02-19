@@ -20,14 +20,14 @@ namespace Selenium.PageObjects
         private static readonly By SubmissionModal = By.XPath("//div[@class='modal-content']");        
         private static readonly By DeleteSubmissionButton = By.Id("deleteSubmissionButton");
 
-        public ExpenseReportSubmissionBaseModal BaseModal;
+        public BaseSubmissionModal BaseModal;
 
         public ExpenseReportSubmissionPage(IWebDriver Driver)
             : base(Driver)
         {
             this.Driver = Driver;
         }
-        public ExpenseReportSubmissionBaseModal ClickCreateSubmission()
+        public BaseSubmissionModal ClickCreateSubmission()
         {
             try
             { 
@@ -37,8 +37,8 @@ namespace Selenium.PageObjects
             {
                 ClickAddLineItem();
             }
-            
-            return new ExpenseReportSubmissionBaseModal(Driver);
+
+            return new BaseSubmissionModal(Driver);
         }
 
         public bool DoesSubmissionModalExist()
@@ -46,10 +46,10 @@ namespace Selenium.PageObjects
             return DoesElementExist(SubmissionModal);
         }
 
-        public ExpenseReportSubmissionBaseModal ClickAddLineItem()
+        public BaseSubmissionModal ClickAddLineItem()
         {
             Find(AddLineItemButton).Click();
-            return new ExpenseReportSubmissionBaseModal(Driver);
+            return new BaseSubmissionModal(Driver);
         }    
 
         //public ExpenseReportSubmissionPage SelectClient(int clientIndex)

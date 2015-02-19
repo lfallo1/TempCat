@@ -161,13 +161,13 @@ namespace Selenium.PageObjects
 
         }
 
-        public ExpenseReportSubmissionBaseModal ClickAddLineItem()
+        public BaseSubmissionModal ClickAddLineItem()
         {
             Find(AddLineItemButton).Click();
-            return new ExpenseReportSubmissionBaseModal(Driver);
+            return new BaseSubmissionModal(Driver);
         }
 
-        public ExpenseReportSubmissionBaseModal ClickCreateSubmission()
+        public BaseSubmissionModal ClickCreateSubmission()
         {
             try
             {
@@ -178,12 +178,12 @@ namespace Selenium.PageObjects
                 ClickAddLineItem();
             }
 
-            return new ExpenseReportSubmissionBaseModal(Driver);
+            return new BaseSubmissionModal(Driver);
         }
 
         public bool CancelSubmissionClick()
         {
-            ExpenseReportSubmissionBaseModal modal = new ExpenseReportSubmissionBaseModal(Driver);
+            BaseSubmissionModal modal = new BaseSubmissionModal(Driver);
             var clicked = false;
             OpenDatePicker();
             DatePickerClickToday();
@@ -212,7 +212,7 @@ namespace Selenium.PageObjects
 
         public bool CheckMileageDefault()
         {
-            ExpenseReportSubmissionBaseModal modal = new ExpenseReportSubmissionBaseModal(Driver);
+            BaseSubmissionModal modal = new BaseSubmissionModal(Driver);
             OpenDatePicker();
             DatePickerClickToday();
             ClickCreateSubmission();
@@ -221,7 +221,7 @@ namespace Selenium.PageObjects
 
         public void CreateTestSubmission()
         {
-            ExpenseReportSubmissionBaseModal modal = new ExpenseReportSubmissionBaseModal(Driver);
+            BaseSubmissionModal modal = new BaseSubmissionModal(Driver);
             SubmissionType type = SubmissionType.Other;
             modal.ChangeSubmissionType(type);
             modal.SetDescription("test submission");

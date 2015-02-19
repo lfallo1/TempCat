@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Selenium.PageObjects
 {
-    public class PerDiemModal : ExpenseReportSubmissionBaseModal
+    public class PerDiemModal : BaseSubmissionModal
     {
         private static readonly By AllDayCheckBoxes = 
             By.XPath("//input[contains(@ng-model,'perDiemValues.days.')]");
