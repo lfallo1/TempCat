@@ -27,7 +27,7 @@ namespace Selenium.PageObjects
         {
             this.Driver = Driver;
         }
-        public BaseSubmissionModal ClickCreateSubmission()
+        public void ClickCreateSubmission()
         {
             try
             { 
@@ -37,8 +37,6 @@ namespace Selenium.PageObjects
             {
                 ClickAddLineItem();
             }
-            
-            return new BaseSubmissionModal(Driver);
         }
 
         public bool DoesSubmissionModalExist()

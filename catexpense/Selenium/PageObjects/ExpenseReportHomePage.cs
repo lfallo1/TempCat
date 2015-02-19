@@ -187,7 +187,6 @@ namespace Selenium.PageObjects
         public void CancelSubmissionClick()
         {
             BaseSubmissionModal modal = new BaseSubmissionModal(Driver);
-            var clicked = false;
             OpenDatePicker();
             DatePickerClickCurrentWeek();
             ClickCreateSubmission();
@@ -202,12 +201,10 @@ namespace Selenium.PageObjects
                 var cancelSubmissionButton = Driver.FindElement(DeleteSubmissionButton);
 
                 cancelSubmissionButton.Click();
-                clicked = true;
             }
 
             catch (WebDriverException)
             {
-                clicked = false;
             }
         }
 
