@@ -16,7 +16,7 @@ namespace Selenium.PageObjects
         private static readonly By NewCommentButton = By.Id("newCommentButton");
 
         #region Expense Item table paths
-        private static readonly string _expenseRowPath = 
+        private static readonly string _expenseRowPath =
             "(//tbody[@ng-repeat='expense in lineItems'])[{0}]";
         private static readonly string _editLineItemByRow = _expenseRowPath + "//td[1]//span";
         private static readonly string _deleteLineItemByRow = _expenseRowPath + "//td[2]//span";
@@ -31,7 +31,7 @@ namespace Selenium.PageObjects
         #endregion
 
         #region Comments table paths
-        private static readonly string _commentsRowPath = 
+        private static readonly string _commentsRowPath =
             "(//tbody[contains(@ng-repeat,'expenseComments')])[{0}]";
         private static readonly string _editCommentByRow = _commentsRowPath + "//td[1]//span";
         private static readonly string _deleteCommentByRow = _commentsRowPath + "//td[2]//span";
@@ -45,10 +45,10 @@ namespace Selenium.PageObjects
         {
         }
 
-        public ExpenseReportSubmissionBaseModal ClickAddNewLineItem()
+        public BaseSubmissionModal ClickAddNewLineItem()
         {
             Find(AddNewLineItemButton).Click();
-            return new ExpenseReportSubmissionBaseModal(Driver);
+            return new BaseSubmissionModal(Driver);
         }
 
         public ExpenseReportEditSubmissionPage ClickSubmitTableButton()
@@ -77,11 +77,11 @@ namespace Selenium.PageObjects
             return allRows.Count;
         }
 
-        public ExpenseReportSubmissionBaseModal ClickExpenseEditByRow(int row)
+        public BaseSubmissionModal ClickExpenseEditByRow(int row)
         {
             var icon = Find(By.XPath(string.Format(_editLineItemByRow, row)));
             icon.Click();
-            return new ExpenseReportSubmissionBaseModal(Driver);
+            return new BaseSubmissionModal(Driver);
         }
 
         public ExpenseReportEditSubmissionPage ClickExpenseDeleteByRow(int row)
@@ -100,7 +100,7 @@ namespace Selenium.PageObjects
         public SubmissionType GetExpenseSubmissionTypeByRow(int row)
         {
             var span = Find(By.XPath(string.Format(_expenseTypeByRow, row)));
-            string typeAsString = span.Text.Replace(" ","_");
+            string typeAsString = span.Text.Replace(" ", "_");
 
             return (SubmissionType)Enum.Parse(typeof(SubmissionType), typeAsString);
         }
