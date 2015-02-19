@@ -19,7 +19,10 @@ namespace CatExpenseFront.Controllers
     public class ErrorController: BaseController
     {
         private IErrorService service;
-
+        
+        /**
+         * default constructor
+         */
         public ErrorController(){
             service = new ErrorService();
         }
