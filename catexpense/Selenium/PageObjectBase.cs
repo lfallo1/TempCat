@@ -83,7 +83,7 @@ namespace Selenium
             }
             else
             {
-                return new ReadOnlyCollection<IWebElement>(new List<IWebElement>);
+                return new ReadOnlyCollection<IWebElement>(new List<IWebElement>());
             }
         }
 
