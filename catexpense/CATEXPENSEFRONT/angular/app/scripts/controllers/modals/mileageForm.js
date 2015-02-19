@@ -8,7 +8,7 @@
  * Controller of the expenseApp
  */
 angular.module('expenseApp.Controllers')
-  .controller('MileageCtrl', ["$scope", "LineItemService", "MapQuestService", "ValidationService", function ($scope, LineItemService, MapQuestService, ValidationService) {
+  .controller('MileageCtrl', ["$scope", "LineItemService", "MapQuestService", "ValidationService", "Authentication", "LogError", function ($scope, LineItemService, MapQuestService, ValidationService, Authentication, LogError) {
 
       /** 
       * stores the ides of the mileageArray of the item that is being edited

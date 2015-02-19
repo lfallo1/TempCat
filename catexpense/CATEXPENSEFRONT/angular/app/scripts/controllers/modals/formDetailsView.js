@@ -11,7 +11,7 @@
  * Controller of the expenseApp
  */
 angular.module('expenseApp.Controllers')
-  .controller('FormDetailsCtrl', ["$scope", "$modalInstance", "$modal", "$rootScope", "LineItemService", "ValidationService", "Application", "ReceiptService", "ExpenseCategory", function ($scope, $modalInstance, $modal, $rootScope, LineItemService, ValidationService, Application, ReceiptService, ExpenseCategory) {
+  .controller('FormDetailsCtrl', ["$scope", "$modalInstance", "$modal", "$rootScope", "LineItemService", "ValidationService", "Application", "ReceiptService", "ExpenseCategory", "Authentication", "LogError", function ($scope, $modalInstance, $modal, $rootScope, LineItemService, ValidationService, Application, ReceiptService, ExpenseCategory, Authentication, LogError) {
 
       $scope.divShow = false;
 

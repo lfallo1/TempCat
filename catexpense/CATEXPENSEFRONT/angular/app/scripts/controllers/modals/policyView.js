@@ -8,7 +8,7 @@
  * Controller of the expenseApp
  */
 angular.module('expenseApp.Controllers')
-  .controller('PolicyCtrl', ["$scope", "$modalInstance", "selectedType", "ExpenseCategory", function ($scope, $modalInstance, selectedType, ExpenseCategory) {
+  .controller('PolicyCtrl', ["$scope", "$modalInstance", "selectedType", "ExpenseCategory", "Authentication", "LogError", function ($scope, $modalInstance, selectedType, ExpenseCategory, Authentication, LogError) {
 
       $scope.policyType = selectedType;
 

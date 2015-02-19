@@ -1,7 +1,7 @@
 ﻿'use strict';
 
 angular.module('expenseApp.Controllers')
-  .controller('FinanceTableController', ["$scope", "$location", "$modal", "$route", "$rootScope", "$filter", "Application", "SubmissionService", "MessageService", "Authentication", "ReceiptService", function ($scope, $location, $modal, $route, $rootScope, $filter, Application, SubmissionService, MessageService, Authentication, ReceiptService) {
+  .controller('FinanceTableController', ["$scope", "$location", "$modal", "$route", "$rootScope", "$filter", "Application", "SubmissionService", "MessageService", "Authentication", "ReceiptService", "LogError", function ($scope, $location, $modal, $route, $rootScope, $filter, Application, SubmissionService, MessageService, Authentication, ReceiptService, LogError) {
 
       /** 
       * container for the submissions
@@ -85,6 +85,10 @@ angular.module('expenseApp.Controllers')
                     financeSubmissionsContainer = $scope.financeSubmissions;
                     $scope.filterTableBySubmissionStatus(3);
                     $rootScope.$broadcast("financeTotal", $scope.financeSubmissions.length);
+                }, function (error) {
+                    LogError.logError({ username: Authentication.getUser(), endpoint: error.config.url, error: error.statusText }).then(
+                        function (success) { },
+                        function (error) { });
                 });
           }
       }
@@ -177,6 +181,10 @@ angular.module('expenseApp.Controllers')
           SubmissionService.deleteExpenseReport(MessageService.getId()).then(function (success) {
               $scope.financeSubmissions.splice(Application.getSubmissionIndex(), 1);
               Application.setPendingSubmissionsByFinanceApprover($scope.financeSubmissions);
+          }, function (error) {
+              LogError.logError({ username: Authentication.getUser(), endpoint: error.config.url, error: error.statusText }).then(
+                  function (success) { },
+                  function (error) { });
           });
 
       });

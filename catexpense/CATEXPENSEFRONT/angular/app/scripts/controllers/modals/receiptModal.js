@@ -1,7 +1,7 @@
 ﻿'use strict';
 
 angular.module('expenseApp.Controllers')
-  .controller('receiptController', ["$scope", "$modalInstance", "ReceiptService", "$rootScope", "MessageService", "$modal", "Application", "$route", "LineItemService", function ($scope, $modalInstance, ReceiptService, $rootScope, MessageService, $modal, Application, $route, LineItemService) {
+  .controller('receiptController', ["$scope", "$modalInstance", "ReceiptService", "$rootScope", "MessageService", "$modal", "Application", "$route", "LineItemService", "Authentication", "LogError", function ($scope, $modalInstance, ReceiptService, $rootScope, MessageService, $modal, Application, $route, LineItemService, Authentication, LogError) {
       var receiptId = 0;
       var receiptIndexId = 0;
       var allReceipts = false;

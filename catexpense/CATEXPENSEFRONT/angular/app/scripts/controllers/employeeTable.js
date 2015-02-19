@@ -108,6 +108,11 @@ angular.module('expenseApp.Controllers')
                   $scope.employeeSubmissions = Application.getAllUserSubmissions();
                   $rootScope.$broadcast("employeeTotal", rejected);
                   employeeSubmissionsContainer = $scope.employeeSubmissions;
+              }, function(error){
+                  LogError.logError({ username: Authentication.getUser(), endpoint: error.config.url, error: error.statusText }).then(
+                    function (success) {},
+                    function (error) {});
+                    
               });
           }
       }
@@ -183,7 +188,11 @@ angular.module('expenseApp.Controllers')
           SubmissionService.deleteExpenseReport(MessageService.getId()).then(function (success) {
               $scope.employeeSubmissions.splice(Application.getSubmissionIndex(), 1);
               Application.setAllUserSubmissions($scope.employeeSubmissions);
-          }, function (error) { });
+          }, function (error) {
+              LogError.logError({ username: Authentication.getUser(), endpoint: error.config.url, error: error.statusText }).then(
+                  function (success) { },
+                  function (error) { });
+          });
       });
 
       /**

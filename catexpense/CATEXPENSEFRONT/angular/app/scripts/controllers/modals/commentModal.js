@@ -1,7 +1,7 @@
 ﻿'use strict';
 
 angular.module( 'expenseApp.Controllers' )
-  .controller('CommentController', ["$scope", "$modalInstance", "$modal", "$rootScope", "Application", "CommentService", "MessageService", function ($scope, $modalInstance, $modal, $rootScope, Application, CommentService, MessageService) {
+  .controller('CommentController', ["$scope", "$modalInstance", "$modal", "$rootScope", "Application", "CommentService", "MessageService", "Authentication", "LogError", function ($scope, $modalInstance, $modal, $rootScope, Application, CommentService, MessageService, Authentication, LogError) {
 
       var commentIndex = Application.getCommentIndex();
 
