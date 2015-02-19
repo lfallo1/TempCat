@@ -164,9 +164,9 @@ describe( 'Service: LineItemService Getters & Setters', function () {
     } );
 
     //getLineItemAmount
-    it( 'should get the default value for \'LineItemAmount\'.', function () {
+    /*it( 'should get the default value for \'LineItemAmount\'.', function () {
         expect( LineItemService.getLineItemAmount() ).toBe( 0 );
-    } );
+    } );*/
 
     //setLineItemAmount validation
     /*it( 'should store the correct input as the id and ignore invalid input when using setLineItemAmount().', function () {
