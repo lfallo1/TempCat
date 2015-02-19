@@ -11,6 +11,7 @@ namespace Selenium.PageObjects
     public class ExpenseReportHomePage : PageObjectBase
     {
         private static readonly string url = ConfigurationManager.AppSettings["testUrl"];
+        private static readonly string title = ConfigurationManager.AppSettings["homeTitle"];
         private static readonly By ClientList = By.Id("clientDropDownList");
         private static readonly By EmployeeTable = By.Id("employee-short-table");
         private static readonly By EmployeeTableNoContentsWarning = By.Id("empNoSubmissions");
@@ -19,7 +20,7 @@ namespace Selenium.PageObjects
         private static readonly By SubmissionDescription = By.Id("submissionDescription");
         private static readonly By DatePickerInput = By.Id("datePickerInput");
         private static readonly By DatePickerButton = By.Id("datePickerBtn");
-        private static readonly By DatePickerTodayButton = By.XPath("//button[.='Current week']");
+        private static readonly By DatePickerCurrentWeekButton = By.XPath("//button[.='Current week']");
         private static readonly By DatePickerClearButton = By.XPath("//button[.='Clear']");
         private static readonly By DatePickerCloseButton = By.XPath("//button[.='Close']");
         private static readonly By RejectedAlert = By.Id("rejectedAlert");
@@ -36,8 +37,16 @@ namespace Selenium.PageObjects
         private static readonly By FinanceTableSelect = By.XPath(
             "//div[@id='finance-short-table']//select");
 
-        private static readonly By _editButtonByTable = By.XPath(
-            "//div[@id='{0}-short-table']//span[@title='Edit Report']");
+        private const string EDIT = "Edit Report' or @title='View Report";
+        private const string DELETE = "Delete Submission";
+        private static readonly string _tableButton =
+            "//div[@id='{0}-short-table']//span[@title='{1}'][{2}]";
+
+        private static readonly string _editSubmissionButton =
+            "//div[@id='{0}-short-table']//span[@title='Edit Report'][{1}]";
+
+        private static readonly string _deleteSubmissionButton =
+            "//div[@id='{0}-short-table']//span[@title='Delete Submission'][{1}]";
 
         private static readonly string _deleteClientButtonByRow =
             "//span[@title='Delete Submission'][{0}]";
@@ -52,7 +61,7 @@ namespace Selenium.PageObjects
         public ExpenseReportHomePage(IWebDriver driver, string username, string password)
             : base(driver)
         {
-            Visit(string.Format("http://{0}", url), string.Empty);
+            Visit(url, string.Empty);
 
             Thread.Sleep(2000);
             Login(username, password);
@@ -121,7 +130,7 @@ namespace Selenium.PageObjects
             var dropDownSelect = Driver.FindElement(ClientList);
             var selectElement = new SelectElement(dropDownSelect);
             OpenDatePicker();
-            DatePickerClickToday();
+            DatePickerClickCurrentWeek();
             var isPresent = false;
             IList<IWebElement> AllDropDownList = Driver.FindElement(ClientList).FindElements(By.XPath("//option"));
             
@@ -146,28 +155,22 @@ namespace Selenium.PageObjects
 
         }
 
-        public bool ClickProjectSync()
+        public void ClickProjectSync()
         {
-            var projectSyncBtn = Driver.FindElement(ProjectSyncButton);
-            projectSyncBtn.Click();
-            if (projectSyncBtn.Enabled)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-
+            Click(ProjectSyncButton);
         }
 
-        public ExpenseReportSubmissionBaseModal ClickAddLineItem()
+        public bool IsProjectSyncing()
         {
-            Find(AddLineItemButton).Click();
-            return new ExpenseReportSubmissionBaseModal(Driver);
+            return Driver.FindElement(ProjectSyncButton).Enabled;
         }
 
-        public ExpenseReportSubmissionBaseModal ClickCreateSubmission()
+        public void ClickAddLineItem()
+        {
+            Click(AddLineItemButton);
+        }
+
+        public BaseSubmissionModal ClickCreateSubmission()
         {
             try
             {
@@ -178,15 +181,15 @@ namespace Selenium.PageObjects
                 ClickAddLineItem();
             }
 
-            return new ExpenseReportSubmissionBaseModal(Driver);
+            return new BaseSubmissionModal(Driver);
         }
 
-        public bool CancelSubmissionClick()
+        public void CancelSubmissionClick()
         {
-            ExpenseReportSubmissionBaseModal modal = new ExpenseReportSubmissionBaseModal(Driver);
+            BaseSubmissionModal modal = new BaseSubmissionModal(Driver);
             var clicked = false;
             OpenDatePicker();
-            DatePickerClickToday();
+            DatePickerClickCurrentWeek();
             ClickCreateSubmission();
             Thread.Sleep(3000);
             modal.ClickCancel();
@@ -206,22 +209,20 @@ namespace Selenium.PageObjects
             {
                 clicked = false;
             }
-
-            return clicked;
         }
 
         public bool CheckMileageDefault()
         {
-            ExpenseReportSubmissionBaseModal modal = new ExpenseReportSubmissionBaseModal(Driver);
+            BaseSubmissionModal modal = new BaseSubmissionModal(Driver);
             OpenDatePicker();
-            DatePickerClickToday();
+            DatePickerClickCurrentWeek();
             ClickCreateSubmission();
             return modal.CheckMileageDefault();
         }
 
         public void CreateTestSubmission()
         {
-            ExpenseReportSubmissionBaseModal modal = new ExpenseReportSubmissionBaseModal(Driver);
+            BaseSubmissionModal modal = new BaseSubmissionModal(Driver);
             SubmissionType type = SubmissionType.Other;
             modal.ChangeSubmissionType(type);
             modal.SetDescription("test submission");
@@ -235,9 +236,9 @@ namespace Selenium.PageObjects
             Find(DatePickerButton).Click();
         }
 
-        public void DatePickerClickToday()
+        public void DatePickerClickCurrentWeek()
         {
-            Find(DatePickerTodayButton).Click();
+            Find(DatePickerCurrentWeekButton).Click();
         }
 
         public void DatePickerClickClear()
@@ -252,9 +253,7 @@ namespace Selenium.PageObjects
 
         public string ReadDatePickerInput()
         {
-            var input = Find(DatePickerInput);
-            var text = input.GetAttribute("value");
-            return text;
+            return Find(DatePickerInput).Text;
         }
 
         public bool DoesSubmissionModalExist()
@@ -322,19 +321,38 @@ namespace Selenium.PageObjects
         }
         #endregion
 
-        //public ExpenseReportEditSubmissionPage ClickEditByTableAndColumn(UserType table, int column)
-        //{
-        //    var buttonXpath = string.Format(_editButtonByTable, table.ToString().ToLower());
-        //    var allEditButtons = Driver.FindElements(By.XPath(buttonXpath));
+        #region table button handlers
+        private void ClickTableButton(string action, UserType table, int column)
+        {
+            By buttonBy = By.XPath(string.Format(_tableButton,
+                table.ToString().ToLower(), action, column.ToString()));
 
-        //    if (column > 0 && column <= GetColumnCountByTable(table))
-        //    {
-        //        var chosenButton = allEditButtons[column - 1];
-        //        chosenButton.Click();
-        //    }
+            if (DoesElementExist(buttonBy))
+            {
+                Click(buttonBy);
+            }
+        }
 
-        //    return new ExpenseReportEditSubmissionPage(Driver);
-        //}
+        /// <summary>
+        /// Click the Edit Submission button for a specific column and table.
+        /// </summary>
+        /// <param name="table">Employee, Manager, or Finance</param>
+        /// <param name="column">One-based column number</param>
+        public void ClickEditByTableAndColumn(UserType table, int column)
+        {
+            ClickTableButton(EDIT, UserType.Employee, column);
+        }
+
+        /// <summary>
+        /// Click the Delete Submission button for a specific column and table.
+        /// </summary>
+        /// <param name="table">Employee, Manager, or Finance</param>
+        /// <param name="column">One-based column number</param>
+        public void ClickDeleteByTableAndColumn(UserType table, int column)
+        {
+            ClickTableButton(DELETE, UserType.Employee, column);
+        }
+        #endregion
 
         #region get information from tables
 
