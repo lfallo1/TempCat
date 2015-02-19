@@ -52,10 +52,12 @@ namespace CatExpenseFront
         {
             container.RegisterType<IRepository<FinanceApprover>, Repository<FinanceApprover>>();
             container.RegisterType<IRepository<LineItem>, Repository<LineItem>>();
+            container.RegisterType<IRepository<Error>, Repository<Error>>();
             container.RegisterType<IRepository<Comment>, Repository<Comment>>();
             container.RegisterType<IRepository<Submission>, Repository<Submission>>();
             container.RegisterType<IRepository<ExpenseCategory>, Repository<ExpenseCategory>>();
             container.RegisterType<IRepliconUserProjectService, RepliconUserProjectService>();
+            container.RegisterType<IErrorService, ErrorService>();
             container.RegisterType<ISubmissionService, SubmissionService>();
             container.RegisterType<ILineItemService, LineItemService>();
             container.RegisterType<IExpenseCategoryService, ExpenseCategoryService>();
