@@ -76,13 +76,6 @@ module.exports = function (grunt) {
             server: '.tmp'
         },
 
-        // Run some tasks in parallel to speed up the build process
-        concurrent: {
-            test: [
-              'copy:styles'
-            ]
-        },
-
         // Test settings
         karma: {
             unit: {
@@ -101,7 +94,6 @@ module.exports = function (grunt) {
     
     grunt.registerTask('test', [
       'clean:server',
-      'concurrent:test',
       'autoprefixer',
       'connect:test',
       'karma'
