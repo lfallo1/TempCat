@@ -108,7 +108,7 @@ namespace Selenium.PageObjects
         /// <returns></returns>
         public HomePage ClickDatePickerSpecificMonth(Month month)
         {
-            Click(By.XPath(string.Format(dateButtonMonthPath, month.ToString()));
+            Click(By.XPath(string.Format(dateButtonMonthPath, month.ToString())));
 
             return this;
         }
