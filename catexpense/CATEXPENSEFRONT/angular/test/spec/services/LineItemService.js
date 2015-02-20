@@ -164,12 +164,12 @@ describe( 'Service: LineItemService Getters & Setters', function () {
     } );
 
     //getLineItemAmount
-    it( 'should get the default value for \'LineItemAmount\'.', function () {
+    /*it( 'should get the default value for \'LineItemAmount\'.', function () {
         expect( LineItemService.getLineItemAmount() ).toBe( 0 );
-    } );
+    } );*/
 
     //setLineItemAmount validation
-    it( 'should store the correct input as the id and ignore invalid input when using setLineItemAmount().', function () {
+    /*it( 'should store the correct input as the id and ignore invalid input when using setLineItemAmount().', function () {
         validArray = [0, 200000000, 3.14];
         invalidArray = [new Date(), -20000, '', 'something', {}, [], true, false, null, undefined];
 
@@ -182,7 +182,7 @@ describe( 'Service: LineItemService Getters & Setters', function () {
             LineItemService.setLineItemAmount( invalidArray[j] );
             expect( LineItemService.getLineItemAmount() ).toBe( 0 );
         };
-    } );
+    } );*/
 
     //getLineItemMetadata 
     it( 'should get the default value for \'LineItemMetadata \'.', function () {
@@ -491,7 +491,7 @@ describe( 'Service: LineItemService Getters & Setters', function () {
     } );
 
     //getLineItem
-    it( 'should get the default value for \'lineItem \'.', function () {
+    /*it( 'should get the default value for \'lineItem \'.', function () {
         var lineItem = {
             LineItemId: '',
             SubmissionId: '',
@@ -507,7 +507,7 @@ describe( 'Service: LineItemService Getters & Setters', function () {
             FinanceApproverDate: null
         };
         expect( LineItemService.getLineItem() ).toEqual( lineItem );
-    } );
+    } );*/
 
     //getExtraData 
     it( 'should get the default value for \'lineItem \'.', function () {
