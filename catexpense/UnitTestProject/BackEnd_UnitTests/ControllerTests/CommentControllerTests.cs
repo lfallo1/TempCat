@@ -90,7 +90,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
 
        
 
-        [Test]
+        /*[Test]
         public void GetLineItemTest()
         {
             // Arrange
@@ -102,9 +102,9 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             // Assert
             Assert.IsNotNull(response);
             Assert.AreEqual(typeof(OkNegotiatedContentResult<Comment>), response.GetType());
-        }
+        }*/
 
-        [Test]
+        /*[Test]
         public void FailGetCommentTest()
         {
             // Arrange
@@ -117,9 +117,9 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             // Assert
             Assert.IsNotNull(response);
             Assert.AreEqual(typeof(NotFoundResult), response.GetType());
-        }
+        }*/
 
-        [Test]
+        /*[Test]
         public void GetLineItemsByLineItemIdTest()
         {
             // Arrange
@@ -134,9 +134,9 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             Assert.IsTrue((response as ICollection<Comment>).Contains(comment1));
             Assert.IsTrue((response as ICollection<Comment>).Contains(comment2));
             Assert.IsFalse((response as ICollection<Comment>).Contains(comment3));
-        }
+        }*/
 
-        [Test]
+        /*[Test]
         public void PutCommentTest()
         {
             // Arrange
@@ -147,9 +147,9 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             // Assert
             Assert.IsNotNull(response);
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-        }
+        }*/
 
-        [Test]
+        /*[Test]
         public void FailPutCommentTest()
         {
             // Act
@@ -158,9 +158,9 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             // Assert
             Assert.IsNotNull(response);
             Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
-        }
+        }*/
 
-        [Test]
+       /* [Test]
         public void ModelStateErrorPutCommentTest()
         {
             // Arrange
@@ -172,9 +172,9 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             // Assert
             Assert.IsNotNull(response);
             Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
-        }
+        }*/
 
-        [Test]
+        /*[Test]
         public void ModelStateErrorPostTest()
         {
             // Arrange
@@ -185,9 +185,9 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
 
             // Assert
             Assert.IsNotNull(response);
-        }
+        }*/
 
-        [Test]
+        /*[Test]
         public void PostTest()
         {
             // Arrange
@@ -198,9 +198,9 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
 
             // Assert
             Assert.IsNotNull(response);
-        }
+        }*/
 
-        [Test]
+        /*[Test]
         public void DeleteCommentTest()
         {
             // Arrange
@@ -213,9 +213,9 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             // Assert
             Assert.IsNotNull(response);
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-        }
+        }*/
 
-        [Test]
+        /*[Test]
         public void FailDeleteCommentTest()
         {
             // Arrange
@@ -228,6 +228,6 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             // Assert
             Assert.IsNotNull(response);
             Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
-        }
+        }*/
     }
 }

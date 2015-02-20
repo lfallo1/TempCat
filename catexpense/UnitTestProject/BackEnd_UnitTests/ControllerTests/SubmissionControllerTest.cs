@@ -154,7 +154,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             Assert.AreEqual(typeof(SubmissionController), emptyController.GetType());
         }
 
-        [Test]
+        /*[Test]
         public void GetSubmissionByUsernameTest()
         {
             // Arrange
@@ -170,9 +170,9 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             Assert.IsFalse((response as ICollection<Submission>).Contains(submission2));
             Assert.IsTrue((response as ICollection<Submission>).Contains(submission3));
             Assert.IsFalse((response as ICollection<Submission>).Contains(submission4));
-        }
+        }*/
 
-        [Test]
+        /*[Test]
         public void GetPendingSubmissionsByManagerNameTest()
         {
             // Arrange
@@ -188,9 +188,9 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             Assert.IsFalse((response as ICollection<Submission>).Contains(submission2));
             Assert.IsFalse((response as ICollection<Submission>).Contains(submission3));
             Assert.IsFalse((response as ICollection<Submission>).Contains(submission4));
-        }
+        }*/
 
-        [Test]
+        /*[Test]
         public void GetPendingSubmissionsByFinanceApproverTest()
         {
             // Arrange
@@ -206,13 +206,13 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             Assert.IsFalse((response as ICollection<Submission>).Contains(submission2));
             Assert.IsTrue((response as ICollection<Submission>).Contains(submission3));
             Assert.IsTrue((response as ICollection<Submission>).Contains(submission4));
-        }
+        }*/
 
        
 
     
 
-        [Test]
+        /*[Test]
         public void GetSubmissionsTest()
         {
             // Arrange
@@ -228,11 +228,11 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             Assert.IsTrue((response as ICollection<Submission>).Contains(submission2));
             Assert.IsTrue((response as ICollection<Submission>).Contains(submission3));
             Assert.IsTrue((response as ICollection<Submission>).Contains(submission4));
-        }
+        }*/
 
        
 
-        [Test]
+        /*[Test]
         public void ModelStateErrorPostTest()
         {
             // Arrange
@@ -244,9 +244,9 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             // Assert
             Assert.IsNotNull(response);
             Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
-        }
+        }*/
 
-        [Test]
+       /* [Test]
         public void PostTest()
         {
             // Arrange
@@ -258,9 +258,9 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             // Assert
             Assert.IsNotNull(response);
             Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
-        }
+        }*/
 
-        [Test]
+        /*[Test]
         public void DeleteSubmissionTest()
         {
             // Arrange
@@ -273,9 +273,9 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             // Assert
             Assert.IsNotNull(response);
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-        }
+        }*/
 
-        [Test]
+        /*[Test]
         public void FailDeleteSubmissionTest()
         {
             // Arrange
@@ -288,7 +288,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             // Assert
             Assert.IsNotNull(response);
             Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
-        }
+        }*/
 
     }
 }
