@@ -18,37 +18,6 @@ angular.module( 'expenseApp.Controllers' )
           billable: LineItemService.getBillable()
       };
 
-      //custom placeholder directive for ng-model
-      /*app.directive("ngPlaceholder", function ($log, $timeout) {
-          var txt;
-          return {
-              restrict: "A",
-              scope: { txt: "@ngPlaceholder" },
-              link: function (scope, elem, attrs) {
-
-                  elem.on("focus", function () {
-                      if (elem.val() === scope.txt) {
-                          elem.val("");
-                      }
-                      scope.$apply()
-                  })
-
-                  elem.on("blur", function () {
-                      if (elem.val() === "") {
-                          elem.val(scope.txt);
-                      }
-                      scope.$apply()
-                  })
-
-                  // Initialise placeholder
-                  $timeout(function () {
-                      elem.val(scope.txt)
-                      scope.$apply();
-                  })
-              }
-          }
-      })*/
-
       //default validation for the values stored above
       var otherValidation = {
           date: {
