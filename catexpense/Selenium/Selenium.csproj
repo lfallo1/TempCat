@@ -105,22 +105,10 @@
     <Compile Include="Enumerators\HomeTableFilters.cs" />
     <Compile Include="Enumerators\SubmissionType.cs" />
     <Compile Include="Enumerators\TableType.cs" />
-    <Compile Include="PageObjectBase.cs" />
-    <Compile Include="PageObjects\CommentModal.cs" />
-    <Compile Include="PageObjects\ConfirmModal.cs" />
-    <Compile Include="PageObjects\ExpenseReportEditSubmissionPage.cs" />
-    <Compile Include="PageObjects\ExpenseReportEmployeePage.cs" />
-    <Compile Include="PageObjects\ExpenseReportHomePage.cs" />
-    <Compile Include="PageObjects\BaseSubmissionModal.cs" />
-    <Compile Include="PageObjects\ExpenseReportSubmissionPage.cs" />
-    <Compile Include="PageObjects\MileageModal.cs" />
-    <Compile Include="PageObjects\OtherModal.cs" />
-    <Compile Include="PageObjects\PerDiemModal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SeleniumDriver.cs" />
     <Compile Include="SqlHandler.cs" />
     <Compile Include="TestBase.cs" />
-    <Compile Include="Tests\ExpenseReportHomePageTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Logger\Logger.csproj">
