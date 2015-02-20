@@ -91,6 +91,18 @@ angular.module('expenseApp.Controllers')
           $scope.editingNewMileage = true;
       };
 
+      $scope.copyMileage = function (index) {
+          mileageIndex = index;
+          $scope.mileageValues.date = $scope.mileageArray[mileageIndex].date;
+          $scope.mileageValues.origin = $scope.mileageArray[mileageIndex].origin;
+          $scope.mileageValues.destination = $scope.mileageArray[mileageIndex].destination;
+          $scope.mileageValues.miles = $scope.mileageArray[mileageIndex].miles;
+          $scope.mileageValues.description = $scope.mileageArray[mileageIndex].description;
+          $scope.mileageValues.amount = $scope.mileageArray[mileageIndex].amount;
+          $scope.mileageValues.billable = $scope.mileageArray[mileageIndex].billable;
+          $scope.startMileage();
+      };
+
       /**
        * Remove the mileage expense from the list of mileage expenses.
        * Will clear out the fields if deleting the expense that the suer is also currently editing.
@@ -241,10 +253,15 @@ angular.module('expenseApp.Controllers')
           }
       };
 
+      $scope.cancelNewMileage = function () {
+          resetValues();
+          $scope.createMileage = false;
+      };
+
       /**
       * do not save the changes made to the line item
       */
-      $scope.discardChanges = function () {
+      $scope.cancelChanges = function () {
           resetValues();
           $scope.editingNewMileage = false;
       };
