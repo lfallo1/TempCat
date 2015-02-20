@@ -19,6 +19,8 @@ angular.module('expenseApp.Controllers')
       */
       $scope.calculatingDistance = false;
 
+      $scope.createMileage = false;
+
       /**
       * determine if the modal is editing an existing lineitem or creating new one(s)
       */
@@ -68,6 +70,10 @@ angular.module('expenseApp.Controllers')
           description: LineItemService.getLineItemDesc(),
           amount: LineItemService.getLineItemAmount(),
           billable: LineItemService.getBillable()
+      };
+
+      $scope.startMileage = function () {
+          $scope.createMileage = true;
       };
 
       /**
@@ -190,6 +196,7 @@ angular.module('expenseApp.Controllers')
                                   $scope.mileageArray.push($scope.mileageValues);
 
                                   resetMileage();
+                                  $scope.createMileage = false;
                               };
                           };
                       }, function (errorDestination) {
