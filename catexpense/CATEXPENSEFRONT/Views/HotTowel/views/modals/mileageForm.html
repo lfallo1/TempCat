@@ -124,17 +124,22 @@
 
                         <div class="row" ng-hide="editingExistingMileage">
                             <div class="col-md-12">
-                                <button id="mileageAddNew" ng-click="saveAsNewMileage()"
+                                <button id="mileageAddNew" ng-hide="editingNewMileage" ng-click="saveAsNewMileage()"
                                         class="btn btn-success">
                                     <i class="glyphicon glyphicon-ok"></i>
                                     <span>Save as New Mileage</span>
                                 </button>
-                                <button id="mileageSaveCurrent" ng-disabled="!editingNewMileage" ng-click="saveChanges()"
+                                <button id="mileageCancelNew" ng-hide="editingNewMileage" ng-click="cancelNewMileage()"
+                                        class="btn btn-warning">
+                                    <i class="glyphicon glyphicon-ban-circle"></i>
+                                    <span>Cancel</span>
+                                </button>
+                                <button id="mileageSaveCurrent" ng-hide="!editingNewMileage" ng-click="saveChanges()"
                                         class="btn btn-primary">
                                     <i class="glyphicon glyphicon-save"></i>
                                     <span>Save Changes</span>
                                 </button>
-                                <button id="mileageCancelCurrent" ng-disabled="!editingNewMileage" ng-click="cancelChanges()"
+                                <button id="mileageCancelCurrent" ng-hide="!editingNewMileage" ng-click="cancelChanges()"
                                         class="btn btn-warning">
                                     <i class="glyphicon glyphicon-ban-circle"></i>
                                     <span>Cancel Changes</span>
@@ -150,6 +155,7 @@
                                     <tr>
                                         <th></th>
                                         <th></th>
+                                        <th></th>
                                         <th>From</th>
                                         <th>To</th>
                                         <th>Amount</th>
@@ -160,6 +166,10 @@
                                         <td>
                                             <span class="pointer glyphicon glyphicon-edit" ng-click="editMileage($index)"
                                                   data-toggle="tooltip" data-placement="right" title="Edit Mileage"></span>
+                                        </td>
+                                        <td>
+                                            <span class="pointer glyphicon glyphicon-repeat" ng-click="copyMileage($index)"
+                                                  data-toggle="tooltip" data-placement="right" title="Copy Mileage"></span>
                                         </td>
                                         <td>
                                             <span class="pointer glyphicon glyphicon-trash" ng-click="deleteMileage($index)"
