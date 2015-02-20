@@ -72,33 +72,33 @@ namespace Selenium
 
         public IWebElement Find(By by)
         {
-            return Driver.FindElement(by);
+            try
+            {
+                return Driver.FindElement(by);
+            }
+            catch (WebDriverException wde)
+            {
+                Console.WriteLine(wde.ToString());
+                return null;
+            }
         }
 
         public ReadOnlyCollection<IWebElement> FindAll(By by)
         {
-            if (DoesElementExist(by))
+            try
             {
                 return Driver.FindElements(by);
             }
-            else
+            catch (WebDriverException wde)
             {
+                Console.WriteLine(wde.ToString());
                 return new ReadOnlyCollection<IWebElement>(new List<IWebElement>());
             }
         }
 
         public bool DoesElementExist(By element)
         {
-            try
-            {
-                var elements = Driver.FindElements(element);
-                return elements.Count > 0;
-            }
-            catch (WebDriverException wde)
-            {
-                Console.WriteLine(wde.ToString());
-                return false;
-            }
+            return FindAll(element).Count > 0;
         }
 
         public void Click(By by)

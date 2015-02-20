@@ -67,6 +67,11 @@ namespace Selenium.PageObjects
             return defaultMiles;
         }
 
+        public string GetMileageDefault()
+        {
+            return Find(mileageInput).GetAttribute("value");
+        }
+
         private void WaitForModalClose()
         {
             WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(5));

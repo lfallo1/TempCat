@@ -170,7 +170,7 @@ namespace Selenium.PageObjects
             Click(AddLineItemButton);
         }
 
-        public BaseSubmissionModal ClickCreateSubmission()
+        public void ClickCreateSubmission()
         {
             try
             {
@@ -180,8 +180,6 @@ namespace Selenium.PageObjects
             {
                 ClickAddLineItem();
             }
-
-            return new BaseSubmissionModal(Driver);
         }
 
         public void CancelSubmissionClick()
@@ -206,15 +204,6 @@ namespace Selenium.PageObjects
             catch (WebDriverException)
             {
             }
-        }
-
-        public bool CheckMileageDefault()
-        {
-            BaseSubmissionModal modal = new BaseSubmissionModal(Driver);
-            OpenDatePicker();
-            DatePickerClickCurrentWeek();
-            ClickCreateSubmission();
-            return modal.CheckMileageDefault();
         }
 
         public void CreateTestSubmission()

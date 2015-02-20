@@ -29,6 +29,13 @@ namespace Selenium.Tests
             thisPage = new ExpenseReportHomePage(WebDriver, username, password);
         }
 
+        /// <summary>
+        /// Tests whether or not the price shown on the mileage modal is rounded to two digits.
+        /// 
+        /// Currently fails because Selenium cannot hit the value on the HTML because the value
+        /// is being derived from angular with no parallel field set on the front end that
+        /// Selenium can reach.
+        /// </summary>
         [Test]
         public void MileageRoundingAccurate()
         {
@@ -52,29 +59,9 @@ namespace Selenium.Tests
             Assert.True(match.Success, string.Format(failMessage, cost));
         }
 
-        //[Test]
-        //public void NavigationAndPersistentSessionTests()
-        //{
-        //    string testFailWrongUrl = "Test Failed:  URL of '{0}' did not end with '{1}'.";
-        //    string expectedEnding = "home";
-
-        //    var thisTitle = thisPage.GetCurrentUrl();
-        //    Assert.IsTrue(thisTitle.EndsWith(expectedEnding),
-        //        string.Format(testFailWrongUrl, thisTitle, expectedEnding));
-
-        //    thisPage.ClickFirstEditableSubmission();
-        //    expectedEnding = "submission";
-        //    thisTitle = thisPage.GetCurrentUrl();
-        //    Assert.IsTrue(thisTitle.EndsWith(expectedEnding),
-        //        string.Format(testFailWrongUrl, thisTitle, expectedEnding));
-
-        //    thisPage.ClickHome();
-        //    expectedEnding = "home";
-        //    thisTitle = thisPage.GetCurrentUrl();
-        //    Assert.IsTrue(thisTitle.EndsWith(expectedEnding),
-        //        string.Format(testFailWrongUrl, thisTitle, expectedEnding));
-        //}
-
+        /// <summary>
+        /// Ensures that the Employee table can be found.
+        /// </summary>
         [Test]
         public void DoesEmployeeTableExist()
         {
@@ -83,7 +70,11 @@ namespace Selenium.Tests
         }
 
         /// <summary>
-        ///  Checks that pressing the cancel button in fact closes the open modal
+        /// Checks that pressing the cancel button on an open submission modal will close it.
+        /// 
+        /// This test will fail if a submission is created for that field, as the expected button
+        /// to create a submission will not appear if the submission already exists.  Refactor
+        /// to accommodate this functionality pending.
         /// </summary>
         [Test]
         public void CancelButtonClosesModal()
@@ -101,6 +92,12 @@ namespace Selenium.Tests
             Assert.IsTrue(thisPage.DoesSubmissionModalExist());
         }
 
+        /// <summary>
+        /// Expects the Weekending Date to read the date for the following weekend.
+        /// 
+        /// Test passes in error because, at present the weekending date in angular 
+        /// is being improperly set parallel to a property that Selenium can reach.
+        /// </summary>
         [Test]
         public void ExpectDatePickerToReadToday()
         {
@@ -122,30 +119,31 @@ namespace Selenium.Tests
             Assert.AreEqual(string.Empty, thisPage.ReadDatePickerInput());
         }
 
-        //[Test]
+        /// <summary>
+        /// Ensures that the mileage distance will default to 0.
+        /// 
+        /// Test will probably fail because input does not contain a property that selenium can hit.
+        /// </summary>
+        [Test]
         public void CheckMileageDefault()
         {
-            Assert.IsTrue(thisPage.CheckMileageDefault());
-        }
+            string mileageDefault = "0";
+            thisPage.OpenDatePicker();
+            thisPage.DatePickerClickCurrentWeek();
+            thisPage.ClickCreateSubmission();
+            
+            BaseSubmissionModal modal = new BaseSubmissionModal(WebDriver);
 
-        // Suspected legacy test; remove upon confirmation
-        ////[Test]
-        //public void DoAlertsExist()
-        //{
-        //    var failNoAlert = "Test Failed:  {0} alert missing.";
-        //    foreach (UserType type in allTypes)
-        //    {
-        //        Assert.IsTrue(thisPage.DoesAlertExist(type), 
-        //            string.Format(failNoAlert, type));
-        //    }
-        //}
+            Assert.AreEqual(modal.GetMileageDefault(), mileageDefault);
+        }
 
         //[Test]
         public void AddDescriptionToSubmissionTest()
         {
             thisPage.OpenDatePicker();
             thisPage.DatePickerClickCurrentWeek();
-            submissionModal = thisPage.ClickCreateSubmission();
+            thisPage.ClickCreateSubmission();
+            submissionModal = new BaseSubmissionModal(WebDriver);
             submissionModal.ClickCancel();
             //thisPage.CreateTestSubmission();
             thisPage.AddDescriptionToSubmission();
@@ -326,34 +324,6 @@ namespace Selenium.Tests
             var firstList = sqlHandler.GetAllOfSpecificColumn(sqlHandler.RunScript(script), "ActiveDirectoryUser");
          
             Assert.IsTrue(true);
-        }
-
-        //[Test]
-        public void ModalHasAllSettings()
-        {
-            thisPage.OpenDatePicker(); thisPage.DatePickerClickCurrentWeek();
-
-            for (int modalType = 0; modalType < 9; modalType++)
-            {
-                CheckOneModalForm((SubmissionType)modalType);
-            }
-        }
-
-        private void CheckOneModalForm(SubmissionType type)
-        {
-            var modal = thisPage.ClickCreateSubmission().ChangeSubmissionType(type);
-
-            Assert.IsTrue(thisPage.DoesSubmissionModalExist());
-            Assert.AreEqual(type, modal.GetCurrentModalSelection());
-            Assert.AreEqual(GetExpectedModalType(type), modal.GetVisibleModalForm());
-
-             modal.ClickCancel();
-        }
-
-        private SubmissionType GetExpectedModalType(SubmissionType type)
-        {
-            var returnType = type < SubmissionType.Transportation ? type : SubmissionType.Other;
-            return returnType;
         }
     }
 }
