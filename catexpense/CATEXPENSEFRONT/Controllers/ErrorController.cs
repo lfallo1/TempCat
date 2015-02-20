@@ -27,6 +27,14 @@ namespace CatExpenseFront.Controllers
             service = new ErrorService();
         }
 
+        public ErrorController(IErrorService iservice) {
+
+            if (this.service == null)
+            {
+                this.service = iservice;
+            }
+        }
+
         [HttpPost]
         [ResponseType(typeof(Error))]
         [Route("api/Error")]
