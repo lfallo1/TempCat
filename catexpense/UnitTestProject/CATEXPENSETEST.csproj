@@ -160,7 +160,7 @@
     <Compile Include="BackEnd_UnitTests\ControllerTests\ReceiptControllerTests.cs" />
     <Compile Include="BackEnd_UnitTests\ControllerTests\RepliconControllerTests.cs" />
     <Compile Include="BackEnd_UnitTests\ControllerTests\SubmissionControllerTest.cs" />
-    <Compile Include="BackEnd_UnitTests\ControllerTests\UnitTest1.cs" />
+    <Compile Include="BackEnd_UnitTests\ControllerTests\ErrorControllerTest.cs" />
     <Compile Include="BackEnd_UnitTests\ModelTests\ExpenseCategoryTests.cs" />
     <Compile Include="BackEnd_UnitTests\ModelTests\ExpenseTests.cs" />
     <Compile Include="BackEnd_UnitTests\ModelTests\LineItemTests.cs" />
