@@ -14,7 +14,7 @@
     <dotnet.tool.version>3.5</dotnet.tool.version>	
 	<sonar.dotnet.test.assemblies>UnitTestProject\obj\Debug\UnittTestProject.dll</sonar.dotnet.test.assemblies>
 	<sonar.fxcop.mode>skip</sonar.fxcop.mode>
-	<sonar.stylecop.mode>skip</sonar.fxcop.mode>
+	<sonar.stylecop.mode>skip</sonar.stylecop.mode>
     <sonar.language>cs</sonar.language>	
   </properties>
 
