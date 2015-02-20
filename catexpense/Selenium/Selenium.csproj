@@ -121,7 +121,6 @@
     <Compile Include="SqlHandler.cs" />
     <Compile Include="TestBase.cs" />
     <Compile Include="Tests\ExpenseReportHomePageTests.cs" />
-    <Compile Include="Tests\ExpenseReportSubmissionPageTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Logger\Logger.csproj">
