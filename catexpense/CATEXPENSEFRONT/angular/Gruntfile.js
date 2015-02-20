@@ -94,7 +94,6 @@ module.exports = function (grunt) {
     
     grunt.registerTask('test', [
       'clean:server',
-      'autoprefixer',
       'connect:test',
       'karma'
     ]);
