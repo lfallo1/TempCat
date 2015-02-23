@@ -13,10 +13,7 @@ namespace CatExpenseFront.Services
 
         private IRepository<Error> repository;
 
-        public ErrorService() 
-        {
-            this.repository = new CatExpenseFront.Repository.Repository<Error>();
-        }
+        public ErrorService() { }
 
         public ErrorService(IRepository<Error> irepository)
         {

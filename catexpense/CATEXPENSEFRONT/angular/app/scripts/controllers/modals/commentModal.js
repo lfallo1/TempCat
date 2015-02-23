@@ -1,7 +1,7 @@
 ﻿'use strict';
 
 angular.module( 'expenseApp.Controllers' )
-  .controller('CommentController', ["$scope", "$modalInstance", "$modal", "$rootScope", "Application", "CommentService", "MessageService", "Authentication", "LogError", function ($scope, $modalInstance, $modal, $rootScope, Application, CommentService, MessageService, Authentication, LogError) {
+  .controller('CommentController', ["$scope", "$modalInstance", "$modal", "$rootScope", "Application", "CommentService", "MessageService", function ($scope, $modalInstance, $modal, $rootScope, Application, CommentService, MessageService) {
 
       var commentIndex = Application.getCommentIndex();
 
@@ -46,10 +46,6 @@ angular.module( 'expenseApp.Controllers' )
               submission.Comments.splice(commentIndex, 1);
               Application.setSubmission(submission);
               $modalInstance.dismiss("dismiss confirm modal");
-          }, function (error) {
-              LogError.logError({ username: Authentication.getUser(), endpoint: error.config.url, error: error.statusText }).then(
-                  function (success) {},
-                  function (error) {});
           });
       });
   }]);

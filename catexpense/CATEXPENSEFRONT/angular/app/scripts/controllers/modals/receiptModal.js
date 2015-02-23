@@ -1,7 +1,7 @@
 ﻿'use strict';
 
 angular.module('expenseApp.Controllers')
-  .controller('receiptController', ["$scope", "$modalInstance", "ReceiptService", "$rootScope", "MessageService", "$modal", "Application", "$route", "LineItemService", "Authentication", "LogError", function ($scope, $modalInstance, ReceiptService, $rootScope, MessageService, $modal, Application, $route, LineItemService, Authentication, LogError) {
+  .controller('receiptController', ["$scope", "$modalInstance", "ReceiptService", "$rootScope", "MessageService", "$modal", "Application", "$route", "LineItemService", function ($scope, $modalInstance, ReceiptService, $rootScope, MessageService, $modal, Application, $route, LineItemService) {
       var receiptId = 0;
       var receiptIndexId = 0;
       var allReceipts = false;
@@ -79,10 +79,6 @@ angular.module('expenseApp.Controllers')
                     }
                     Application.setAllUserSubmissions(submissions);
                 });
-            }, function (error) {
-                LogError.logError({ username: Authentication.getUser(), endpoint: error.config.url, error: error.statusText }).then(
-                  function (success) { },
-                  function (error) { });
             });
       });
 
@@ -114,10 +110,6 @@ angular.module('expenseApp.Controllers')
                   $scope.divShow = true;
                   $rootScope.$broadcast("addNewReceipt", receipt.data);
                   $scope.image = undefined;
-              }, function (error) {
-                  LogError.logError({ username: Authentication.getUser(), endpoint: error.config.url, error: error.statusText }).then(
-                    function (success) { },
-                    function (error) { });
               });
           } else {
               $('#upload').prop('disabled', true);

@@ -50,10 +50,6 @@ namespace CatExpenseFront.Models
         /// </summary>
         public DbSet<Receipt> Receipts { get; set; }
 
-        /// <summary>
-        /// Loads Errors to the context
-        /// </summary>
-        public DbSet<Error> Errors { get; set; }
-
+        
     }
 }

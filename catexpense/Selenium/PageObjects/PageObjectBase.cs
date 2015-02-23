@@ -6,34 +6,37 @@ using OpenQA.Selenium.Support.UI;
 using LOGGER = Logger.Logger;
 using System.Collections.Generic;
 using Selenium.PageObjects;
+using System.Collections.ObjectModel;
+using System.Configuration;
 
-namespace Selenium
+namespace Selenium.PageObjects
 {
     public class PageObjectBase
     {
         protected IWebDriver Driver { get; set; }
-        private WebDriverWait wait;
-        private static readonly By HomeLink = By.Id("homeLink");
-        private static readonly By SubmissionLink = By.Id("submissionLink");
         private const string LOGSTRING = "TestDetails";
-        private const string ERRORMESSAGE =
-            "PageObjectBase: We're not on the expected page.";
+        private const string ERRORMESSAGE = "PageObjectBase: We're not on the expected page.";
+        
+        // Page Header Elements
+        private static readonly By homeLink = By.Id("homeLink");
+        private static readonly By logoutButton = By.Id("logoutButton");
 
+        // Login Controls
         private static readonly By usernameLogin = By.Id("usernameInput");
         private static readonly By passwordLogin = By.Id("passwordInput");
         private static readonly By loginButton = By.Id("loginButton");
-        private static readonly By logoutButton = By.Id("logoutButton");
+        private static readonly By syncButton = By.Id("syncProjectsButton");
 
         public PageObjectBase(IWebDriver driver)
         {
             Driver = driver;
-            wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(10));
+            Login();
         }
 
-        public void Login(string username, string password)
-        {            
-            Find(usernameLogin).SendKeys(username);
-            Find(passwordLogin).SendKeys(password);
+        public void Login()
+        {
+            Find(usernameLogin).SendKeys(ConfigurationManager.AppSettings["username"]);
+            Find(passwordLogin).SendKeys(ConfigurationManager.AppSettings["password"]);
             Find(loginButton).Click();
         }
 
@@ -71,21 +74,33 @@ namespace Selenium
 
         public IWebElement Find(By by)
         {
-            return Driver.FindElement(by);
-        }
-
-        public bool DoesElementExist(By element)
-        {
             try
             {
-                var elements = Driver.FindElements(element);
-                return elements.Count > 0;
+                return Driver.FindElement(by);
             }
             catch (WebDriverException wde)
             {
                 Console.WriteLine(wde.ToString());
-                return false;
+                return null;
             }
+        }
+
+        public ReadOnlyCollection<IWebElement> FindAll(By by)
+        {
+            try
+            {
+                return Driver.FindElements(by);
+            }
+            catch (WebDriverException wde)
+            {
+                Console.WriteLine(wde.ToString());
+                return new ReadOnlyCollection<IWebElement>(new List<IWebElement>());
+            }
+        }
+
+        public bool DoesElementExist(By element)
+        {
+            return FindAll(element).Count > 0;
         }
 
         public void Click(By by)
@@ -155,21 +170,22 @@ namespace Selenium
             return innerHtml;
         }
 
-        public ExpenseReportHomePage ClickHome()
+        public HomePage ClickHome()
         {
-            Click(HomeLink);
-            return new ExpenseReportHomePage(Driver);
+            Click(homeLink);
+            return new HomePage(Driver);
         }
 
-        public ExpenseReportSubmissionPage ClickSubmission()
-        {
-            Click(SubmissionLink);
-            return new ExpenseReportSubmissionPage(Driver);
-        }
-
-        public void ClickLogout()
+        public HomePage ClickLogout()
         {
             Click(logoutButton);
+            return new HomePage(Driver);
+        }
+
+        public PageObjectBase ClickSync()
+        {
+            Click(syncButton);
+            return this;
         }
     }
 }

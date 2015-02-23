@@ -11,7 +11,7 @@
  * Controller of the expenseApp
  */
 angular.module('expenseApp.Controllers')
-  .controller('FormDetailsCtrl', ["$scope", "$modalInstance", "$modal", "$rootScope", "LineItemService", "ValidationService", "Application", "ReceiptService", "ExpenseCategory", "Authentication", "LogError", function ($scope, $modalInstance, $modal, $rootScope, LineItemService, ValidationService, Application, ReceiptService, ExpenseCategory, Authentication, LogError) {
+  .controller('FormDetailsCtrl', ["$scope", "$modalInstance", "$modal", "$rootScope", "LineItemService", "ValidationService", "Application", "ReceiptService", "ExpenseCategory", function ($scope, $modalInstance, $modal, $rootScope, LineItemService, ValidationService, Application, ReceiptService, ExpenseCategory) {
 
       $scope.divShow = false;
 
@@ -116,9 +116,7 @@ angular.module('expenseApp.Controllers')
                   });
               },
               function (error) {
-                  LogError.logError({ username: Authentication.getUser(), endpoint: error.config.url, error: error.statusText }).then(
-                  function (success) { },
-                  function (error) { });
+                  console.log(error);
               });
       }
       getExpenseCategories();
@@ -262,11 +260,7 @@ angular.module('expenseApp.Controllers')
                   $scope.divShow = true;
                   $rootScope.$broadcast("addNewReceipt", receipt.data);
                   $scope.image = undefined;
-              }, function (error) {
-                  LogError.logError({ username: Authentication.getUser(), endpoint: '/api/Receipts', error: error }).then(
-                  function (success) { },
-                  function (error) { });
-                  });
+              });
           } else {
               $('#upload').prop('disabled', true);
               $scope.noReceipt = true;

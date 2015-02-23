@@ -8,7 +8,7 @@
  * Controller of the expenseApp
  */
 angular.module('expenseApp.Controllers')
-  .controller('MileageCtrl', ["$scope", "LineItemService", "MapQuestService", "ValidationService", "Authentication", "LogError", function ($scope, LineItemService, MapQuestService, ValidationService, Authentication, LogError) {
+  .controller('MileageCtrl', ["$scope", "LineItemService", "MapQuestService", "ValidationService", function ($scope, LineItemService, MapQuestService, ValidationService) {
 
       /** 
       * stores the ides of the mileageArray of the item that is being edited
@@ -18,8 +18,6 @@ angular.module('expenseApp.Controllers')
       * this variable will be responsible for disabling the 'Get Distance' button when clicked
       */
       $scope.calculatingDistance = false;
-
-      $scope.createMileage = false;
 
       /**
       * determine if the modal is editing an existing lineitem or creating new one(s)
@@ -72,10 +70,6 @@ angular.module('expenseApp.Controllers')
           billable: LineItemService.getBillable()
       };
 
-      $scope.startMileage = function () {
-          $scope.createMileage = true;
-      };
-
       /**
        * Edit the mileage expense from the array
        */
@@ -89,18 +83,6 @@ angular.module('expenseApp.Controllers')
           $scope.mileageValues.amount = $scope.mileageArray[mileageIndex].amount;
           $scope.mileageValues.billable = $scope.mileageArray[mileageIndex].billable;
           $scope.editingNewMileage = true;
-      };
-
-      $scope.copyMileage = function (index) {
-          mileageIndex = index;
-          $scope.mileageValues.date = $scope.mileageArray[mileageIndex].date;
-          $scope.mileageValues.origin = $scope.mileageArray[mileageIndex].origin;
-          $scope.mileageValues.destination = $scope.mileageArray[mileageIndex].destination;
-          $scope.mileageValues.miles = $scope.mileageArray[mileageIndex].miles;
-          $scope.mileageValues.description = $scope.mileageArray[mileageIndex].description;
-          $scope.mileageValues.amount = $scope.mileageArray[mileageIndex].amount;
-          $scope.mileageValues.billable = $scope.mileageArray[mileageIndex].billable;
-          $scope.startMileage();
       };
 
       /**
@@ -142,10 +124,8 @@ angular.module('expenseApp.Controllers')
                   }
 
               }, function (error) {
+                  console.log(error);
                   $scope.calculatingDistance = false;
-                  LogError.logError({ username: Authentication.getUser(), endpoint: error.config.url, error: error.statusText }).then(
-                  function (success) { },
-                  function (error) { });
               });
       };
 
@@ -208,18 +188,13 @@ angular.module('expenseApp.Controllers')
                                   $scope.mileageArray.push($scope.mileageValues);
 
                                   resetMileage();
-                                  $scope.createMileage = false;
                               };
                           };
                       }, function (errorDestination) {
-                          LogError.logError({ username: Authentication.getUser(), endpoint: error.config.url, error: error.statusText }).then(
-                            function (success) { },
-                            function (error) { });
+                          console.log(errorDestination);
                       });
               }, function (errorOrigin) {
-                  LogError.logError({ username: Authentication.getUser(), endpoint: error.config.url, error: error.statusText }).then(
-                    function (success) { },
-                    function (error) { });
+                  console.log(errorOrigin);
               });
       };
 
@@ -253,15 +228,10 @@ angular.module('expenseApp.Controllers')
           }
       };
 
-      $scope.cancelNewMileage = function () {
-          resetValues();
-          $scope.createMileage = false;
-      };
-
       /**
       * do not save the changes made to the line item
       */
-      $scope.cancelChanges = function () {
+      $scope.discardChanges = function () {
           resetValues();
           $scope.editingNewMileage = false;
       };

@@ -2,7 +2,7 @@
 
 angular.module('expenseApp.Controllers')
 
-  .controller('SubmissionCtrl', ["$scope", "$modal", "$window", "$location", "$route", "$rootScope", "$timeout", "LineItemService", "SubmissionService", "RepliconProjectService", "MessageService", "DateService", "Application", "Authentication", "ReceiptService", "LogError", function ($scope, $modal, $window, $location, $route, $rootScope, $timeout, LineItemService, SubmissionService, RepliconProjectService, MessageService, DateService, Application, Authentication, ReceiptService, LogError) {
+  .controller('SubmissionCtrl', ["$scope", "$modal", "$window", "$location", "$route", "$rootScope", "$timeout", "LineItemService", "SubmissionService", "RepliconProjectService", "MessageService", "DateService", "Application", "Authentication", "ReceiptService", function ($scope, $modal, $window, $location, $route, $rootScope, $timeout, LineItemService, SubmissionService, RepliconProjectService, MessageService, DateService, Application, Authentication, ReceiptService) {
 
       $scope.syncComplete = false;
       $scope.flag = false;
@@ -157,9 +157,7 @@ angular.module('expenseApp.Controllers')
                   $scope.totalSubmissions = userSubmissions;
                   Application.setAllUserSubmissions(userSubmissions);
               }, function (error) {
-                  LogError.logError({ username: Authentication.getUser(), endpoint: error.config.url, error: error.statusText }).then(
-                    function (success) { },
-                    function (error) { });
+                  console.log(error);
               }
              )
           }
@@ -209,10 +207,8 @@ angular.module('expenseApp.Controllers')
                       $scope.hasNoProjects = true;
                   }
 
-              }, function (error) {
-                  LogError.logError({ username: Authentication.getUser(), endpoint: error.config.url, error: error.statusText }).then(
-                    function (success) { },
-                    function (error) { });
+              }, function (fail) {
+                  console.log(fail);
               });
       }
 
@@ -259,9 +255,7 @@ angular.module('expenseApp.Controllers')
                   $rootScope.$broadcast("addSubmissionEmployeeTable");
                   $scope.openModal();
               }, function (error) {
-                  LogError.logError({ username: Authentication.getUser(), endpoint: error.config.url, error: error.statusText }).then(
-                    function (success) { },
-                    function (error) { });
+                  console.log(error);
               }
           );
       };
@@ -294,11 +288,7 @@ angular.module('expenseApp.Controllers')
           MessageService.setBroadCastMessage("");
           SubmissionService.deleteExpenseReport(MessageService.getId()).then(function (success) {
               $window.location.href = '/';
-          }, function (error) {
-              LogError.logError({ username: Authentication.getUser(), endpoint: error.config.url, error: error.statusText }).then(
-                  function (success) { },
-                  function (error) { });
-          });
+          }, function (error) { });
 
       });
 
@@ -474,9 +464,7 @@ angular.module('expenseApp.Controllers')
                               LineItemService.resetLineItem();
                           },
                             function (error) {
-                                LogError.logError({ username: Authentication.getUser(), endpoint: error.config.url, error: error.statusText }).then(
-                                    function (success) { },
-                                    function (error) { });
+                                console.log(error);
                             });
                       LineItemService.setUnderEdit(false);
                   } else {
@@ -522,20 +510,16 @@ angular.module('expenseApp.Controllers')
                                                   });
                                               });
                                           },
-                                          function (error) {
-                                              LogError.logError({ username: Authentication.getUser(), endpoint: error.config.url, error: error.statusText }).then(
-                                                function (success) { },
-                                                function (error) { });
+                                          function (err) {
+                                              console.log(err);
                                           });
                       });
 
                   }
               },
-            function (error) {
+            function (errorMessage) {
                 $scope.disableCreate = false;
-                LogError.logError({ username: Authentication.getUser(), endpoint: error.config.url, error: error.statusText }).then(
-                  function (success) { },
-                  function (error) { });
+                console.log(errorMessage);
             }
         );
       };
@@ -558,9 +542,7 @@ angular.module('expenseApp.Controllers')
                       $window.location.reload();
                   },
                   function (error) {
-                      LogError.logError({ username: Authentication.getUser(), endpoint: error.config.url, error: error.statusText }).then(
-                        function (success) { },
-                        function (error) { });
+                      console.log(error);
                   });
           } else {
               MessageService.setMessage('You can not submit a table without any expense items');
@@ -608,9 +590,7 @@ angular.module('expenseApp.Controllers')
                   $window.location.reload();
               },
               function (error) {
-                  LogError.logError({ username: Authentication.getUser(), endpoint: error.config.url, error: error.statusText }).then(
-                    function (success) { },
-                    function (error) { });
+
               });
       }
 
@@ -638,9 +618,7 @@ angular.module('expenseApp.Controllers')
                  $window.location.reload();
              },
              function (error) {
-                 LogError.logError({ username: Authentication.getUser(), endpoint: error.config.url, error: error.statusText }).then(
-                  function (success) { },
-                  function (error) { });
+
              });
 
 
@@ -659,14 +637,12 @@ angular.module('expenseApp.Controllers')
                   }
                   if (newValue.getDay() === 6) {
                       $scope.dt1 = newValue;
-                      console.log(newValue);
                   }
                   else {
                       var difference = 6 - newValue.getDay();
                       var weekEnding = new Date();
-                      weekEnding.setHours(0, 0, 0, 0);
-                      weekEnding = new Date(weekEnding.setDate(newValue.getDate() + difference));
-                      console.log(weekEnding);
+                      $scope.dt1 = new Date(weekEnding.setDate(newValue.getDate() + difference));
+                      //$scope.dt1 = new Date( $scope.dt );
                   }
               } else {
                   return;

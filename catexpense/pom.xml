@@ -8,11 +8,11 @@
 <!-- A Change -->
   <properties>
     <visual.studio.solution>CatExpense.sln</visual.studio.solution>
-    <visual.test.project.pattern>UnitTestProject</visual.test.project.pattern>
+    <visual.test.project.pattern>*.Tests;*Test</visual.test.project.pattern>
 	<sonar.gallio.runner>IsolatedProcess</sonar.gallio.runner>
 	<sonar.gallio.coverage.tool>NCover</sonar.gallio.coverage.tool>
-    <dotnet.tool.version>3.5</dotnet.tool.version>
-	<sonar.dotnet.test.assemblies>UnitTestProject\bin\Debug\UnitTestProject.dll</sonar.dotnet.test.assemblies>
+    <dotnet.tool.version>3.5</dotnet.tool.version>	
+	<sonar.dotnet.test.assemblies>UnitTestProject\obj\Debug\UnittTestProject.dll</sonar.dotnet.test.assemblies>
 	<sonar.fxcop.mode>skip</sonar.fxcop.mode>
 	<sonar.stylecop.mode>skip</sonar.stylecop.mode>
     <sonar.language>cs</sonar.language>	

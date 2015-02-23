@@ -1,7 +1,7 @@
 ﻿'use strict';
 
 angular.module('expenseApp.Controllers')
-  .controller('ManagerTableController', ["$scope", "$location", "$modal", "$route", "$rootScope", "$filter", "Application", "SubmissionService", "MessageService", "Authentication", "ReceiptService", "LogError", function ($scope, $location, $modal, $route, $rootScope, $filter, Application, SubmissionService, MessageService, Authentication, ReceiptService, LogError) {
+  .controller('ManagerTableController', ["$scope", "$location", "$modal", "$route", "$rootScope", "$filter", "Application", "SubmissionService", "MessageService", "Authentication", "ReceiptService", function ($scope, $location, $modal, $route, $rootScope, $filter, Application, SubmissionService, MessageService, Authentication, ReceiptService) {
       /**
       * container for the submissions
       */
@@ -84,10 +84,6 @@ angular.module('expenseApp.Controllers')
                       managerSubmissionsContainer = $scope.managerSubmissions;
                       $scope.filterTableBySubmissionStatus(2);
                       $rootScope.$broadcast("managerTotal", $scope.managerSubmissions.length);
-                  }, function (error) {
-                      LogError.logError({ username: Authentication.getUser(), endpoint: error.config.url, error: error.statusText }).then(
-                        function (success) { },
-                        function (error) { });
                   });
           }
       };
@@ -178,10 +174,6 @@ angular.module('expenseApp.Controllers')
           SubmissionService.deleteExpenseReport(MessageService.getId()).then(function (success) {
               $scope.managerSubmissions.splice(Application.getSubmissionIndex(), 1);
               Application.setPendingSubmissionsByManagerName($scope.managerSubmissions);
-          }, function (error) {
-              LogError.logError({ username: Authentication.getUser(), endpoint: error.config.url, error: error.statusText }).then(
-                  function (success) { },
-                  function (error) { });
           });
 
       });

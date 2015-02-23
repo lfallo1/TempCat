@@ -246,7 +246,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
         }*/
 
-        /*[Test]
+       /* [Test]
         public void PostTest()
         {
             // Arrange

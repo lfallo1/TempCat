@@ -1,7 +1,7 @@
 ﻿'use strict';
 
 angular.module('expenseApp.Controllers')
-    .controller('NavController', ["$scope", "$location", "$timeout", "Application", "$route", "$rootScope", "Authentication", "LoginService", "SubmissionService", "RepliconProjectService", "LogError", function ($scope, $location, $timeout, Application, $route, $rootScope, Authentication, LoginService, SubmissionService, RepliconProjectService, LogError) {
+    .controller('NavController', ["$scope", "$location", "$timeout", "Application", "$route", "$rootScope", "Authentication", "LoginService", "SubmissionService", "RepliconProjectService", function ($scope, $location, $timeout, Application, $route, $rootScope, Authentication, LoginService, SubmissionService, RepliconProjectService) {
         $scope.isLoggedIn = Authentication.exists();
         $scope.flag = false;
         $scope.spinner = "";
@@ -43,9 +43,6 @@ angular.module('expenseApp.Controllers')
              function (error) {
                  alert(error);
                  $scope.flag = false;
-                 LogError.logError({ username: Authentication.getUser(), endpoint: error.config.url, error: error.statusText }).then(
-                  function (success) { },
-                  function (error) { });
              });
         };
     }]);

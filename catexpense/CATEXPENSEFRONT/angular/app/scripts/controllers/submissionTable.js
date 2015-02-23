@@ -1,7 +1,7 @@
 ﻿'use strict';
 
 angular.module('expenseApp.Controllers')
-    .controller('submissionTableCtrl', ["$scope", "$route", "$modal", "$location", "$rootScope", "$filter", "Application", "ReceiptService", "LineItemService", "MessageService", "CommentService", "SubmissionService", "Authentication", "LogError", function ($scope, $route, $modal, $location, $rootScope, $filter, Application, ReceiptService, LineItemService, MessageService, CommentService, SubmissionService, Authentication, LogError) {
+    .controller('submissionTableCtrl', ["$scope", "$route", "$modal", "$location", "$rootScope", "$filter", "Application", "ReceiptService", "LineItemService", "MessageService", "CommentService", "SubmissionService", "Authentication", function ($scope, $route, $modal, $location, $rootScope, $filter, Application, ReceiptService, LineItemService, MessageService, CommentService, SubmissionService, Authentication) {
         $scope.receipts = true;
         var orderBy = $filter('orderBy');
         var sortColumn = { field: 'DateCreated', reverse: false };
@@ -74,9 +74,7 @@ angular.module('expenseApp.Controllers')
                 userSubmissions[Application.getSubmissionIndex()].TotalAmount = submissionTotalAmount;
                 Application.setSubmissionStatus(userSubmissions);
             }, function (error) {
-                LogError.logError({ username: Authentication.getUser(), endpoint: error.config.url, error: error.statusText }).then(
-                  function (success) { },
-                  function (error) { });
+                console.log(error);
             });
 
         });
@@ -294,10 +292,6 @@ angular.module('expenseApp.Controllers')
                     Application.setPendingSubmissionsByFinanceApprover(submissions);
                 }
                 $location.path('/home');
-            }, function (error) {
-                LogError.logError({ username: Authentication.getUser(), endpoint: error.config.url, error: error.statusText }).then(
-                  function (success) { },
-                  function (error) { });
             });
         });
 
@@ -328,10 +322,6 @@ angular.module('expenseApp.Controllers')
                     submissions.splice(Application.getSubmissionIndex(), 1);
                 }
                 $location.path('/home');
-            }, function (error) {
-                LogError.logError({ username: Authentication.getUser(), endpoint: error.config.url, error: error.statusText }).then(
-                  function (success) { },
-                  function (error) { });
             });
         });
 
@@ -343,20 +333,12 @@ angular.module('expenseApp.Controllers')
             if (Application.getComment().ExpenseComment) {
                 CommentService.PutComment(Application.getComment().CommentId, comment).then(function (success) {
                     $scope.currentSubmission.Comments[commentIndex]['ExpenseComment'] = comment;
-                }, function (error) {
-                    LogError.logError({ username: Authentication.getUser(), endpoint: error.config.url, error: error.statusText }).then(
-                        function (success) { },
-                        function (error) { });
                 });
             } else {
                 // create new comment
                 CommentService.CreateComment($scope.currentSubmission.SubmissionId, comment).then(function (success) {
                     success.data["commentIsMine"] = true;
                     $scope.currentSubmission.Comments.push(success.data);
-                }, function (error) {
-                    LogError.logError({ username: Authentication.getUser(), endpoint: error.config.url, error: error.statusText }).then(
-                        function (success) { },
-                        function (error) { });
                 });
             }
         });

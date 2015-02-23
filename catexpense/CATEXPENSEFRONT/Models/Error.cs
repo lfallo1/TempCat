@@ -12,10 +12,9 @@ namespace CatExpenseFront.Models
 
         public Error() { }
 
-        public int ErrorId { get; set; }
         public string username { get; set; }
         public string endpoint { get; set; }
-        public string error { get; set; }
+        public string message { get; set; }
         public System.DateTime DateCreated { get; set; }
     }
 }

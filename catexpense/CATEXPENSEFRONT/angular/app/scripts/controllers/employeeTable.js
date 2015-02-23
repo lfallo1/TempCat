@@ -31,6 +31,9 @@ angular.module('expenseApp.Controllers')
       */
       $scope.expandContract = function (value) {
           $scope.expanded = value;
+          LogError.logError({ username: Authentication.getUser(), endpoint: 'api/Error', message: 'successfully add errors to db' }).then(
+              function (success) { console.log(success); },
+              function (error) { console.log(error); });
       };
 
       /**
@@ -108,11 +111,6 @@ angular.module('expenseApp.Controllers')
                   $scope.employeeSubmissions = Application.getAllUserSubmissions();
                   $rootScope.$broadcast("employeeTotal", rejected);
                   employeeSubmissionsContainer = $scope.employeeSubmissions;
-              }, function(error){
-                  LogError.logError({ username: Authentication.getUser(), endpoint: error.config.url, error: error.statusText }).then(
-                    function (success) {},
-                    function (error) {});
-                    
               });
           }
       }
@@ -188,11 +186,7 @@ angular.module('expenseApp.Controllers')
           SubmissionService.deleteExpenseReport(MessageService.getId()).then(function (success) {
               $scope.employeeSubmissions.splice(Application.getSubmissionIndex(), 1);
               Application.setAllUserSubmissions($scope.employeeSubmissions);
-          }, function (error) {
-              LogError.logError({ username: Authentication.getUser(), endpoint: error.config.url, error: error.statusText }).then(
-                  function (success) { },
-                  function (error) { });
-          });
+          }, function (error) { });
       });
 
       /**
