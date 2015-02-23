@@ -4,6 +4,10 @@
             <form role="form" name="mileageForm" class="expense-form" id="mileage-line-form"
                   novalidate>
                 <div class="form-horizontal">
+                    <div ng-show="!createMileage">
+                        <button type="button" id="createMileageButton" class="btn btn-success" ng-click="startMileage()">Create Mileage</button>
+                    </div>
+                    <div ng-show="createMileage">
                     <div class="row">
                         <div class="col-md-10">
                             <div class="form-group has-feedback col-md-12" ng-class="{ 'has-error' : !mileageValidation.date.valid }">
@@ -118,33 +122,38 @@
                     </div>
                     <br />
 
-                    <div ng-hide="editingExistingMileage">
-
-                        <div class="row">
+                        <div class="row" ng-hide="editingExistingMileage">
                             <div class="col-md-12">
-                                <button id="mileageAddNew" ng-click="saveAsNewMileage()"
+                                <button id="mileageAddNew" ng-hide="editingNewMileage" ng-click="saveAsNewMileage()"
                                         class="btn btn-success">
                                     <i class="glyphicon glyphicon-ok"></i>
                                     <span>Save as New Mileage</span>
                                 </button>
-                                <button id="mileageSaveCurrent" ng-disabled="!editingNewMileage" ng-click="saveChanges()"
+                                <button id="mileageCancelNew" ng-hide="editingNewMileage" ng-click="cancelNewMileage()"
+                                        class="btn btn-warning">
+                                    <i class="glyphicon glyphicon-ban-circle"></i>
+                                    <span>Cancel</span>
+                                </button>
+                                <button id="mileageSaveCurrent" ng-hide="!editingNewMileage" ng-click="saveChanges()"
                                         class="btn btn-primary">
                                     <i class="glyphicon glyphicon-save"></i>
                                     <span>Save Changes</span>
                                 </button>
-                                <button id="mileageCancelCurrent" ng-disabled="!editingNewMileage" ng-click="cancelChanges()"
+                                <button id="mileageCancelCurrent" ng-hide="!editingNewMileage" ng-click="cancelChanges()"
                                         class="btn btn-warning">
                                     <i class="glyphicon glyphicon-ban-circle"></i>
                                     <span>Cancel Changes</span>
                                 </button>
                             </div>
                         </div>
+                    </div>
 
-                        <div ng-if="mileageArray.length > 0" class="panel panel-default">
+                        <div ng-if="mileageArray.length > 0" class="panel panel-default" ng-hide="editingExistingMileage || createMileage">
                             <div class="panel-heading">These are your mileage expenses that will be saved.</div>
                             <table class="panel-body table table-condensed table-hover">
                                 <thead>
                                     <tr>
+                                        <th></th>
                                         <th></th>
                                         <th></th>
                                         <th>From</th>
@@ -159,6 +168,10 @@
                                                   data-toggle="tooltip" data-placement="right" title="Edit Mileage"></span>
                                         </td>
                                         <td>
+                                            <span class="pointer glyphicon glyphicon-repeat" ng-click="copyMileage($index)"
+                                                  data-toggle="tooltip" data-placement="right" title="Copy Mileage"></span>
+                                        </td>
+                                        <td>
                                             <span class="pointer glyphicon glyphicon-trash" ng-click="deleteMileage($index)"
                                                   data-toggle="tooltip" data-placement="right" title="Delete Mileage"></span>
                                         </td>
@@ -170,7 +183,6 @@
                             </table>
                         </div>
                         <!-- End Table -->
-                    </div>
                 </div>
             </form>
         </div>
