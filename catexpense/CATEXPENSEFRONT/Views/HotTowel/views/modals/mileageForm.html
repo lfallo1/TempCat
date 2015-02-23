@@ -2,145 +2,147 @@
     <section id="submission-form">
         <div>
             <form role="form" name="mileageForm" class="expense-form" id="mileage-line-form"
-                  novalidate>
+                novalidate>
                 <div class="form-horizontal">
                     <div ng-show="!createMileage">
-                        <button type="button" id="createMileageButton" class="btn btn-success" ng-click="startMileage()">Create Mileage</button>
+                        <button type="button" id="createMileageButton" class="btn btn-success" ng-click="startMileage()">
+                            Create Mileage</button>
                     </div>
+
                     <div ng-show="createMileage">
-                    <div class="row">
-                        <div class="col-md-10">
-                            <div class="form-group has-feedback col-md-12" ng-class="{ 'has-error' : !mileageValidation.date.valid }">
-                                <label class="sr-only" for="mileageDatePickerValue">Date</label>
-                                <div class="input-group">
-                                    <div class="input-group-addon">Date:</div>
-                                    <input type="text" class="form-control" id="mileageDatePickerValue" datepicker-popup="{{format}}"
-                                           ng-model="mileageValues.date" is-open="opened" min-date="minDate" max-date="maxDate"
-                                           datepicker-options="dateOptions" close-text="Close" readonly required />
-                                    <span class="input-group-btn">
-                                        <button type="button" id="mileageDatePickerButton" class="btn btn-default" ng-click="open($event)">
-                                            <i class="glyphicon glyphicon-calendar"></i>
-                                        </button>
-                                    </span>
-                                </div>
-                                <p ng-hide="mileageValidation.date.valid" class="help-block">
-                                    {{mileageValidation.date.message}}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-10">
-                            <div class="form-group col-md-12" ng-class="{ 'has-error' : !mileageValidation.description.valid }">
-                                <label class="sr-only" for="mileageDescription">Description</label>
-                                <div class="input-group">
-                                    <div class="input-group-addon">Description:</div>
-                                    <input ng-model="mileageValues.description" name="description" class="form-control"
-                                           id="mileageDescription" />
-                                </div>
-                                <p ng-hide="mileageValidation.description.valid"
-                                   class="help-block">
-                                    {{mileageValidation.description.message}}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="col-md-6">
-                                <div class="form-group" ng-class="{ 'has-error' : !mileageValidation.origin.valid }">
-                                    <label class="sr-only" for="mileageOrigin">Origin</label>
+                        <div class="row">
+                            <div class="col-md-10">
+                                <div class="form-group has-feedback col-md-12" ng-class="{ 'has-error' : !mileageValidation.date.valid }">
+                                    <label class="sr-only" for="mileageDatePickerValue">Date</label>
                                     <div class="input-group">
-                                        <div class="input-group-addon">Origin:</div>
-                                        <textarea ng-model="mileageValues.origin" class="form-control col-md-5" rows="5"
-                                                  id="mileageOrigin"></textarea>
+                                        <div class="input-group-addon">Date:</div>
+                                        <input type="text" class="form-control" id="mileageDatePickerValue" datepicker-popup="{{format}}"
+                                            ng-model="mileageValues.date" is-open="opened" min-date="minDate" max-date="maxDate"
+                                            datepicker-options="dateOptions" close-text="Close" readonly required />
+                                        <span class="input-group-btn">
+                                            <button type="button" id="mileageDatePickerButton" class="btn btn-default" ng-click="open($event)">
+                                                <i class="glyphicon glyphicon-calendar"></i>
+                                            </button>
+                                        </span>
                                     </div>
-                                    <p ng-hide="mileageValidation.origin.valid" class="help-block">
-                                        {{mileageValidation.origin.message}}
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group" ng-class="{ 'has-error' : !mileageValidation.origin.valid }">
-                                    <label class="sr-only" for="mileageDestination">Destination</label>
-                                    <div class="input-group">
-                                        <div class="input-group-addon">Destination:</div>
-                                        <textarea ng-model="mileageValues.destination" class="form-control col-md-5" rows="5"
-                                                  id="mileageDestination"></textarea>
-                                    </div>
-                                    <p ng-hide="mileageValidation.destination.valid" class="help-block">
-                                        {{mileageValidation.destination.message}}
+                                    <p ng-hide="mileageValidation.date.valid" class="help-block">
+                                        {{mileageValidation.date.message}}
                                     </p>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-12">
-                            <button ng-disabled="calculatingDistance" id="mileageGetDistance" ng-click="getDistance()"
+
+                        <div class="row">
+                            <div class="col-md-10">
+                                <div class="form-group col-md-12" ng-class="{ 'has-error' : !mileageValidation.description.valid }">
+                                    <label class="sr-only" for="mileageDescription">Description</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon">Description:</div>
+                                        <input ng-model="mileageValues.description" name="description" class="form-control"
+                                            id="mileageDescription" />
+                                    </div>
+                                    <p ng-hide="mileageValidation.description.valid"
+                                        class="help-block">
+                                        {{mileageValidation.description.message}}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-6">
+                                    <div class="form-group" ng-class="{ 'has-error' : !mileageValidation.origin.valid }">
+                                        <label class="sr-only" for="mileageOrigin">Origin</label>
+                                        <div class="input-group">
+                                            <div class="input-group-addon">Origin:</div>
+                                            <textarea ng-model="mileageValues.origin" class="form-control col-md-5" rows="5"
+                                                id="mileageOrigin"></textarea>
+                                        </div>
+                                        <p ng-hide="mileageValidation.origin.valid" class="help-block">
+                                            {{mileageValidation.origin.message}}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group" ng-class="{ 'has-error' : !mileageValidation.origin.valid }">
+                                        <label class="sr-only" for="mileageDestination">Destination</label>
+                                        <div class="input-group">
+                                            <div class="input-group-addon">Destination:</div>
+                                            <textarea ng-model="mileageValues.destination" class="form-control col-md-5" rows="5"
+                                                id="mileageDestination"></textarea>
+                                        </div>
+                                        <p ng-hide="mileageValidation.destination.valid" class="help-block">
+                                            {{mileageValidation.destination.message}}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <button ng-disabled="calculatingDistance" id="mileageGetDistance" ng-click="getDistance()"
                                     class="btn btn-info">
-                                <i class="glyphicon glyphicon-road"></i>
-                                <span>Get Distance</span>
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="col-md-10">
-                            <div class="form-group has-feedback col-md-12" ng-class="{ 'has-error' : !mileageValidation.miles.valid }">
-                                <label class="sr-only" for="mileageDistance">Distance</label>
-                                <div class="input-group">
-                                    <div class="input-group-addon">Distance:</div>
-                                    <input ng-model="mileageValues.miles" class="form-control"
-                                           id="mileageDistance" placeholder="0" />
-                                    <div class="input-group-addon">mi</div>
-                                </div>
-                                <p ng-hide="mileageValidation.miles.valid" class="help-block">
-                                    {{mileageValidation.miles.message}}
-                                </p>
+                                    <i class="glyphicon glyphicon-road"></i>
+                                    <span>Get Distance</span>
+                                </button>
                             </div>
                         </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-10">
-                            <div class="form-group col-md-12">
-                                <label class="sr-only" for="totalAmount">Total Amount</label>
-                                <div class="input-group">
-                                    <div class="input-group-addon">$</div>
-                                    <input ng-model="mileageValues.amount" class="form-control"
-                                           id="totalAmount" disabled />
-                                    <div class="input-group-addon">$0.40 Per Mile</div>
+
+                        <div class="row">
+                            <div class="col-md-10">
+                                <div class="form-group has-feedback col-md-12" ng-class="{ 'has-error' : !mileageValidation.miles.valid }">
+                                    <label class="sr-only" for="mileageDistance">Distance</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon">Distance:</div>
+                                        <input ng-model="mileageValues.miles" class="form-control"
+                                            id="mileageDistance" placeholder="0" />
+                                        <div class="input-group-addon">mi</div>
+                                    </div>
+                                    <p ng-hide="mileageValidation.miles.valid" class="help-block">
+                                        {{mileageValidation.miles.message}}
+                                    </p>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                        <div class="row">
+                            <div class="col-md-10">
+                                <div class="form-group col-md-12">
+                                    <label class="sr-only" for="totalAmount">Total Amount</label>
+                                    <div class="input-group">
+                                        <div class="input-group-addon">$</div>
+                                        <input ng-model="mileageValues.amount" class="form-control"
+                                            id="totalAmount" disabled />
+                                        <div class="input-group-addon">$0.40 Per Mile</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-                    <div class="checkbox">
-                        <label>
-                            <input ng-model="mileageValues.billable" id="mileageBillable" type="checkbox">Billable
-                        </label>
-                    </div>
-                    <br />
+                        <div class="checkbox">
+                            <label>
+                                <input ng-model="mileageValues.billable" id="mileageBillable" type="checkbox">Billable
+                            </label>
+                        </div>
+                        <br />
 
                         <div class="row" ng-hide="editingExistingMileage">
                             <div class="col-md-12">
                                 <button id="mileageAddNew" ng-hide="editingNewMileage" ng-click="saveAsNewMileage()"
-                                        class="btn btn-success">
+                                    class="btn btn-success">
                                     <i class="glyphicon glyphicon-ok"></i>
                                     <span>Save as New Mileage</span>
                                 </button>
                                 <button id="mileageCancelNew" ng-hide="editingNewMileage" ng-click="cancelNewMileage()"
-                                        class="btn btn-warning">
+                                    class="btn btn-warning">
                                     <i class="glyphicon glyphicon-ban-circle"></i>
                                     <span>Cancel</span>
                                 </button>
                                 <button id="mileageSaveCurrent" ng-hide="!editingNewMileage" ng-click="saveChanges()"
-                                        class="btn btn-primary">
+                                    class="btn btn-primary">
                                     <i class="glyphicon glyphicon-save"></i>
                                     <span>Save Changes</span>
                                 </button>
                                 <button id="mileageCancelCurrent" ng-hide="!editingNewMileage" ng-click="cancelChanges()"
-                                        class="btn btn-warning">
+                                    class="btn btn-warning">
                                     <i class="glyphicon glyphicon-ban-circle"></i>
                                     <span>Cancel Changes</span>
                                 </button>
@@ -148,41 +150,41 @@
                         </div>
                     </div>
 
-                        <div ng-if="mileageArray.length > 0" class="panel panel-default" ng-hide="editingExistingMileage || createMileage">
-                            <div class="panel-heading">These are your mileage expenses that will be saved.</div>
-                            <table class="panel-body table table-condensed table-hover">
-                                <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th></th>
-                                        <th></th>
-                                        <th>From</th>
-                                        <th>To</th>
-                                        <th>Amount</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr ng-repeat="expense in mileageArray">
-                                        <td>
-                                            <span class="pointer glyphicon glyphicon-edit" ng-click="editMileage($index)"
-                                                  data-toggle="tooltip" data-placement="right" title="Edit Mileage"></span>
-                                        </td>
-                                        <td>
-                                            <span class="pointer glyphicon glyphicon-repeat" ng-click="copyMileage($index)"
-                                                  data-toggle="tooltip" data-placement="right" title="Copy Mileage"></span>
-                                        </td>
-                                        <td>
-                                            <span class="pointer glyphicon glyphicon-trash" ng-click="deleteMileage($index)"
-                                                  data-toggle="tooltip" data-placement="right" title="Delete Mileage"></span>
-                                        </td>
-                                        <td ng-bind="expense.origin"></td>
-                                        <td ng-bind="expense.destination"></td>
-                                        <td>{{("$" +(expense.amount).toFixed( 2 ))}}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <!-- End Table -->
+                    <div ng-if="mileageArray.length > 0" class="panel panel-default" ng-hide="editingExistingMileage || createMileage">
+                        <div class="panel-heading">These are your mileage expenses that will be saved.</div>
+                        <table class="panel-body table table-condensed table-hover">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th></th>
+                                    <th></th>
+                                    <th>From</th>
+                                    <th>To</th>
+                                    <th>Amount</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="expense in mileageArray">
+                                    <td>
+                                        <span class="pointer glyphicon glyphicon-edit" ng-click="editMileage($index)"
+                                            data-toggle="tooltip" data-placement="right" title="Edit Mileage"></span>
+                                    </td>
+                                    <td>
+                                        <span class="pointer glyphicon glyphicon-repeat" ng-click="copyMileage($index)"
+                                            data-toggle="tooltip" data-placement="right" title="Copy Mileage"></span>
+                                    </td>
+                                    <td>
+                                        <span class="pointer glyphicon glyphicon-trash" ng-click="deleteMileage($index)"
+                                            data-toggle="tooltip" data-placement="right" title="Delete Mileage"></span>
+                                    </td>
+                                    <td ng-bind="expense.origin"></td>
+                                    <td ng-bind="expense.destination"></td>
+                                    <td>${{expense.amount}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- End Table -->
                 </div>
             </form>
         </div>
