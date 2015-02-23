@@ -3,36 +3,41 @@
         <div class="col-sm-12">
             <h4 ng-show="editExistingSubmission">Submission Details</h4>
         </div>
-        <div class="col-sm-12">
-            <div class="col-sm-6">
-                <datepicker-icon id="datePicker"></datepicker-icon>
-            </div>
-            <div class="col-sm-6">
-                <div class="form-group">
-                    <label class="sr-only" for="submissionDescription">Description</label>
-                    <div class="input-group">
-                        <div class="input-group-addon">Description:</div>
-                        <input type="text" class="form-control" id="submissionDescription" ng-model="currentDescription" ng-disabled="!createNewItemLoad">
-                    </div>
-                </div>
-            </div>
+        <div ng-show="!startCreateSubmission">
+            <button type="button" id="startCreateButton" class="btn btn-success" ng-click="startCreate()">Create New Expense Submission</button>
         </div>
-        <div class="col-sm-12">
-            <div class="col-sm-6">
-                <div class="form-group">
-                    <label class="sr-only" for="clientDropDownList">Client</label>
-                    <div class="input-group">
-                        <div class="input-group-addon">Client:</div>
-                        <select class="form-control" id="clientDropDownList" ng-options="client.ProjectName for client in clients" ng-model="selectedClient" ng-change="getManager()" ng-disabled="editExistingSubmission"></select>
+        <div ng-show="startCreateSubmission">
+            <div class="col-sm-12">
+                <div class="col-sm-6">
+                    <datepicker-icon id="datePicker"></datepicker-icon>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="sr-only" for="submissionDescription">Description</label>
+                        <div class="input-group">
+                            <div class="input-group-addon">Description:</div>
+                            <input type="text" class="form-control" id="submissionDescription" ng-model="currentDescription" ng-disabled="!createNewItemLoad">
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="col-sm-6">
-                <div class="form-group">
-                    <label class="sr-only" for="managerName">Manager</label>
-                    <div class="input-group">
-                        <div class="input-group-addon">Manager:</div>
-                        <input type="text" disabled class="form-control" id="managerName" ng-model="clientManager">
+            <div class="col-sm-12">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="sr-only" for="clientDropDownList">Client</label>
+                        <div class="input-group">
+                            <div class="input-group-addon">Client:</div>
+                            <select class="form-control" id="clientDropDownList" ng-options="client.ProjectName for client in clients" ng-model="selectedClient" ng-change="getManager()" ng-disabled="editExistingSubmission"></select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        <label class="sr-only" for="managerName">Manager</label>
+                        <div class="input-group">
+                            <div class="input-group-addon">Manager:</div>
+                            <input type="text" disabled class="form-control" id="managerName" ng-model="clientManager">
+                        </div>
                     </div>
                 </div>
             </div>

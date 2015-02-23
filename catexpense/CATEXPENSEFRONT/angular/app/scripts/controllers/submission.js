@@ -14,6 +14,7 @@ angular.module('expenseApp.Controllers')
       $scope.submission = Application.getSubmission();
       $scope.submissionLoad = Application.getSubmission() === undefined;
       $scope.submissionUnderEdit = LineItemService.getUnderEdit();
+      $scope.startCreateSubmission = false;
       $scope.submissionCreated = false;
       $scope.currentDescription = '';
       $scope.editExistingSubmission = false;
@@ -51,6 +52,10 @@ angular.module('expenseApp.Controllers')
       */
       $scope.se = function () {
           return $scope.submissionExists;
+      };
+
+      $scope.startCreate = function () {
+          $scope.startCreateSubmission = true;
       };
 
       /**
@@ -539,6 +544,7 @@ angular.module('expenseApp.Controllers')
                       $scope.dt1 = '';
                       $scope.currentDescription = "";
                       $scope.submissionCreated = false;
+                      $scope.startCreateSubmission = false;
                       $window.location.reload();
                   },
                   function (error) {
@@ -587,6 +593,7 @@ angular.module('expenseApp.Controllers')
                   $scope.dt1 = '';
                   $scope.currentDescription = "";
                   $scope.submissionCreated = false;
+                  $scope.startCreateSubmission = false;
                   $window.location.reload();
               },
               function (error) {
@@ -615,6 +622,7 @@ angular.module('expenseApp.Controllers')
                  $scope.dt1 = '';
                  $scope.currentDescription = "";
                  $scope.submissionCreated = false;
+                 $scope.startCreateSubmission = false;
                  $window.location.reload();
              },
              function (error) {
