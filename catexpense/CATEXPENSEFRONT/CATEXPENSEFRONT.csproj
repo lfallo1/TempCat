@@ -290,9 +290,9 @@
     <Compile Include="Controllers\EmailController.cs">
       <SubType>Code</SubType>
     </Compile>
-	<Compile Include="Controllers\ErrorController.cs">
-	  <SubType>Code</SubType>
-	</Compile>
+    <Compile Include="Controllers\ErrorController.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Controllers\ExpenseCategoryController.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -322,7 +322,7 @@
     </Compile>
     <Compile Include="Models\Login.cs" />
     <Compile Include="Models\RepliconUserProject.cs" />
-	<Compile Include="Models\Error.cs" />
+    <Compile Include="Models\Error.cs" />
     <Compile Include="Models\ExpenseCategory.cs" />
     <Compile Include="Models\LineItem.cs" />
     <Compile Include="Models\Comment.cs" />
@@ -340,7 +340,7 @@
     </Compile>
     <Compile Include="Services\ExpenseCategoryService.cs" />
     <Compile Include="Services\FinanceApproverService.cs" />
-	<Compile Include="Services\Interfaces\IErrorService.cs" />
+    <Compile Include="Services\Interfaces\IErrorService.cs" />
     <Compile Include="Services\Interfaces\IExpenseCategoryService.cs" />
     <Compile Include="Services\Interfaces\IFinanceApproverService.cs" />
     <Compile Include="Services\Interfaces\ICommentService.cs" />
@@ -351,7 +351,7 @@
     <Compile Include="Services\Interfaces\Base\IService.cs" />
     <Compile Include="Services\Interfaces\ISubmissionService.cs" />
     <Compile Include="Services\CommentService.cs" />
-	<Compile Include="Services\ErrorService.cs" />
+    <Compile Include="Services\ErrorService.cs" />
     <Compile Include="Services\LineItemService.cs" />
     <Compile Include="Services\ReceiptService.cs" />
     <Compile Include="Services\RepliconService.cs" />
@@ -603,6 +603,7 @@
     <Content Include="App_Start\EntityFrameworkProfilerBootstrapper.vb" />
     <Content Include="DBScripts\Sprint19.sql" />
     <Content Include="Views\HotTowel\views\about.html" />
+    <Content Include="Views\HotTowel\views\admin.html" />
     <Content Include="Views\HotTowel\views\datepicker.html" />
     <Content Include="Views\HotTowel\views\employeeTable.html" />
     <Content Include="Views\HotTowel\views\FinanceTable.html" />

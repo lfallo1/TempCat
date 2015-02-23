@@ -7,13 +7,13 @@
  * # MainCtrl
  * Controller of the expenseApp
  */
-angular.module('expenseApp.Controllers')
-  .controller('MileageCtrl', ["$scope", "LineItemService", "MapQuestService", "ValidationService", "Authentication", "LogError", function ($scope, LineItemService, MapQuestService, ValidationService, Authentication, LogError) {
+angular.module( 'expenseApp.Controllers' )
+  .controller( 'MileageCtrl', ["$scope", "LineItemService", "MapQuestService", "ValidationService", "Authentication", "LogError", function ( $scope, LineItemService, MapQuestService, ValidationService, Authentication, LogError ) {
 
       /** 
       * stores the ides of the mileageArray of the item that is being edited
       */
-      var mileageIndex = 0;      
+      var mileageIndex = 0;
       /**
       * this variable will be responsible for disabling the 'Get Distance' button when clicked
       */
@@ -79,7 +79,7 @@ angular.module('expenseApp.Controllers')
       /**
        * Edit the mileage expense from the array
        */
-      $scope.editMileage = function (index) {
+      $scope.editMileage = function ( index ) {
           mileageIndex = index;
           $scope.mileageValues.date = $scope.mileageArray[mileageIndex].date;
           $scope.mileageValues.origin = $scope.mileageArray[mileageIndex].origin;
@@ -91,7 +91,7 @@ angular.module('expenseApp.Controllers')
           $scope.editingNewMileage = true;
       };
 
-      $scope.copyMileage = function (index) {
+      $scope.copyMileage = function ( index ) {
           mileageIndex = index;
           $scope.mileageValues.date = $scope.mileageArray[mileageIndex].date;
           $scope.mileageValues.origin = $scope.mileageArray[mileageIndex].origin;
@@ -107,12 +107,12 @@ angular.module('expenseApp.Controllers')
        * Remove the mileage expense from the list of mileage expenses.
        * Will clear out the fields if deleting the expense that the suer is also currently editing.
        */
-      $scope.deleteMileage = function (index) {
-          if ($scope.editingNewMileage && mileageIndex === index) {
+      $scope.deleteMileage = function ( index ) {
+          if ( $scope.editingNewMileage && mileageIndex === index ) {
               resetMileage();
           };
-          $scope.mileageArray.splice(index, 1);
-          if ($scope.mileageArray.length <= 0) {
+          $scope.mileageArray.splice( index, 1 );
+          if ( $scope.mileageArray.length <= 0 ) {
               $scope.editingNewMileage = false;
           }
           mileageIndex = 0;
@@ -129,10 +129,10 @@ angular.module('expenseApp.Controllers')
               to: $scope.mileageValues.destination
           };
 
-          MapQuestService.getDistance(item).then(
-              function (success) {
+          MapQuestService.getDistance( item ).then(
+              function ( success ) {
                   $scope.calculatingDistance = false;
-                  if (success.data.info.statuscode !== 0) {
+                  if ( success.data.info.statuscode !== 0 ) {
                       $scope.mileageValidation.miles.valid = false;
                       $scope.mileageValidation.miles.message = success.data.info.messages[0];
                   } else {
@@ -141,19 +141,23 @@ angular.module('expenseApp.Controllers')
                       $scope.mileageValidation.miles.message = 'This field is valid.';
                   }
 
-              }, function (error) {
+              }, function ( error ) {
                   $scope.calculatingDistance = false;
-                  LogError.logError({ username: Authentication.getUser(), endpoint: error.config.url, error: error.statusText }).then(
-                  function (success) { },
-                  function (error) { });
-              });
+                  LogError.logError( { username: Authentication.getUser(), endpoint: error.config.url, error: error.statusText } ).then(
+                  function ( success ) { },
+                  function ( error ) { } );
+              } );
       };
 
       /**
        * Calulate the amount based on the distance and reimbursement amount
        */
       $scope.getAmount = function () {
-          $scope.mileageValues.amount = ($scope.mileageValues.miles * 0.40).toFixed(2);
+          if ( isNaN( $scope.mileageValues.miles ) ) {
+              $scope.mileageValues.amount = 0;
+          } else {
+              $scope.mileageValues.amount = ( $scope.mileageValues.miles * 0.40 ).toFixed( 2 );
+          }
       };
 
       /**
@@ -181,11 +185,11 @@ angular.module('expenseApp.Controllers')
               location: $scope.mileageValues.destination
           };
 
-          MapQuestService.getLocation(origin).then(
-              function (successOrigin) {
-                  MapQuestService.getLocation(destination).then(
-                      function (successDestination) {
-                          if (successOrigin.data.results[0].locations.length === 0) {
+          MapQuestService.getLocation( origin ).then(
+              function ( successOrigin ) {
+                  MapQuestService.getLocation( destination ).then(
+                      function ( successDestination ) {
+                          if ( successOrigin.data.results[0].locations.length === 0 ) {
                               $scope.mileageValidation.origin.valid = false;
                               $scope.mileageValidation.origin.message = 'Invalid Origin.';
                           } else {
@@ -193,7 +197,7 @@ angular.module('expenseApp.Controllers')
                               $scope.mileageValidation.origin.message = 'This field is valid.';
                           };
 
-                          if (successDestination.data.results[0].locations.length === 0) {
+                          if ( successDestination.data.results[0].locations.length === 0 ) {
                               $scope.mileageValidation.destination.valid = false;
                               $scope.mileageValidation.destination.message = 'Invalid Destination.';
                           } else {
@@ -201,26 +205,26 @@ angular.module('expenseApp.Controllers')
                               $scope.mileageValidation.destination.message = 'This field is valid.';
                           };
 
-                          if ($scope.mileageValidation.origin.valid && $scope.mileageValidation.destination.valid) {
-                              $scope.mileageValidation = ValidationService.validateMileage(lineitem);
-                              if ($scope.mileageValidation.validInput) {
+                          if ( $scope.mileageValidation.origin.valid && $scope.mileageValidation.destination.valid ) {
+                              $scope.mileageValidation = ValidationService.validateMileage( lineitem );
+                              if ( $scope.mileageValidation.validInput ) {
                                   $scope.mileageValues.valid = $scope.mileageValidation.validInput;
-                                  $scope.mileageArray.push($scope.mileageValues);
+                                  $scope.mileageArray.push( $scope.mileageValues );
 
                                   resetMileage();
                                   $scope.createMileage = false;
                               };
                           };
-                      }, function (errorDestination) {
-                          LogError.logError({ username: Authentication.getUser(), endpoint: error.config.url, error: error.statusText }).then(
-                            function (success) { },
-                            function (error) { });
-                      });
-              }, function (errorOrigin) {
-                  LogError.logError({ username: Authentication.getUser(), endpoint: error.config.url, error: error.statusText }).then(
-                    function (success) { },
-                    function (error) { });
-              });
+                      }, function ( errorDestination ) {
+                          LogError.logError( { username: Authentication.getUser(), endpoint: error.config.url, error: error.statusText } ).then(
+                            function ( success ) { },
+                            function ( error ) { } );
+                      } );
+              }, function ( errorOrigin ) {
+                  LogError.logError( { username: Authentication.getUser(), endpoint: error.config.url, error: error.statusText } ).then(
+                    function ( success ) { },
+                    function ( error ) { } );
+              } );
       };
 
       /**
@@ -239,8 +243,8 @@ angular.module('expenseApp.Controllers')
               LineItemMetadata: metadata
           };
 
-          $scope.mileageValidation = ValidationService.validateMileage(lineitem);
-          if ($scope.mileageValidation.validInput) {
+          $scope.mileageValidation = ValidationService.validateMileage( lineitem );
+          if ( $scope.mileageValidation.validInput ) {
               $scope.mileageArray[mileageIndex].date = $scope.mileageValues.date;
               $scope.mileageArray[mileageIndex].origin = $scope.mileageValues.origin;
               $scope.mileageArray[mileageIndex].destination = $scope.mileageValues.destination;
@@ -318,18 +322,18 @@ angular.module('expenseApp.Controllers')
        */
       $scope.$watch(
           'mileageValues',
-          function (newValue, oldValue) {
+          function ( newValue, oldValue ) {
               $scope.getAmount();
-              if (newValue !== oldValue && $scope.editingLineItem) {
+              if ( newValue !== oldValue && $scope.editingLineItem ) {
 
-                  LineItemService.setLineItemDate($scope.mileageValues.date);
-                  LineItemService.setLineItemDesc($scope.mileageValues.description);
-                  LineItemService.setOrigin($scope.mileageValues.origin);
-                  LineItemService.setDestination($scope.mileageValues.destination);
-                  LineItemService.setMiles($scope.mileageValues.miles);
-                  LineItemService.setLineItemAmount($scope.mileageValues.amount);
-                  LineItemService.setBillable($scope.mileageValues.billable);
-                  $scope.mileageValidation = ValidationService.validateMileage(LineItemService.getLineItem());
+                  LineItemService.setLineItemDate( $scope.mileageValues.date );
+                  LineItemService.setLineItemDesc( $scope.mileageValues.description );
+                  LineItemService.setOrigin( $scope.mileageValues.origin );
+                  LineItemService.setDestination( $scope.mileageValues.destination );
+                  LineItemService.setMiles( $scope.mileageValues.miles );
+                  LineItemService.setLineItemAmount( $scope.mileageValues.amount );
+                  LineItemService.setBillable( $scope.mileageValues.billable );
+                  $scope.mileageValidation = ValidationService.validateMileage( LineItemService.getLineItem() );
 
                   $scope.mileageArray[0] = $scope.mileageValues;
                   $scope.mileageArray[0].valid = $scope.mileageValidation.validInput;
@@ -380,7 +384,7 @@ angular.module('expenseApp.Controllers')
       /**
       * opens the datepicker modal
       */
-      $scope.open = function ($event) {
+      $scope.open = function ( $event ) {
           $event.preventDefault();
           $event.stopPropagation();
 
@@ -402,5 +406,5 @@ angular.module('expenseApp.Controllers')
       $scope.formats = ['yyyy/MM/dd', 'EEEE - MMM. dd/yyyy', 'dd.MM.yyyy', 'shortDate'];
       $scope.format = $scope.formats[1];
 
-  }]);
+  }] );
 

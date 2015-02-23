@@ -69,6 +69,11 @@ angular
             templateUrl: 'Views/HotTowel/views/submissionPage.html',
             controller: 'SubmissionCtrl'
         })
+        .when('/admin', {
+            title: 'Submission Page',
+            templateUrl: 'Views/HotTowel/views/admin.html',
+            controller: 'AdminCtrl'
+        })
         .otherwise({
             redirectTo: '/home'
         });
