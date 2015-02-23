@@ -254,7 +254,7 @@ angular.module('expenseApp.Controllers')
       };
 
       $scope.cancelNewMileage = function () {
-          resetValues();
+          resetMileage();
           $scope.createMileage = false;
       };
 
@@ -262,7 +262,7 @@ angular.module('expenseApp.Controllers')
       * do not save the changes made to the line item
       */
       $scope.cancelChanges = function () {
-          resetValues();
+          resetMileage();
           $scope.editingNewMileage = false;
       };
 
