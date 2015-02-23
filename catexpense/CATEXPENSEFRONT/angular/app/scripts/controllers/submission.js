@@ -73,7 +73,11 @@ angular.module('expenseApp.Controllers')
       function setDisabledButtons() {
           if (Application.getSubmission() !== undefined) {
               $scope.missingLineItems = Application.getSubmission().LineItems.length < 1;
+              $scope.startCreateSubmission = true;
           }
+          //if (Application.getOrigin() == "EmployeeTable" || "FinanceTable" || "ManagerTable") {
+          //    $scope.startCreateSubmission = true;
+          //}
       }
       setDisabledButtons();
 
