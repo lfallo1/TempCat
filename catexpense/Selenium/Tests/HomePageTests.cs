@@ -35,5 +35,11 @@ namespace Selenium.Tests
         {
            Assert.IsTrue(methods.ClickSync());
         }
+
+        [Test]
+        public void ClickCreateNewExpenseReportButton()
+        {
+            Assert.IsTrue(methods.ClickCreateNewExpense());
+        }
     }
 }

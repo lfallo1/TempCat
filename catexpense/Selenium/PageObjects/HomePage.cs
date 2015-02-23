@@ -18,6 +18,7 @@ namespace Selenium.PageObjects
         private static readonly By submissionDescription = By.Id("submissionDescription");
         private static readonly By submissionManager = By.Id("submissionManager");
         private static readonly By submissionStatus = By.Id("submissionStatus");
+        private static readonly By startCreateButton = By.Id("startCreateButton");
 
         // date picker elements
         private static readonly string datePickerHeaderPath = "(//ul[@ng-model='date']//button)[{0}]";
@@ -78,6 +79,16 @@ namespace Selenium.PageObjects
         {
             Click(DatePickerButton);
 
+            return this;
+        }
+
+        /// <summary>
+        /// Click the create new expense report button to access the datepicker and client dropdown.
+        /// </summary>
+        /// <returns></returns>
+        public HomePage ClickCreateNewExpenseReport()
+        {
+            Click(startCreateButton);
             return this;
         }
 

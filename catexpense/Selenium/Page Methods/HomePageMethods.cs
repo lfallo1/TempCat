@@ -35,5 +35,23 @@ namespace Selenium.Page_Methods
             return isClicked;
             
         }
+
+        public bool ClickCreateNewExpense()
+        {
+            var isClicked = false;
+            try
+            {
+                _homePage.ClickCreateNewExpenseReport();
+                isClicked = true;
+            }
+            catch (ElementNotVisibleException e)
+            {
+                isClicked = false;
+                string error = e.ToString();
+                Logger.Logger.GetLogger("TestDetails").LogError(error);
+            }
+
+            return isClicked;
+        }
     }
 }
