@@ -106,6 +106,7 @@
     <Compile Include="Enumerators\Month.cs" />
     <Compile Include="Enumerators\SubmissionType.cs" />
     <Compile Include="Enumerators\TableType.cs" />
+    <Compile Include="Page Methods\HomePageMethods.cs" />
     <Compile Include="PageObjects\PageObjectBase.cs" />
     <Compile Include="PageObjects\HomePage.cs" />
     <Compile Include="PageObjects\SubmissionModal.cs" />
@@ -114,6 +115,7 @@
     <Compile Include="SeleniumDriver.cs" />
     <Compile Include="SqlHandler.cs" />
     <Compile Include="TestBase.cs" />
+    <Compile Include="Tests\HomePageTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Logger\Logger.csproj">
@@ -134,9 +136,7 @@
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Tests\" />
-  </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

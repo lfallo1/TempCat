@@ -2,6 +2,7 @@
 using Selenium.Enumerators;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -49,6 +50,12 @@ namespace Selenium.PageObjects
         public HomePage(IWebDriver driver)
             : base(driver)
         { 
+        }
+
+        public HomePage(IWebDriver driver, string username, string password)
+            : base(driver)
+        {
+            Visit( ConfigurationManager.AppSettings["testUrl"], string.Empty);
         }
 
         #region Header controls

@@ -30,7 +30,6 @@ namespace Selenium.PageObjects
         public PageObjectBase(IWebDriver driver)
         {
             Driver = driver;
-            Login();
         }
 
         public void Login()
