@@ -1,5 +1,8 @@
 ﻿<div class="header" ng-controller="NavController">
     <ul class="nav nav-pills pull-right" ng-if="isLoggedIn">
+        <li ng-class="{ active: isActive('#/admin') }">
+            <a ng-href="#/admin">Admin</a>
+        </li>
         <li>
             <div class="col-sm-12 pull-right">
                 <button id="syncProjectsButton" class="btn btn-primary pull-right" ng-click="syncProjects()" ng-disabled="flag">
