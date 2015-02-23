@@ -431,7 +431,8 @@ describe( 'Controller: OtherCtrl', function () {
     it( 'should set the date object to today when clicking the \'today\' button.', function () {
         expect( scope.otherValues.date ).toBe( '' );
         scope.today();
-        expect( scope.otherValues.date ).toEqual( new Date() );
+        var date = new Date();
+        expect( scope.otherValues.date.toUTCString() ).toEqual( date.toUTCString() );
     } );
 
     it( 'should clear the date object when clicking the \'clear\' button.', function () {

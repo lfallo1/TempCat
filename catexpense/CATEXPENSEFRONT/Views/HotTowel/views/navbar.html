@@ -1,6 +1,6 @@
 ﻿<div class="header" ng-controller="NavController">
     <ul class="nav nav-pills pull-right" ng-if="isLoggedIn">
-        <li ng-class="{ active: isActive('#/admin') }">
+        <li ng-show="isAdmin" ng-class="{ active: isActive('#/admin') }">
             <a ng-href="#/admin">Admin</a>
         </li>
         <li>

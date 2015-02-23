@@ -3,6 +3,7 @@
 angular.module('expenseApp.Controllers')
     .controller('NavController', ["$scope", "$location", "$timeout", "Application", "$route", "$rootScope", "Authentication", "LoginService", "SubmissionService", "RepliconProjectService", function ($scope, $location, $timeout, Application, $route, $rootScope, Authentication, LoginService, SubmissionService, RepliconProjectService) {
         $scope.isLoggedIn = Authentication.exists();
+        $scope.isAdmin = false;
         $scope.flag = false;
         $scope.spinner = "";
         $scope.$on("refresh", function () {
@@ -45,4 +46,11 @@ angular.module('expenseApp.Controllers')
                  $scope.flag = false;
              });
         };
+
+        /**
+        * only show the admin tab if the logged in user in infact an admin
+        */
+        if (Authentication.getIsFinanceApprover() === 'true') {
+            $scope.isAdmin = true;
+        }
     }]);
