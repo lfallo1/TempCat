@@ -68,7 +68,7 @@ namespace Selenium.PageObjects
         /// <returns></returns>
         public string GetWeekendingDate()
         {
-            return Find(WeekendingDateInput).Text;
+            return Find(WeekendingDateInput).GetAttribute("value").ToString();
         }
 
         /// <summary>
