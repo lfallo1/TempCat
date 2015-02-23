@@ -11,6 +11,7 @@ namespace Selenium.Page_Methods
     public class HomePageMethods
     {
         HomePage _homePage;
+        IWebDriver driver;
 
         public HomePageMethods(HomePage homePage)
         {
@@ -52,6 +53,24 @@ namespace Selenium.Page_Methods
             }
 
             return isClicked;
+        }
+
+        public bool SelectDropdownElements()
+        {
+            _homePage.ClickCreateNewExpenseReport();
+            var isPresent = false;
+            var valueText = _homePage.GetSelectedClient();
+            _homePage.ClickClient(valueText);
+            if (string.IsNullOrEmpty(valueText))
+            {
+                isPresent = false;
+            }
+            else
+            {
+                isPresent = true;
+            }
+
+            return isPresent;
         }
     }
 }

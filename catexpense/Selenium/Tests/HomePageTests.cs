@@ -31,6 +31,12 @@ namespace Selenium.Tests
         }
 
         [Test]
+        public void OpenHomePage()
+        {
+            Assert.IsNotNull(thisPage);
+        }
+
+        [Test]
         public void ProjectSyncTest()
         {
            Assert.IsTrue(methods.ClickSync());
@@ -40,6 +46,12 @@ namespace Selenium.Tests
         public void ClickCreateNewExpenseReportButton()
         {
             Assert.IsTrue(methods.ClickCreateNewExpense());
+        }
+
+        [Test]
+        public void DropdownTests()
+        {
+            Assert.IsTrue(methods.SelectDropdownElements());
         }
     }
 }

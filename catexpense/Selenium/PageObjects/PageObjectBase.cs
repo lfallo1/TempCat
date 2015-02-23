@@ -157,6 +157,14 @@ namespace Selenium.PageObjects
             select.SelectByIndex(optionIndex);
         }
 
+        public void ClickSelectedElement(By by, string text)
+        {
+            var dropDownSelect = Driver.FindElement(by);
+            var selectElement = new SelectElement(dropDownSelect);
+            selectElement.SelectByText(text);
+            selectElement.SelectedOption.Click();
+        }
+
         public string GetSelectValueFromDropdown(By dropdown)
         {
             var selectedElement = new SelectElement(Find(dropdown));
