@@ -2,6 +2,7 @@
 using Selenium.Enumerators;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,6 +18,7 @@ namespace Selenium.PageObjects
         private static readonly By submissionDescription = By.Id("submissionDescription");
         private static readonly By submissionManager = By.Id("submissionManager");
         private static readonly By submissionStatus = By.Id("submissionStatus");
+        private static readonly By startCreateButton = By.Id("startCreateButton");
 
         // date picker elements
         private static readonly string datePickerHeaderPath = "(//ul[@ng-model='date']//button)[{0}]";
@@ -51,6 +53,12 @@ namespace Selenium.PageObjects
         { 
         }
 
+        public HomePage(IWebDriver driver, string username, string password)
+            : base(driver)
+        {
+            Visit( ConfigurationManager.AppSettings["testUrl"], string.Empty);
+        }
+
         #region Header controls
         /// <summary>
         /// Get text value from the Weekending Date input.
@@ -71,6 +79,16 @@ namespace Selenium.PageObjects
         {
             Click(DatePickerButton);
 
+            return this;
+        }
+
+        /// <summary>
+        /// Click the create new expense report button to access the datepicker and client dropdown.
+        /// </summary>
+        /// <returns></returns>
+        public HomePage ClickCreateNewExpenseReport()
+        {
+            Click(startCreateButton);
             return this;
         }
 
