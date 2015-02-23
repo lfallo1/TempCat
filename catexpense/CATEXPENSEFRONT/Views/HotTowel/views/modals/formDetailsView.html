@@ -19,11 +19,7 @@
         <div ng-show="displayOtherForm()">
             <div ng-include="'Views/HotTowel/views/modals/otherForm.html'"></div>
         </div>
-        <div class="checkbox" ng-hide="editingLineItem">
-            <label>
-                <input type="checkbox" ng-model="addNewReceipt"> Add Receipt
-            </label>
-        </div>
+        
         <div class="row" ng-show="editingLineItem">
             <form id="Form1">
                 <div id="divComfirm" ng-show="divShow" class="col-md-12">
