@@ -111,6 +111,13 @@ namespace Selenium.PageObjects
             actions.MoveToElement(element).Click().Perform();
         }
 
+        public bool CanClick(By by)
+        {
+            IWebElement element = Find(by);
+
+            return element.Displayed && element.Enabled;
+        }
+
         public void ClickAndWaitForPageWithTitle(By by, string title, long timeoutPerAttempt = 2000, int totalAttempts = 3)
         {
             int attempts = 0;
