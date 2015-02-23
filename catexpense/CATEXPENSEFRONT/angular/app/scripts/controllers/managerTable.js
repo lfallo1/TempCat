@@ -47,6 +47,21 @@ angular.module('expenseApp.Controllers')
           $scope.expanded = value;
       };
 
+      /**
+      * load the table with the filtered items
+      */
+      $scope.filterTableBySubmissionStatus = function (status) {
+          var managerSubmissionsFilter = [];
+          for (var i = 0; i < managerSubmissionsContainer.length; i++) {
+              if (managerSubmissionsContainer[i].StatusId == status || status == 0) {
+                  managerSubmissionsFilter.push(managerSubmissionsContainer[i]);
+              }
+          }
+          if (managerSubmissionsFilter.length != 0) {
+              $scope.financeSubmissions = managerSubmissionsFilter;
+          }
+      }
+
       var loadManagerTable = function () {
           if (Application.getPendingSubmissionsByManagerName() != undefined) {
               $scope.managerSubmissions = Application.getPendingSubmissionsByManagerName();
