@@ -9,7 +9,6 @@
  */
 angular.module('expenseApp.Controllers')
   .controller('MileageCtrl', ["$scope", "LineItemService", "MapQuestService", "ValidationService", function ($scope, LineItemService, MapQuestService, ValidationService) {
-
       /** 
       * stores the ides of the mileageArray of the item that is being edited
       */
@@ -18,7 +17,6 @@ angular.module('expenseApp.Controllers')
       * this variable will be responsible for disabling the 'Get Distance' button when clicked
       */
       $scope.calculatingDistance = false;
-
       /**
       * determine if the modal is editing an existing lineitem or creating new one(s)
       */
