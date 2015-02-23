@@ -75,7 +75,7 @@ namespace Selenium.Page_Methods
 
         /// <summary>
         /// This method first tries to set the current week in datepicker then checks to see if it is indeed the 
-        /// current week
+        /// current week that was selected
         /// </summary>
         /// <returns></returns>
         public bool CheckWeekEndingDate()
