@@ -187,6 +187,8 @@ namespace Selenium.PageObjects
         }
         #endregion
 
+        
+        
         /// <summary>
         /// Determine the client currently selected by the client dropdown.
         /// </summary>
@@ -205,6 +207,17 @@ namespace Selenium.PageObjects
         {
             SelectByText(clientDropDownList, client);
 
+            return this;
+        }
+
+        /// <summary>
+        /// actually clicks on the specified client
+        /// </summary>
+        /// <param name="client">name of the client to select</param>
+        /// <returns></returns>
+        public HomePage ClickClient(string client)
+        {
+            ClickSelectedElement(clientDropDownList, client);
             return this;
         }
 
