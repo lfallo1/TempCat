@@ -10,7 +10,6 @@ angular.module('expenseApp.Controllers')
       */
       $scope.doLogin = function (user) {
           LoginService.userlogin(user.username, user.password).then(function (results) {
-             
                   $scope.ErrorMessage = "";
                   Authentication.login(results.data);
                   $location.path('/home');
