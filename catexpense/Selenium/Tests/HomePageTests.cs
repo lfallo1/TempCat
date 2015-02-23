@@ -53,5 +53,11 @@ namespace Selenium.Tests
         {
             Assert.IsTrue(methods.SelectDropdownElements());
         }
+
+        [Test]
+        public void ExpectDatePickerToReadCurrentWeek()
+        {
+            Assert.IsTrue(methods.CheckWeekEndingDate());
+        }
     }
 }
