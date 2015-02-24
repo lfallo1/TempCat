@@ -272,5 +272,20 @@ namespace Selenium.Page_Methods
 
             return isPresent;
         }
+
+        public bool ViewReceiptFromTable()
+        {
+            var receiptViewed = false;
+           if (_homePage.IsReceiptOnTableRow(UserType.Employee, 1))
+           {
+               _homePage.ClickReceiptOnTableAndRow(UserType.Employee, 1);
+               receiptViewed = true;
+           }
+           else
+           {
+               receiptViewed = false;
+           }
+           return receiptViewed;
+        }
     }
 }

@@ -94,5 +94,11 @@ namespace Selenium.Tests
         {
             Assert.IsTrue(methods.SelectStatusFilter());
         }
+
+        [Test]
+        public void CanViewReceiptFromEmployeeTable()
+        {
+            Assert.IsTrue(methods.ViewReceiptFromTable());
+        }
     }
 }
