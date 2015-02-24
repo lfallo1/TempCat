@@ -18,6 +18,10 @@ namespace Selenium.Page_Methods
             _homePage = homePage;
         }
          
+        /// <summary>
+        /// this method attempts to click on the sync button returns true if successful
+        /// </summary>
+        /// <returns>boolean</returns>
         public bool ClickSync()
         {
             var isClicked = false;
@@ -37,6 +41,11 @@ namespace Selenium.Page_Methods
             
         }
 
+        /// <summary>
+        /// this method attempts to click on the Create New Expense button to access datepicker and
+        /// client fields, if successful returns true if not returns false
+        /// </summary>
+        /// <returns>boolean</returns>
         public bool ClickCreateNewExpense()
         {
             var isClicked = false;
@@ -55,6 +64,11 @@ namespace Selenium.Page_Methods
             return isClicked;
         }
 
+        /// <summary>
+        /// This method attempts to select a client from the client dropdown and click on it
+        /// if successful returns true if not returns false
+        /// </summary>
+        /// <returns>boolean</returns>
         public bool SelectDropdownElements()
         {
             _homePage.ClickCreateNewExpenseReport();
@@ -80,10 +94,8 @@ namespace Selenium.Page_Methods
         /// <returns></returns>
         public bool CheckWeekEndingDate()
         {
-            _homePage.ClickCreateNewExpenseReport();
             var isSame = false;
-            _homePage.ClickDatePicker();
-            _homePage.ClickDatePickerCurrentWeek();
+            SetupSubmission();
             var actualWeek = _homePage.GetWeekendingDate();
             var expectedWeek = EndOfWeek(DateTime.Today).ToString();
             DateTime formattedActual;
@@ -104,6 +116,16 @@ namespace Selenium.Page_Methods
             }
 
             return isSame;
+        }
+
+        /// <summary>
+        /// Method to initiate access to the create/add new line item options
+        /// </summary>
+        private void SetupSubmission()
+        {
+            _homePage.ClickCreateNewExpenseReport();
+            _homePage.ClickDatePicker();
+            _homePage.ClickDatePickerCurrentWeek();
         }
 
         /// <summary>
@@ -128,6 +150,28 @@ namespace Selenium.Page_Methods
             if (days < 0)
                 days += 7;
             return dateTime.AddDays(-1 * days).Date;
+        }
+
+        /// <summary>
+        /// this method attempts to click the create submission button
+        /// if successful returns true if not returns false
+        /// </summary>
+        /// <returns>boolean</returns>
+        public bool ClickCreateSubmission()
+        {
+            var submissionClicked = false;
+            SetupSubmission();
+            try
+            {
+                _homePage.ClickCreateSubmission();
+                submissionClicked = true;
+            }
+            catch(OpenQA.Selenium.WebDriverException)
+            {
+                submissionClicked = false;
+            }
+
+            return submissionClicked;
         }
     }
 }

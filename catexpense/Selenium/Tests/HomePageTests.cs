@@ -59,5 +59,11 @@ namespace Selenium.Tests
         {
             Assert.IsTrue(methods.CheckWeekEndingDate());
         }
+
+        [Test]
+        public void ClickCreateSubmission()
+        {
+            Assert.IsTrue(methods.ClickCreateSubmission());
+        }
     }
 }
