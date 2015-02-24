@@ -58,6 +58,9 @@ angular.module( 'expenseApp.Controllers' )
           validInput: true
       };
 
+      if ($scope.editingExistingMileage === true) {
+          $scope.createMileage = true;
+      }
 
       /**
       * default values when the modal is opened
