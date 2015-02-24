@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using OpenQA.Selenium;
 using System.Globalization;
+using Selenium.Enumerators;
 
 namespace Selenium.Page_Methods
 {
@@ -174,6 +175,11 @@ namespace Selenium.Page_Methods
             return submissionClicked;
         }
 
+        /// <summary>
+        /// this method attempts to click the add line item button
+        /// if successful returns true if not returns false
+        /// </summary>
+        /// <returns>boolean</returns>
         public bool ClickAddLineItem()
         {
             var lineItemClicked = false;
@@ -189,6 +195,27 @@ namespace Selenium.Page_Methods
             }
 
             return lineItemClicked;
+        }
+
+        public bool CheckTableForExistingSubmissions()
+        {
+            var submissions = false;
+           
+                var tableExists =_homePage.DoesTableExist(UserType.Employee);
+                if (tableExists)
+                {
+                    var tableCount = _homePage.GetRowCountForTable(UserType.Employee);
+                    if (tableCount > 0)
+                    {
+                        submissions = true;
+                    }
+                }
+                else
+                {
+                    submissions = false;
+                }
+
+                return submissions;
         }
     }
 }

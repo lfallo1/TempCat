@@ -71,5 +71,11 @@ namespace Selenium.Tests
         {
             Assert.IsTrue(methods.ClickAddLineItem());
         }
+
+        [Test]
+        public void DoesEmployeeTableExist()
+        {
+            Assert.IsTrue(methods.CheckTableForExistingSubmissions());
+        }
     }
 }
