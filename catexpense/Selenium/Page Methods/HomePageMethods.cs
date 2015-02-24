@@ -224,6 +224,11 @@ namespace Selenium.Page_Methods
                 return submissions;
         }
 
+        /// <summary>
+        /// this method attempts to delete the first submission in the employee
+        /// table, if successful it returns true
+        /// </summary>
+        /// <returns>boolean</returns>
         public bool DeleteSubmissionFromEmployeeTable()
         {
             var isDeleted = false;
