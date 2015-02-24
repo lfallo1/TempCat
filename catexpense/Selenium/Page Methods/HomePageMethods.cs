@@ -7,13 +7,14 @@ using System.Threading.Tasks;
 using OpenQA.Selenium;
 using System.Globalization;
 using Selenium.Enumerators;
+using OpenQA.Selenium.Support.UI;
 
 namespace Selenium.Page_Methods
 {
     public class HomePageMethods
     {
         HomePage _homePage;
-
+        
         public HomePageMethods(HomePage homePage)
         {
             _homePage = homePage;
@@ -244,6 +245,32 @@ namespace Selenium.Page_Methods
             }
 
             return isDeleted;
+        }
+
+        public bool SelectStatusFilter()
+        {
+            var isPresent = false;
+            SelectElement selectElement;
+            IList<IWebElement> statuses;
+            selectElement = _homePage.SelectStatusDropdown();
+            statuses = _homePage.SelectStatusesFromDropdown();
+
+            for(int x = 0; x < statuses.Count(); x++)
+            {
+                var valueText = statuses[x].GetAttribute("value");
+                selectElement.SelectByValue(valueText);
+                selectElement.SelectedOption.Click();
+                if (string.IsNullOrEmpty(valueText))
+                {
+                    isPresent = false;
+                }
+                else
+                {
+                    isPresent = true;
+                }
+            }
+
+            return isPresent;
         }
     }
 }

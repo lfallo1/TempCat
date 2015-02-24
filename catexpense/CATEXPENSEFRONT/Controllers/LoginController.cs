@@ -76,7 +76,7 @@ namespace CatExpenseFront.Controllers
                 userWithSession.isManager = isManager();
 
             }
-            catch (DirectoryServicesCOMException e)
+            catch (DirectoryServicesCOMException)
             {
                 this.checkSession();
             }

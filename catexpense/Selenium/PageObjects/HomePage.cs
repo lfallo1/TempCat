@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 using Selenium.Enumerators;
 using System;
 using System.Collections.Generic;
@@ -47,11 +48,8 @@ namespace Selenium.PageObjects
         private static readonly string tableRowAndColPath = tableRowPath + "//td[{1}]";
         private static readonly string viewReceiptPath = "(" + tableBasePath + 
             "//span[@title='View all receipts'])[{1}]";
-
         public HomePage(IWebDriver driver)
-            : base(driver)
-        { 
-        }
+            : base(driver) { }
 
         public HomePage(IWebDriver driver, string username, string password)
             : base(driver)
@@ -267,6 +265,33 @@ namespace Selenium.PageObjects
         public bool IsStatusVisible()
         {
             return DoesElementExist(submissionStatusDropdown);
+        }
+
+        /// <summary>
+        /// Selects the status dropdown and returns a select element that can be used to select 
+        /// the options contained in the dropdown
+        /// </summary>
+        /// <returns>SelectElement object</returns>
+        public SelectElement SelectStatusDropdown()
+        {
+            var element = Driver.FindElement(submissionStatusDropdown);
+            var selectElement = new SelectElement(element);
+            return selectElement;
+        }
+
+        /// <summary>
+        /// Takes all statuses contained in the status dropdown and puts them into a list
+        /// to be used in conjunction with the select element to click on each status in 
+        /// the dropdown
+        /// </summary>
+        /// <returns>IList<IWebElement></returns>
+        public IList<IWebElement> SelectStatusesFromDropdown()
+        {
+            var element = Driver.FindElement(submissionStatusDropdown);
+            var selectElement = new SelectElement(element);
+            IList<IWebElement> allStatusDropdown = Driver.FindElement(submissionStatusDropdown)
+                .FindElements(By.XPath("//option"));
+            return allStatusDropdown;
         }
         #endregion
 

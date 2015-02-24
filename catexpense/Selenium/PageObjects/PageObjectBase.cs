@@ -14,6 +14,8 @@ namespace Selenium.PageObjects
     public class PageObjectBase
     {
         protected IWebDriver Driver { get; set; }
+        private string username = ConfigurationManager.AppSettings["username"];
+        private string password = ConfigurationManager.AppSettings["password"];
         private const string LOGSTRING = "TestDetails";
         private const string ERRORMESSAGE = "PageObjectBase: We're not on the expected page.";
         
@@ -38,8 +40,8 @@ namespace Selenium.PageObjects
 
         public void Login()
         {
-            Find(usernameLogin).SendKeys(ConfigurationManager.AppSettings["username"]);
-            Find(passwordLogin).SendKeys(ConfigurationManager.AppSettings["password"]);
+            Find(usernameLogin).SendKeys(username);
+            Find(passwordLogin).SendKeys(password);
             Find(loginButton).Click();
         }
 

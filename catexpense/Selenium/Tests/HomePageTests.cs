@@ -16,17 +16,16 @@ namespace Selenium.Tests
     {
         HomePage thisPage;
         HomePageMethods methods;
+        string username;
+        string password;    
 
         [SetUp]
         public void Init()
-        {
-            thisPage = new HomePage(WebDriver);
-            methods = new HomePageMethods(thisPage);
-            string username;
-            string password;
+        {            
             username = ConfigurationManager.AppSettings["username"];
             password = ConfigurationManager.AppSettings["password"];
             thisPage = new HomePage(WebDriver, username, password);
+            methods = new HomePageMethods(thisPage);              
             thisPage.Login();
         }
 
@@ -88,6 +87,12 @@ namespace Selenium.Tests
         public void IsStatusDropdownVisible()
         {
             Assert.IsTrue(thisPage.IsStatusVisible());
+        }
+
+        [Test]
+        public void CanSelectStatusFilters()
+        {
+            Assert.IsTrue(methods.SelectStatusFilter());
         }
     }
 }
