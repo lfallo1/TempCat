@@ -96,36 +96,36 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
        
 
         //[Test]
-        //public void ModelStateErrorPostTest()
-        //{
-        //    // Arrange
-        //    controller.ModelState.AddModelError("test", "test");
+        public void ModelStateErrorPostTest()
+        {
+            // Arrange
+            controller.ModelState.AddModelError("test", "test");
 
-        //    // Act
-        //    var response = controller.Post(receipt1);
+            // Act
+            var response = controller.FileUpload(receipt1);
 
-        //    // Assert
-        //    Assert.IsNotNull(response);
-        //    Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
-        //}
+            // Assert
+            Assert.IsNotNull(response);
+            //Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
+        }
 
         //[Test]
-        //public void PostTest()
-        //{
-        //    // Arrange
-        //    mockService.Setup(s => s.Create(It.IsAny<Receipt>())).Returns(receipt1);
+        public void PostTest()
+        {
+            // Arrange
+            mockService.Setup(s => s.Create(It.IsAny<Receipt>())).Returns(receipt1);
 
-        //    // Act
-        //    var response = controller.Post(receipt1);
+            // Act
+            var response = controller.FileUpload(receipt1);
 
-        //    // Assert
-        //    Assert.IsNotNull(response);
-        //    Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
-        //}
+            // Assert
+            Assert.IsNotNull(response);
+            //Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
+        }
 
        
 
-        /*[Test]
+        //[Test]
         public void GetReceiptIdsBySubmissionIdTest()
         {
             // Arrange
@@ -137,6 +137,6 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             // Assert
             Assert.IsNotNull(response);
             Assert.AreEqual(1, (response as ICollection<ReceiptWithoutImage>).Count);
-        }*/
+        }
     }
 }

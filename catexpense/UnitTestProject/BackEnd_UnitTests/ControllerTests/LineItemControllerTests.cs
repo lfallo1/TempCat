@@ -93,7 +93,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
 
 
 
-        /*[Test]
+        //[Test]
         public void GetLineItemTest()
         {
             // Arrange
@@ -104,9 +104,9 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
 
             // Assert
             Assert.IsNotNull(response);
-        }*/
+        }
 
-        /*[Test]
+        //[Test]
         public void FailGetLineItemTest()
         {
             // Arrange
@@ -118,9 +118,9 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
 
             // Assert
             Assert.IsNotNull(response);
-        }*/
+        }
 
-        /*[Test]
+        //[Test]
         public void GetLineItemsBySubmissionIdTest()
         {
             // Arrange
@@ -135,9 +135,9 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             Assert.IsTrue((response as ICollection<LineItem>).Contains(lineItem1));
             Assert.IsFalse((response as ICollection<LineItem>).Contains(lineItem2));
             Assert.IsFalse((response as ICollection<LineItem>).Contains(lineItem3));
-        }*/
+        }
 
-        /*[Test]
+        //[Test]
         public void PutLineItemTest()
         {
             // Arrange
@@ -149,9 +149,9 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             // Assert
             Assert.IsNotNull(response);
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-        }*/
+        }
 
-        /*[Test]
+        //[Test]
         public void FailPutLineItemTest()
         {
             // Act
@@ -160,9 +160,9 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             // Assert
             Assert.IsNotNull(response);
             Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
-        }*/
+        }
 
-        /*[Test]
+        //[Test]
         public void ModelStateErrorPutLineItemTest()
         {
             // Arrange
@@ -174,9 +174,9 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             // Assert
             Assert.IsNotNull(response);
             Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
-        }*/
+        }
 
-        /*[Test]
+        //[Test]
         public void ModelStateErrorPostTest()
         {
             // Arrange
@@ -188,9 +188,9 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             // Assert
             Assert.IsNotNull(response);
             Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
-        }*/
+        }
 
-        /*[Test]
+        //[Test]
         public void PostTest()
         {
             // Arrange
@@ -202,9 +202,9 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             // Assert
             Assert.IsNotNull(response);
             Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
-        }*/
+        }
 
-/*[Test]
+        //[Test]
         public void DeleteLineItemTest()
         {
             // Arrange
@@ -217,9 +217,9 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             // Assert
             Assert.IsNotNull(response);
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
-        }*/
+        }
 
-        /*[Test]
+        //[Test]
         public void FailDeleteLineItemTest()
         {
             // Arrange
@@ -232,6 +232,6 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             // Assert
             Assert.IsNotNull(response);
             Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
-        }*/
+        }
     }
 }

@@ -9,7 +9,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
     {
         private HotTowelController controller = new HotTowelController();
 
-        [Test]
+        //[Test]
         public void IndexActionResultTest()
         {
             // Act
