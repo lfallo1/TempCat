@@ -27,6 +27,10 @@ namespace Selenium.PageObjects
         private static readonly By loginButton = By.Id("loginButton");
         private static readonly By syncButton = By.Id("syncProjectsButton");
 
+        //Confirm Modal
+        private static readonly By confirmDelete = By.Id("yesButton");
+        private static readonly By cancelDelete = By.Id("cancelButton");
+
         public PageObjectBase(IWebDriver driver)
         {
             Driver = driver;
@@ -200,6 +204,16 @@ namespace Selenium.PageObjects
         {
             Click(syncButton);
             return this;
+        }
+
+        public void ClickConfirmDelete()
+        {
+            Click(confirmDelete);
+        }
+
+        public void ClickCancelDelete()
+        {
+            Click(cancelDelete);
         }
     }
 }

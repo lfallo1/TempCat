@@ -77,5 +77,11 @@ namespace Selenium.Tests
         {
             Assert.IsTrue(methods.CheckTableForExistingSubmissions());
         }
+
+        [Test]
+        public void DeleteFirstSubmissionFromEmployeeTable()
+        {
+            Assert.IsTrue(methods.DeleteSubmissionFromEmployeeTable());
+        }
     }
 }

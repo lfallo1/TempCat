@@ -197,6 +197,12 @@ namespace Selenium.Page_Methods
             return lineItemClicked;
         }
 
+        /// <summary>
+        /// this method first checks to see if the employee table is visible then
+        /// checks to make sure there are submissions in the table it returns true if 
+        /// both criteria are met
+        /// </summary>
+        /// <returns></returns>
         public bool CheckTableForExistingSubmissions()
         {
             var submissions = false;
@@ -216,6 +222,23 @@ namespace Selenium.Page_Methods
                 }
 
                 return submissions;
+        }
+
+        public bool DeleteSubmissionFromEmployeeTable()
+        {
+            var isDeleted = false;
+            try
+            {
+                _homePage.ClickDeleteByTableAndColumn(UserType.Employee, 1);
+                _homePage.ClickConfirmDelete();
+                isDeleted = true;
+            }
+            catch(OpenQA.Selenium.WebDriverException)
+            {
+                isDeleted = false;
+            }
+
+            return isDeleted;
         }
     }
 }
