@@ -287,5 +287,38 @@ namespace Selenium.Page_Methods
            }
            return receiptViewed;
         }
+
+        public bool EditSubmissionFromEmployeeTable()
+        {
+            var submissionEdit = false;
+             try
+            {
+                _homePage.ClickEditOrViewByTableAndColumn(UserType.Employee, 1);
+                _homePage.ClickSaveTable();
+                submissionEdit = true;
+            }
+            catch(OpenQA.Selenium.WebDriverException)
+            {
+                submissionEdit = false;
+            }
+
+            return submissionEdit;
+        }
+
+        public bool ClickLogOut()
+        {
+            var loggedOut = false;
+            try
+            {
+                _homePage.ClickLogout();
+                loggedOut = true;
+            }
+            catch(OpenQA.Selenium.WebDriverException)
+            {
+                loggedOut = false;
+            }
+            return loggedOut;
+        }
+        
     }
 }

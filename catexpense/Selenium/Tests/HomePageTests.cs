@@ -100,5 +100,17 @@ namespace Selenium.Tests
         {
             Assert.IsTrue(methods.ViewReceiptFromTable());
         }
+        
+        [Test]
+        public void CanEditSubmissionFromEmployeeTable()
+        {
+            Assert.IsTrue(methods.EditSubmissionFromEmployeeTable());
+        }
+
+        [Test]
+        public void CanLogOut()
+        {
+            Assert.IsTrue(methods.ClickLogOut());
+        }
     }
 }
