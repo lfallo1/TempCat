@@ -247,6 +247,11 @@ namespace Selenium.Page_Methods
             return isDeleted;
         }
 
+        /// <summary>
+        /// this method checks to make sure that you are able to change the status filter
+        /// returns true if successful
+        /// </summary>
+        /// <returns>boolean</returns>
         public bool SelectStatusFilter()
         {
             var isPresent = false;
@@ -273,6 +278,11 @@ namespace Selenium.Page_Methods
             return isPresent;
         }
 
+        /// <summary>
+        /// This method checks to see if a user is able to view a receipt from the employee table
+        /// returns true if successful
+        /// </summary>
+        /// <returns>boolean</returns>
         public bool ViewReceiptFromTable()
         {
             var receiptViewed = false;
@@ -288,6 +298,11 @@ namespace Selenium.Page_Methods
            return receiptViewed;
         }
 
+        /// <summary>
+        /// This method checks to see if the edit button from the employee table takes 
+        /// you to the submission page, returns true if successful
+        /// </summary>
+        /// <returns>boolean</returns>
         public bool EditSubmissionFromEmployeeTable()
         {
             var submissionEdit = false;
@@ -305,6 +320,11 @@ namespace Selenium.Page_Methods
             return submissionEdit;
         }
 
+        /// <summary>
+        /// This method checks to see if a user is able to log out of the application
+        /// returns true if successful
+        /// </summary>
+        /// <returns>boolean</returns>
         public bool ClickLogOut()
         {
             var loggedOut = false;
