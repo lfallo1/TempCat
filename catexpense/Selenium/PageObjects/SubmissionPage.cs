@@ -31,9 +31,24 @@ namespace Selenium.PageObjects
         private static readonly string billableByRow = 
             "(//tbody[contains(@ng-repeat,'expense')][{0}])//span[@class='glyphicon glyphicon-ok']";
 
-        // modal buttons
+        private static readonly string rowPath = "//tbody[contains(@ng-repeat,'expense')]";
+        private static readonly string cellPathByColumn = "(" + rowPath + ")[{0}]//td[{1}]";
+        private static readonly int EXPENSE_DATE = 3;
+        private static readonly int EXPENSE_TYPE = 4;
+        private static readonly int AMOUNT = 5;
+
+
+        // modal controls
+        private static readonly By commentTextArea = By.Id("commentTextArea");
         private static readonly By yesButton = By.Id("yesButton");
         private static readonly By cancelButton = By.Id("cancelButton");
+
+        // line item table headers
+        private static readonly By expenseDateHeader = By.Id("subExpenseDate");
+        private static readonly By expenseTypeHeader = By.Id("subExpenseType");
+        private static readonly By amountHeader = By.Id("subAmount");
+        private static readonly By billableHeader = By.Id("subBillable");
+        private static readonly By receiptHeader = By.Id("subReceipt");
 
         public SubmissionPage(IWebDriver driver)
             : base(driver)
@@ -114,9 +129,129 @@ namespace Selenium.PageObjects
         #endregion
 
         #region read expense table values
+        /// <summary>
+        /// Get the contents of a specific cell on the table.  Should not be
+        /// directly called outside the page object.
+        /// </summary>
+        /// <param name="row">row of cell to search for</param>
+        /// <param name="column">column of cell to search for</param>
+        /// <returns></returns>
+        private string GetCellByRowAndColumn(int row, int column)
+        {
+            string fullPath = string.Format(cellPathByColumn, row, column);
+            return Find(By.XPath(fullPath)).Text;
+        }
+
+        /// <summary>
+        /// Counts the number of expense rows in the line item table.
+        /// </summary>
+        /// <returns></returns>
+        public int GetRowCount()
+        {
+            return FindAll(By.XPath(rowPath)).Count;
+        }
+
+        /// <summary>
+        /// Get all the string contents of all cells in a given column.
+        /// 
+        /// Will return an empty string if there are no columns.
+        /// 
+        /// Should not be directly called outside the page object.
+        /// </summary>
+        /// <param name="column"></param>
+        /// <returns></returns>
+        public List<string> GetCellContentsByColumn(int column)
+        {
+            int rowCount = GetRowCount();
+            List<string> columnContents = new List<string>();
+
+            for (int row = 1; row <= rowCount; row++)
+            {
+                columnContents.Add(GetCellByRowAndColumn(row, column));
+            }
+
+            return columnContents;
+        }
+
+        /// <summary>
+        /// Reads and returns all the Expense Date values in order.
+        /// </summary>
+        /// <returns></returns>
+        public List<string> GetAllExpenseDatesFromTable()
+        {
+            return GetCellContentsByColumn(EXPENSE_DATE);
+        }
+
+        /// <summary>
+        /// Reads and returns all the Expense Type values in order.
+        /// </summary>
+        /// <returns></returns>
+        public List<string> GetAllExpenseTypesFromTable()
+        {
+            return GetCellContentsByColumn(EXPENSE_TYPE);
+        }
+
+        /// <summary>
+        /// Reads and returns all the Amount values in order.
+        /// </summary>
+        /// <returns></returns>
+        public List<string> GetAllAmountsFromTable()
+        {
+            return GetCellContentsByColumn(AMOUNT);
+        }
         #endregion
 
-        #region expense table buttons
+        #region expense table headers
+        /// <summary>
+        /// Click the Expense Date header.
+        /// </summary>
+        /// <returns></returns>
+        private SubmissionPage SortByExpenseDate()
+        {
+            Click(expenseDateHeader);
+            return this;
+        }
+
+        /// <summary>
+        /// Click the Expense Type header.
+        /// </summary>
+        /// <returns></returns>
+        private SubmissionPage SortByExpenseType()
+        {
+            Click(expenseTypeHeader);
+            return this;
+        }
+
+        /// <summary>
+        /// Click the Amount header.
+        /// </summary>
+        /// <returns></returns>
+        private SubmissionPage SortByAmount()
+        {
+            Click(amountHeader);
+            return this;
+        }
+
+        /// <summary>
+        /// Click the Billable header.
+        /// </summary>
+        /// <returns></returns>
+        private SubmissionPage SortByBillable()
+        {
+            Click(billableHeader);
+            return this;
+        }
+
+        /// <summary>
+        /// Click the Receipts header.
+        /// </summary>
+        /// <returns></returns>
+        private SubmissionPage SortByReceipt()
+        {
+            Click(receiptHeader);
+            return this;
+        }
+
         /// <summary>
         /// Click an element on the table by what it does and the row it occupies on the 
         /// line items table.
@@ -210,6 +345,22 @@ namespace Selenium.PageObjects
             {
                 Click(newCommentButton);
             }
+            return this;
+        }
+
+        /// <summary>
+        /// Clicks the "New Comment" button, then makes a given comment.
+        /// 
+        /// May also specify whether you want to accept or cancel the comment.
+        /// </summary>
+        /// <param name="comment">the text of the comment you wish to make</param>
+        /// <param name="confirm">should click yes after entering comment (optional; default to yes)</param>
+        /// <returns></returns>
+        public SubmissionPage AddComment(string comment, bool confirm = true)
+        {
+            Click(newCommentButton);
+            SendKeys(commentTextArea, comment);
+            Click(confirm ? yesButton : cancelButton);
             return this;
         }
 
