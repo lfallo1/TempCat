@@ -83,5 +83,11 @@ namespace Selenium.Tests
         {
             Assert.IsTrue(methods.DeleteSubmissionFromEmployeeTable());
         }
+
+        [Test]
+        public void IsStatusDropdownVisible()
+        {
+            Assert.IsTrue(thisPage.IsStatusVisible());
+        }
     }
 }

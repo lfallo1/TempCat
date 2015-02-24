@@ -17,7 +17,7 @@ namespace Selenium.PageObjects
         private static readonly By clientDropDownList = By.Id("clientDropDownList");
         private static readonly By submissionDescription = By.Id("submissionDescription");
         private static readonly By submissionManager = By.Id("submissionManager");
-        private static readonly By submissionStatus = By.Id("submissionStatus");
+        private static readonly By submissionStatusDropdown = By.Id("empSelectStatus");
         private static readonly By startCreateButton = By.Id("startCreateButton");
 
         // date picker elements
@@ -257,7 +257,7 @@ namespace Selenium.PageObjects
         /// <returns></returns>
         public string GetStatus()
         {
-            return IsStatusVisible() ? Find(submissionStatus).Text : string.Empty;
+            return IsStatusVisible() ? Find(submissionStatusDropdown).Text : string.Empty;
         }
 
         /// <summary>
@@ -266,7 +266,7 @@ namespace Selenium.PageObjects
         /// <returns></returns>
         public bool IsStatusVisible()
         {
-            return DoesElementExist(submissionStatus);
+            return DoesElementExist(submissionStatusDropdown);
         }
         #endregion
 
