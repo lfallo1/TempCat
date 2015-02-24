@@ -173,5 +173,22 @@ namespace Selenium.Page_Methods
 
             return submissionClicked;
         }
+
+        public bool ClickAddLineItem()
+        {
+            var lineItemClicked = false;
+            SetupSubmission();
+            try
+            {
+                _homePage.ClickAddLineItemButton();
+                lineItemClicked = true;
+            }
+            catch(OpenQA.Selenium.WebDriverException)
+            {
+                lineItemClicked = false;
+            }
+
+            return lineItemClicked;
+        }
     }
 }

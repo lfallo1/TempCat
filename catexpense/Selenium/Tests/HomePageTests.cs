@@ -65,5 +65,11 @@ namespace Selenium.Tests
         {
             Assert.IsTrue(methods.ClickCreateSubmission());
         }
+
+        [Test]
+        public void ClickAddLineItem()
+        {
+            Assert.IsTrue(methods.ClickAddLineItem());
+        }
     }
 }
