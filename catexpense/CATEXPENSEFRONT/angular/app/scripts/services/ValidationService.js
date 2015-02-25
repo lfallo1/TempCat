@@ -256,7 +256,7 @@ angular.module('expenseApp.Services')
           };
 
           var regExp = /^(\d*.?\d+)$/;
-          invalidObj.amount.valid = regExp.test(lineitem.LineItemAmount) && lineitem.LineItemAmount >= 0;
+          invalidObj.amount.valid = regExp.test(lineitem.LineItemAmount) && lineitem.LineItemAmount > 0;
           if (!invalidObj.amount.valid) {
               invalidObj.amount.message = 'Please input a valid amount.';
           };

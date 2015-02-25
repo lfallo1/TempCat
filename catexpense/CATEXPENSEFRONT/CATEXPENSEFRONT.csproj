@@ -527,6 +527,8 @@
     <Content Include="angular\app\favicon.ico" />
     <Content Include="angular\app\robots.txt" />
     <Content Include="angular\app\scripts\app.js" />
+    <Content Include="angular\app\scripts\constants\Constant.js" />
+    <Content Include="angular\app\scripts\controllers\admin.js" />
     <Content Include="angular\app\scripts\controllers\datepicker.js" />
     <Content Include="angular\app\scripts\controllers\employeeTable.js" />
     <Content Include="angular\app\scripts\controllers\financeTable.js" />
@@ -552,8 +554,9 @@
     <Content Include="angular\app\scripts\services\Authentication.js" />
     <Content Include="angular\app\scripts\services\CommentService.js" />
     <Content Include="angular\app\scripts\services\DateService.js" />
-    <Content Include="angular\app\scripts\services\HttpInterceptor.js" />
+    <Content Include="angular\app\scripts\services\ExpenseCategoryService.js" />
     <Content Include="angular\app\scripts\services\LineItemService.js" />
+    <Content Include="angular\app\scripts\services\LogErrors.js" />
     <Content Include="angular\app\scripts\services\LoginService.js" />
     <Content Include="angular\app\scripts\services\MapQuestService.js" />
     <Content Include="angular\app\scripts\services\MessageService.js" />

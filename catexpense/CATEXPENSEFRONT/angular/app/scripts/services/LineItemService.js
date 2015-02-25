@@ -356,7 +356,7 @@ angular.module('expenseApp.Services')
           if (!isNaN(parseInt(value)) && value > 0) {
               lineItem.LineItemAmount = value;
           } else {
-              lineItem.LineItemAmount = '0.00';
+              lineItem.LineItemAmount = 0;
           }
       };
 
