@@ -15,6 +15,8 @@ angular.module('expenseApp.Controllers')
 
       $scope.divShow = false;
 
+      $scope.showDetailsViewSaveCancel = true;
+
       /**
       * contains the list of the different types of expenses
       * set to current values in database upon page load by getExpenseCategories function
@@ -45,6 +47,10 @@ angular.module('expenseApp.Controllers')
        */
       $scope.displayMileageForm = function () {
           return $scope.selectedType === 'Mileage';
+      };
+
+      $scope.isMileage = function () {
+
       };
 
       /**
@@ -266,4 +272,20 @@ angular.module('expenseApp.Controllers')
               $scope.noReceipt = true;
           }
       }
+
+      $scope.$watch(
+          'showDetailsViewSaveCancel',
+          function (newValue, oldValue) {
+              if (newValue == true) {
+                  console.log("true");
+                  $("#SaveAndCancel").show();
+              }
+              if (newValue == false) {
+                  console.log("false");
+                  $("#SaveAndCancel").hide();
+              }
+              else {
+                  return;
+              }
+          }, true);
   }]);

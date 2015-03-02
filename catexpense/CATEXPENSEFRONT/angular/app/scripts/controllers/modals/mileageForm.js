@@ -77,6 +77,7 @@ angular.module( 'expenseApp.Controllers' )
 
       $scope.startMileage = function () {
           $scope.createMileage = true;
+          $scope.showDetailsViewSaveCancel = false;
       };
 
       /**
@@ -216,6 +217,7 @@ angular.module( 'expenseApp.Controllers' )
 
                                   resetMileage();
                                   $scope.createMileage = false;
+                                  $scope.showDetailsViewSaveCancel = true;
                               };
                           };
                       }, function ( errorDestination ) {
@@ -263,6 +265,7 @@ angular.module( 'expenseApp.Controllers' )
       $scope.cancelNewMileage = function () {
           resetMileage();
           $scope.createMileage = false;
+          $scope.showDetailsViewSaveCancel = true;
       };
 
       /**
@@ -344,6 +347,20 @@ angular.module( 'expenseApp.Controllers' )
           },
           true
       );
+
+      $scope.$watch(
+          'showDetailsViewSaveCancel',
+          function (newValue, oldValue) {
+                if (newValue == true) {
+                $("#SaveAndCancel").show();
+                }
+                if (newValue == false) {
+                $("#SaveAndCancel").hide();
+                }
+                else {
+                    return;
+                }
+           }, true);
 
       //==============================================================================//
       // THESE FUNCTIONS ARE FOR THE DATEPICKER

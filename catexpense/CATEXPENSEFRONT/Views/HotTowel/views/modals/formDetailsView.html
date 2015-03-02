@@ -50,20 +50,22 @@
                     <span class="glyphicon glyphicon-info-sign"></span>&nbsp;Policy
                 </button>
             </div>
-            <div class="col-md-2 pull-right">
-                <button ng-click="cancel()" id="cancel" class="btn btn-warning pull-right">
-                    <i class="glyphicon glyphicon-ban-circle"></i>
-                    <span>Cancel</span>
-                </button>
-            </div>
-            <div ng-hide="editingLineItem" class="col-md-3 pull-right">
-                <div class="pull-right">
-                    <button id="saveNew" ng-click="saveNew()" class="btn btn-success">
-                        <i class="glyphicon glyphicon-save"></i>
-                        <span>Save</span>
+            <div id="SaveAndCancel">
+                <div class="col-md-2 pull-right">
+                    <button ng-click="cancel()" id="cancel" class="btn btn-warning pull-right">
+                        <i class="glyphicon glyphicon-ban-circle"></i>
+                        <span>Cancel</span>
                     </button>
                 </div>
-                <div class="pull-right"></div>
+                <div ng-hide="editingLineItem" class="col-md-3 pull-right">
+                    <div class="pull-right">
+                        <button id="saveNew" ng-click="saveNew()" class="btn btn-success">
+                            <i class="glyphicon glyphicon-save"></i>
+                            <span>Save</span>
+                        </button>
+                    </div>
+                    <div class="pull-right"></div>
+                </div>
             </div>
             <div ng-show="editingLineItem" class="col-md-3 pull-right">
                 <div class="pull-right">
