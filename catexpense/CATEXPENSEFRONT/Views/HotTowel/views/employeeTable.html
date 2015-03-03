@@ -19,6 +19,7 @@
                 <tr>
                     <th class="col-md-1"></th>
                     <th class="col-md-1"></th>
+                    <th class="col-md-1"></th>
                     <th class="col-md-3">
                         <a href="" id="empClient" ng-click="employeeOrder('RepliconProject.RepliconProjectName')">
                             Client
@@ -38,10 +39,12 @@
             <tbody class="scrollTable">
                 <tr ng-repeat="submission in employeeSubmissions">
                     <td class="col-md-1">
-                        <div ng-if="submission.Status.StatusName == 'Submitted' || submission.Status.StatusName == 'Manager Approved' || submission.Status.StatusName == 'Finance Approved'">
+                        <div>
                             <span class="glyphicon glyphicon-search pointer" ng-click="loadEmployeeSubmission(submission, $index)"
                                   data-toggle="tooltip" data-placement="left" title="View Report"></span>
                         </div>
+                    </td>
+                    <td class="col-md-1">
                         <div ng-if="submission.Status.StatusName == 'In Progress' || submission.Status.StatusName == 'Manager Rejected' || submission.Status.StatusName == 'Finance Rejected'">
                             <span class="glyphicon glyphicon-edit pointer" ng-click="loadEmployeeSubmission(submission, $index)"
                                   data-toggle="tooltip" data-placement="left" title="Edit Report"></span>
