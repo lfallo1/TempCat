@@ -22,7 +22,7 @@ namespace CatExpenseFront.Services
         ///Constructor that accepts a repository.   
         /// </summary>
         /// <param name="iRepository"></param>
-        public ReceiptService(Repository<Receipt> iRepository)
+        public ReceiptService(IRepository<Receipt> iRepository)
         {
             this.repository = iRepository;
         }
