@@ -42,7 +42,7 @@
                         </div>
                     </td>
                     <td  class="col-md-1">
-                        <div>
+                        <div ng-hide="Status.StatusName == 'Finance Approved'">
                             <span class="pointer glyphicon glyphicon-trash" ng-click="deleteSubmission(submission, $index)"
                                 data-toggle="tooltip" data-placement="left" title="Delete Submission"></span>
                         </div>
