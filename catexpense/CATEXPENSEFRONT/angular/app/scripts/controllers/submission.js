@@ -27,7 +27,7 @@ angular.module( 'expenseApp.Controllers' )
       * initialize variables upon page load 
       * if a submission has been set in the Application service
       */
-      if ( Application.getSubmission() ) {
+      if ( $scope.submission ) {
           $scope.submittedNotApproved = Application.getSubmissionStatus() === 2
         && Application.getSubmission().ActiveDirectoryUser.toUpperCase() == Authentication.getUserName().toUpperCase()
           && ( Application.getOrigin() == "FinanceTable" || Application.getOrigin() == "ManagerTable" );
@@ -113,7 +113,6 @@ angular.module( 'expenseApp.Controllers' )
           if ( $scope.selectedClient !== null && ( $scope.dt1 instanceof Date && !isNaN( $scope.dt1.valueOf() ) ) ) {
               //gets the submission that matches the date and client
               $scope.submission = $scope.findSpecificSubmission();
-              $scope.createNewItemLoad = false;
               if ( afDate !== $scope.dt1 && $scope.afClient !== $scope.selectedClient ) {
                   $rootScope.$broadcast( "submissionFound", $scope.submission );
               }
