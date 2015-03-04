@@ -9,14 +9,14 @@ namespace CatExpenseFront.Models
     /// <summary>
     /// The response from the replicon call.
     /// </summary>
-    public static class RepliconResponse
+    public class RepliconResponse
     {
         /// <summary>
         /// Creates all the replicon projects in the cat expense db.
         /// </summary>
         /// <param name="projects"></param>
         /// <returns></returns>
-        public static List<RepliconUserProject> CreateAllProjectsList(JArray projects)
+        public List<RepliconUserProject> CreateAllProjectsList(JArray projects)
         {
             List<RepliconUserProject> clientList = new List<RepliconUserProject>();
 
@@ -73,7 +73,7 @@ namespace CatExpenseFront.Models
         /// </summary>
         /// <param name="response"></param>
         /// <returns></returns>
-        public static JArray GetResponseValue(JObject response)
+        public JArray GetResponseValue(JObject response)
         {
             string status = (string)response["Status"];
             if (status != "OK")

@@ -24,6 +24,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
         //[Test]
         public void GetRepliconProjectsTest()
         {
+            /*
             JObject apiAction = RepliconRequest.SetupGetAllProjectsQuery();
             mockService.Setup(s => s.SetUpGetAllProjectsQuery()).Returns(apiAction);
 
@@ -32,7 +33,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
 
             JArray responseValue = RepliconResponse.GetResponseValue(response);
             mockService.Setup(s => s.GetResponseValue(response)).Returns(responseValue);
-
+            */
           
         }
     }

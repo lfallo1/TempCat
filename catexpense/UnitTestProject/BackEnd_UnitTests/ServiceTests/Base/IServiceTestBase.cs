@@ -8,8 +8,13 @@ using CatExpenseFront.Services.Interfaces.Base;
 using Moq;
 using NUnit.Framework;
 
+
 namespace UnitTestProject.BackEnd_UnitTests.ServiceTests.Base
 {
+    /// <summary>
+    /// Generic abstract class for service tests
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     [TestFixture]
     public abstract class IServiceTestBase<T> where T : class
     {

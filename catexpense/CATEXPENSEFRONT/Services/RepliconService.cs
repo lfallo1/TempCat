@@ -9,11 +9,16 @@ namespace CatExpenseFront.Services
     /// </summary>
     public class RepliconService : IRepliconService
     {
+        private RepliconRequest repliconRequest;
+        private RepliconResponse repliconResponse;
         /// <summary>
         /// Default Constructor
         /// </summary>
         public RepliconService()
-        { }
+        {
+            repliconRequest = new RepliconRequest();
+            repliconResponse = new RepliconResponse();
+        }
 
         /// <summary>
         /// Builds the all project query.
@@ -21,7 +26,7 @@ namespace CatExpenseFront.Services
         /// <returns></returns>
         public Newtonsoft.Json.Linq.JObject SetUpGetAllProjectsQuery()
         {
-            return RepliconRequest.SetupGetAllProjectsQuery();
+            return repliconRequest.SetupGetAllProjectsQuery();
         }
 
         /// <summary>
@@ -30,7 +35,7 @@ namespace CatExpenseFront.Services
         /// <returns></returns>
         public Newtonsoft.Json.Linq.JObject SetupGetAllUsersQuery()
         {
-            return RepliconRequest.SetupGetAllUsersQuery();
+            return repliconRequest.SetupGetAllUsersQuery();
         }
 
         /// <summary>
@@ -40,7 +45,7 @@ namespace CatExpenseFront.Services
         /// <returns></returns>
         public Newtonsoft.Json.Linq.JObject SetupGetOneProjectQuery(int id)
         {
-            return RepliconRequest.SetupGetOneProjectQuery(id);
+            return repliconRequest.SetupGetOneProjectQuery(id);
         }
 
         /// <summary>
@@ -49,7 +54,7 @@ namespace CatExpenseFront.Services
         /// <returns></returns>
         public System.Net.HttpWebRequest SetupApiCredentials()
         {
-            return RepliconRequest.SetupApiCredentials();
+            return repliconRequest.SetupApiCredentials();
         }
 
         /// <summary>
@@ -59,7 +64,7 @@ namespace CatExpenseFront.Services
         /// <returns></returns>
         public Newtonsoft.Json.Linq.JObject PerformApiRequest(Newtonsoft.Json.Linq.JObject actionObject)
         {
-            return RepliconRequest.PerformApiRequest(actionObject);
+            return repliconRequest.PerformApiRequest(actionObject);
         }
 
 
@@ -70,7 +75,7 @@ namespace CatExpenseFront.Services
         /// <returns></returns>
         public List<RepliconUserProject> CreateAllProjectsList(Newtonsoft.Json.Linq.JArray projects)
         {
-            return RepliconResponse.CreateAllProjectsList(projects);
+            return repliconResponse.CreateAllProjectsList(projects);
         }
 
        
@@ -82,7 +87,7 @@ namespace CatExpenseFront.Services
         /// <returns></returns>
         public Newtonsoft.Json.Linq.JArray GetResponseValue(Newtonsoft.Json.Linq.JObject response)
         {
-            return RepliconResponse.GetResponseValue(response);
+            return repliconResponse.GetResponseValue(response);
         }
 
         /// <summary>

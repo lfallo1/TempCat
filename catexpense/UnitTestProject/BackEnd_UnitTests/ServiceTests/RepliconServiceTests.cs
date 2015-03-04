@@ -26,6 +26,15 @@ namespace UnitTestProject.BackEnd_UnitTests.ServiceTests
         //[Test]
         public void SetupApiCredentialsTest()
         {
+
+            /*
+            using (ShimsContext.Create())
+            {
+                Fakes.ShimToggledExtensions.IsOnIToggled = toggled => true;
+                Assert.That(toggledFeature.SomeProcessing(), Is.EqualTo(1));
+            }
+             * */
+
             //Arrange
             Mock<HttpWebRequest> httpWebRequest = new Mock<HttpWebRequest>();
             httpWebRequest.Object.Credentials = new NetworkCredential("username", "password");

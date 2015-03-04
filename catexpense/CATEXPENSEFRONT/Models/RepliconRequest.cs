@@ -14,7 +14,7 @@ namespace CatExpenseFront.Models
     /// <summary>
     /// Class used to make a request to the replicon api.  
     /// </summary>
-    public static class RepliconRequest
+    public class RepliconRequest
     {
         private const string APIURL = "https://na1.replicon.com/a/RemoteAPI/RemoteAPI.ashx/8.29.23/";
         private const string COMPANYNAME = "CatalystIT";
@@ -27,7 +27,7 @@ namespace CatExpenseFront.Models
         /// Setup the Replicon query to get information for all projects
         /// </summary>
         /// <returns></returns>
-        public static JObject SetupGetAllProjectsQuery()
+        public JObject SetupGetAllProjectsQuery()
         {
             JObject apiLoad = new JObject();
      
@@ -55,7 +55,7 @@ namespace CatExpenseFront.Models
         /// Setup the Replicon query to get information for all users
         /// </summary>
         /// <returns></returns>
-        public static JObject SetupGetAllUsersQuery()
+        public JObject SetupGetAllUsersQuery()
         {
             JObject apiAction = new JObject();
             apiAction["Action"] = "Query";
@@ -72,7 +72,7 @@ namespace CatExpenseFront.Models
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public static JObject SetupGetOneProjectQuery(int id)
+        public JObject SetupGetOneProjectQuery(int id)
         {
             JObject apiLoad = new JObject();
             apiLoad["Relationship"] = "ProjectLeader";
@@ -92,7 +92,7 @@ namespace CatExpenseFront.Models
         /// Setup the Replicon credentials needed for the api calls
         /// </summary>
         /// <returns></returns>
-        public static HttpWebRequest SetupApiCredentials()
+        public HttpWebRequest SetupApiCredentials()
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(APIURL);
             request.Credentials = new NetworkCredential(COMPANYNAME + "\\" + LOGINNAME, PASSWORD);
@@ -107,9 +107,9 @@ namespace CatExpenseFront.Models
         /// </summary>
         /// <param name="apiAction"></param>
         /// <returns>Deserialized response from Replicon</returns>
-        public static JObject PerformApiRequest(JObject apiAction)
+        public JObject PerformApiRequest(JObject apiAction)
         {
-            HttpWebRequest request = RepliconRequest.SetupApiCredentials();
+            HttpWebRequest request = this.SetupApiCredentials();
             JObject responseInfo = null;
 
             // Send API request in JSON format 

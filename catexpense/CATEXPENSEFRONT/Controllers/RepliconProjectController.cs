@@ -29,7 +29,8 @@ namespace CatExpenseFront.Controllers
 
         public IRepliconUserProjectService userProjectService;
         public IFinanceApproverService financeApproverService;
-
+        public RepliconRequest repliconRequest;
+        public RepliconResponse repliconResponse;
 
         /// <summary>
         /// Constructor that accepts service as a parameter
@@ -41,6 +42,8 @@ namespace CatExpenseFront.Controllers
             {
                 this.userProjectService = new RepliconUserProjectService();
                 this.financeApproverService = new FinanceApproverService(new Repository<FinanceApprover>());
+                this.repliconRequest = new RepliconRequest();
+                this.repliconResponse = new RepliconResponse();
             }
         }
 
@@ -79,11 +82,11 @@ namespace CatExpenseFront.Controllers
             //Checks the session to see if it is valid
             this.checkSession();
 
-            JObject apiAction = RepliconRequest.SetupGetAllProjectsQuery();
-            JObject response = RepliconRequest.PerformApiRequest(apiAction);
-            JArray responseValue = RepliconResponse.GetResponseValue(response);
+            JObject apiAction = repliconRequest.SetupGetAllProjectsQuery();
+            JObject response = repliconRequest.PerformApiRequest(apiAction);
+            JArray responseValue = repliconResponse.GetResponseValue(response);
             // gets all of the projects from the replicon db
-            List<RepliconUserProject> projectList = RepliconResponse.CreateAllProjectsList(responseValue);
+            List<RepliconUserProject> projectList = repliconResponse.CreateAllProjectsList(responseValue);
 
             //Delete existing user projects
             List<RepliconUserProject> existingUserProjects = userProjectService.All().ToList<RepliconUserProject>();

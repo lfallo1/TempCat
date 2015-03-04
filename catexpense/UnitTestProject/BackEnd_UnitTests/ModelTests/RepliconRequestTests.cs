@@ -8,10 +8,11 @@ namespace UnitTestProject.BackEnd_UnitTests.ModelTests
     [TestFixture]
     public class RepliconRequestTests
     {
+        RepliconRequest repliconRequest = new RepliconRequest();
         [Test]
         public void SetupGetAllProjectsQueryTest()
         {
-            var jobject = RepliconRequest.SetupGetAllProjectsQuery();
+            var jobject = repliconRequest.SetupGetAllProjectsQuery();
 
             Assert.IsNotNull(jobject);
             Assert.AreSame(jobject.GetType(), typeof(JObject));
@@ -20,7 +21,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ModelTests
         [Test]
         public void SetupGetAllUsersQueryTest()
         {
-            var jobject = RepliconRequest.SetupGetAllUsersQuery();
+            var jobject = repliconRequest.SetupGetAllUsersQuery();
 
             Assert.IsNotNull(jobject);
             Assert.AreSame(jobject.GetType(), typeof(JObject));
@@ -29,7 +30,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ModelTests
         [Test]
         public void SetupGetOneProjectQueryTest()
         {
-            var jobject = RepliconRequest.SetupGetOneProjectQuery(1);
+            var jobject = repliconRequest.SetupGetOneProjectQuery(1);
 
             Assert.IsNotNull(jobject);
             Assert.AreSame(jobject.GetType(), typeof(JObject));
@@ -38,7 +39,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ModelTests
         [Test]
         public void SetupApiCredentialsTest()
         {
-            var request = RepliconRequest.SetupApiCredentials();
+            var request = repliconRequest.SetupApiCredentials();
 
             Assert.IsNotNull(request);
             Assert.AreSame(request.GetType(), typeof(HttpWebRequest));
@@ -47,7 +48,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ModelTests
         [Test]
         public void PerformApiRequestTest()
         {
-            var jobject = RepliconRequest.PerformApiRequest(new JObject());
+            var jobject = repliconRequest.PerformApiRequest(new JObject());
 
             Assert.IsNotNull(jobject);
             Assert.AreSame(jobject.GetType(), typeof(JObject));
