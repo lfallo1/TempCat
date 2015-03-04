@@ -166,6 +166,36 @@
     <Compile Include="BackEnd_UnitTests\ModelTests\RepliconRequestTests.cs" />
     <Compile Include="BackEnd_UnitTests\ModelTests\StatusTests.cs" />
     <Compile Include="BackEnd_UnitTests\ModelTests\SubmissionsTest.cs" />
+    <Compile Include="BackEnd_UnitTests\ServiceTests\Base\IServiceTestBase.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="BackEnd_UnitTests\ServiceTests\CommentServiceTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="BackEnd_UnitTests\ServiceTests\ErrorServiceTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="BackEnd_UnitTests\ServiceTests\ExpenseCategoryServiceTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="BackEnd_UnitTests\ServiceTests\FinanceApproverServiceTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="BackEnd_UnitTests\ServiceTests\LineItemServiceTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="BackEnd_UnitTests\ServiceTests\ReceiptServiceTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="BackEnd_UnitTests\ServiceTests\RepliconServiceTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="BackEnd_UnitTests\ServiceTests\RepliconUserProjectServiceTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="BackEnd_UnitTests\ServiceTests\SubmissionServiceTests.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Other_Tests\BootstrapperTests.cs" />
     <Compile Include="Other_Tests\BundleConfigTests.cs" />
     <Compile Include="Other_Tests\FilterConfigTests.cs" />
@@ -206,9 +236,7 @@
     <Content Include="Scripts\jquery-2.0.3.min.js" />
     <Content Include="Unity.Mvc4.README.txt" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="BackEnd_UnitTests\ServiceTests\" />
-  </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
