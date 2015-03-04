@@ -1,8 +1,8 @@
-﻿/*'use strict';
+﻿'use strict';
 
 describe( 'Service: NavService', function () {
 
-    beforeEach( module( 'expenseApp' ) );
+    beforeEach( module( 'expenseApp.Services' ) );
 
     var NavService;
 
@@ -11,8 +11,14 @@ describe( 'Service: NavService', function () {
 
     } ) );
 
-    it( 'should run a dummy test ( true === true ).', function () {
-        expect( true ).toBe( true );
+    it( 'should get the value of \'title\'.', function () {
+        expect( NavService.getTitle() ).toBe( undefined );
     } );
 
-} );*/
+    it( 'should set the value of \'title\'.', function () {
+        var obj = 'something';
+        NavService.setTitle( obj );
+        expect( NavService.getTitle() ).toBe( obj );
+    } );
+
+} );

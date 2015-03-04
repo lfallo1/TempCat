@@ -1,20 +1,14 @@
-angular.module('expenseApp.Services')
-    .service('NavService', [function () {
-
+angular.module( 'expenseApp.Services' )
+    .service( 'NavService', [function () {
+        var self = this;
         var title;
-        return {
 
-            getTitle: function () {
-
-                return title;
-
-            },
-            setTitle: function (title) {
-
-                this.title = title;
-
-            }
-
+        self.getTitle = function () {
+            return title;
         };
 
-    }]);
+        self.setTitle = function ( newTitle ) {
+            title = newTitle;
+        };
+
+    }] );
