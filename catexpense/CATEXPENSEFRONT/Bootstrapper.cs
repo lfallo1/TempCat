@@ -63,6 +63,10 @@ namespace CatExpenseFront
             container.RegisterType<ICommentService, CommentService>();
             container.RegisterType<IReceiptService, ReceiptService>();
             container.RegisterType<IRepliconService, RepliconService>();
+            container.RegisterType<IRepository<QbClient>, Repository<QbClient>>();
+            container.RegisterType<IRepository<QbVendor>, Repository<QbVendor>>();
+            container.RegisterType<IQbClientService, QbClientService>();
+            container.RegisterType<IQbVendorService, QbVendorService>();
         }
 
     }

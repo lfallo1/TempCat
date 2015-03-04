@@ -6,58 +6,61 @@ using CatExpenseFront.Services.Interfaces;
 namespace CatExpenseFront.Services
 {
     /// <summary>
-    /// Implimentation of the Receipt service interface.
+    /// Implimentation of Category inteface.
     /// </summary>
-    public class ReceiptService : IReceiptService
+    public class QbVendorService : IQbVendorService
     {
-        private IRepository<Receipt> repository;
-
         /// <summary>
-        /// Default Constructor.
+        /// Local category repository.
         /// </summary>
-        public ReceiptService()
-        { }
+        private IRepository<QbVendor> repository;
 
         /// <summary>
-        ///Constructor that accepts a repository.   
+        /// 
+        /// </summary>
+        public QbVendorService()
+        { repository = new Repository<QbVendor>(); }
+
+        /// <summary>
+        /// Construcor that accepts a repository.
         /// </summary>
         /// <param name="iRepository"></param>
-        public ReceiptService(IRepository<Receipt> iRepository)
+        public QbVendorService(IRepository<QbVendor> iRepository)
         {
             this.repository = iRepository;
         }
 
         /// <summary>
-        /// Returns all receipts.
+        /// Returns all QbVendors.
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<Models.Receipt> All()
+        public IEnumerable<Models.QbVendor> All()
         {
             return this.repository.All();
         }
 
         /// <summary>
-        /// Creates a new reciept.
+        /// Creates One QbVendor.
         /// </summary>
         /// <param name="tobject"></param>
         /// <returns></returns>
-        public Models.Receipt Create(Models.Receipt tobject)
+        public Models.QbVendor Create(Models.QbVendor tobject)
         {
             return this.repository.Create(tobject);
         }
 
         /// <summary>
-        /// Updates a single receipt.
+        /// Updates a QbVendor.
         /// </summary>
         /// <param name="tobject"></param>
         /// <returns></returns>
-        public int Update(Models.Receipt tobject)
+        public int Update(Models.QbVendor tobject)
         {
             return this.repository.Update(tobject);
         }
 
         /// <summary>
-        /// Commits the changes to the database.
+        /// Commits the changes.
         /// </summary>
         public void SaveChanges()
         {
@@ -65,31 +68,31 @@ namespace CatExpenseFront.Services
         }
 
         /// <summary>
-        /// Gets a receipt by id.
+        /// Returns a QbVendor by id.
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public Models.Receipt Find(int id)
+        public Models.QbVendor Find(int id)
         {
             return this.repository.Find(id);
         }
 
         /// <summary>
-        /// Delete a receipt.
+        /// Deletes a vendor by id.
         /// </summary>
         /// <param name="tobject"></param>
         /// <returns></returns>
-        public int Delete(Models.Receipt tobject)
+        public int Delete(Models.QbVendor tobject)
         {
             return this.repository.Delete(tobject);
         }
 
         /// <summary>
-        /// Creates a list
+        /// Creates a list of QbVendors
         /// </summary>
         /// <param name="tobjects"></param>
         /// <returns></returns>
-        public IEnumerable<Models.Receipt> CreateAll(IEnumerable<Models.Receipt> tobjects)
+        public IEnumerable<Models.QbVendor> CreateAll(IEnumerable<Models.QbVendor> tobjects)
         {
             return this.repository.CreateAll(tobjects);
         }
