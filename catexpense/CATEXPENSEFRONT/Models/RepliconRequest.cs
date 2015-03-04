@@ -27,7 +27,7 @@ namespace CatExpenseFront.Models
         /// Setup the Replicon query to get information for all projects
         /// </summary>
         /// <returns></returns>
-        public JObject SetupGetAllProjectsQuery()
+        public virtual JObject SetupGetAllProjectsQuery()
         {
             JObject apiLoad = new JObject();
      
@@ -55,7 +55,7 @@ namespace CatExpenseFront.Models
         /// Setup the Replicon query to get information for all users
         /// </summary>
         /// <returns></returns>
-        public JObject SetupGetAllUsersQuery()
+        public virtual JObject SetupGetAllUsersQuery()
         {
             JObject apiAction = new JObject();
             apiAction["Action"] = "Query";
@@ -72,7 +72,7 @@ namespace CatExpenseFront.Models
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public JObject SetupGetOneProjectQuery(int id)
+        public virtual JObject SetupGetOneProjectQuery(int id)
         {
             JObject apiLoad = new JObject();
             apiLoad["Relationship"] = "ProjectLeader";
@@ -92,7 +92,7 @@ namespace CatExpenseFront.Models
         /// Setup the Replicon credentials needed for the api calls
         /// </summary>
         /// <returns></returns>
-        public HttpWebRequest SetupApiCredentials()
+        public virtual HttpWebRequest SetupApiCredentials()
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(APIURL);
             request.Credentials = new NetworkCredential(COMPANYNAME + "\\" + LOGINNAME, PASSWORD);
@@ -107,7 +107,7 @@ namespace CatExpenseFront.Models
         /// </summary>
         /// <param name="apiAction"></param>
         /// <returns>Deserialized response from Replicon</returns>
-        public JObject PerformApiRequest(JObject apiAction)
+        public virtual JObject PerformApiRequest(JObject apiAction)
         {
             HttpWebRequest request = this.SetupApiCredentials();
             JObject responseInfo = null;

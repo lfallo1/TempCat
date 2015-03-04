@@ -14,10 +14,10 @@ namespace CatExpenseFront.Services
         /// <summary>
         /// Default Constructor
         /// </summary>
-        public RepliconService()
+        public RepliconService(RepliconRequest repliconRequest, RepliconResponse repliconResponse)
         {
-            repliconRequest = new RepliconRequest();
-            repliconResponse = new RepliconResponse();
+            this.repliconRequest = repliconRequest;
+            this.repliconResponse = repliconResponse;
         }
 
         /// <summary>
@@ -95,9 +95,9 @@ namespace CatExpenseFront.Services
         /// </summary>
         /// <param name="projects"></param>
         /// <returns></returns>
-        List<RepliconUserProject> IRepliconService.CreateAllProjectsList(Newtonsoft.Json.Linq.JArray projects)
-        {
-            throw new System.NotImplementedException();
-        }
+        //List<RepliconUserProject> IRepliconService.CreateAllProjectsList(Newtonsoft.Json.Linq.JArray projects)
+        //{
+        //    throw new System.NotImplementedException();
+        //}
     }
 }

@@ -193,6 +193,8 @@
     <Compile Include="BackEnd_UnitTests\ServiceTests\RepliconUserProjectServiceTests.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="BackEnd_UnitTests\ServiceTests\Stub\RepliconRequestStub.cs" />
+    <Compile Include="BackEnd_UnitTests\ServiceTests\Stub\RepliconResponseStub.cs" />
     <Compile Include="BackEnd_UnitTests\ServiceTests\SubmissionServiceTests.cs">
       <SubType>Code</SubType>
     </Compile>

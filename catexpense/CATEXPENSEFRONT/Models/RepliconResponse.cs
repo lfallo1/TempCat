@@ -16,7 +16,7 @@ namespace CatExpenseFront.Models
         /// </summary>
         /// <param name="projects"></param>
         /// <returns></returns>
-        public List<RepliconUserProject> CreateAllProjectsList(JArray projects)
+        public virtual List<RepliconUserProject> CreateAllProjectsList(JArray projects)
         {
             List<RepliconUserProject> clientList = new List<RepliconUserProject>();
 
@@ -73,7 +73,7 @@ namespace CatExpenseFront.Models
         /// </summary>
         /// <param name="response"></param>
         /// <returns></returns>
-        public JArray GetResponseValue(JObject response)
+        public virtual JArray GetResponseValue(JObject response)
         {
             string status = (string)response["Status"];
             if (status != "OK")

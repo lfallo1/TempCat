@@ -2,13 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using CatExpenseFront.Models;
 using CatExpenseFront.Services;
 using CatExpenseFront.Services.Interfaces;
 using Moq;
+using Newtonsoft.Json.Linq;
 using NUnit.Framework;
+using UnitTestProject.BackEnd_UnitTests.ServiceTests.Stub;
 
 namespace UnitTestProject.BackEnd_UnitTests.ServiceTests
 {
@@ -16,37 +19,94 @@ namespace UnitTestProject.BackEnd_UnitTests.ServiceTests
     class RepliconServiceTests
     {
         private IRepliconService service;
+        private RepliconRequestStub repliconRequestStub;
+        private RepliconResponse repliconResponseStub;
+        private JObject jobject = new JObject();
+        private JArray jarray = new JArray();
 
         [TestFixtureSetUp]
         public void setup()
         {
-            service = new RepliconService();
+            repliconRequestStub = new RepliconRequestStub();
+            repliconResponseStub = new RepliconResponseStub();
+            service = new RepliconService(repliconRequestStub, repliconResponseStub);
         }
 
-        //[Test]
-        public void SetupApiCredentialsTest()
+        [Test]
+        public void RepliconServiceSetupApiCredentialsTest()
         {
-
-            /*
-            using (ShimsContext.Create())
-            {
-                Fakes.ShimToggledExtensions.IsOnIToggled = toggled => true;
-                Assert.That(toggledFeature.SomeProcessing(), Is.EqualTo(1));
-            }
-             * */
-
             //Arrange
-            Mock<HttpWebRequest> httpWebRequest = new Mock<HttpWebRequest>();
-            httpWebRequest.Object.Credentials = new NetworkCredential("username", "password");
-
-           // mockRepliconRequest.Setup(s => s.SetupApiCredentials()).Returns(httpWebRequest);
 
             //Act
             var response = service.SetupApiCredentials();
 
             //Assert
-            Assert.AreEqual("username", (response.Credentials as NetworkCredential).UserName);
-            Assert.AreEqual("password", (response.Credentials as NetworkCredential).Password);
+            Assert.IsNotNull(response);
+            Assert.AreEqual(response.Address.AbsoluteUri, "http://www.foo.com/");
+        }
+
+        [Test]
+        public void RepliconServicePerformApiRequest()
+        {
+            //Act
+            var response = service.PerformApiRequest(jobject);
+
+            //Assert
+            Assert.IsNotNull(response);
+            Assert.AreEqual(response["method"].ToString(), "PerformApiRequest");
+        }
+
+        [Test]
+        public void RepliconServiceSetupGetAllProjectsQueryTest()
+        {
+            //Act
+            var response = service.SetUpGetAllProjectsQuery();
+
+            //Assert
+            Assert.IsNotNull(response);
+            Assert.AreEqual(response["method"].ToString(), "SetupGetAllProjects");
+        }
+
+        [Test]
+        public void RepliconServiceSetupGetAllUsersQuery()
+        {
+            //Act
+            var response = service.SetupGetAllUsersQuery();
+
+            //Assert
+            Assert.IsNotNull(response);
+            Assert.AreEqual(response["method"].ToString(), "SetupGetAllUsers");
+        }
+
+        [Test]
+        public void RepliconServiceSetupGetOneProjectQuery()
+        {
+            //Act
+            var response = service.SetupGetOneProjectQuery(1);
+
+            //Assert
+            Assert.IsNotNull(response);
+            Assert.AreEqual(response["method"].ToString(), "SetupGetOneProject");
+        }
+
+        [Test]
+        public void RepliconServiceCreateAllProjectsListTest(){
+            //Act
+            var response = service.CreateAllProjectsList(jarray);
+
+            //Assert
+            Assert.IsNotNull(response);
+            Assert.AreEqual(typeof(List<RepliconUserProject>), response.GetType());
+        }
+
+        [Test]
+        public void RepliconServiceGetResponseValueTest(){
+            //Act
+            var response = service.GetResponseValue(jobject);
+
+            //Assert
+            Assert.IsNotNull(response);
+            Assert.AreEqual(typeof(JArray), response.GetType());
         }
     }
 }
