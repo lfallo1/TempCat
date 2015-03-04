@@ -602,7 +602,6 @@
     <Content Include="angular\test\spec\factories\Application.js" />
     <Content Include="angular\test\spec\factories\Authentication.js" />
     <Content Include="angular\test\spec\factories\MessageService.js" />
-    <Content Include="angular\test\spec\services\DateService.js" />
     <Content Include="angular\test\spec\services\LineItemService.js" />
     <Content Include="angular\test\spec\services\MapQuestService.js" />
     <Content Include="angular\test\spec\services\NavService.js" />

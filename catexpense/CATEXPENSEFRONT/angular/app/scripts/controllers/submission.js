@@ -2,7 +2,7 @@
 
 angular.module( 'expenseApp.Controllers' )
 
-  .controller( 'SubmissionCtrl', ["$scope", "$modal", "$window", "$location", "$route", "$rootScope", "$timeout", "LineItemService", "SubmissionService", "RepliconProjectService", "MessageService", "DateService", "Application", "Authentication", "ReceiptService", function ( $scope, $modal, $window, $location, $route, $rootScope, $timeout, LineItemService, SubmissionService, RepliconProjectService, MessageService, DateService, Application, Authentication, ReceiptService ) {
+  .controller( 'SubmissionCtrl', ["$scope", "$modal", "$window", "$location", "$route", "$rootScope", "$timeout", "LineItemService", "SubmissionService", "RepliconProjectService", "MessageService", "Application", "Authentication", "ReceiptService", function ( $scope, $modal, $window, $location, $route, $rootScope, $timeout, LineItemService, SubmissionService, RepliconProjectService, MessageService, DateService, Application, Authentication, ReceiptService ) {
 
       $scope.syncComplete = false;
       $scope.flag = false;
