@@ -19,9 +19,15 @@ namespace CatExpenseFront.Controllers
     public class ErrorController: BaseController
     {
         private IErrorService service;
+        
 
         public ErrorController(){
             service = new ErrorService();
+        }
+
+        public ErrorController(IErrorService errorService)
+        {
+            this.service = errorService;
         }
 
         [HttpPost]
