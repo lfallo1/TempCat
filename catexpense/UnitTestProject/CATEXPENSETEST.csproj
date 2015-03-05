@@ -172,6 +172,8 @@
     <Compile Include="BackEnd_UnitTests\ServiceTests\CommentServiceTests.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="BackEnd_UnitTests\ServiceTests\QbVendorServiceTests.cs" />
+    <Compile Include="BackEnd_UnitTests\ServiceTests\QbClientServiceTests.cs" />
     <Compile Include="BackEnd_UnitTests\ServiceTests\ErrorServiceTests.cs">
       <SubType>Code</SubType>
     </Compile>
