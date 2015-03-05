@@ -55,6 +55,7 @@ namespace CatExpenseFront
             container.RegisterType<IRepository<Comment>, Repository<Comment>>();
             container.RegisterType<IRepository<Submission>, Repository<Submission>>();
             container.RegisterType<IRepository<ExpenseCategory>, Repository<ExpenseCategory>>();
+            container.RegisterType<IRepository<Receipt>, Repository<Receipt>>();
             container.RegisterType<IRepliconUserProjectService, RepliconUserProjectService>();
             container.RegisterType<ISubmissionService, SubmissionService>();
             container.RegisterType<ILineItemService, LineItemService>();
