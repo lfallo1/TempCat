@@ -2,7 +2,7 @@
 
 angular.module( 'expenseApp.Controllers' )
 
-  .controller( 'SubmissionCtrl', ["$scope", "$modal", "$window", "$location", "$route", "$rootScope", "$timeout", "LineItemService", "SubmissionService", "RepliconProjectService", "MessageService", "DateService", "Application", "Authentication", "ReceiptService", function ( $scope, $modal, $window, $location, $route, $rootScope, $timeout, LineItemService, SubmissionService, RepliconProjectService, MessageService, DateService, Application, Authentication, ReceiptService ) {
+  .controller( 'SubmissionCtrl', ["$scope", "$modal", "$window", "$location", "$route", "$rootScope", "$timeout", "LineItemService", "SubmissionService", "RepliconProjectService", "MessageService", "Application", "Authentication", "ReceiptService", function ( $scope, $modal, $window, $location, $route, $rootScope, $timeout, LineItemService, SubmissionService, RepliconProjectService, MessageService, Application, Authentication, ReceiptService ) {
 
       $scope.syncComplete = false;
       $scope.flag = false;
@@ -19,9 +19,6 @@ angular.module( 'expenseApp.Controllers' )
       $scope.currentDescription = '';
       $scope.editExistingSubmission = false;
       $scope.receiptsAmount = 0;
-
-      var afClient;
-      var afDate;
 
       /**
       * initialize variables upon page load 
@@ -113,11 +110,9 @@ angular.module( 'expenseApp.Controllers' )
           if ( $scope.selectedClient !== null && ( $scope.dt1 instanceof Date && !isNaN( $scope.dt1.valueOf() ) ) ) {
               //gets the submission that matches the date and client
               $scope.submission = $scope.findSpecificSubmission();
-              if ( afDate !== $scope.dt1 && $scope.afClient !== $scope.selectedClient ) {
-                  $rootScope.$broadcast( "submissionFound", $scope.submission );
-              }
               Application.setAllUserSubmissions( $scope.totalSubmissions );
-              if ( $scope.submission ) {
+              if ($scope.submission) {
+                  $rootScope.$broadcast("submissionFound", $scope.submission);
                   $scope.missingLineItems = $scope.submission.LineItems.length < 1;
                   $scope.submissionExists = true;
                   $scope.createNewItemLoad = $scope.submission.StatusId == 1 || $scope.submission.StatusId == 4 || $scope.submission.StatusId == 6;
@@ -125,8 +120,6 @@ angular.module( 'expenseApp.Controllers' )
                   $scope.currentDescription = '';
                   $scope.submissionExists = false;
               }
-              afClient = $scope.selectedClient;
-              afDate = $scope.dt1;
               return true;
           } else {
               return false;
@@ -655,7 +648,6 @@ angular.module( 'expenseApp.Controllers' )
                       var difference = 6 - newValue.getDay();
                       var weekEnding = new Date();
                       $scope.dt1 = new Date( weekEnding.setDate( newValue.getDate() + difference ) );
-                      //$scope.dt1 = new Date( $scope.dt );
                   }
               } else {
                   return;
@@ -663,5 +655,15 @@ angular.module( 'expenseApp.Controllers' )
           },
           true
       );
+
+      $scope.$watch(
+          'selectedClient',
+          function (newValue, oldValue) {
+              if (newValue != oldValue) {
+                  $scope.clientAndDate();
+              } else {
+                  return;
+              }
+          }, true);
 
   }] );

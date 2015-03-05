@@ -264,14 +264,9 @@ namespace CatExpenseFront.Repository
             {
                 throw new ObjectDisposedException(GetType().Name);
             }
-            try
-            {
-                context.SaveChanges();
-            }
-            catch (System.Data.Entity.Infrastructure.DbUpdateException e)
-            {
-                LOGGER.GetLogger("StackTrace").LogError(e.ToString() + "\nThis exception is thrown because the projects are not all in the proper db. Try updating the projects and resubmitting.");
-            }
+
+            context.SaveChanges();
+
         }
     }
 } 

@@ -49,7 +49,13 @@ namespace CatExpenseFront.Models
         /// Loads Reciepts to the context.
         /// </summary>
         public DbSet<Receipt> Receipts { get; set; }
-
-        
+        /// <summary>
+        /// Loads QbClients to the context.
+        /// </summary>
+        public DbSet<QbClient> QbClients { get; set; }
+        /// <summary>
+        /// Loads QbVendor to the context.
+        /// </summary>
+        public DbSet<QbVendor> QbVendor { get; set; }
     }
 }

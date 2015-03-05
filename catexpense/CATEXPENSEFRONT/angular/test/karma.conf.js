@@ -72,7 +72,7 @@ module.exports = function ( config ) {
         },
 
         junitReporter: {
-            outputFile: 'test/test-results.xml'
+            outputFile: 'test/coverage/test-results.xml'
         },
 
         coverageReporter: {
@@ -84,9 +84,6 @@ module.exports = function ( config ) {
                 {
                     type: 'html',
                     dir: 'test/coverage/'
-                },
-                {
-                    type: 'text-summary'
                 }
             ]
         },
