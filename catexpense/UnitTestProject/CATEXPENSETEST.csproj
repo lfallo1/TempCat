@@ -153,6 +153,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="BackEnd_UnitTests\ControllerTests\EmailControllerTests.cs" />
+    <Compile Include="BackEnd_UnitTests\ControllerTests\ErrorControllerTests.cs" />
     <Compile Include="BackEnd_UnitTests\ControllerTests\ExpenseCategoryControllerTests.cs" />
     <Compile Include="BackEnd_UnitTests\ControllerTests\HotTowelControllerTests.cs" />
     <Compile Include="BackEnd_UnitTests\ControllerTests\CommentControllerTests.cs" />
