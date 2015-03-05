@@ -602,8 +602,11 @@
     <Content Include="angular\test\spec\factories\Application.js" />
     <Content Include="angular\test\spec\factories\Authentication.js" />
     <Content Include="angular\test\spec\factories\MessageService.js" />
+    <Content Include="angular\test\spec\services\ExpenseCategoryService.js" />
     <Content Include="angular\test\spec\services\LineItemService.js" />
+    <Content Include="angular\test\spec\services\LogError.js" />
     <Content Include="angular\test\spec\services\MapQuestService.js" />
+    <Content Include="angular\test\spec\services\MessageService.js" />
     <Content Include="angular\test\spec\services\NavService.js" />
     <Content Include="angular\test\spec\services\ReceiptService.js" />
     <Content Include="angular\test\spec\services\RepliconProjectService.js" />
