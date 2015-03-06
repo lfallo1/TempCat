@@ -495,7 +495,7 @@ angular.module( 'expenseApp.Controllers' )
                                                       controller: 'receiptController'
                                                   } );
                                               } else {
-                                                  if ( success.data.ExpensecategoryId === 1 ) {
+                                                  if ( success.data.ExpenseCategoryId !== 1 ) {
                                                       MessageService.setMessage( 'Would you like to add a receipt for this line item?' );
                                                       MessageService.setBroadCastMessage( "addReeciptForLineItem" );
                                                       var modalInstance = $modal.open( {
