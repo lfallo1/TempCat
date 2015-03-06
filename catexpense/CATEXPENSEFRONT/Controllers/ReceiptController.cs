@@ -16,6 +16,7 @@ using CatExpenseFront.Services.Interfaces;
 using CatExpenseFront.Services;
 using System.IO;
 using CatExpenseFront.Controllers.Base;
+using CatExpenseFront.App_Start;
 
 
 namespace CatExpenseFront.Controllers
@@ -73,13 +74,13 @@ namespace CatExpenseFront.Controllers
 
             Receipt r = service.Find(id);
 
-            HttpContext.Current.Response.ClearContent();
-            HttpContext.Current.Response.AddHeader("Content-Disposition", "attachment; filename=" + r.Name);
-            BinaryWriter bw = new BinaryWriter(HttpContext.Current.Response.OutputStream);
+            HttpContextFactory.Current.Response.ClearContent();
+            HttpContextFactory.Current.Response.AddHeader("Content-Disposition", "attachment; filename=" + r.Name);
+            BinaryWriter bw = new BinaryWriter(HttpContextFactory.Current.Response.OutputStream);
             bw.Write(r.ReceiptImage);
             bw.Close();
-            HttpContext.Current.Response.ContentType = "image/" + r.Type;
-            HttpContext.Current.Response.End();
+            HttpContextFactory.Current.Response.ContentType = "image/" + r.Type;
+            HttpContextFactory.Current.Response.End();
 
         }
 
@@ -200,9 +201,9 @@ namespace CatExpenseFront.Controllers
             Receipt receipt = service.Find(id);
             LineItem lineItem = lineItemService.Find(lineItemId);
             Submission submission = submissionService.Find(lineItem.SubmissionId);
-            string currentUser = (null == HttpContext.Current.Session["UserName"]
+            string currentUser = (null == HttpContextFactory.Current.Session["UserName"]
                                                           ? ""
-                                                          : HttpContext.Current.Session["UserName"].ToString().ToUpper());
+                                                          : HttpContextFactory.Current.Session["UserName"].ToString().ToUpper());
             if (null != receipt)
             {
                 if (submission.ActiveDirectoryUser.ToUpper() == currentUser)

@@ -277,6 +277,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="App_Start\HotTowelRouteConfig.cs" />
+    <Compile Include="App_Start\HttpContextFactory.cs" />
     <Compile Include="App_Start\RouteConfig.cs">
       <SubType>Code</SubType>
     </Compile>

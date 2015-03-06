@@ -12,6 +12,7 @@ using CatExpenseFront.Services;
 using CatExpenseFront.Repository;
 using CatExpenseFront.Controllers.Base;
 using System.Web;
+using CatExpenseFront.App_Start;
 
 
 namespace CatExpenseFront.Controllers
@@ -176,8 +177,8 @@ namespace CatExpenseFront.Controllers
 
             LineItem lineitem = service.Find(id);
             Submission submission = submissionService.Find(lineitem.SubmissionId);
-            string currentUser = (null == HttpContext.Current.Session["UserName"]
-                                 ? "" : HttpContext.Current.Session["UserName"].ToString().ToUpper());
+            string currentUser = (null == HttpContextFactory.Current.Session["UserName"]
+                                 ? "" : HttpContextFactory.Current.Session["UserName"].ToString().ToUpper());
             if (lineitem == null)
             {
                 return Request.CreateResponse(HttpStatusCode.NotFound);                

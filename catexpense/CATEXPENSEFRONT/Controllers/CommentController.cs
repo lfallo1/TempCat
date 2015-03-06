@@ -15,6 +15,7 @@ using CatExpenseFront.Services;
 using System.Web;
 
 using CatExpenseFront.Controllers.Base;
+using CatExpenseFront.App_Start;
 
 namespace CatExpenseFront.Controllers
 {
@@ -113,9 +114,9 @@ namespace CatExpenseFront.Controllers
             this.checkSession();
 
             Comment Comment = service.Find(id);
-            string currentUser = (null == HttpContext.Current.Session["UserName"]
+            string currentUser = (null == HttpContextFactory.Current.Session["UserName"]
                                                           ? ""
-                                                          : HttpContext.Current.Session["UserName"].ToString().ToLower());
+                                                          : HttpContextFactory.Current.Session["UserName"].ToString().ToLower());
             if (Comment.RepliconUserName.ToLower() == currentUser)
             {
                 Comment.DateUpdated = DateTime.Now;
@@ -146,9 +147,9 @@ namespace CatExpenseFront.Controllers
             Comment Comment = new Comment();
 
             Comment.SubmissionId = submissionId;
-            var Username = (null == HttpContext.Current.Session["UserName"]
+            var Username = (null == HttpContextFactory.Current.Session["UserName"]
                                                           ? ""
-                                                          : HttpContext.Current.Session["UserName"].ToString());
+                                                          : HttpContextFactory.Current.Session["UserName"].ToString());
 
             Comment.RepliconUserName = Username;
             Comment.ExpenseComment = comment;
@@ -175,9 +176,9 @@ namespace CatExpenseFront.Controllers
             this.checkSession();
 
             Comment comment = service.Find(id);
-            string currentUser = (null == HttpContext.Current.Session["UserName"]
+            string currentUser = (null == HttpContextFactory.Current.Session["UserName"]
                                                           ? ""
-                                                          : HttpContext.Current.Session["UserName"].ToString().ToUpper());
+                                                          : HttpContextFactory.Current.Session["UserName"].ToString().ToUpper());
             if (comment == null)
             {
                 return Request.CreateResponse(HttpStatusCode.NotFound);

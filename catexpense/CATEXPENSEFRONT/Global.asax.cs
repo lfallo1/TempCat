@@ -10,6 +10,7 @@ using Quartz.Impl;
 using System;
 using System.Web;
 using System.Web.SessionState;
+using CatExpenseFront.App_Start;
 
 namespace CatExpenseFront
 {
@@ -51,7 +52,7 @@ namespace CatExpenseFront
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
             Bootstrapper.Initialise();
-            System.Web.HttpContext.Current.SetSessionStateBehavior(SessionStateBehavior.Required);
+            HttpContextFactory.Current.SetSessionStateBehavior(SessionStateBehavior.Required);
 
         }
 
@@ -62,7 +63,7 @@ namespace CatExpenseFront
         {
             if (IsWebApiRequest())
             {
-                HttpContext.Current.SetSessionStateBehavior(SessionStateBehavior.Required);
+                HttpContextFactory.Current.SetSessionStateBehavior(SessionStateBehavior.Required);
             }
         }
 
@@ -72,7 +73,7 @@ namespace CatExpenseFront
         /// <returns></returns>
         private bool IsWebApiRequest()
         {
-            return HttpContext.Current.Request.AppRelativeCurrentExecutionFilePath.StartsWith(WebApiConfig.UrlPrefixRelative);
+            return HttpContextFactory.Current.Request.AppRelativeCurrentExecutionFilePath.StartsWith(WebApiConfig.UrlPrefixRelative);
         }
     }
 }

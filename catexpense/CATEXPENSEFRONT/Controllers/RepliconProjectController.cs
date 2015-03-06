@@ -17,6 +17,7 @@ using CatExpenseFront.Services;
 using System.Web;
 using CatExpenseFront.Controllers.Base;
 using System.DirectoryServices.AccountManagement;
+using CatExpenseFront.App_Start;
 
 
 namespace CatExpenseFront.Controllers
@@ -63,9 +64,9 @@ namespace CatExpenseFront.Controllers
 
 
             return (from m in userProjectService.All()
-                    where (m.UserName.ToUpper() == (null == HttpContext.Current.Session["UserName"]
+                    where (m.UserName.ToUpper() == (null == HttpContextFactory.Current.Session["UserName"]
                                                    ? ""
-                                                   : HttpContext.Current.Session["UserName"].ToString().ToUpper()))
+                                                   : HttpContextFactory.Current.Session["UserName"].ToString().ToUpper()))
                     select m).ToList<RepliconUserProject>();
         }
 

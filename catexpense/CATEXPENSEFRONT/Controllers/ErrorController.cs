@@ -33,9 +33,13 @@ namespace CatExpenseFront.Controllers
         [HttpPost]
         [ResponseType(typeof(Error))]
         [Route("api/Error")]
-        public HttpResponseMessage Post(Error error){
-
-            this.checkSession();
+        public HttpResponseMessage Post(Error error, bool isTest)
+        {
+            if (isTest == false)
+            {
+                this.checkSession();
+            }
+            
 
             if( error != null){
                 error.DateCreated = DateTime.Now;

@@ -13,6 +13,7 @@ using System.Net.Http;
 using System.Net;
 using CatExpenseFront.Services;
 using CatExpenseFront.Controllers.Base;
+using CatExpenseFront.App_Start;
 
 namespace CatExpenseFront.Controllers
 {
@@ -69,8 +70,8 @@ namespace CatExpenseFront.Controllers
                 search.PropertiesToLoad.Add("sn"); // last name
                 search.PropertiesToLoad.Add("manager"); // manager
                 SearchResult result = search.FindOne();
-                HttpContext.Current.Session["UserName"] = result.Properties["samaccountname"][0].ToString();
-                userWithSession.Username = HttpContext.Current.Session["UserName"].ToString();
+                HttpContextFactory.Current.Session["UserName"] = result.Properties["samaccountname"][0].ToString();
+                userWithSession.Username = HttpContextFactory.Current.Session["UserName"].ToString();
 
                 userWithSession.isFinanceApprover = isFinanceApprover();
                 userWithSession.isManager = isManager();
@@ -95,7 +96,7 @@ namespace CatExpenseFront.Controllers
             this.checkSession();
             Login userWithSession = new Login();
 
-            userWithSession.Username = HttpContext.Current.Session["UserName"].ToString();
+            userWithSession.Username = HttpContextFactory.Current.Session["UserName"].ToString();
 
             userWithSession.isFinanceApprover = isFinanceApprover();
             userWithSession.isManager = isManager();
@@ -111,7 +112,7 @@ namespace CatExpenseFront.Controllers
         [Route("api/login/userLogout")]
         public void userLogout()
         {
-            HttpContext.Current.Session.Abandon();
+            HttpContextFactory.Current.Session.Abandon();
         }
 
         /// <summary>
@@ -121,9 +122,9 @@ namespace CatExpenseFront.Controllers
         private bool isManager()
         {
             return (from m in service.All()
-                    where m.ManagerName.ToUpper() == (null == HttpContext.Current.Session["UserName"]
+                    where m.ManagerName.ToUpper() == (null == HttpContextFactory.Current.Session["UserName"]
                                                   ? ""
-                                                  : HttpContext.Current.Session["UserName"].ToString().ToUpper())
+                                                  : HttpContextFactory.Current.Session["UserName"].ToString().ToUpper())
                     select m).Count() > 0;
         }
 
@@ -135,9 +136,9 @@ namespace CatExpenseFront.Controllers
         {
             return (from m in approverService.All()
 
-                    where (m.Username.ToUpper() == (null == HttpContext.Current.Session["UserName"]
+                    where (m.Username.ToUpper() == (null == HttpContextFactory.Current.Session["UserName"]
                                                      ? ""
-                                                     : HttpContext.Current.Session["UserName"].ToString()).ToUpper())
+                                                     : HttpContextFactory.Current.Session["UserName"].ToString()).ToUpper())
                     select m).Count() > 0;
 
         }

@@ -15,6 +15,7 @@ using CatExpenseFront.Services.Interfaces;
 using System.Web;
 using CatExpenseFront.Services;
 using CatExpenseFront.Controllers.Base;
+using CatExpenseFront.App_Start;
 
 namespace CatExpenseFront.Controllers
 {
@@ -102,9 +103,9 @@ namespace CatExpenseFront.Controllers
             //Checks the session to see if it is valid
             this.checkSession();
             List<Submission> submissionList = (from m in service.All()
-                                               where m.ActiveDirectoryUser.ToUpper() == (null == HttpContext.Current.Session["UserName"]
+                                               where m.ActiveDirectoryUser.ToUpper() == (null == HttpContextFactory.Current.Session["UserName"]
                                                                                 ? ""
-                                                                                : HttpContext.Current.Session["UserName"].ToString().ToUpper()) && !m.IsDeleted
+                                                                                : HttpContextFactory.Current.Session["UserName"].ToString().ToUpper()) && !m.IsDeleted
                                                select m).OrderByDescending(s => s.WeekEndingDate).ToList();
 
             CalculateTotalsForList(submissionList);
@@ -135,9 +136,9 @@ namespace CatExpenseFront.Controllers
             else
             {
                 //Get the current user
-                String currentUser = null == HttpContext.Current.Session["UserName"]
+                String currentUser = null == HttpContextFactory.Current.Session["UserName"]
                                                                ? ""
-                                                               : HttpContext.Current.Session["UserName"].ToString().ToUpper();
+                                                               : HttpContextFactory.Current.Session["UserName"].ToString().ToUpper();
                 //Check to see if the user is a finace approver
                 bool isFinanceApprover = IsFinanceApprover(currentUser);
 
@@ -174,9 +175,9 @@ namespace CatExpenseFront.Controllers
             List<Submission> submissionList = new List<Submission>();
 
             submissionList = (from m in service.All()
-                              where (m.ManagerName.ToUpper() == (null == HttpContext.Current.Session["UserName"]
+                              where (m.ManagerName.ToUpper() == (null == HttpContextFactory.Current.Session["UserName"]
                                                                ? ""
-                                                               : HttpContext.Current.Session["UserName"].ToString().ToUpper())
+                                                               : HttpContextFactory.Current.Session["UserName"].ToString().ToUpper())
                               && (m.Status.StatusName.ToUpper() == APPROVAL_STATUS_SUBMITTED.ToUpper()
                               || m.Status.StatusName.ToUpper() == APPROVAL_STATUS_MANAGER_APPROVED.ToUpper()
                               || m.Status.StatusName.ToUpper() == APPROVAL_STATUS_MANAGER_REJECTED.ToUpper())
@@ -203,9 +204,9 @@ namespace CatExpenseFront.Controllers
             List<Submission> submissionList = new List<Submission>();
 
             int count = (from m in userProjectService.All()
-                         where (m.UserName.ToUpper() == (null == HttpContext.Current.Session["UserName"]
+                         where (m.UserName.ToUpper() == (null == HttpContextFactory.Current.Session["UserName"]
                                                                ? ""
-                                                               : HttpContext.Current.Session["UserName"].ToString().ToUpper()))
+                                                               : HttpContextFactory.Current.Session["UserName"].ToString().ToUpper()))
                          select m).ToList<RepliconUserProject>().Count;
             if (count > 0)
             {
@@ -242,12 +243,12 @@ namespace CatExpenseFront.Controllers
             }
             submission.DateCreated = DateTime.Now;
             submission.DateUpdated = DateTime.Now;
-            submission.ActiveDirectoryUser = HttpContext.Current.Session["UserName"].ToString();
+            submission.ActiveDirectoryUser = HttpContextFactory.Current.Session["UserName"].ToString();
             service.Create(submission);
             service.SaveChanges();
             HttpResponseMessage response = Request.CreateResponse(HttpStatusCode.Created, submission);
             response.Headers.Location = new Uri(Url.Link("DefaultApi", new { id = submission.SubmissionId }));
-            HttpContext.Current.Session["SubmissionId"] = submission.SubmissionId;
+            HttpContextFactory.Current.Session["SubmissionId"] = submission.SubmissionId;
             return response;
         }
 
@@ -271,9 +272,9 @@ namespace CatExpenseFront.Controllers
             HttpResponseMessage message = Request.CreateResponse(HttpStatusCode.OK);
             Submission mergedSubmission = service.Find(id);
 
-            string Username = (null == HttpContext.Current.Session["Username"]
+            string Username = (null == HttpContextFactory.Current.Session["Username"]
             ? ""
-            : HttpContext.Current.Session["UserName"].ToString().ToUpper());
+            : HttpContextFactory.Current.Session["UserName"].ToString().ToUpper());
             int userId = (from m in userProjectService.All()
                           where m.UserName.ToUpper() == Username
                           select m.ID).First();
