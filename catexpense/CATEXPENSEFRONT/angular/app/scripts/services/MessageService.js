@@ -7,7 +7,7 @@ angular.module('expenseApp.Services')
       var broadCastMessage = "";
       var id = "";
       var index = 0;
-      var addCommit = false;
+      var addComment = false;
 
       /**
       * getter and setter methods
@@ -46,11 +46,11 @@ angular.module('expenseApp.Services')
           },
 
           setAddComment: function (result) {
-              addCommit = result;
+              addComment = result;
           },
 
           getAddComment: function () {
-              return addCommit;
+              return addComment;
           }
       }
   }]);

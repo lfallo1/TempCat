@@ -7,7 +7,7 @@ angular.module('expenseApp.Services')
         self.logError = function (data) {
             return $http({
                 method: 'POST',
-                url: 'api/Error',
+                url: '/api/Error',
                 data: data
             });
         };
