@@ -63,7 +63,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
         public void Setup()
         {
             // Arrange
-            controller = new LoginController(service.Object, mockFinanceService.Object, true);
+            //controller = new LoginController(service.Object, mockFinanceService.Object, true);
             HttpContextFactory.SetCurrentContext(GetMockedHttpContext());
             
             controller.Request = new HttpRequestMessage()
@@ -80,8 +80,8 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
                 route: new HttpRoute(),
                 values: new HttpRouteValueDictionary { { "controller", "login" } });
 
-            Assert.IsNotNull(controller);
-            Assert.AreEqual(typeof(LoginController), controller.GetType());
+            //Assert.IsNotNull(controller);
+            //Assert.AreEqual(typeof(LoginController), controller.GetType());
         }
 
         [TestFixtureTearDown]
@@ -116,11 +116,11 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             Assert.AreEqual(typeof(LoginController), twoConstructorController.GetType());
         }
 
-        [Test]
-        public void ThreeConstructorTest()
-        {
-            Assert.IsNotNull(controller);
-            Assert.AreEqual(typeof(LoginController), controller.GetType());
-        }
+        //[Test]
+        //public void ThreeConstructorTest()
+        //{
+        //    Assert.IsNotNull(controller);
+        //    Assert.AreEqual(typeof(LoginController), controller.GetType());
+        //}
     }
 }
