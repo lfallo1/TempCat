@@ -16,6 +16,7 @@ using System.Security.Principal;
 using System.Web.Routing;
 using System.Collections.Specialized;
 using CatExpenseFront.App_Start;
+using System.Text;
 
 namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
 {
@@ -90,8 +91,10 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             controller.RequestContext.RouteData = new HttpRouteData(
                 route: new HttpRoute(),
                 values: new HttpRouteValueDictionary { { "controller", "Receipt" } });
-
+            var bytes = Encoding.UTF8.GetBytes("testtttting");
+            var base64 = Convert.ToBase64String(bytes);
             receipt1 = new Receipt();
+            receipt1.Base64String = base64;
             guid1 = Guid.NewGuid();
             
 
@@ -167,11 +170,12 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             //Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
         }
 
-        //[Test]
+        [Test]
         public void PostTest()
         {
             // Arrange
             mockService.Setup(s => s.Create(It.IsAny<Receipt>())).Returns(receipt1);
+            mockLineItemService.Setup(s => s.Find(It.IsAny<int>())).Returns(lineItem1);
 
             // Act
             var response = controller.FileUpload(receipt1);
