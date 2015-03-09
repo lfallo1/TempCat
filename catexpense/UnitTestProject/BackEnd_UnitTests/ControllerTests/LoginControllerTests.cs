@@ -63,7 +63,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
         public void Setup()
         {
             // Arrange
-            //controller = new LoginController(service.Object, mockFinanceService.Object, true);
+            controller = new LoginController(service.Object, mockFinanceService.Object);
             HttpContextFactory.SetCurrentContext(GetMockedHttpContext());
             
             controller.Request = new HttpRequestMessage()
