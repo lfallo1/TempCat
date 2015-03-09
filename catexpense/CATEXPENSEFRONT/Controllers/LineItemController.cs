@@ -43,18 +43,16 @@ namespace CatExpenseFront.Controllers
         /// <param name="iService"></param>
         public LineItemController(ILineItemService iService, ISubmissionService iSubmissionService)
         {
-            if (this.service == null)
-            {
                 service = iService;
                 receiptService = new ReceiptService(new Repository<Receipt>());
                 submissionService = iSubmissionService;
-            }
         }
 
-        public LineItemController(ILineItemService iService, ISubmissionService iSubmissionService, bool _isTest)
+        public LineItemController(ILineItemService iService, IReceiptService iReceiptService,
+            ISubmissionService iSubmissionService, bool _isTest)
         {
             service = iService;
-            receiptService = new ReceiptService(new Repository<Receipt>());
+            receiptService = iReceiptService;
             submissionService = iSubmissionService;
             this.isTest = _isTest;
         }

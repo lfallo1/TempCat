@@ -72,7 +72,8 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
         public void LineItemControllerTestsSetUp()
         {
             // Arrange
-            controller = new LineItemController(mockService.Object, mockSubmissionService.Object, true);
+            controller = new LineItemController(mockService.Object, mockReceiptService.Object, 
+                mockSubmissionService.Object, true);
             HttpContextFactory.SetCurrentContext(GetMockedHttpContext());
             controller.Request = new HttpRequestMessage()
             {
@@ -101,6 +102,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             lineItem3.SubmissionId = 6;
 
             receipt1 = new Receipt();
+            receipt1.LineItemId = 1;
             
             submission1 = new Submission();
             submission1.ActiveDirectoryUser = "catexpuser";
@@ -114,7 +116,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
 
             listReceipts = new List<Receipt>
             {
-
+                receipt1,
             };
 
             // Assert
@@ -231,7 +233,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
         }
 
-        //[Test]
+        [Test]
         public void ModelStateErrorPostTest()
         {
             // Arrange
@@ -242,14 +244,15 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
 
             // Assert
             Assert.IsNotNull(response);
-            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
+            Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
         }
 
-        //[Test]
+        [Test]
         public void PostTest()
         {
             // Arrange
             mockService.Setup(s => s.Create(It.IsAny<LineItem>())).Returns(lineItem1);
+            mockService.Setup(s => s.Find(It.IsAny<int>())).Returns(lineItem1);
             mockReceiptService.Setup(s => s.All()).Returns(listReceipts);
 
             // Act
