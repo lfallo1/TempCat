@@ -7,7 +7,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
     [TestFixture]
     public class HotTowelControllerTests
     {
-        private HotTowelController controller = new HotTowelController();
+        private HomeController controller = new HomeController();
 
         //[Test]
         public void IndexActionResultTest()

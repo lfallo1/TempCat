@@ -123,7 +123,7 @@ angular.module('expenseApp.Controllers')
           Application.setSubmissionIndex(submissionIndex);
           ReceiptService.setAddReceipt(false);
           var modalInstance = $modal.open({
-              templateUrl: 'Views/HotTowel/views/modals/receiptModal.html',
+              templateUrl: 'Views/Home/views/modals/receiptModal.html',
               controller: 'receiptController'
           });
       }
@@ -156,7 +156,7 @@ angular.module('expenseApp.Controllers')
           MessageService.setBroadCastMessage("confirmFinanceDeleteSubmission");
           MessageService.setId(submission.SubmissionId)
           var modalInstance = $modal.open({
-              templateUrl: 'Views/HotTowel/views/modals/confirmModal.html',
+              templateUrl: 'Views/Home/views/modals/confirmModal.html',
               controller: 'confirmModalController',
               resolve: {
                   selectedType: function () {

@@ -19,7 +19,7 @@ namespace CatExpenseFront
               url: "{controller}/{action}/{id}",
               defaults: new
               {
-                  controller = "HotTowel",
+                  controller = "Home",
                   action = "Index",
                   id = UrlParameter.Optional
               }

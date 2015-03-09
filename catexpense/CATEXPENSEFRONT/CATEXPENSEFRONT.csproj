@@ -267,16 +267,12 @@
     <Reference Include="XamlBuildTask" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\BreezeWebApiConfig.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="App_Start\EntityFrameworkProfilerBootstrapper.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="App_Start\FilterConfig.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="App_Start\HotTowelRouteConfig.cs" />
     <Compile Include="App_Start\HttpContextFactory.cs" />
     <Compile Include="App_Start\RouteConfig.cs">
       <SubType>Code</SubType>
@@ -297,7 +293,7 @@
     <Compile Include="Controllers\ExpenseCategoryController.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Controllers\HotTowelController.cs">
+    <Compile Include="Controllers\HomeController.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Controllers\CommentController.cs">
@@ -613,27 +609,26 @@
     <Content Include="angular\test\spec\factories\RouteFilter.js" />
     <Content Include="angular\test\spec\services\SubmissionService.js" />
     <Content Include="angular\test\spec\services\ValidationService.js" />
-    <Content Include="App_Start\EntityFrameworkProfilerBootstrapper.vb" />
     <Content Include="DBScripts\Sprint19.sql" />
-    <Content Include="Views\HotTowel\views\about.html" />
-    <Content Include="Views\HotTowel\views\admin.html" />
-    <Content Include="Views\HotTowel\views\datepicker.html" />
-    <Content Include="Views\HotTowel\views\employeeTable.html" />
-    <Content Include="Views\HotTowel\views\FinanceTable.html" />
-    <Content Include="Views\HotTowel\views\home.html" />
-    <Content Include="Views\HotTowel\views\login.html" />
-    <Content Include="Views\HotTowel\views\ManagerTable.html" />
-    <Content Include="Views\HotTowel\views\modals\confirmModal.html" />
-    <Content Include="Views\HotTowel\views\modals\formDetailsView.html" />
-    <Content Include="Views\HotTowel\views\modals\commentModal.html" />
-    <Content Include="Views\HotTowel\views\modals\mileageForm.html" />
-    <Content Include="Views\HotTowel\views\modals\otherForm.html" />
-    <Content Include="Views\HotTowel\views\modals\perDiemForm.html" />
-    <Content Include="Views\HotTowel\views\modals\policyView.html" />
-    <Content Include="Views\HotTowel\views\modals\receiptModal.html" />
-    <Content Include="Views\HotTowel\views\navbar.html" />
-    <Content Include="Views\HotTowel\views\submissionPage.html" />
-    <Content Include="Views\HotTowel\views\submissionTable.html" />
+    <Content Include="Views\Home\views\about.html" />
+    <Content Include="Views\Home\views\admin.html" />
+    <Content Include="Views\Home\views\datepicker.html" />
+    <Content Include="Views\Home\views\employeeTable.html" />
+    <Content Include="Views\Home\views\FinanceTable.html" />
+    <Content Include="Views\Home\views\home.html" />
+    <Content Include="Views\Home\views\login.html" />
+    <Content Include="Views\Home\views\ManagerTable.html" />
+    <Content Include="Views\Home\views\modals\confirmModal.html" />
+    <Content Include="Views\Home\views\modals\formDetailsView.html" />
+    <Content Include="Views\Home\views\modals\commentModal.html" />
+    <Content Include="Views\Home\views\modals\mileageForm.html" />
+    <Content Include="Views\Home\views\modals\otherForm.html" />
+    <Content Include="Views\Home\views\modals\perDiemForm.html" />
+    <Content Include="Views\Home\views\modals\policyView.html" />
+    <Content Include="Views\Home\views\modals\receiptModal.html" />
+    <Content Include="Views\Home\views\navbar.html" />
+    <Content Include="Views\Home\views\submissionPage.html" />
+    <Content Include="Views\Home\views\submissionTable.html" />
     <Content Include="angular\Gruntfile.js" />
     <Content Include="DBScripts\DBLayout.sql" />
     <Content Include="DBScripts\Sprint17.sql" />
@@ -817,7 +812,7 @@
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
-    <Content Include="Views\HotTowel\index.cshtml" />
+    <Content Include="Views\Home\index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="angular\two\" />
