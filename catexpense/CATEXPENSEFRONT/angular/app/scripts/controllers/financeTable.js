@@ -62,7 +62,7 @@ angular.module('expenseApp.Controllers')
                     for (var i = 0; i < userSubmissions.length; i++) {
                         // a status of 4 and 6 means the submission was rejected
                         if (userSubmissions[i].StatusId == 4 || userSubmissions[i].StatusId == 6) {
-                            rejected++;
+                            //rejected++;
                         }
                         var receipts = [];
                         //get all receipts in that submission
