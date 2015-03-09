@@ -322,6 +322,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\QbAccount.cs" />
     <Compile Include="Models\QbClient.cs" />
     <Compile Include="Models\Login.cs" />
     <Compile Include="Models\QbVendor.cs" />
@@ -332,8 +333,10 @@
     <Compile Include="Models\LineItem.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\TempCatExpenseContext.cs" />
+    <Compile Include="Services\Interfaces\IQbAccountService.cs" />
     <Compile Include="Services\Interfaces\IQbClientService.cs" />
     <Compile Include="Services\Interfaces\IQbVendorService.cs" />
+    <Compile Include="Services\QbAccountService.cs" />
     <Compile Include="Services\QbClientService.cs" />
     <Compile Include="Services\QbVendorService.cs" />
     <Compile Include="Services\RepliconUserProjectService.cs" />

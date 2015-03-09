@@ -461,7 +461,7 @@ GO
 CREATE TABLE [dbo].[QbVendors](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[VendorId] [int] NOT NULL,
-	[VendorName] [nvarchar](50) NOT NULL,
+	[VendorName] [nvarchar](max) NOT NULL,
  CONSTRAINT [PK_QbVendors] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
@@ -473,8 +473,20 @@ GO
 CREATE TABLE [dbo].[QbClients](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
 	[ClientId] [int] NOT NULL,
-	[ClientName] [nvarchar](50) NOT NULL,
+	[ClientName] [nvarchar](max) NOT NULL,
  CONSTRAINT [PK_QbClients] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+CREATE TABLE [dbo].[QbAccounts](
+	[Id] [int] IDENTITY(1,1) NOT NULL,
+	[AccountId] [int] NOT NULL,
+	[AccountName] [nvarchar](max) NOT NULL,
+ CONSTRAINT [PK_QbAccounts] PRIMARY KEY CLUSTERED 
 (
 	[Id] ASC
 )WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
