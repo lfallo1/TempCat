@@ -43,40 +43,40 @@ angular
   .config( ["$routeProvider", function ( $routeProvider ) {
       $routeProvider
         .when( '/', {
-            templateUrl: 'Views/HotTowel/views/home.html',
+            templateUrl: 'Views/Home/views/home.html',
             controller: 'HomeController'
         } ).when( '/login', {
             title: 'Login',
-            templateUrl: 'Views/HotTowel/views/login.html',
+            templateUrl: 'Views/Home/views/login.html',
             controller: 'LoginController'
         } ).when( '/logout', {
             title: 'Logout',
-            templateUrl: 'Views/HotTowel/views/login.html',
+            templateUrl: 'Views/Home/views/login.html',
             controller: 'LogoutController'
         } ).when( '/navbar', {
             templateUrl: 'views/navbar.html',
             controller: 'NavController'
         } ).when( '/home', {
             title: 'Home',
-            templateUrl: 'Views/HotTowel/views/home.html',
+            templateUrl: 'Views/Home/views/home.html',
             controller: 'HomeController'
         } )
         .when( '/EmployeeTable', {
-            templateUrl: 'Views/HotTowel/views/EmployeeTable.html',
+            templateUrl: 'Views/Home/views/EmployeeTable.html',
             controller: 'EmployeeTableController'
         } )
         .when( '/ManagerTable', {
-            templateUrl: 'Views/HotTowel/views/ManagerTable.html',
+            templateUrl: 'Views/Home/views/ManagerTable.html',
             controller: 'ManagerTableController'
         } )
         .when( '/submission', {
             title: 'Submission Page',
-            templateUrl: 'Views/HotTowel/views/submissionPage.html',
+            templateUrl: 'Views/Home/views/submissionPage.html',
             controller: 'SubmissionCtrl'
         } )
         .when( '/admin', {
             title: 'Submission Page',
-            templateUrl: 'Views/HotTowel/views/admin.html',
+            templateUrl: 'Views/Home/views/admin.html',
             controller: 'AdminCtrl'
         } )
         .otherwise( {

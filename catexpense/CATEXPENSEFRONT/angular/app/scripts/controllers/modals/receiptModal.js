@@ -40,7 +40,7 @@ angular.module('expenseApp.Controllers')
           MessageService.setMessage("Are you sure you want to delete this receipt?");
           MessageService.setBroadCastMessage("confirmDeleteReceipt");
           var modalInstance = $modal.open({
-              templateUrl: 'Views/HotTowel/views/modals/confirmModal.html',
+              templateUrl: 'Views/Home/views/modals/confirmModal.html',
               controller: 'confirmModalController'
           });
       }

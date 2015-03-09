@@ -5,7 +5,7 @@ describe( 'Controller: PolicyCtrl', function () {
 
     var PolicyCtrl;
     var scope;
-    var httpBackend;
+    var ExpenseCategory, getAllExpenseCategoriesDeferred;
 
     //Mock $modalInstance
     var mockModalInstance = {
@@ -20,32 +20,50 @@ describe( 'Controller: PolicyCtrl', function () {
 
     var mockSelectedType = 'something';
 
+    //mocking the promise
+    var mockPromise = {
+        resolve: function ( success, error ) {
+            if ( success ) {
+                return this.success( success );
+            } else {
+                return this.error( error );
+            }
+        },
+        then: function ( success, error ) {
+            this.success = success;
+            this.error = error;
+        },
+        success: function () {
+            return "No success callback registered!";
+        },
+        error: function () {
+            return "No error callback registered!";
+        }
+    };
 
     // load the controller's module
-    beforeEach( module( 'expenseApp' ) );
-
-    //mock a logged in user
-    beforeEach( inject( function ( $httpBackend ) {
-        httpBackend = $httpBackend;
-        $httpBackend.expectGET( '/api/login/isLoggedIn' ).respond(
-            {
-                Username: "testuser",
-                isLoggedIn: true,
-                isFinanceApprover: false,
-                isManager: false
-            }
-        );
-    } ) );
+    beforeEach( module( 'expenseApp.Controllers' ) );
 
     // Initialize the controller and a mock scope
-    beforeEach( inject( function ( $controller, $rootScope ) {
+    beforeEach( inject( function ( $controller, $rootScope, $q ) {
+
+        ExpenseCategory = {
+            getAllExpenseCategories: function () {
+                getAllExpenseCategoriesDeferred = $q.defer();
+                return getAllExpenseCategoriesDeferred.promise;
+            },
+        };
+
         scope = $rootScope.$new();
 
         PolicyCtrl = $controller( 'PolicyCtrl', {
             $scope: scope,
             $modalInstance: mockModalInstance,
-            selectedType: mockSelectedType
+            selectedType: mockSelectedType,
+            ExpenseCategory: ExpenseCategory
         } );
+
+        spyOn( scope, 'getExpenseCategories' );
 
     } ) );
 
@@ -53,67 +71,8 @@ describe( 'Controller: PolicyCtrl', function () {
         expect( scope.policyType ).toBe( mockSelectedType );
     } );
 
-
-    it( 'should dismiss the modal.', function () {
-        spyOn( mockModalInstance, 'dismiss' );
-        scope.ok();
-        expect( mockModalInstance.dismiss ).toHaveBeenCalledWith( 'Form was cancelled.' );
-    } );
-
-} );
-
-//test the contents of scope.policyIs
-describe( 'Controller: PolicyCtrl', function () {
-
-    var PolicyCtrl;
-    var scope;
-    var httpBackend;
-
-    var typesArray = [
-        'Mileage',
-        'Per Diem',
-        'Transportation',
-        'Lodging',
-        'Parking',
-        'Entertainment',
-        'Meals',
-        'Airfare',
-        'Other',
-        null,
-        undefined
-    ];
-
-    var counter = 0;
-
-    var actualResult;
-
-    // load the controller's module
-    beforeEach( module( 'expenseApp' ) );
-
-    //mock a logged in user
-    beforeEach( inject( function ( $httpBackend ) {
-        httpBackend = $httpBackend;
-        $httpBackend.expectGET( '/api/login/isLoggedIn' ).respond(
-            {
-                Username: "testuser",
-                isLoggedIn: true,
-                isFinanceApprover: false,
-                isManager: false
-            }
-        );
-    } ) );
-
-    // Initialize the controller and a mock scope
-    beforeEach( inject( function ( $controller, $rootScope ) {
-        scope = $rootScope.$new();
-
-        PolicyCtrl = $controller( 'PolicyCtrl', {
-            $scope: scope,
-            $modalInstance: null,
-            selectedType: typesArray[counter]
-        } );
-
-        actualResult = {
+    it( 'should get the default values for scope.policyIs.', function () {
+        var expected = {
             mileage: false,
             perdiem: false,
             transportation: false,
@@ -122,66 +81,445 @@ describe( 'Controller: PolicyCtrl', function () {
             entertainment: false,
             meals: false,
             airfare: false,
-            other: false
-        }
-    } ) );
-
-    afterEach( function () {
-        counter++;
+            other: false,
+            loading: true,
+            error: false
+        };
+        expect( scope.policyIs ).toEqual( expected );
     } );
 
-   /* it( 'should say that scope.policyIs.mileage = true.', function () {
-        actualResult.mileage = true;
-        expect( scope.policyIs ).toEqual( actualResult );
+    it( 'should get the list of all expense categories (success) and display the Mileage Policy.', function () {
+        var successObj = {
+            data: [
+                { "ExpenseCategoryName": "Mileage" },
+                { "ExpenseCategoryName": "Per Diem" },
+                { "ExpenseCategoryName": "Transportation" },
+                { "ExpenseCategoryName": "Lodging" },
+                { "ExpenseCategoryName": "Parking" },
+                { "ExpenseCategoryName": "Entertainment" },
+                { "ExpenseCategoryName": "Meals" },
+                { "ExpenseCategoryName": "Airfare" },
+                { "ExpenseCategoryName": "Other" }
+            ]
+        };
+
+        var expected = {
+            mileage: true,
+            perdiem: false,
+            transportation: false,
+            lodging: false,
+            parking: false,
+            entertainment: false,
+            meals: false,
+            airfare: false,
+            other: false,
+            loading: false,
+            error: false
+        };
+
+        scope.policyType = 'Mileage';
+
+        getAllExpenseCategoriesDeferred.resolve( successObj );
+
+        scope.$digest();
+        scope.getExpenseCategories();
+
+        expect( scope.policyIs ).toEqual( expected );
+
     } );
 
-    it( 'should say that scope.policyIs.perdiem = true.', function () {
-        actualResult.perdiem = true;
-        expect( scope.policyIs ).toEqual( actualResult );
+    it( 'should get the list of all expense categories (success) and display the Per Diem Policy.', function () {
+        var successObj = {
+            data: [
+                { "ExpenseCategoryName": "Mileage" },
+                { "ExpenseCategoryName": "Per Diem" },
+                { "ExpenseCategoryName": "Transportation" },
+                { "ExpenseCategoryName": "Lodging" },
+                { "ExpenseCategoryName": "Parking" },
+                { "ExpenseCategoryName": "Entertainment" },
+                { "ExpenseCategoryName": "Meals" },
+                { "ExpenseCategoryName": "Airfare" },
+                { "ExpenseCategoryName": "Other" }
+            ]
+        };
+
+        var expected = {
+            mileage: false,
+            perdiem: true,
+            transportation: false,
+            lodging: false,
+            parking: false,
+            entertainment: false,
+            meals: false,
+            airfare: false,
+            other: false,
+            loading: false,
+            error: false
+        };
+
+        scope.policyType = 'Per Diem';
+
+        getAllExpenseCategoriesDeferred.resolve( successObj );
+
+        scope.$digest();
+        scope.getExpenseCategories();
+
+        expect( scope.policyIs ).toEqual( expected );
+
     } );
 
-    it( 'should say that scope.policyIs.transportation = true.', function () {
-        actualResult.transportation = true;
-        expect( scope.policyIs ).toEqual( actualResult );
+    it( 'should get the list of all expense categories (success) and display the Transportation Policy.', function () {
+        var successObj = {
+            data: [
+                { "ExpenseCategoryName": "Mileage" },
+                { "ExpenseCategoryName": "Per Diem" },
+                { "ExpenseCategoryName": "Transportation" },
+                { "ExpenseCategoryName": "Lodging" },
+                { "ExpenseCategoryName": "Parking" },
+                { "ExpenseCategoryName": "Entertainment" },
+                { "ExpenseCategoryName": "Meals" },
+                { "ExpenseCategoryName": "Airfare" },
+                { "ExpenseCategoryName": "Other" }
+            ]
+        };
+
+        var expected = {
+            mileage: false,
+            perdiem: false,
+            transportation: true,
+            lodging: false,
+            parking: false,
+            entertainment: false,
+            meals: false,
+            airfare: false,
+            other: false,
+            loading: false,
+            error: false
+        };
+
+        scope.policyType = 'Transportation';
+
+        getAllExpenseCategoriesDeferred.resolve( successObj );
+
+        scope.$digest();
+        scope.getExpenseCategories();
+
+        expect( scope.policyIs ).toEqual( expected );
+
     } );
 
-    it( 'should say that scope.policyIs.lodging = true.', function () {
-        actualResult.lodging = true;
-        expect( scope.policyIs ).toEqual( actualResult );
+    it( 'should get the list of all expense categories (success) and display the Lodging Policy.', function () {
+        var successObj = {
+            data: [
+                { "ExpenseCategoryName": "Mileage" },
+                { "ExpenseCategoryName": "Per Diem" },
+                { "ExpenseCategoryName": "Transportation" },
+                { "ExpenseCategoryName": "Lodging" },
+                { "ExpenseCategoryName": "Parking" },
+                { "ExpenseCategoryName": "Entertainment" },
+                { "ExpenseCategoryName": "Meals" },
+                { "ExpenseCategoryName": "Airfare" },
+                { "ExpenseCategoryName": "Other" }
+            ]
+        };
+
+        var expected = {
+            mileage: false,
+            perdiem: false,
+            transportation: false,
+            lodging: true,
+            parking: false,
+            entertainment: false,
+            meals: false,
+            airfare: false,
+            other: false,
+            loading: false,
+            error: false
+        };
+
+        scope.policyType = 'Lodging';
+
+        getAllExpenseCategoriesDeferred.resolve( successObj );
+
+        scope.$digest();
+        scope.getExpenseCategories();
+
+        expect( scope.policyIs ).toEqual( expected );
+
     } );
 
-    it( 'should say that scope.policyIs.parking = true.', function () {
-        actualResult.parking = true;
-        expect( scope.policyIs ).toEqual( actualResult );
+    it( 'should get the list of all expense categories (success) and display the Parking Policy.', function () {
+        var successObj = {
+            data: [
+                { "ExpenseCategoryName": "Mileage" },
+                { "ExpenseCategoryName": "Per Diem" },
+                { "ExpenseCategoryName": "Transportation" },
+                { "ExpenseCategoryName": "Lodging" },
+                { "ExpenseCategoryName": "Parking" },
+                { "ExpenseCategoryName": "Entertainment" },
+                { "ExpenseCategoryName": "Meals" },
+                { "ExpenseCategoryName": "Airfare" },
+                { "ExpenseCategoryName": "Other" }
+            ]
+        };
+
+        var expected = {
+            mileage: false,
+            perdiem: false,
+            transportation: false,
+            lodging: false,
+            parking: true,
+            entertainment: false,
+            meals: false,
+            airfare: false,
+            other: false,
+            loading: false,
+            error: false
+        };
+
+        scope.policyType = 'Parking';
+
+        getAllExpenseCategoriesDeferred.resolve( successObj );
+
+        scope.$digest();
+        scope.getExpenseCategories();
+
+        expect( scope.policyIs ).toEqual( expected );
+
     } );
 
-    it( 'should say that scope.policyIs.entertainment = true.', function () {
-        actualResult.entertainment = true;
-        expect( scope.policyIs ).toEqual( actualResult );
+    it( 'should get the list of all expense categories (success) and display the Entertainment Policy.', function () {
+        var successObj = {
+            data: [
+                { "ExpenseCategoryName": "Mileage" },
+                { "ExpenseCategoryName": "Per Diem" },
+                { "ExpenseCategoryName": "Transportation" },
+                { "ExpenseCategoryName": "Lodging" },
+                { "ExpenseCategoryName": "Parking" },
+                { "ExpenseCategoryName": "Entertainment" },
+                { "ExpenseCategoryName": "Meals" },
+                { "ExpenseCategoryName": "Airfare" },
+                { "ExpenseCategoryName": "Other" }
+            ]
+        };
+
+        var expected = {
+            mileage: false,
+            perdiem: false,
+            transportation: false,
+            lodging: false,
+            parking: false,
+            entertainment: true,
+            meals: false,
+            airfare: false,
+            other: false,
+            loading: false,
+            error: false
+        };
+
+        scope.policyType = 'Entertainment';
+
+        getAllExpenseCategoriesDeferred.resolve( successObj );
+
+        scope.$digest();
+        scope.getExpenseCategories();
+
+        expect( scope.policyIs ).toEqual( expected );
+
     } );
 
-    it( 'should say that scope.policyIs.meals = true.', function () {
-        actualResult.meals = true;
-        expect( scope.policyIs ).toEqual( actualResult );
+    it( 'should get the list of all expense categories (success) and display the Meals Policy.', function () {
+        var successObj = {
+            data: [
+                { "ExpenseCategoryName": "Mileage" },
+                { "ExpenseCategoryName": "Per Diem" },
+                { "ExpenseCategoryName": "Transportation" },
+                { "ExpenseCategoryName": "Lodging" },
+                { "ExpenseCategoryName": "Parking" },
+                { "ExpenseCategoryName": "Entertainment" },
+                { "ExpenseCategoryName": "Meals" },
+                { "ExpenseCategoryName": "Airfare" },
+                { "ExpenseCategoryName": "Other" }
+            ]
+        };
+
+        var expected = {
+            mileage: false,
+            perdiem: false,
+            transportation: false,
+            lodging: false,
+            parking: false,
+            entertainment: false,
+            meals: true,
+            airfare: false,
+            other: false,
+            loading: false,
+            error: false
+        };
+
+        scope.policyType = 'Meals';
+
+        getAllExpenseCategoriesDeferred.resolve( successObj );
+
+        scope.$digest();
+        scope.getExpenseCategories();
+
+        expect( scope.policyIs ).toEqual( expected );
+
     } );
 
-    it( 'should say that scope.policyIs.airfare = true.', function () {
-        actualResult.airfare = true;
-        expect( scope.policyIs ).toEqual( actualResult );
+    it( 'should get the list of all expense categories (success) and display the Airfare Policy.', function () {
+        var successObj = {
+            data: [
+                { "ExpenseCategoryName": "Mileage" },
+                { "ExpenseCategoryName": "Per Diem" },
+                { "ExpenseCategoryName": "Transportation" },
+                { "ExpenseCategoryName": "Lodging" },
+                { "ExpenseCategoryName": "Parking" },
+                { "ExpenseCategoryName": "Entertainment" },
+                { "ExpenseCategoryName": "Meals" },
+                { "ExpenseCategoryName": "Airfare" },
+                { "ExpenseCategoryName": "Other" }
+            ]
+        };
+
+        var expected = {
+            mileage: false,
+            perdiem: false,
+            transportation: false,
+            lodging: false,
+            parking: false,
+            entertainment: false,
+            meals: false,
+            airfare: true,
+            other: false,
+            loading: false,
+            error: false
+        };
+
+        scope.policyType = 'Airfare';
+
+        getAllExpenseCategoriesDeferred.resolve( successObj );
+
+        scope.$digest();
+        scope.getExpenseCategories();
+
+        expect( scope.policyIs ).toEqual( expected );
+
     } );
 
-    it( 'should say that scope.policyIs.other = true.', function () {
-        actualResult.other = true;
-        expect( scope.policyIs ).toEqual( actualResult );
+    it( 'should get the list of all expense categories (success) and display the Other Policy.', function () {
+        var successObj = {
+            data: [
+                { "ExpenseCategoryName": "Mileage" },
+                { "ExpenseCategoryName": "Per Diem" },
+                { "ExpenseCategoryName": "Transportation" },
+                { "ExpenseCategoryName": "Lodging" },
+                { "ExpenseCategoryName": "Parking" },
+                { "ExpenseCategoryName": "Entertainment" },
+                { "ExpenseCategoryName": "Meals" },
+                { "ExpenseCategoryName": "Airfare" },
+                { "ExpenseCategoryName": "Other" }
+            ]
+        };
+
+        var expected = {
+            mileage: false,
+            perdiem: false,
+            transportation: false,
+            lodging: false,
+            parking: false,
+            entertainment: false,
+            meals: false,
+            airfare: false,
+            other: true,
+            loading: false,
+            error: false
+        };
+
+        scope.policyType = 'Other';
+
+        getAllExpenseCategoriesDeferred.resolve( successObj );
+
+        scope.$digest();
+        scope.getExpenseCategories();
+
+        expect( scope.policyIs ).toEqual( expected );
+
     } );
 
-    it( 'should say that all of scope.policy\'s fields are false if selectedType = null.', function () {
-        expect( scope.policyIs ).toEqual( actualResult );
+    it( 'should get the list of all expense categories (success) and display the error Policy.', function () {
+        var successObj = {
+            data: [
+                { "ExpenseCategoryName": "Mileage" },
+                { "ExpenseCategoryName": "Per Diem" },
+                { "ExpenseCategoryName": "Transportation" },
+                { "ExpenseCategoryName": "Lodging" },
+                { "ExpenseCategoryName": "Parking" },
+                { "ExpenseCategoryName": "Entertainment" },
+                { "ExpenseCategoryName": "Meals" },
+                { "ExpenseCategoryName": "Airfare" },
+                { "ExpenseCategoryName": "Other" }
+            ]
+        };
+
+        var expected = {
+            mileage: false,
+            perdiem: false,
+            transportation: false,
+            lodging: false,
+            parking: false,
+            entertainment: false,
+            meals: false,
+            airfare: false,
+            other: false,
+            loading: false,
+            error: true
+        };
+
+        scope.policyType = null;
+
+        getAllExpenseCategoriesDeferred.resolve( successObj );
+
+        scope.$digest();
+        scope.getExpenseCategories();
+
+        expect( scope.policyIs ).toEqual( expected );
+
     } );
 
-    it( 'should say that all of scope.policy\'s fields are false if selectedType = undefined.', function () {
-        expect( scope.policyIs ).toEqual( actualResult );
-    } );*/
+    it( 'should get the list of all expense categories (error) and display the error Policy.', function () {
+        var errorObj = {};
+
+        var expected = {
+            mileage: false,
+            perdiem: false,
+            transportation: false,
+            lodging: false,
+            parking: false,
+            entertainment: false,
+            meals: false,
+            airfare: false,
+            other: false,
+            loading: false,
+            error: true
+        };
+
+        scope.policyType = 'This can be anything';
+
+        getAllExpenseCategoriesDeferred.reject( errorObj );
+
+        scope.$digest();
+        scope.getExpenseCategories();
+
+        expect( scope.policyIs ).toEqual( expected );
+
+    } );
+
+    it( 'should dismiss the modal.', function () {
+        spyOn( mockModalInstance, 'dismiss' );
+        scope.ok();
+        expect( mockModalInstance.dismiss ).toHaveBeenCalledWith( 'Form was cancelled.' );
+    } );
 
 } );
-

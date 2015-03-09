@@ -11,6 +11,12 @@ using CatExpenseFront.Services.Interfaces;
 using CatExpenseFront.ViewModels;
 using Moq;
 using NUnit.Framework;
+using System.Web;
+using System.Security.Principal;
+using System.Web.Routing;
+using System.Collections.Specialized;
+using CatExpenseFront.App_Start;
+using System.Text;
 
 namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
 {
@@ -18,6 +24,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
     public class ReceiptControllerTests
     {
         private Mock<IReceiptService> mockService = new Mock<IReceiptService>();
+        private Mock<ILineItemService> mockLineItemService = new Mock<ILineItemService>();
         private ReceiptController controller;
 
         private Receipt receipt1;
@@ -27,12 +34,50 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
         private Guid guid2;
         private Guid guid3;
         private List<Receipt> receipts;
+        private LineItem lineItem1;
+        private LineItem lineItem2;
+        private LineItem lineItem3;
+        private List<LineItem> lineItems;
 
+
+        private HttpContextBase GetMockedHttpContext()
+        {
+            var context = new Mock<HttpContextBase>();
+            var request = new Mock<HttpRequestBase>();
+            var response = new Mock<HttpResponseBase>();
+            var session = new Mock<HttpSessionStateBase>();
+            var server = new Mock<HttpServerUtilityBase>();
+            var user = new Mock<IPrincipal>();
+            var identity = new Mock<IIdentity>();
+            var urlHelper = new Mock<UrlHelper>();
+
+            session.Setup(s => s.Add("UserName", "catexpuser"));
+            session.Setup(s => s.IsNewSession).Returns(true);
+            session.Setup(s => s.SessionID).Returns("UserName");
+            var requestContext = new Mock<RequestContext>();
+            requestContext.Setup(x => x.HttpContext).Returns(context.Object);
+            context.Setup(ctx => ctx.Request).Returns(request.Object);
+            context.Setup(ctx => ctx.Response).Returns(response.Object);
+            context.Setup(ctx => ctx.Session).Returns(session.Object);
+            context.Setup(ctx => ctx.Server).Returns(server.Object);
+            context.Setup(ctx => ctx.User).Returns(user.Object);
+            user.Setup(ctx => ctx.Identity).Returns(identity.Object);
+            identity.Setup(id => id.IsAuthenticated).Returns(true);
+            identity.Setup(id => id.Name).Returns("test");
+            request.Setup(req => req.Url).Returns(new Uri("http://localhost:54879/api/Receipts"));
+            request.Setup(req => req.RequestContext).Returns(requestContext.Object);
+            requestContext.Setup(x => x.RouteData).Returns(new RouteData());
+            request.SetupGet(req => req.Headers).Returns(new NameValueCollection());
+
+            return context.Object;
+
+        }
         [TestFixtureSetUp]
         public void ReceiptControllerTestSetUp()
         {
             // Arrange
-            controller = new ReceiptController();
+            controller = new ReceiptController(mockService.Object, mockLineItemService.Object, true);
+            HttpContextFactory.SetCurrentContext(GetMockedHttpContext());
             controller.Request = new HttpRequestMessage()
             {
                 RequestUri = new Uri("http://localhost/api/receipt"),
@@ -46,8 +91,10 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             controller.RequestContext.RouteData = new HttpRouteData(
                 route: new HttpRoute(),
                 values: new HttpRouteValueDictionary { { "controller", "Receipt" } });
-
+            var bytes = Encoding.UTF8.GetBytes("testtttting");
+            var base64 = Convert.ToBase64String(bytes);
             receipt1 = new Receipt();
+            receipt1.Base64String = base64;
             guid1 = Guid.NewGuid();
             
 
@@ -65,9 +112,17 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
                 receipt3,
             };
 
-            // Assert
-            Assert.IsNotNull(controller);
-            Assert.AreEqual(typeof(ReceiptController), controller.GetType());
+            lineItem1 = new LineItem();
+            lineItem1.SubmissionId = 1;
+            lineItem2 = new LineItem();
+            lineItem3 = new LineItem();
+
+            lineItems = new List<LineItem>
+            {
+                lineItem1,
+                lineItem2,
+                lineItem3,
+            };
         }
 
         [TestFixtureTearDown]
@@ -95,11 +150,13 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
 
        
 
-        //[Test]
+        [Test]
         public void ModelStateErrorPostTest()
         {
             // Arrange
             controller.ModelState.AddModelError("test", "test");
+            mockService.Setup(s => s.Create(It.IsAny<Receipt>())).Returns(receipt1);
+            mockLineItemService.Setup(s => s.Find(It.IsAny<int>())).Returns(lineItem1);
 
             // Act
             var response = controller.FileUpload(receipt1);
@@ -109,11 +166,12 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             //Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
         }
 
-        //[Test]
+        [Test]
         public void PostTest()
         {
             // Arrange
             mockService.Setup(s => s.Create(It.IsAny<Receipt>())).Returns(receipt1);
+            mockLineItemService.Setup(s => s.Find(It.IsAny<int>())).Returns(lineItem1);
 
             // Act
             var response = controller.FileUpload(receipt1);
@@ -125,18 +183,40 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
 
        
 
-        //[Test]
+        [Test]
         public void GetReceiptIdsBySubmissionIdTest()
         {
             // Arrange
             mockService.Setup(s => s.All()).Returns(receipts);
+            mockLineItemService.Setup(s => s.All()).Returns(lineItems);
 
             // Act
             var response = controller.GetReceiptIdsBySubmissionId(1);
 
             // Assert
             Assert.IsNotNull(response);
-            Assert.AreEqual(1, (response as ICollection<ReceiptWithoutImage>).Count);
+            Assert.AreEqual(3, (response as ICollection<ReceiptWithoutImage>).Count);
+        }
+
+        //[Test]
+        public void GetReceiptByUniqueIdTest()
+        {
+            mockService.Setup(s => s.Find(It.IsAny<int>())).Returns(receipt1);
+
+            controller.GetReceiptByUniqueId(1);
+
+            mockService.Verify(x => controller.GetReceiptByUniqueId(1), Times.Never());
+        }
+
+        [Test]
+        public void GetAllReceiptsBySubmissionIdTest()
+        {
+            mockService.Setup(s => s.All()).Returns(receipts);
+            mockLineItemService.Setup(s => s.All()).Returns(lineItems);
+
+            var response = controller.GetAllReceiptsBySubmissionId(1);
+            Assert.IsNotNull(response);
+           
         }
     }
 }

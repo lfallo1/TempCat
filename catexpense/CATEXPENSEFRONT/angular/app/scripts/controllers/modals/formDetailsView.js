@@ -83,7 +83,7 @@ angular.module('expenseApp.Controllers')
        */
       $scope.getPolicy = function () {
           var modalInstance = $modal.open({
-              templateUrl: 'Views/HotTowel/views/modals/policyView.html',
+              templateUrl: 'Views/Home/views/modals/policyView.html',
               controller: 'PolicyCtrl',
               resolve: {
                   selectedType: function () {

@@ -7,9 +7,9 @@ namespace CatExpenseFront.Controllers
     /// <summary>
     /// Only used to load the index page.
     /// </summary>
-    public class HotTowelController : Controller
+    public class HomeController : Controller
     {
-        // GET: /HotTowel/
+        // GET: /Home/
 
         public ActionResult Index()
         {

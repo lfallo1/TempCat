@@ -270,7 +270,7 @@ angular.module( 'expenseApp.Controllers' )
           MessageService.setBroadCastMessage( "confirmDeleteSubmissionUnderEdit" );
           MessageService.setId( $scope.submission.SubmissionId );
           var modalInstance = $modal.open( {
-              templateUrl: 'Views/HotTowel/views/modals/confirmModal.html',
+              templateUrl: 'Views/Home/views/modals/confirmModal.html',
               controller: 'confirmModalController',
               resolve: {
                   selectedType: function () {
@@ -394,7 +394,7 @@ angular.module( 'expenseApp.Controllers' )
           ReceiptService.setShowAllReceipts( true );
           ReceiptService.setAddReceipt( false );
           var modalInstance = $modal.open( {
-              templateUrl: 'Views/HotTowel/views/modals/receiptModal.html',
+              templateUrl: 'Views/Home/views/modals/receiptModal.html',
               controller: 'receiptController'
           } );
       }
@@ -440,7 +440,7 @@ angular.module( 'expenseApp.Controllers' )
       $scope.openModal = function ( index ) {
 
           var modalInstance = $modal.open( {
-              templateUrl: 'Views/HotTowel/views/modals/formDetailsView.html',
+              templateUrl: 'Views/Home/views/modals/formDetailsView.html',
               controller: 'FormDetailsCtrl',
           } );
 
@@ -491,7 +491,7 @@ angular.module( 'expenseApp.Controllers' )
                                               if ( ReceiptService.getAddReceipt() ) {
                                                   ReceiptService.setReceipts( userSubmission[Application.getSubmissionIndex()].LineItems[Application.getLineItemIndex()].Receipts );
                                                   var modalInstance = $modal.open( {
-                                                      templateUrl: 'Views/HotTowel/views/modals/receiptModal.html',
+                                                      templateUrl: 'Views/Home/views/modals/receiptModal.html',
                                                       controller: 'receiptController'
                                                   } );
                                               } else {
@@ -499,7 +499,7 @@ angular.module( 'expenseApp.Controllers' )
                                                       MessageService.setMessage( 'Would you like to add a receipt for this line item?' );
                                                       MessageService.setBroadCastMessage( "addReeciptForLineItem" );
                                                       var modalInstance = $modal.open( {
-                                                          templateUrl: 'Views/HotTowel/views/modals/confirmModal.html',
+                                                          templateUrl: 'Views/Home/views/modals/confirmModal.html',
                                                           controller: 'confirmModalController'
                                                       } );
                                                   }
@@ -508,7 +508,7 @@ angular.module( 'expenseApp.Controllers' )
                                                   ReceiptService.setAddReceipt( true );
                                                   ReceiptService.setReceipts( userSubmission[Application.getSubmissionIndex()].LineItems[Application.getLineItemIndex()].Receipts );
                                                   var modalInstance = $modal.open( {
-                                                      templateUrl: 'Views/HotTowel/views/modals/receiptModal.html',
+                                                      templateUrl: 'Views/Home/views/modals/receiptModal.html',
                                                       controller: 'receiptController'
                                                   } );
                                               } );
@@ -553,7 +553,7 @@ angular.module( 'expenseApp.Controllers' )
               MessageService.setBroadCastMessage( "confirmNoEmptyLineItems" );
               MessageService.setId( $scope.submission.SubmissionId );
               var modalInstance = $modal.open( {
-                  templateUrl: 'Views/HotTowel/views/modals/confirmModal.html',
+                  templateUrl: 'Views/Home/views/modals/confirmModal.html',
                   controller: 'confirmModalController',
                   resolve: {
                       selectedType: function () {

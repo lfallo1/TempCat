@@ -90,7 +90,7 @@ angular.module('expenseApp.Controllers')
             MessageService.setId(expense.LineItemId);
             MessageService.setIndex(index);
             var modalInstance = $modal.open({
-                templateUrl: 'Views/HotTowel/views/modals/confirmModal.html',
+                templateUrl: 'Views/Home/views/modals/confirmModal.html',
                 controller: 'confirmModalController'
             });
         };
@@ -136,7 +136,7 @@ angular.module('expenseApp.Controllers')
                 Application.setComment("");
             }
             var modalInstance = $modal.open({
-                templateUrl: 'Views/HotTowel/views/modals/commentModal.html',
+                templateUrl: 'Views/Home/views/modals/commentModal.html',
                 controller: 'CommentController'
             });
         });
@@ -159,7 +159,7 @@ angular.module('expenseApp.Controllers')
                 Application.setComment("");
             }
             var modalInstance = $modal.open({
-                templateUrl: 'Views/HotTowel/views/modals/commentModal.html',
+                templateUrl: 'Views/Home/views/modals/commentModal.html',
                 controller: 'CommentController'
             });
         }
@@ -224,7 +224,7 @@ angular.module('expenseApp.Controllers')
             MessageService.setMessage("Please confirm you are about to approve this submission.");
             MessageService.setBroadCastMessage("confirmApproveSubmission");
             var modalInstance = $modal.open({
-                templateUrl: 'Views/HotTowel/views/modals/confirmModal.html',
+                templateUrl: 'Views/Home/views/modals/confirmModal.html',
                 controller: 'confirmModalController'
             });
         }
@@ -239,7 +239,7 @@ angular.module('expenseApp.Controllers')
             MessageService.setBroadCastMessage("confirmRejectSubmission");
             MessageService.setAddComment(true);
             var modalInstance = $modal.open({
-                templateUrl: 'Views/HotTowel/views/modals/confirmModal.html',
+                templateUrl: 'Views/Home/views/modals/confirmModal.html',
                 controller: 'confirmModalController'
             });
         }
@@ -254,7 +254,7 @@ angular.module('expenseApp.Controllers')
             ReceiptService.setShowAllReceipts(false);
             ReceiptService.setReceipts($scope.currentSubmission.LineItems[index].Receipts);
             var modalInstance = $modal.open({
-                templateUrl: 'Views/HotTowel/views/modals/receiptModal.html',
+                templateUrl: 'Views/Home/views/modals/receiptModal.html',
                 controller: 'receiptController'
             });
         };

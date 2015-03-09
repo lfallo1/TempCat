@@ -234,6 +234,16 @@
             <p>•	Personal items lost, stolen or damaged while traveling.</p>
         </div>
 
+        <!--loading Policy-->
+        <div id="loadingPolicy" ng-show="policyIs.loading">
+            <p>Loading Policy...</p>
+        </div>
+
+        <!-- error retrieving Policy -->
+        <div id="errorMsg" ng-show="policyIs.error">
+            <p>There was an error when retrieving the policies.</p>
+        </div>
+
     </div>
 
     <div class="modal-footer">
