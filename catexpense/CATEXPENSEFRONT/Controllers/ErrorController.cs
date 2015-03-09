@@ -41,7 +41,7 @@ namespace CatExpenseFront.Controllers
         [Route("api/Error")]
         public HttpResponseMessage Post(Error error)
         {
-            if(this.isTest == false || this.isTest == null)
+            if(this.isTest == false)
             {
                 this.checkSession(); 
             }
