@@ -29,6 +29,7 @@ namespace CatExpenseFront.Controllers
         private IReceiptService service;
         private ILineItemService lineItemService;
         private ISubmissionService submissionService;
+        private bool isTest;
 
         /// <summary>
         /// Default Construcor
@@ -38,6 +39,21 @@ namespace CatExpenseFront.Controllers
             service = new ReceiptService();
             lineItemService = new LineItemService();
             submissionService = new SubmissionService();
+        }
+
+        public ReceiptController(IReceiptService _receiptService)
+        {
+            service = _receiptService;
+            lineItemService = new LineItemService();
+            submissionService = new SubmissionService();
+        }
+
+        public ReceiptController(IReceiptService _receiptService, ILineItemService _lineItemService, bool _isTest)
+        {
+            service = _receiptService;
+            lineItemService = _lineItemService;
+            submissionService = new SubmissionService();
+            this.isTest = _isTest;
         }
 
         /// <summary>
@@ -69,9 +85,11 @@ namespace CatExpenseFront.Controllers
         public void GetReceiptByUniqueId(int id)
         {
 
-            //Checks the session to see if it is valid
-            this.checkSession();
-
+            if (this.isTest == false || this.isTest == null)
+            {
+                //Checks the session to see if it is valid
+                this.checkSession();
+            }
             Receipt r = service.Find(id);
 
             HttpContextFactory.Current.Response.ClearContent();
@@ -94,8 +112,11 @@ namespace CatExpenseFront.Controllers
         [Route("api/Receipts")]
         public Receipt FileUpload(Receipt receipt)
         {
-            //Checks the session to see if it is valid
-            this.checkSession();
+            if (this.isTest == false || this.isTest == null)
+            {
+                //Checks the session to see if it is valid
+                this.checkSession();
+            }
 
             receipt.DateCreated = DateTime.Now;
             byte[] binaryData = System.Convert.FromBase64String(receipt.Base64String);
@@ -135,8 +156,11 @@ namespace CatExpenseFront.Controllers
         /// <returns></returns>
         private List<Receipt> GetAllReceiptsBySubmissionId(int id)
         {
-            //Checks the session to see if it is valid
-            this.checkSession();
+            if (this.isTest == false || this.isTest == null)
+            {
+                //Checks the session to see if it is valid
+                this.checkSession();
+            }
 
             List<LineItem> lineItemList = (from m in lineItemService.All()
                                            where m.SubmissionId == id
@@ -165,8 +189,11 @@ namespace CatExpenseFront.Controllers
         [Route("api/Receipt/GetReceiptsBySubmissionId")]
         public List<ReceiptWithoutImage> GetReceiptIdsBySubmissionId(int id)
         {
-            //Checks the session to see if it is valid
-            this.checkSession();
+            if (this.isTest == false || this.isTest == null)
+            {
+                //Checks the session to see if it is valid
+                this.checkSession();
+            }
 
             List<Receipt> receiptList = GetAllReceiptsBySubmissionId(id);
 
@@ -195,8 +222,11 @@ namespace CatExpenseFront.Controllers
         [ResponseType(typeof(Receipt))]
         public HttpResponseMessage DeleteReceipt(int id, int lineItemId)
         {
-            //Checks the session to see if it is valid
-            this.checkSession();
+            if (this.isTest == false || this.isTest == null)
+            {
+                //Checks the session to see if it is valid
+                this.checkSession();
+            }
 
             Receipt receipt = service.Find(id);
             LineItem lineItem = lineItemService.Find(lineItemId);

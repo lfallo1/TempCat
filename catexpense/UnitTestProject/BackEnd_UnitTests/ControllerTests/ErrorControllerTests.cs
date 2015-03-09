@@ -64,7 +64,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
         [SetUp]
         public void Init()
         {
-            controller = new ErrorController(mockService.Object);
+            controller = new ErrorController(mockService.Object, true);
             HttpContextFactory.SetCurrentContext(GetMockedHttpContext());
             
         }
@@ -103,7 +103,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             controller.Request.Properties[HttpPropertyKeys.HttpConfigurationKey] = config;
             error.DateCreated = DateTime.Today;
             mockService.Setup(s => s.Create(error)).Returns(error);
-            var actualResponse = controller.Post(error, true);
+            var actualResponse = controller.Post(error);
             Assert.IsNotNull(actualResponse);
         }
     }
