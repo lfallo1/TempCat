@@ -123,12 +123,6 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
                 lineItem2,
                 lineItem3,
             };
-
-
-
-            // Assert
-            Assert.IsNotNull(controller);
-            Assert.AreEqual(typeof(ReceiptController), controller.GetType());
         }
 
         [TestFixtureTearDown]
@@ -156,11 +150,13 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
 
        
 
-        //[Test]
+        [Test]
         public void ModelStateErrorPostTest()
         {
             // Arrange
             controller.ModelState.AddModelError("test", "test");
+            mockService.Setup(s => s.Create(It.IsAny<Receipt>())).Returns(receipt1);
+            mockLineItemService.Setup(s => s.Find(It.IsAny<int>())).Returns(lineItem1);
 
             // Act
             var response = controller.FileUpload(receipt1);
@@ -200,6 +196,27 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             // Assert
             Assert.IsNotNull(response);
             Assert.AreEqual(3, (response as ICollection<ReceiptWithoutImage>).Count);
+        }
+
+        //[Test]
+        public void GetReceiptByUniqueIdTest()
+        {
+            mockService.Setup(s => s.Find(It.IsAny<int>())).Returns(receipt1);
+
+            controller.GetReceiptByUniqueId(1);
+
+            mockService.Verify(x => controller.GetReceiptByUniqueId(1), Times.Never());
+        }
+
+        [Test]
+        public void GetAllReceiptsBySubmissionIdTest()
+        {
+            mockService.Setup(s => s.All()).Returns(receipts);
+            mockLineItemService.Setup(s => s.All()).Returns(lineItems);
+
+            var response = controller.GetAllReceiptsBySubmissionId(1);
+            Assert.IsNotNull(response);
+           
         }
     }
 }
