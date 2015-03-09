@@ -552,13 +552,11 @@
     <Content Include="angular\app\scripts\controllers\submission.js" />
     <Content Include="angular\app\scripts\controllers\submissionTable.js" />
     <Content Include="angular\app\scripts\directives\datepicker.js" />
-    <Content Include="angular\app\scripts\directives\imageupload.js" />
     <Content Include="angular\app\scripts\directives\submission-table.js" />
     <Content Include="angular\app\scripts\directives\submissionPage.js" />
     <Content Include="angular\app\scripts\services\Application.js" />
     <Content Include="angular\app\scripts\services\Authentication.js" />
     <Content Include="angular\app\scripts\services\CommentService.js" />
-    <Content Include="angular\app\scripts\services\DateService.js" />
     <Content Include="angular\app\scripts\services\ExpenseCategoryService.js" />
     <Content Include="angular\app\scripts\services\LineItemService.js" />
     <Content Include="angular\app\scripts\services\LogErrors.js" />

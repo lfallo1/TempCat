@@ -85,7 +85,7 @@ namespace CatExpenseFront.Controllers
         public void GetReceiptByUniqueId(int id)
         {
 
-            if (this.isTest == false || this.isTest == null)
+            if (this.isTest == false)
             {
                 //Checks the session to see if it is valid
                 this.checkSession();
@@ -112,7 +112,7 @@ namespace CatExpenseFront.Controllers
         [Route("api/Receipts")]
         public Receipt FileUpload(Receipt receipt)
         {
-            if (this.isTest == false || this.isTest == null)
+            if (this.isTest == false)
             {
                 //Checks the session to see if it is valid
                 this.checkSession();
@@ -154,9 +154,9 @@ namespace CatExpenseFront.Controllers
         /// </summary>
         /// <param name="id">id of the submission to get line items from</param>
         /// <returns></returns>
-        private List<Receipt> GetAllReceiptsBySubmissionId(int id)
+        public List<Receipt> GetAllReceiptsBySubmissionId(int id)
         {
-            if (this.isTest == false || this.isTest == null)
+            if (this.isTest == false)
             {
                 //Checks the session to see if it is valid
                 this.checkSession();
@@ -189,7 +189,7 @@ namespace CatExpenseFront.Controllers
         [Route("api/Receipt/GetReceiptsBySubmissionId")]
         public List<ReceiptWithoutImage> GetReceiptIdsBySubmissionId(int id)
         {
-            if (this.isTest == false || this.isTest == null)
+            if (this.isTest == false)
             {
                 //Checks the session to see if it is valid
                 this.checkSession();
@@ -222,7 +222,7 @@ namespace CatExpenseFront.Controllers
         [ResponseType(typeof(Receipt))]
         public HttpResponseMessage DeleteReceipt(int id, int lineItemId)
         {
-            if (this.isTest == false || this.isTest == null)
+            if (this.isTest == false)
             {
                 //Checks the session to see if it is valid
                 this.checkSession();

@@ -11,6 +11,11 @@ using CatExpenseFront.Models;
 using CatExpenseFront.Services.Interfaces;
 using Moq;
 using NUnit.Framework;
+using System.Web;
+using System.Security.Principal;
+using System.Web.Routing;
+using System.Collections.Specialized;
+using CatExpenseFront.App_Start;
 
 namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
 {
@@ -27,10 +32,44 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
         private Comment comment3;
         private List<Comment> comments;
 
+        private HttpContextBase GetMockedHttpContext()
+        {
+            var context = new Mock<HttpContextBase>();
+            var request = new Mock<HttpRequestBase>();
+            var response = new Mock<HttpResponseBase>();
+            var session = new Mock<HttpSessionStateBase>();
+            var server = new Mock<HttpServerUtilityBase>();
+            var user = new Mock<IPrincipal>();
+            var identity = new Mock<IIdentity>();
+            var urlHelper = new Mock<UrlHelper>();
+
+            session.Setup(s => s.Add("UserName", "catexpuser"));
+            session.Setup(s => s.IsNewSession).Returns(true);
+            session.Setup(s => s.SessionID).Returns("UserName");
+            var requestContext = new Mock<RequestContext>();
+            requestContext.Setup(x => x.HttpContext).Returns(context.Object);
+            context.Setup(ctx => ctx.Request).Returns(request.Object);
+            context.Setup(ctx => ctx.Response).Returns(response.Object);
+            context.Setup(ctx => ctx.Session).Returns(session.Object);
+            context.Setup(ctx => ctx.Server).Returns(server.Object);
+            context.Setup(ctx => ctx.User).Returns(user.Object);
+            user.Setup(ctx => ctx.Identity).Returns(identity.Object);
+            identity.Setup(id => id.IsAuthenticated).Returns(true);
+            identity.Setup(id => id.Name).Returns("test");
+            request.Setup(req => req.Url).Returns(new Uri("http://localhost:54879/api/Comment"));
+            request.Setup(req => req.RequestContext).Returns(requestContext.Object);
+            requestContext.Setup(x => x.RouteData).Returns(new RouteData());
+            request.SetupGet(req => req.Headers).Returns(new NameValueCollection());
+
+            return context.Object;
+
+        }
+
         [TestFixtureSetUp]
         public void CommentControllerTestsSetUp()
         {
-            controller = new CommentController(mockService.Object);
+            controller = new CommentController(mockService.Object, true);
+            HttpContextFactory.SetCurrentContext(GetMockedHttpContext());
             controller.Request = new HttpRequestMessage()
             {
                 RequestUri = new Uri("http://localhost/api/comment"),
@@ -48,10 +87,12 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             comment1 = new Comment();
             comment1.SubmissionId = 1;
             comment1.CommentId = 1;
+            comment1.RepliconUserName = "catexpuser";
 
             comment2 = new Comment();
             comment2.SubmissionId = 1;
             comment2.CommentId = 2;
+            comment2.RepliconUserName = "user";
 
             comment3 = new Comment();
             comment3.SubmissionId = 2;
@@ -90,7 +131,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
 
        
 
-        //[Test]
+        [Test]
         public void GetLineItemTest()
         {
             // Arrange
@@ -104,7 +145,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             Assert.AreEqual(typeof(OkNegotiatedContentResult<Comment>), response.GetType());
         }
 
-        //[Test]
+        [Test]
         public void FailGetCommentTest()
         {
             // Arrange
@@ -119,7 +160,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             Assert.AreEqual(typeof(NotFoundResult), response.GetType());
         }
 
-        //[Test]
+        [Test]
         public void GetLineItemsByLineItemIdTest()
         {
             // Arrange
@@ -136,11 +177,12 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             Assert.IsFalse((response as ICollection<Comment>).Contains(comment3));
         }
 
-        //[Test]
+        [Test]
         public void PutCommentTest()
         {
             // Arrange
-            mockService.Setup(s => s.Update(comment1)).Returns(0);
+            mockService.Setup(s => s.Update(It.IsAny<Comment>())).Returns(0);
+            mockService.Setup(s => s.Find(It.IsAny<int>())).Returns(comment1);
             // Act
             var response = controller.PutComment(1, comment);
 
@@ -149,36 +191,42 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
-        //[Test]
+        [Test]
         public void FailPutCommentTest()
         {
+            mockService.Setup(s => s.Update(It.IsAny<Comment>())).Returns(0);
+            mockService.Setup(s => s.Find(It.IsAny<int>())).Returns(comment2);
+
             // Act
             var response = controller.PutComment(3, comment);
 
             // Assert
             Assert.IsNotNull(response);
-            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
         }
 
-        //[Test]
+        [Test]
         public void ModelStateErrorPutCommentTest()
         {
             // Arrange
             controller.ModelState.AddModelError("test", "test");
+            mockService.Setup(s => s.Update(It.IsAny<Comment>())).Returns(0);
+            mockService.Setup(s => s.Find(It.IsAny<int>())).Returns(comment1);
 
             // Act
             var response = controller.PutComment(1, comment);
 
             // Assert
             Assert.IsNotNull(response);
-            Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
-        //[Test]
+        [Test]
         public void ModelStateErrorPostTest()
         {
             // Arrange
             controller.ModelState.AddModelError("test", "test");
+            mockService.Setup(s => s.Update(It.IsAny<Comment>())).Returns(0);
+            mockService.Setup(s => s.Find(It.IsAny<int>())).Returns(comment1);
 
             // Act
             var response = controller.CreateComment(1, comment);
@@ -187,7 +235,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             Assert.IsNotNull(response);
         }
 
-        //[Test]
+        [Test]
         public void PostTest()
         {
             // Arrange
@@ -200,7 +248,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             Assert.IsNotNull(response);
         }
 
-        //[Test]
+        [Test]
         public void DeleteCommentTest()
         {
             // Arrange
@@ -212,10 +260,10 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
 
             // Assert
             Assert.IsNotNull(response);
-            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            Assert.AreEqual(HttpStatusCode.Forbidden, response.StatusCode);
         }
 
-        //[Test]
+        [Test]
         public void FailDeleteCommentTest()
         {
             // Arrange
