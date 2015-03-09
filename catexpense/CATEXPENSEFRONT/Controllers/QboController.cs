@@ -42,7 +42,7 @@ namespace CatExpenseFront.Controllers
         [Route("api/qbo/")]
         public void GetQbo()
         {
-            QuickBooksRequest.Sync();
+            QuickBooksRequest.PerformApiRequest();
         }
 
     }

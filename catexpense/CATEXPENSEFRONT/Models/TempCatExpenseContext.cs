@@ -57,5 +57,11 @@ namespace CatExpenseFront.Models
         /// Loads QbVendor to the context.
         /// </summary>
         public DbSet<QbVendor> QbVendor { get; set; }
+        /// <summary>
+        /// Loads QbVendor to the context.
+        /// </summary>
+        public DbSet<QbAccount> QbAccount { get; set; }
+
+
     }
 }

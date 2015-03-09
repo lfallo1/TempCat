@@ -17,6 +17,21 @@ angular.module('expenseApp.Controllers')
 
       $scope.showDetailsViewSaveCancel = true;
 
+      $scope.showDetailsViewSaveCancel = true;
+      $scope.showSaveAndCancel = function () {
+          $scope.showDetailsViewSaveCancel = true;
+      };
+      $scope.hideSaveAndCancel = function () {
+          $scope.showDetailsViewSaveCancel = false;
+      };
+
+      //stores the value if the user is currently creating a mileage expense
+      var mileageStatus = false;
+      $scope.creatingMileage = function ( value ) {
+          mileageStatus = !!value;
+      };
+
+
       /**
       * contains the list of the different types of expenses
       * set to current values in database upon page load by getExpenseCategories function
@@ -46,11 +61,12 @@ angular.module('expenseApp.Controllers')
        * Returns false otherwise.
        */
       $scope.displayMileageForm = function () {
+          if ( mileageStatus ) {
+              $scope.hideSaveAndCancel();
+          } else {
+              $scope.showSaveAndCancel();
+          };
           return $scope.selectedType === 'Mileage';
-      };
-
-      $scope.isMileage = function () {
-
       };
 
       /**
@@ -59,6 +75,9 @@ angular.module('expenseApp.Controllers')
        * Returns false otherwise.
        */
       $scope.displayPerDiemForm = function () {
+          if ( $scope.selectedType === 'Per Diem' ) {
+              $scope.showSaveAndCancel();
+          };
           return $scope.selectedType === 'Per Diem';
       };
 
@@ -68,7 +87,16 @@ angular.module('expenseApp.Controllers')
        * Returns false otherwise.
        */
       $scope.displayOtherForm = function () {
-          return $scope.displayMileageForm() === false && $scope.displayPerDiemForm() === false;
+          if ( $scope.selectedType === 'Transportation' || $scope.selectedType === 'Lodging'
+          || $scope.selectedType === 'Parking' || $scope.selectedType === 'Entertainment'
+          || $scope.selectedType === 'Meals' || $scope.selectedType === 'Airfare'
+          || $scope.selectedType === 'Other' ) {
+              $scope.showSaveAndCancel();
+          };
+          return $scope.selectedType === 'Transportation' || $scope.selectedType === 'Lodging'
+          || $scope.selectedType === 'Parking' || $scope.selectedType === 'Entertainment'
+          || $scope.selectedType === 'Meals' || $scope.selectedType === 'Airfare'
+          || $scope.selectedType === 'Other';
       };
 
       /**
@@ -272,20 +300,4 @@ angular.module('expenseApp.Controllers')
               $scope.noReceipt = true;
           }
       }
-
-      $scope.$watch(
-          'showDetailsViewSaveCancel',
-          function (newValue, oldValue) {
-              if (newValue == true) {
-                  console.log("true");
-                  $("#SaveAndCancel").show();
-              }
-              if (newValue == false) {
-                  console.log("false");
-                  $("#SaveAndCancel").hide();
-              }
-              else {
-                  return;
-              }
-          }, true);
   }]);
