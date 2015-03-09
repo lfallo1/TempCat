@@ -80,5 +80,11 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             Assert.AreEqual(1, response.Count);
             Assert.IsFalse(response.ContainsKey("TestManager1"));
         }
+
+        [Test]
+        public void SendsEmailTest()
+        {
+            controller.SendEmails()
+        }
     }
 }
