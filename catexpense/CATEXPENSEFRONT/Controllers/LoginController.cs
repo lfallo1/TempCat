@@ -24,6 +24,7 @@ namespace CatExpenseFront.Controllers
     {
         private ISubmissionService service;
         private IFinanceApproverService approverService;
+        private bool isTrue;
 
         /// <summary>
         /// Construcor that accepts submission service and user service
@@ -34,6 +35,12 @@ namespace CatExpenseFront.Controllers
         {
             this.service = service;
             this.approverService = iApproverService;
+        }
+        public LoginController(ISubmissionService iService, IFinanceApproverService iApproverService, bool _isTrue)
+        {
+            this.service = iService;
+            this.approverService = iApproverService;
+            this.isTrue = _isTrue;
         }
 
         /// <summary>
