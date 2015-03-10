@@ -76,7 +76,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
         public void ReceiptControllerTestSetUp()
         {
             // Arrange
-            controller = new ReceiptController(mockService.Object, mockLineItemService.Object, true);
+            controller = new ReceiptController(mockService.Object, mockLineItemService.Object);
             HttpContextFactory.SetCurrentContext(GetMockedHttpContext());
             controller.Request = new HttpRequestMessage()
             {
