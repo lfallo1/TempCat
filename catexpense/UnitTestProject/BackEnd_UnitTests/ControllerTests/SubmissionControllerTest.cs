@@ -70,8 +70,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
                 },
             };
             submission1.SubmissionId = 1;
-            submission1.WeekEndingDate = DateTime.Today;
-            submission1.RepliconProjectId = 17;
+            submission1.RepliconProjectId = 1;
 
             submission2 = new Submission();
             submission2.ActiveDirectoryUser = "TestUser2";
@@ -179,7 +178,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
         {
             // Arrange
             mockService.Setup(s => s.All()).Returns(submissions);
-            mockRepliconUserService.Setup(s => s.All()).Returns(new List<RepliconUserProject> { new RepliconUserProject("TestUser1", 17) });
+            
             // Act
             var response = controller.GetUserSubmissions();
 
@@ -274,6 +273,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             // Assert
             Assert.IsNotNull(response);
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            submission1.IsDeleted = false;
         }
 
         [Test]
