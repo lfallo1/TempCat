@@ -19,7 +19,7 @@ namespace CatExpenseFront.Controllers
     public class ErrorController: BaseController
     {
         private IErrorService service;
-        private bool isTest;
+        
         
 
         public ErrorController(){
@@ -30,21 +30,16 @@ namespace CatExpenseFront.Controllers
         {
             this.service = errorService;
         }
-        public ErrorController(IErrorService errorService, bool _isTest)
-        {
-            this.service = errorService;
-            this.isTest = _isTest;
-        }
+       
 
         [HttpPost]
         [ResponseType(typeof(Error))]
         [Route("api/Error")]
         public HttpResponseMessage Post(Error error)
         {
-            if(this.isTest == false)
-            {
+            
                 this.checkSession(); 
-            }
+           
                       
 
             if( error != null){
