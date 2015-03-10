@@ -165,6 +165,15 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             Assert.AreEqual(typeof(SubmissionController), emptyController.GetType());
         }
         [Test]
+        public void oneArgConstructorTest()
+        {
+            var oneController = new SubmissionController(mockService.Object);
+
+            Assert.IsNotNull(oneController);
+            Assert.AreEqual(typeof(SubmissionController), oneController.GetType());
+        }
+
+        [Test]
         public void FullConstructorTest()
         {
             var fullController = new SubmissionController(mockService.Object, mockCommentService.Object);
@@ -289,6 +298,51 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             // Assert
             Assert.IsNotNull(response);
             Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
+        }
+
+        [Test]
+        public void UpdateSubmissionTest()
+        {
+            Submission submission = new Submission();
+            submission.ActiveDirectoryUser = "TestUser1";
+            submission.ManagerName = "TestUser1";
+            Comment comment = new Comment();
+            comment.ExpenseComment = "Test";
+            submission.Comments = new List<Comment>(){ comment };
+
+            submission.Status = new Status();
+            submission.Status.StatusName = "In Progress";
+            submission.WeekEndingDate = new DateTime();
+            submission.LineItems = new List<LineItem>()
+            {
+                new LineItem()
+                {
+                    LineItemAmount = 20
+                },
+                new LineItem()
+                {
+                    LineItemAmount = 30
+                },
+            };
+            submission.SubmissionId = 1;
+            submission.RepliconProjectId = 1;
+
+            mockService.Setup(s => s.Find(1)).Returns(submission);
+            mockService.Setup(s => s.Update(submission)).Returns(1);
+
+            mockRepliconUserService.Setup(s => s.All()).Returns(new List<RepliconUserProject>(){ new RepliconUserProject(1, "TestUser1", 1) });
+            
+            Assert.AreEqual(controller.UpdateSubmission(1, submission).StatusCode,HttpStatusCode.OK);
+            submission.Status.StatusName = "Submitted";
+            Assert.AreEqual(controller.UpdateSubmission(1, submission).StatusCode, HttpStatusCode.OK);
+            submission.Status.StatusName = "Manager Approved";
+            Assert.AreEqual(controller.UpdateSubmission(1, submission).StatusCode, HttpStatusCode.OK);
+            submission.Status.StatusName = "Manager Rejected";
+            Assert.AreEqual(controller.UpdateSubmission(1, submission).StatusCode, HttpStatusCode.OK);
+            submission.Status.StatusName = "Finance Approved";
+            Assert.AreEqual(controller.UpdateSubmission(1, submission).StatusCode, HttpStatusCode.OK);
+            submission.Status.StatusName = "Finance Rejected";
+            Assert.AreEqual(controller.UpdateSubmission(1, submission).StatusCode, HttpStatusCode.OK);
         }
 
     }
