@@ -175,6 +175,7 @@
     <Compile Include="BackEnd_UnitTests\ModelTests\RepliconRequestTests.cs" />
     <Compile Include="BackEnd_UnitTests\ModelTests\StatusTests.cs" />
     <Compile Include="BackEnd_UnitTests\ModelTests\SubmissionsTest.cs" />
+    <Compile Include="BackEnd_UnitTests\ModelTests\RespliconResponseTest.cs" />
     <Compile Include="BackEnd_UnitTests\ServiceTests\Base\IServiceTestBase.cs">
       <SubType>Code</SubType>
     </Compile>

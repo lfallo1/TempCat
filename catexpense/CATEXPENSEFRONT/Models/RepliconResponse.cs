@@ -20,54 +20,80 @@ namespace CatExpenseFront.Models
         {
             List<RepliconUserProject> clientList = new List<RepliconUserProject>();
 
-            foreach (object projectObject in projects)
+            for (int i = 0; i < projects.Count; i++)
             {
-                JObject project = (JObject)projectObject;
+                JObject project = (JObject)projects[i];
                 JObject projectProperties = (JObject)project["Properties"];
 
-                bool closedStatus = (bool)projectProperties["ClosedStatus"];
-                if (!closedStatus)
-                {
-                    int projectId = (int)projectProperties["Id"];
-                    string projectName = (string)projectProperties["Name"];
 
-                    JObject projectRelationships = (JObject)project["Relationships"];
-                    string managerName = string.Empty;
-                    int managerId = 0;
-                    List<RepliconUserProject> teamMembers = new List<RepliconUserProject>();
-                    try
-                    {
-                        JObject projectManager = (JObject)projectRelationships["ProjectLeader"];
-                        JArray team = (JArray)projectRelationships["ProjTeamUsers"];
-                        JObject managerProperties = (JObject)projectManager["Properties"];
-                        managerName = (string)managerProperties["LoginName"];
-                        managerId = (int)managerProperties["Id"];
-                        
-                        foreach (JObject member in team)
-                        {
-                            JObject memberProperties = (JObject)member["Properties"];
-
-                            RepliconUserProject user = new RepliconUserProject(
-                                (string)memberProperties["LoginName"], projectId);
-                            user.ManagerName = managerName;
-                            user.ProjectName = projectName;
-                            clientList.Add(user);
-                        }
-                       
-                    }
-                    catch (Exception e)
-                    {
-                        LOGGER.GetLogger("StackTrace").LogError(string.Format("An error occured: '{0}'", e));
-                        throw;
-                    }
-                  
-                }
+                ifNotClosed(clientList, project, projectProperties);
             }
             return clientList;
         }
 
+        /// <summary>
+        /// Only adds projects that are not closed.
+        /// </summary>
+        /// <param name="clientList"></param>
+        /// <param name="project"></param>
+        /// <param name="projectProperties"></param>
+        /// <param name="closedStatus"></param>
+        private void ifNotClosed(List<RepliconUserProject> clientList, JObject project, JObject projectProperties)
+        {
+            bool closedStatus = (bool)projectProperties["ClosedStatus"];
+            if (!closedStatus)
+            {
+                int projectId = (int)projectProperties["Id"];
+                string projectName = (string)projectProperties["Name"];
 
-       
+                JObject projectRelationships = (JObject)project["Relationships"];
+                string managerName = string.Empty;
+                int managerId = 0;
+                List<RepliconUserProject> teamMembers = new List<RepliconUserProject>();
+                try
+                {
+                    JObject projectManager = (JObject)projectRelationships["ProjectLeader"];
+                    JArray team = (JArray)projectRelationships["ProjTeamUsers"];
+                    JObject managerProperties = (JObject)projectManager["Properties"];
+                    managerName = (string)managerProperties["LoginName"];
+                    managerId = (int)managerProperties["Id"];
+
+                    teamLoop(clientList, projectId, projectName, managerName, team);
+
+                }
+                catch (Exception e)
+                {
+                    LOGGER.GetLogger("StackTrace").LogError(string.Format("An error occured: '{0}'", e));
+                    throw;
+                }
+
+            }
+        }
+
+        /// <summary>
+        /// Loops through to add team members for a project.
+        /// </summary>
+        /// <param name="clientList"></param>
+        /// <param name="projectId"></param>
+        /// <param name="projectName"></param>
+        /// <param name="managerName"></param>
+        /// <param name="team"></param>
+        private void teamLoop(List<RepliconUserProject> clientList, int projectId, string projectName, string managerName, JArray team)
+        {
+            for (int i = 0; i < team.Count; i++)
+            {
+                JObject memberProperties = (JObject)team[i]["Properties"];
+
+                RepliconUserProject user = new RepliconUserProject(
+                    (string)memberProperties["LoginName"], projectId);
+                user.ManagerName = managerName;
+                user.ProjectName = projectName;
+                clientList.Add(user);
+            }
+        }
+
+
+
         /// <summary>
         /// Gets the values from the response.
         /// </summary>
