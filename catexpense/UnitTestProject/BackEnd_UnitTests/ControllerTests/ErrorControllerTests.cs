@@ -49,6 +49,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             context.Setup(ctx => ctx.Session).Returns(session.Object);
             context.Setup(ctx => ctx.Server).Returns(server.Object);
             context.Setup(ctx => ctx.User).Returns(user.Object);
+            context.Setup(ctx => ctx.Session["UserName"]).Returns("catexpuser");
             user.Setup(ctx => ctx.Identity).Returns(identity.Object);
             identity.Setup(id => id.IsAuthenticated).Returns(true);
             identity.Setup(id => id.Name).Returns("test");
@@ -66,6 +67,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
         {
             controller = new ErrorController(mockService.Object);
             HttpContextFactory.SetCurrentContext(GetMockedHttpContext());
+            
             
         }
 
@@ -88,7 +90,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
 
         }
 
-        //[Test]
+        [Test]
         public void ErrorControllerPostTest()
         {
             var config = new HttpConfiguration();
