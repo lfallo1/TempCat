@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using CatExpenseFront.Models;
 using LOGGER = Logger.Logger;
 
 namespace CatExpenseFront.Repository
@@ -28,6 +29,7 @@ namespace CatExpenseFront.Repository
         public Repository()
         {
             context = new DB();
+           
         }
 
         /// <summary>
