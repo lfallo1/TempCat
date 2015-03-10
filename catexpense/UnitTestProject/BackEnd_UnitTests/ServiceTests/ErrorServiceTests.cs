@@ -18,7 +18,8 @@ namespace UnitTestProject.BackEnd_UnitTests.ServiceTests
         public override IService<Error> GetInstanceWithEmptyConstructor()
         {
             return new ErrorService();
-        }
+        }
+
         public override IService<Error> GetIServiceInstanceWithRepoParamater()
         {
             return new ErrorService(mockRepository.Object);

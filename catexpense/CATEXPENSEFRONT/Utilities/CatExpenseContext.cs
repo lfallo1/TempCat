@@ -1,8 +1,10 @@
 ﻿using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using CatExpenseFront.Utilities;
 
 namespace CatExpenseFront.Models
 {
-    public class TempCatExpenseContext : DbContext
+    public class CatExpenseContext : DbContext
     {
         // You can add custom code to this file. Changes will not be overwritten.
         // 
@@ -14,7 +16,7 @@ namespace CatExpenseFront.Models
         /// <summary>
         /// Constructor that sets the connection string.
         /// </summary>
-        public TempCatExpenseContext()
+        public CatExpenseContext()
             : base("name=CATEXPENSEConnectionString")
         {
 
@@ -57,5 +59,26 @@ namespace CatExpenseFront.Models
         /// Loads QbVendor to the context.
         /// </summary>
         public DbSet<QbVendor> QbVendor { get; set; }
+
+        //public void Dispose()
+        //{
+        //    base.Dispose();
+        //}
+
+        //public int SaveChanges()
+        //{
+        //    return base.SaveChanges();
+        //}
+
+        //public DbEntityEntry Entry(object entity)
+        //{
+        //    return base.Entry(entity);
+
+        //}
+
+        //public DbContextConfiguration Configuration
+        //{
+        //    get { return base.Configuration; }
+        //}
     }
 }

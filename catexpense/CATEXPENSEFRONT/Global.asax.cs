@@ -11,6 +11,7 @@ using System;
 using System.Web;
 using System.Web.SessionState;
 using CatExpenseFront.App_Start;
+using CatExpenseFront.Models;
 
 namespace CatExpenseFront
 {
@@ -43,7 +44,7 @@ namespace CatExpenseFront
 
             scheduler.ScheduleJob(job, trigger);
 
-            Database.SetInitializer<DB>(null);
+            Database.SetInitializer<CatExpenseContext>(null);
             AreaRegistration.RegisterAllAreas();
 
 

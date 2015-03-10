@@ -327,7 +327,7 @@
     <Compile Include="Models\ExpenseCategory.cs" />
     <Compile Include="Models\LineItem.cs" />
     <Compile Include="Models\Comment.cs" />
-    <Compile Include="Models\TempCatExpenseContext.cs" />
+    <Compile Include="Utilities\CatExpenseContext.cs" />
     <Compile Include="Services\Interfaces\IQbClientService.cs" />
     <Compile Include="Services\Interfaces\IQbVendorService.cs" />
     <Compile Include="Services\QbClientService.cs" />
@@ -362,6 +362,7 @@
     <Compile Include="Services\RepliconService.cs" />
     <Compile Include="Services\SubmissionService.cs" />
     <Compile Include="Utilities\DB.cs" />
+    <Compile Include="Utilities\ICatExpenseContext.cs" />
     <Compile Include="Utilities\IRepository.cs">
       <SubType>Code</SubType>
     </Compile>
