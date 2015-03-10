@@ -10,13 +10,19 @@ using CatExpenseFront.Models;
 using Moq;
 using NUnit.Framework;
 using CatExpenseFront.Services.Interfaces;
+using CatExpenseFront.App_Start;
+using System.Web;
 
 namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
 {
     [TestFixture]
     public class SubmissionControllerTest
     {
+        private Mock<HttpContextBase> mockHttpContextBase = new Mock<HttpContextBase>();
         private Mock<ISubmissionService> mockService = new Mock<ISubmissionService>();
+        private Mock<ICommentService> mockCommentService = new Mock<ICommentService>();
+        private Mock<IRepliconUserProjectService> mockRepliconUserService = new Mock<IRepliconUserProjectService>();
+        private Mock<IFinanceApproverService> mockFinanceService = new Mock<IFinanceApproverService>();
         private SubmissionController controller;
 
         private Submission submission1;
@@ -28,8 +34,10 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
         [TestFixtureSetUp]
         public void SubmissionControllerTestSetUp()
         {
+            HttpContextFactory.SetCurrentContext(mockHttpContextBase.Object);
+            mockHttpContextBase.Setup(c => c.Session["UserName"]).Returns("TestUser1");
             // Arrange
-            controller = new SubmissionController(mockService.Object);
+            controller = new SubmissionController(mockService.Object, mockCommentService.Object, mockRepliconUserService.Object, mockFinanceService.Object);
             controller.Request = new HttpRequestMessage()
             {
                 RequestUri = new Uri("http://localhost/api/submission"),
@@ -49,6 +57,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             submission1.ManagerName = "TestManager1";
             submission1.Status = new Status();
             submission1.Status.StatusName = "submitted";
+            submission1.WeekEndingDate = new DateTime();
             submission1.LineItems = new List<LineItem>()
             {
                 new LineItem()
@@ -66,9 +75,10 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
 
             submission2 = new Submission();
             submission2.ActiveDirectoryUser = "TestUser2";
-            submission2.ManagerName = "TestManager2";
+            submission2.ManagerName = "TestUser1";
             submission2.Status = new Status();
-            submission2.Status.StatusName = "manager_rejected";
+            submission2.WeekEndingDate = new DateTime();
+            submission2.Status.StatusName = "manager rejected";
             submission2.LineItems = new List<LineItem>()
             {
                 new LineItem()
@@ -84,9 +94,10 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
 
             submission3 = new Submission();
             submission3.ActiveDirectoryUser = "TestUser3";
-            submission3.ManagerName = "TestManager1";
+            submission3.ManagerName = "TestManager3";
             submission3.Status = new Status();
-            submission3.Status.StatusName = "manager_approved";
+            submission3.WeekEndingDate = new DateTime();
+            submission3.Status.StatusName = "manager approved";
             submission3.LineItems = new List<LineItem>()
             {
                 new LineItem()
@@ -102,9 +113,10 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
 
             submission4 = new Submission();
             submission4.ActiveDirectoryUser = "TestUser4";
-            submission4.ManagerName = "TestManager2";
+            submission4.ManagerName = "TestManager4";
             submission4.Status = new Status();
-            submission4.Status.StatusName = "manager_approved";
+            submission4.WeekEndingDate = new DateTime();
+            submission4.Status.StatusName = "manager approved";
             submission4.LineItems = new List<LineItem>()
             {
                 new LineItem()
@@ -153,26 +165,34 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             Assert.IsNotNull(emptyController);
             Assert.AreEqual(typeof(SubmissionController), emptyController.GetType());
         }
+        [Test]
+        public void FullConstructorTest()
+        {
+            var fullController = new SubmissionController(mockService.Object, mockCommentService.Object);
 
-        //[Test]
+            Assert.IsNotNull(fullController);
+            Assert.AreEqual(typeof(SubmissionController), fullController.GetType());
+        }
+
+        [Test]
         public void GetSubmissionByUsernameTest()
         {
             // Arrange
             mockService.Setup(s => s.All()).Returns(submissions);
-
+            mockRepliconUserService.Setup(s => s.All()).Returns(new List<RepliconUserProject> { new RepliconUserProject("TestUser1", 17) });
             // Act
             var response = controller.GetUserSubmissions();
 
             // Assert
             Assert.IsNotNull(response);
             Assert.AreEqual(1, (response as ICollection<Submission>).Count);
-            Assert.IsFalse((response as ICollection<Submission>).Contains(submission1));
+            Assert.IsTrue((response as ICollection<Submission>).Contains(submission1));
             Assert.IsFalse((response as ICollection<Submission>).Contains(submission2));
-            Assert.IsTrue((response as ICollection<Submission>).Contains(submission3));
+            Assert.IsFalse((response as ICollection<Submission>).Contains(submission3));
             Assert.IsFalse((response as ICollection<Submission>).Contains(submission4));
         }
 
-        //[Test]
+        [Test]
         public void GetPendingSubmissionsByManagerNameTest()
         {
             // Arrange
@@ -184,17 +204,18 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             // Assert
             Assert.IsNotNull(response);
             Assert.AreEqual(1, (response as ICollection<Submission>).Count);
-            Assert.IsTrue((response as ICollection<Submission>).Contains(submission1));
-            Assert.IsFalse((response as ICollection<Submission>).Contains(submission2));
+            Assert.IsFalse((response as ICollection<Submission>).Contains(submission1));
+            Assert.IsTrue((response as ICollection<Submission>).Contains(submission2));
             Assert.IsFalse((response as ICollection<Submission>).Contains(submission3));
             Assert.IsFalse((response as ICollection<Submission>).Contains(submission4));
         }
 
-        //[Test]
+        [Test]
         public void GetPendingSubmissionsByFinanceApproverTest()
         {
             // Arrange
             mockService.Setup(s => s.All()).Returns(submissions);
+            mockRepliconUserService.Setup(s => s.All()).Returns(new List<RepliconUserProject> { new RepliconUserProject("TestUser1", 17) });
 
             // Act
             var response = controller.GetPendingSubmissionsByFinanceApprover();
@@ -208,31 +229,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             Assert.IsTrue((response as ICollection<Submission>).Contains(submission4));
         }
 
-
-
-
-
-        //[Test]
-        public void GetSubmissionsTest()
-        {
-            // Arrange
-            mockService.Setup(s => s.All()).Returns(submissions);
-
-            // Act
-            var response = controller.GetUserSubmissions();
-
-            // Assert
-            Assert.IsNotNull(response);
-            Assert.AreEqual(4, (response as ICollection<Submission>).Count);
-            Assert.IsTrue((response as ICollection<Submission>).Contains(submission1));
-            Assert.IsTrue((response as ICollection<Submission>).Contains(submission2));
-            Assert.IsTrue((response as ICollection<Submission>).Contains(submission3));
-            Assert.IsTrue((response as ICollection<Submission>).Contains(submission4));
-        }
-
-
-
-        //[Test]
+        [Test]
         public void ModelStateErrorPostTest()
         {
             // Arrange
@@ -246,12 +243,12 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
         }
 
-        //[Test]
+        [Test]
         public void PostTest()
         {
             // Arrange
             mockService.Setup(s => s.Create(It.IsAny<Submission>())).Returns(submission1);
-
+            
             // Act
             var response = controller.Post(submission1);
 
@@ -260,12 +257,16 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
         }
 
-        //[Test]
+        [Test]
         public void DeleteSubmissionTest()
         {
             // Arrange
+            FinanceApprover approver = new FinanceApprover();
+            approver.id = 1;
+            approver.Username = "TestUser1";
             mockService.Setup(s => s.Find(1)).Returns(submission1);
             mockService.Setup(s => s.Delete(submission1)).Returns(0);
+            mockFinanceService.Setup(s => s.All()).Returns(new List<FinanceApprover>() {approver});
 
             // Act
             var response = controller.DeleteSubmission(1);
@@ -275,7 +276,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
-        //[Test]
+        [Test]
         public void FailDeleteSubmissionTest()
         {
             // Arrange

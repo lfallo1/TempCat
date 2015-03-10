@@ -79,7 +79,13 @@ namespace CatExpenseFront.Controllers
 
 
         }
-
+        public SubmissionController(ISubmissionService service, ICommentService cService, IRepliconUserProjectService rService, IFinanceApproverService fService)
+        {
+            this.service = service;
+            commentsService = cService;
+            userProjectService = rService;
+            financeApproverService = fService;
+        }
         /// <summary>
         /// Default Constructor
         /// </summary>
