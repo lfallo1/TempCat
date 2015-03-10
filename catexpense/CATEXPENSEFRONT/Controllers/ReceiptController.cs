@@ -47,6 +47,13 @@ namespace CatExpenseFront.Controllers
             submissionService = new SubmissionService();
         }
 
+        public ReceiptController(IReceiptService _receiptService, ILineItemService _lineItemService)
+        {
+            service = _receiptService;
+            lineItemService = _lineItemService;
+            submissionService = new SubmissionService();
+        }
+
         
 
         /// <summary>

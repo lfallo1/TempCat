@@ -64,7 +64,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
         [SetUp]
         public void Init()
         {
-            controller = new ErrorController(mockService.Object, true);
+            controller = new ErrorController(mockService.Object);
             HttpContextFactory.SetCurrentContext(GetMockedHttpContext());
             
         }
