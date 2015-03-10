@@ -5,6 +5,7 @@ using CatExpenseFront.Models;
 using CatExpenseFront.Services.Interfaces;
 using Moq;
 using NUnit.Framework;
+using Quartz;
 
 namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
 {
@@ -14,6 +15,8 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
     
         private Mock<ISubmissionService> mockSubmission = new Mock<ISubmissionService>();
         private Mock<ILineItemService> mockLineItem = new Mock<ILineItemService>();
+        private Mock<EmailController> mockController;
+        private Mock<IJobExecutionContext> fake = new Mock<IJobExecutionContext>();
         private EmailController controller;
         private List<Submission> submissions;
         private List<LineItem> lineItems;
@@ -65,7 +68,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             Assert.AreEqual(typeof(EmailController), emptyController.GetType());
         }
 
-        //[Test]
+        [Test]
         public void GenerateMessageTest()
         {
             // Arrange
@@ -81,10 +84,29 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             Assert.IsFalse(response.ContainsKey("TestManager1"));
         }
 
-        //[Test]
-        //public void SendsEmailTest()
-        //{
-        //    controller.SendEmails()
-        //}
+        [Test]
+        [ExpectedException(typeof(System.Net.Mail.SmtpException))]
+        public void SendsEmailTest()
+        {
+            Dictionary<string, string> managerList = new Dictionary<string, string>();
+            managerList.Add("test1", "test1");
+            managerList.Add("test2", "test2");
+            managerList.Add("test3", "test3");
+            var response = controller.SendEmails(managerList);
+
+            Assert.IsNotNull(response);
+            Assert.IsTrue(response);           
+
+        }
+
+        [Test]
+        [ExpectedException(typeof(System.Net.Mail.SmtpException))]
+        public void EmailExecuteTest()
+        {
+            mockSubmission.Setup(x => x.All()).Returns(submissions);           
+             controller.Execute(fake.Object);
+
+             mockSubmission.Verify(x => x.All(), Times.Never());
+        }
     }
 }

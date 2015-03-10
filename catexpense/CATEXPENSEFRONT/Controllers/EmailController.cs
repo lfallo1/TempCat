@@ -59,6 +59,7 @@ namespace CatExpenseFront.Controllers
             Dictionary<string, string> emailManagerList = GenerateMessage(submissionList);
 
             SendEmails(emailManagerList);
+            
         }
         
         /// <summary>
@@ -104,7 +105,7 @@ namespace CatExpenseFront.Controllers
         /// Send the emails.
         /// </summary>
         /// <param name="emailManagerList"></param>
-        public void SendEmails(Dictionary<string, string> emailManagerList)
+        public bool SendEmails(Dictionary<string, string> emailManagerList)
         {
             var fromAddress = new MailAddress("CatalystExpense@catalystitservices.com", "From Catalyst");
             const string Subject = "Reminder";
@@ -125,8 +126,10 @@ namespace CatExpenseFront.Controllers
                 })
                 {
                     smtp.Send(email);
+                    
                 }
             }
+            return true;
 
         }
     }
