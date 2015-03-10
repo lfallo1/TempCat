@@ -6,6 +6,9 @@ using System.Web;
 
 namespace CatExpenseFront.Models
 {
+    /// <summary>
+    /// The model to represent Quickbooks customers
+    /// </summary>
     public class QbClient
     {
 
@@ -18,7 +21,13 @@ namespace CatExpenseFront.Models
 
         [Key]
         public int Id { get; private set; }
+        /// <summary>
+        /// The id Quickbooks associates with the customer
+        /// </summary>
         public int ClientId { get; set; }
+        /// <summary>
+        /// The name of the client
+        /// </summary>
         public string ClientName { get; set; }
     }
 }
