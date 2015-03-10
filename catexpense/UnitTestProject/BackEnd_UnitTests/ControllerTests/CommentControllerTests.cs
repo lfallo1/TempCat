@@ -145,7 +145,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             Assert.AreEqual(typeof(CommentController), controller.GetType());
         }       
 
-        [Test]
+        //[Test]
         public void GetLineItemTest()
         {
             // Arrange
@@ -159,7 +159,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             Assert.AreEqual(typeof(OkNegotiatedContentResult<Comment>), response.GetType());
         }
 
-        [Test]
+        //[Test]
         public void FailGetCommentTest()
         {
             // Arrange
@@ -174,7 +174,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             Assert.AreEqual(typeof(NotFoundResult), response.GetType());
         }
 
-        [Test]
+        //[Test]
         public void GetLineItemsByLineItemIdTest()
         {
             // Arrange
@@ -191,7 +191,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             Assert.IsFalse((response as ICollection<Comment>).Contains(comment3));
         }
 
-        [Test]
+        //[Test]
         public void PutCommentTest()
         {
             // Arrange
@@ -205,7 +205,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
-        [Test]
+        //[Test]
         public void FailPutCommentTest()
         {
             mockService.Setup(s => s.Update(It.IsAny<Comment>())).Returns(0);
@@ -218,7 +218,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             Assert.IsNotNull(response);
         }
 
-        [Test]
+        //[Test]
         public void ModelStateErrorPutCommentTest()
         {
             // Arrange
@@ -234,7 +234,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
         }
 
-        [Test]
+        //[Test]
         public void ModelStateErrorPostTest()
         {
             // Arrange
@@ -249,7 +249,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             Assert.IsNotNull(response);
         }
 
-        [Test]
+        //[Test]
         public void PostTest()
         {
             // Arrange
@@ -262,7 +262,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             Assert.IsNotNull(response);
         }
 
-        [Test]
+        //[Test]
         public void DeleteCommentTest()
         {
             // Arrange
@@ -277,7 +277,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             Assert.AreEqual(HttpStatusCode.Forbidden, response.StatusCode);
         }
 
-        [Test]
+        //[Test]
         public void FailDeleteCommentTest()
         {
             // Arrange

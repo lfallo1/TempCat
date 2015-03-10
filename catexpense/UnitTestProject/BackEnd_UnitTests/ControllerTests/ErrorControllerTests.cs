@@ -88,7 +88,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
 
         }
 
-        [Test]
+        //[Test]
         public void ErrorControllerPostTest()
         {
             var config = new HttpConfiguration();
