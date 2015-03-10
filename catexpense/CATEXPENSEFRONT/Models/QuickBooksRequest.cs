@@ -164,26 +164,27 @@ namespace CatExpenseFront.Models
         /// <param name="accountId"> The number relating to the account to pay (Travel, Advertising, etc.) </param>
         /// <param name="customerId"> The number stored in the QbClients table relating to whom this is billable</param>
         /// <returns></returns>
-        public static JObject CreateExpense(string nameId, string date, string description, string amount, string accountId, string customerId)
+        public static JObject CreateExpense(bool billable, string nameId, string date, string description, string amount, string accountId, string customerId)
         {
             JObject responseInfo = null;
             JArray allAccountDetails = new JArray();
 
 
             JObject expenseReport = new JObject(EMPTY_ACCOUNT_DETAILS);
-            expenseReport["accountId"] = accountId; // Placeholder for the Id of the type of expense account (travel, hotel, etc.)
+            expenseReport["accountId"] = accountId; 
             expenseReport["customerId"] = customerId;
             expenseReport["description"] = description;
-            expenseReport["amount"] = amount;
-            expenseReport["order"] = allAccountDetails.Count + 1; //placeholder for the placement in order top to bottom (redundant)
+            expenseReport["amount"] = amount; 
+            expenseReport["billable"] = billable; 
+            expenseReport["order"] = allAccountDetails.Count + 1; 
             expenseReport["sequence"] = allAccountDetails.Count + 1;
 
             allAccountDetails.Add(expenseReport);
 
             JObject apiAction = new JObject(EMPTY_FORM);
-            apiAction["nameId"] = nameId; //placeholder for vendorId
-            apiAction["accountId"] = "35"; //placeholder for the Id of the savings, checking, etc. account
-            apiAction["date"] = date; // placeholder for the date (redundant with due date)
+            apiAction["nameId"] = nameId; 
+            apiAction["accountId"] = "35"; //placeholder for the Id of the savings, checking, etc. account  (35 is checking in quickbooks sandbox)
+            apiAction["date"] = date; 
             apiAction["dueDate"] = date;
             apiAction["accountDetails"] = allAccountDetails;
 
@@ -213,7 +214,7 @@ namespace CatExpenseFront.Models
             Sync();
             return new JObject();
             // Send API request in JSON format 
-            //return QuickBooksRequest.CreateExpense("56", "2015-03-17", "description", "40.00", "22", "");
+            // return QuickBooksRequest.CreateExpense(true, "56", "2015-03-17", "description", "40.00", "22", "1");
         }
     }
 }

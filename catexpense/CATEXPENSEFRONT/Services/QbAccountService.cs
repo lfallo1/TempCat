@@ -10,7 +10,7 @@ namespace CatExpenseFront.Services
 {
     public class QbAccountService : IQbAccountService
     {
-    /// <summary>
+        /// <summary>
         /// Local category repository.
         /// </summary>
         private IRepository<QbAccount> repository;
