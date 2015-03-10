@@ -9,7 +9,7 @@
                                 <tr>
                                     <td>
                                         <strong>{{expenseComments.RepliconUserName}}</strong> <small>added a comment</small> - {{expenseComments.DateUpdated | date:'yyyy/MM/dd h:mm a'}}<br />
-                                        <div class="cursorText col-md-5" ng-class="{'well': {{expenseComments.commentIsMine}}, 'well-sm': {{expenseComments.commentIsMine}}, 'whiteBackground': {{expenseComments.commentIsMine}} }" ng-click="editComment($index)">{{expenseComments.ExpenseComment}}</div>
+                                        <div class="cursorText col-md-5" ng-class="{'well': expenseComments.commentIsMine, 'well-sm': expenseComments.commentIsMine, 'whiteBackground': expenseComments.commentIsMine }" ng-click="editComment($index)">{{expenseComments.ExpenseComment}}</div>
                                     </td>
                                 </tr>
                             </tbody>

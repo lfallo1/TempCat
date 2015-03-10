@@ -58,7 +58,9 @@ angular.module('expenseApp.Controllers')
               }
           }
           if (managerSubmissionsFilter.length != 0) {
-              $scope.financeSubmissions = managerSubmissionsFilter;
+              $scope.managerSubmissions = managerSubmissionsFilter;
+          } else {
+              $scope.managerSubmissions = [];
           }
       }
 

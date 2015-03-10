@@ -58,8 +58,10 @@ angular.module( 'expenseApp.Controllers' )
                   financeSubmissionsFilter.push( financeSubmissionsContainer[i] );
               }
           }
-          if ( financeSubmissionsFilter.length != 0 ) {
+          if (financeSubmissionsFilter.length != 0) {
               $scope.financeSubmissions = financeSubmissionsFilter;
+          } else {
+              $scope.financeSubmissions = [];
           }
       }
 

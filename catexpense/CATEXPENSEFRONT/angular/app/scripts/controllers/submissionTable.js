@@ -1,7 +1,7 @@
 ﻿'use strict';
 
 angular.module('expenseApp.Controllers')
-    .controller('submissionTableCtrl', ["$scope", "$route", "$modal", "$location", "$rootScope", "$filter", "Application", "ReceiptService", "LineItemService", "MessageService", "CommentService", "SubmissionService", "Authentication", function ($scope, $route, $modal, $location, $rootScope, $filter, Application, ReceiptService, LineItemService, MessageService, CommentService, SubmissionService, Authentication) {
+    .controller('submissionTableCtrl', ["$window","$scope", "$route", "$modal", "$location", "$rootScope", "$filter", "Application", "ReceiptService", "LineItemService", "MessageService", "CommentService", "SubmissionService", "Authentication", function ($window, $scope, $route, $modal, $location, $rootScope, $filter, Application, ReceiptService, LineItemService, MessageService, CommentService, SubmissionService, Authentication) {
         $scope.receipts = true;
         var orderBy = $filter('orderBy');
         var sortColumn = { field: 'DateCreated', reverse: false };
@@ -321,6 +321,8 @@ angular.module('expenseApp.Controllers')
                     var submissions = Application.getPendingSubmissionsByFinanceApprover();
                     submissions.splice(Application.getSubmissionIndex(), 1);
                 }
+
+                $window.location.reload();
                 $location.path('/home');
             });
         });
