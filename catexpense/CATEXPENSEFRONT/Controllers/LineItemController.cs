@@ -25,7 +25,7 @@ namespace CatExpenseFront.Controllers
         private ILineItemService service;
         private IReceiptService receiptService;
         private ISubmissionService submissionService;
-        private bool isTest;
+
 
         /// <summary>
         /// Default Construcor
@@ -43,20 +43,10 @@ namespace CatExpenseFront.Controllers
         /// <param name="iService"></param>
         public LineItemController(ILineItemService iService, ISubmissionService iSubmissionService)
         {
-                service = iService;
-                receiptService = new ReceiptService(new Repository<Receipt>());
-                submissionService = iSubmissionService;
-        }
-
-        public LineItemController(ILineItemService iService, IReceiptService iReceiptService,
-            ISubmissionService iSubmissionService, bool _isTest)
-        {
             service = iService;
-            receiptService = iReceiptService;
+            receiptService = new ReceiptService(new Repository<Receipt>());
             submissionService = iSubmissionService;
-            this.isTest = _isTest;
         }
-
 
 
         /// <summary>
@@ -68,10 +58,7 @@ namespace CatExpenseFront.Controllers
         [ResponseType(typeof(LineItem))]
         public IHttpActionResult GetLineItem(int id)
         {
-            if (this.isTest == false)
-            {
-                this.checkSession();
-            }
+            this.checkSession();
 
             LineItem lineitem = service.Find(id);
             if (lineitem == null)
@@ -95,10 +82,7 @@ namespace CatExpenseFront.Controllers
         public IEnumerable<LineItem> GetLineItemsBySubmissionId(int id)
         {
 
-            if (this.isTest == false)
-            {
-                this.checkSession();
-            }
+            this.checkSession();
 
             List<LineItem> submissionList = new List<LineItem>();
 
@@ -122,10 +106,9 @@ namespace CatExpenseFront.Controllers
         /// <returns></returns>
         public HttpResponseMessage PutLineItem(int id, LineItem lineitem)
         {
-            if (this.isTest == false)
-            {
-                this.checkSession();
-            }
+
+            this.checkSession();
+
 
             if (!ModelState.IsValid || id != lineitem.LineItemId)
             {
@@ -152,10 +135,7 @@ namespace CatExpenseFront.Controllers
         [ResponseType(typeof(LineItem))]
         public HttpResponseMessage Post(LineItem lineitem)
         {
-            if (this.isTest == false)
-            {
-                this.checkSession();
-            }
+            this.checkSession();
 
             if (lineitem != null)
             {
@@ -187,10 +167,8 @@ namespace CatExpenseFront.Controllers
         [ResponseType(typeof(LineItem))]
         public HttpResponseMessage DeleteLineItem(int id)
         {
-            if (this.isTest == false)
-            {
-                this.checkSession();
-            }
+
+            this.checkSession();
 
             LineItem lineitem = service.Find(id);
             if (lineitem != null)
@@ -229,6 +207,6 @@ namespace CatExpenseFront.Controllers
             }
         }
 
-        
+
     }
 }
