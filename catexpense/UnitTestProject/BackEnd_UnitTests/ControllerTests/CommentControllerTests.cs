@@ -68,7 +68,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
         [TestFixtureSetUp]
         public void CommentControllerTestsSetUp()
         {
-            controller = new CommentController(mockService.Object, true);
+            controller = new CommentController(mockService.Object);
             HttpContextFactory.SetCurrentContext(GetMockedHttpContext());
             controller.Request = new HttpRequestMessage()
             {

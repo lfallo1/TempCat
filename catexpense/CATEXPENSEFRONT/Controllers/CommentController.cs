@@ -25,7 +25,7 @@ namespace CatExpenseFront.Controllers
     public class CommentController : BaseController
     {
         private ICommentService service;
-        private bool isTest;
+        
 
         /// <summary>
         /// Default Constructor
@@ -48,14 +48,7 @@ namespace CatExpenseFront.Controllers
             }
         }
 
-        public CommentController(ICommentService commentService, bool _isTest)
-        {
-            this.service = commentService;
-            this.isTest = _isTest;
-        }
-
-
-
+       
         /// <summary>
         /// Returns comment by comment id
         /// GET api/Comment?id={id}
@@ -65,10 +58,8 @@ namespace CatExpenseFront.Controllers
         [ResponseType(typeof(Comment))]
         public IHttpActionResult GetCommentById(int id)
         {
-            if (this.isTest == false)
-            {
                 this.checkSession();
-            }
+            
 
             Comment comment = service.Find(id);
             if (comment == null)
@@ -91,10 +82,9 @@ namespace CatExpenseFront.Controllers
         [Route("api/Comment/GetCommentsBySubmissionId")]
         public IEnumerable<Comment> GetCommentsBySubmissionId(int id)
         {
-            if (this.isTest == false)
-            {
+                       
                 this.checkSession();
-            }
+            
 
             List<Comment> Comments = new List<Comment>();
 
@@ -121,10 +111,8 @@ namespace CatExpenseFront.Controllers
         [Route("api/Comment/PutComment")]
         public HttpResponseMessage PutComment(int id, string comment)
         {
-            if (this.isTest == false)
-            {
                 this.checkSession();
-            }
+            
 
             Comment Comment = service.Find(id);
             string currentUser = (null == HttpContextFactory.Current.Session["UserName"]
@@ -154,10 +142,7 @@ namespace CatExpenseFront.Controllers
         [Route("api/Comment/CreateComment")]
         public Comment CreateComment(int submissionId, string comment)
         {
-            if (this.isTest == false)
-            {
-                this.checkSession();
-            }
+            this.checkSession();          
 
             Comment Comment = new Comment();
 
@@ -187,11 +172,8 @@ namespace CatExpenseFront.Controllers
         [Route("api/Comment/DeleteComment")]
         public HttpResponseMessage DeleteComment(int id)
         {
-            if (this.isTest == false)
-            {
                 this.checkSession();
-            }
-
+            
             Comment comment = service.Find(id);
             string currentUser = (null == HttpContextFactory.Current.Session["UserName"]
                                                           ? ""
