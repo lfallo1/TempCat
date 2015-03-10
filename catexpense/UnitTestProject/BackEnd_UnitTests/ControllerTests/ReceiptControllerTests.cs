@@ -61,6 +61,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             context.Setup(ctx => ctx.Session).Returns(session.Object);
             context.Setup(ctx => ctx.Server).Returns(server.Object);
             context.Setup(ctx => ctx.User).Returns(user.Object);
+            context.Setup(ctx => ctx.Session["UserName"]).Returns("catexpuser");
             user.Setup(ctx => ctx.Identity).Returns(identity.Object);
             identity.Setup(id => id.IsAuthenticated).Returns(true);
             identity.Setup(id => id.Name).Returns("test");
@@ -150,7 +151,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
 
        
 
-        //[Test]
+        [Test]
         public void ModelStateErrorPostTest()
         {
             // Arrange
@@ -166,7 +167,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             //Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
         }
 
-        //[Test]
+        [Test]
         public void PostTest()
         {
             // Arrange
@@ -183,7 +184,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
 
        
 
-        //[Test]
+        [Test]
         public void GetReceiptIdsBySubmissionIdTest()
         {
             // Arrange
@@ -208,7 +209,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             mockService.Verify(x => controller.GetReceiptByUniqueId(1), Times.Never());
         }
 
-        //[Test]
+        [Test]
         public void GetAllReceiptsBySubmissionIdTest()
         {
             mockService.Setup(s => s.All()).Returns(receipts);
