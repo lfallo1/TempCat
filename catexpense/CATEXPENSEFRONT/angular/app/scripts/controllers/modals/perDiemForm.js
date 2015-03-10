@@ -34,14 +34,23 @@ angular.module( 'expenseApp.Controllers' )
           validInput: true
       };
 
+      /**
+       * Returns true if the days field is valid, returns false otherwise.
+       */
       $scope.areDaysValid = function () {
           return perDiemValidation.days.valid;
       };
 
+      /**
+       * Returns the validation message of the days field. 
+       */
       $scope.daysValidationMessage = function () {
           return perDiemValidation.days.message;
       };
 
+      /**
+       * Returns true if the entire form is valid, false otherwise.
+       */
       $scope.perDiemIsValid = function () {
           return perDiemValidation.validInput;
       };
@@ -50,7 +59,6 @@ angular.module( 'expenseApp.Controllers' )
       /**
        * Calculates the total based on which of the days were checked in the form.
        * Currently is hard coded to be 30.
-       *
        */
       $scope.calculateTotal = function () {
           var perDiem = 30;
@@ -64,12 +72,19 @@ angular.module( 'expenseApp.Controllers' )
           LineItemService.setLineItemAmount( $scope.perDiemValues.amount );
       };
 
+      /**
+       * Updates the LineItemService with the new days selected from the form.
+       * Also, checks to see if the newly selected days field is valid.
+       */
       $scope.updateDays = function () {
           LineItemService.setDays( $scope.perDiemValues.days );
           perDiemValidation = ValidationService.validatePerDiem( LineItemService.getLineItem() );
           LineItemService.setValidity( $scope.perDiemIsValid() );
       };
 
+      /**
+       * Updates the LineItemservice with the new billable field from the form.
+       */
       $scope.updateBillable = function () {
           LineItemService.setBillable( $scope.perDiemValues.billable );
       };
