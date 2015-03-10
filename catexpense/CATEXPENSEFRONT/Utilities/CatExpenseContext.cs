@@ -60,6 +60,7 @@ namespace CatExpenseFront.Models
         /// </summary>
         public DbSet<QbVendor> QbVendor { get; set; }
 
+
         //public void Dispose()
         //{
         //    base.Dispose();
@@ -80,5 +81,10 @@ namespace CatExpenseFront.Models
         //{
         //    get { return base.Configuration; }
         //}
+
+        /// <summary>
+        /// Loads QbVendor to the context.
+        /// </summary>
+        public DbSet<QbAccount> QbAccount { get; set; }
     }
 }

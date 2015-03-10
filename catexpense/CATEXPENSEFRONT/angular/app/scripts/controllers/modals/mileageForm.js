@@ -77,7 +77,8 @@ angular.module( 'expenseApp.Controllers' )
 
       $scope.startMileage = function () {
           $scope.createMileage = true;
-          $scope.showDetailsViewSaveCancel = false;
+          $scope.hideSaveAndCancel();
+          $scope.creatingMileage( true );
       };
 
       /**
@@ -217,7 +218,8 @@ angular.module( 'expenseApp.Controllers' )
 
                                   resetMileage();
                                   $scope.createMileage = false;
-                                  $scope.showDetailsViewSaveCancel = true;
+                                  $scope.showSaveAndCancel();
+                                  $scope.creatingMileage( false );
                               };
                           };
                       }, function ( errorDestination ) {
@@ -259,13 +261,15 @@ angular.module( 'expenseApp.Controllers' )
               $scope.mileageArray[mileageIndex].billable = $scope.mileageValues.billable;
               resetMileage();
               $scope.editingNewMileage = false;
+              $scope.creatingMileage( false );
           }
       };
 
       $scope.cancelNewMileage = function () {
           resetMileage();
           $scope.createMileage = false;
-          $scope.showDetailsViewSaveCancel = true;
+          $scope.showSaveAndCancel();
+          $scope.creatingMileage( false );
       };
 
       /**
@@ -274,6 +278,7 @@ angular.module( 'expenseApp.Controllers' )
       $scope.cancelChanges = function () {
           resetMileage();
           $scope.editingNewMileage = false;
+          $scope.creatingMileage( false );
       };
 
       /**
@@ -348,7 +353,7 @@ angular.module( 'expenseApp.Controllers' )
           true
       );
 
-      $scope.$watch(
+      /*$scope.$watch(
           'showDetailsViewSaveCancel',
           function (newValue, oldValue) {
                 if (newValue == true) {
@@ -360,7 +365,7 @@ angular.module( 'expenseApp.Controllers' )
                 else {
                     return;
                 }
-           }, true);
+           }, true);*/
 
       //==============================================================================//
       // THESE FUNCTIONS ARE FOR THE DATEPICKER

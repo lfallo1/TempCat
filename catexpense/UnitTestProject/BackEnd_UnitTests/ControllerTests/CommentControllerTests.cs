@@ -129,7 +129,21 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             Assert.AreEqual(typeof(CommentController), emptyController.GetType());
         }
 
-       
+        [Test]
+        public void OneConstructorTest()
+        {
+            var oneConstructor = new CommentController(mockService.Object);
+
+            Assert.IsNotNull(oneConstructor);
+            Assert.AreEqual(typeof(CommentController), oneConstructor.GetType());
+        }
+
+        [Test]
+        public void TwoConstructorTest()
+        {
+            Assert.IsNotNull(controller);
+            Assert.AreEqual(typeof(CommentController), controller.GetType());
+        }       
 
         [Test]
         public void GetLineItemTest()

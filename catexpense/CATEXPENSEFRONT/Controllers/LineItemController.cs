@@ -25,6 +25,7 @@ namespace CatExpenseFront.Controllers
         private ILineItemService service;
         private IReceiptService receiptService;
         private ISubmissionService submissionService;
+        private bool isTest;
 
         /// <summary>
         /// Default Construcor
@@ -42,12 +43,18 @@ namespace CatExpenseFront.Controllers
         /// <param name="iService"></param>
         public LineItemController(ILineItemService iService, ISubmissionService iSubmissionService)
         {
-            if (this.service == null)
-            {
                 service = iService;
                 receiptService = new ReceiptService(new Repository<Receipt>());
                 submissionService = iSubmissionService;
-            }
+        }
+
+        public LineItemController(ILineItemService iService, IReceiptService iReceiptService,
+            ISubmissionService iSubmissionService, bool _isTest)
+        {
+            service = iService;
+            receiptService = iReceiptService;
+            submissionService = iSubmissionService;
+            this.isTest = _isTest;
         }
 
 
@@ -61,8 +68,10 @@ namespace CatExpenseFront.Controllers
         [ResponseType(typeof(LineItem))]
         public IHttpActionResult GetLineItem(int id)
         {
-            //Checks the session to see if it is valid
-            this.checkSession();
+            if (this.isTest == false)
+            {
+                this.checkSession();
+            }
 
             LineItem lineitem = service.Find(id);
             if (lineitem == null)
@@ -86,8 +95,10 @@ namespace CatExpenseFront.Controllers
         public IEnumerable<LineItem> GetLineItemsBySubmissionId(int id)
         {
 
-            //Checks the session to see if it is valid
-            this.checkSession();
+            if (this.isTest == false)
+            {
+                this.checkSession();
+            }
 
             List<LineItem> submissionList = new List<LineItem>();
 
@@ -111,8 +122,10 @@ namespace CatExpenseFront.Controllers
         /// <returns></returns>
         public HttpResponseMessage PutLineItem(int id, LineItem lineitem)
         {
-            //Checks the session to see if it is valid
-            this.checkSession();
+            if (this.isTest == false)
+            {
+                this.checkSession();
+            }
 
             if (!ModelState.IsValid || id != lineitem.LineItemId)
             {
@@ -139,8 +152,10 @@ namespace CatExpenseFront.Controllers
         [ResponseType(typeof(LineItem))]
         public HttpResponseMessage Post(LineItem lineitem)
         {
-            //Checks the session to see if it is valid
-            this.checkSession();
+            if (this.isTest == false)
+            {
+                this.checkSession();
+            }
 
             if (lineitem != null)
             {
@@ -172,36 +187,48 @@ namespace CatExpenseFront.Controllers
         [ResponseType(typeof(LineItem))]
         public HttpResponseMessage DeleteLineItem(int id)
         {
-            //Checks the session to see if it is valid
-            this.checkSession();
+            if (this.isTest == false)
+            {
+                this.checkSession();
+            }
 
             LineItem lineitem = service.Find(id);
-            Submission submission = submissionService.Find(lineitem.SubmissionId);
-            string currentUser = (null == HttpContextFactory.Current.Session["UserName"]
-                                 ? "" : HttpContextFactory.Current.Session["UserName"].ToString().ToUpper());
-            if (lineitem == null)
+            if (lineitem != null)
             {
-                return Request.CreateResponse(HttpStatusCode.NotFound);                
-            }
-            if (submission.ActiveDirectoryUser.ToUpper() == currentUser)
-            {
-                List<Receipt> receiptList = (from m in receiptService.All()
-                                             where m.LineItemId == lineitem.LineItemId
-                                             select m).ToList<Receipt>();
-                foreach (Receipt receipt in receiptList)
+                Submission submission = submissionService.Find(lineitem.SubmissionId);
+
+                string currentUser = (null == HttpContextFactory.Current.Session["UserName"]
+                                     ? "" : HttpContextFactory.Current.Session["UserName"].ToString().ToUpper());
+                if (lineitem == null)
                 {
-                    receiptService.Delete(receipt);
-                    receiptService.SaveChanges();
+                    return Request.CreateResponse(HttpStatusCode.NotFound);
                 }
-                service.Delete(lineitem);
-                service.SaveChanges();
+                if (submission.ActiveDirectoryUser.ToUpper() == currentUser)
+                {
+                    List<Receipt> receiptList = (from m in receiptService.All()
+                                                 where m.LineItemId == lineitem.LineItemId
+                                                 select m).ToList<Receipt>();
+                    foreach (Receipt receipt in receiptList)
+                    {
+                        receiptService.Delete(receipt);
+                        receiptService.SaveChanges();
+                    }
+                    service.Delete(lineitem);
+                    service.SaveChanges();
+                }
+                else
+                {
+                    return Request.CreateResponse(HttpStatusCode.Forbidden);
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, lineitem);
             }
             else
             {
-                return Request.CreateResponse(HttpStatusCode.Forbidden);
-            }            
-
-            return Request.CreateResponse(HttpStatusCode.OK, lineitem);
+                return Request.CreateResponse(HttpStatusCode.NotFound);
+            }
         }
+
+        
     }
 }

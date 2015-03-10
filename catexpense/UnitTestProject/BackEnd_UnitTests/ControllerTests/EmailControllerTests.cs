@@ -65,7 +65,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             Assert.AreEqual(typeof(EmailController), emptyController.GetType());
         }
 
-        //[Test]
+        [Test]
         public void GenerateMessageTest()
         {
             // Arrange
@@ -78,7 +78,13 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             // Assert
             Assert.IsNotNull(response);
             Assert.AreEqual(1, response.Count);
-            Assert.IsTrue(response.ContainsKey("TestManager1"));
+            Assert.IsFalse(response.ContainsKey("TestManager1"));
         }
+
+        //[Test]
+        //public void SendsEmailTest()
+        //{
+        //    controller.SendEmails()
+        //}
     }
 }
