@@ -119,7 +119,7 @@ namespace CatExpenseFront.Controllers
         /// Checks to see if the user is a manager of any project.
         /// </summary>
         /// <returns></returns>
-        private bool isManager()
+        public bool isManager()
         {
             return (from m in service.All()
                     where m.ManagerName.ToUpper() == (null == HttpContextFactory.Current.Session["UserName"]
@@ -132,7 +132,7 @@ namespace CatExpenseFront.Controllers
         /// Checks to see if the user is a finace approver.
         /// </summary>
         /// <returns></returns>
-        private bool isFinanceApprover()
+        public bool isFinanceApprover()
         {
             return (from m in approverService.All()
 

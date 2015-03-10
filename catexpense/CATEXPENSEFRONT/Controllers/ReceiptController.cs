@@ -134,19 +134,6 @@ namespace CatExpenseFront.Controllers
         }
 
         /// <summary>
-        /// Returns a list of reciepts by submission id.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        [HttpGet]
-        [ActionName("GetReceiptsWithImageBySubmissionId")]
-        [Route("api/Receipt/GetReceiptsWithImageBySubmissionId")]
-        public List<Receipt> GetReceiptsWithImageBySubmissionId(int id)
-        {
-            return GetAllReceiptsBySubmissionId(id);
-        }
-        
-        /// <summary>
         /// Returns all the receipt items associated with 
         /// all line items associated with a given submission
         /// </summary>

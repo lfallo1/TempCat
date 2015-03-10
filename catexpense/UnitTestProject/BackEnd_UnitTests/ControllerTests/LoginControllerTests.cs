@@ -1,5 +1,6 @@
 ﻿using CatExpenseFront.App_Start;
 using CatExpenseFront.Controllers;
+using CatExpenseFront.Models;
 using CatExpenseFront.Services.Interfaces;
 using Moq;
 using NUnit.Framework;
@@ -24,6 +25,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
     {
         private Mock<ISubmissionService> service = new Mock<ISubmissionService>();
         private Mock<IFinanceApproverService> mockFinanceService = new Mock<IFinanceApproverService>();
+        private Login testLogin;
         private LoginController controller;
 
         private HttpContextBase GetMockedHttpContext()
@@ -47,6 +49,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             context.Setup(ctx => ctx.Session).Returns(session.Object);
             context.Setup(ctx => ctx.Server).Returns(server.Object);
             context.Setup(ctx => ctx.User).Returns(user.Object);
+            context.Setup(ctx => ctx.Session["UserName"]).Returns("catexpuser");
             user.Setup(ctx => ctx.Identity).Returns(identity.Object);
             identity.Setup(id => id.IsAuthenticated).Returns(true);
             identity.Setup(id => id.Name).Returns("test");
@@ -80,8 +83,8 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
                 route: new HttpRoute(),
                 values: new HttpRouteValueDictionary { { "controller", "login" } });
 
-            //Assert.IsNotNull(controller);
-            //Assert.AreEqual(typeof(LoginController), controller.GetType());
+            Assert.IsNotNull(controller);
+            Assert.AreEqual(typeof(LoginController), controller.GetType());
         }
 
         [TestFixtureTearDown]
@@ -116,11 +119,44 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             Assert.AreEqual(typeof(LoginController), twoConstructorController.GetType());
         }
 
-        //[Test]
-        //public void ThreeConstructorTest()
-        //{
-        //    Assert.IsNotNull(controller);
-        //    Assert.AreEqual(typeof(LoginController), controller.GetType());
-        //}
+        [Test]
+        public void UserLoginWithSessionTest()
+        {
+            testLogin = new Login();
+            testLogin.Username = "catexpuser";
+            testLogin.Password = "!Catalyst!";
+
+            var response = controller.userLoginSetSession(testLogin);
+
+            Assert.IsNotNull(response);
+            Assert.AreEqual(typeof(Login), response.GetType());
+        }
+
+        [Test]
+        public void IsUserLoggedInTest()
+        {
+            var response = controller.isLoggedIn();
+
+            Assert.IsNotNull(response);
+            Assert.AreEqual(typeof(Login), response.GetType());
+        }
+
+        [Test]
+        public void IsManagerTest()
+        {
+            var response = controller.isManager();
+
+            Assert.IsNotNull(response);
+            Assert.IsFalse(response);
+        }
+
+        [Test]
+        public void IsFinanceApproverTest()
+        {
+            var response = controller.isFinanceApprover();
+
+            Assert.IsNotNull(response);
+            Assert.IsFalse(response);
+        }
     }
 }
