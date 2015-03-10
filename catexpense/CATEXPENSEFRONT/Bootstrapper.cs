@@ -56,6 +56,10 @@ namespace CatExpenseFront
             container.RegisterType<IRepository<Submission>, Repository<Submission>>();
             container.RegisterType<IRepository<ExpenseCategory>, Repository<ExpenseCategory>>();
             container.RegisterType<IRepository<Receipt>, Repository<Receipt>>();
+            container.RegisterType<IRepository<QbClient>, Repository<QbClient>>();
+            container.RegisterType<IRepository<QbVendor>, Repository<QbVendor>>();
+            container.RegisterType<IRepository<QbAccount>, Repository<QbAccount>>();
+            container.RegisterType<IRepository<RepliconUserProject>, Repository<RepliconUserProject>>();
             container.RegisterType<IRepliconUserProjectService, RepliconUserProjectService>();
             container.RegisterType<ISubmissionService, SubmissionService>();
             container.RegisterType<ILineItemService, LineItemService>();
@@ -64,9 +68,6 @@ namespace CatExpenseFront
             container.RegisterType<ICommentService, CommentService>();
             container.RegisterType<IReceiptService, ReceiptService>();
             container.RegisterType<IRepliconService, RepliconService>();
-            container.RegisterType<IRepository<QbClient>, Repository<QbClient>>();
-            container.RegisterType<IRepository<QbVendor>, Repository<QbVendor>>();
-            container.RegisterType<IRepository<QbAccount>, Repository<QbAccount>>();
             container.RegisterType<IQbClientService, QbClientService>();
             container.RegisterType<IQbVendorService, QbVendorService>();
             container.RegisterType<IQbAccountService, QbAccountService>();

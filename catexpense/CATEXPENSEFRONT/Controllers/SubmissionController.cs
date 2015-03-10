@@ -278,7 +278,7 @@ namespace CatExpenseFront.Controllers
             HttpResponseMessage message = Request.CreateResponse(HttpStatusCode.OK);
             Submission mergedSubmission = service.Find(id);
 
-            string Username = (null == HttpContextFactory.Current.Session["Username"]
+            string Username = (null == HttpContextFactory.Current.Session["UserName"]
             ? ""
             : HttpContextFactory.Current.Session["UserName"].ToString().ToUpper());
             int userId = (from m in userProjectService.All()
