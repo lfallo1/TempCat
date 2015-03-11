@@ -166,6 +166,7 @@
     <Compile Include="BackEnd_UnitTests\ControllerTests\CommentControllerTests.cs" />
     <Compile Include="BackEnd_UnitTests\ControllerTests\LineItemControllerTests.cs" />
     <Compile Include="BackEnd_UnitTests\ControllerTests\LoginControllerTests.cs" />
+    <Compile Include="BackEnd_UnitTests\ControllerTests\QBOControllerTests.cs" />
     <Compile Include="BackEnd_UnitTests\ControllerTests\ReceiptControllerTests.cs" />
     <Compile Include="BackEnd_UnitTests\ControllerTests\RepliconControllerTests.cs" />
     <Compile Include="BackEnd_UnitTests\ControllerTests\SubmissionControllerTest.cs" />
