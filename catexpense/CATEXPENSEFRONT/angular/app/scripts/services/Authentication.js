@@ -1,81 +1,96 @@
 ﻿'use strict';
 
-angular.module('expenseApp.Services')
-  .factory('Authentication', ["$q", "$http", "$timeout", "Application", function Authentication($q, $http, $timeout, Application) {
+angular.module( 'expenseApp.Services' )
+  .factory(
+  'Authentication',
+  [
+      "$q",
+      "$http",
+      "$timeout",
+      "Cache",
+      function Authentication(
+          $q,
+          $http,
+          $timeout,
+          Cache
+          ) {
 
-      var authenticatedUser = null;
-      var Username;
-      var isManager;
-      var isFinanceApprover;
+          var authenticatedUser = null;
+          var Username;
+          var isManager;
+          var isFinanceApprover;
 
-      /**
-      * methods made accessable outside the Authentication service
-      */
-      return {
-          requestUser: function () {
-              var deferred = $q.defer();
+          /**
+          * methods made accessable outside the Authentication service
+          */
+          return {
+              requestUser: function () {
+                  var deferred = $q.defer();
 
-              $http.get('/api/user.json').success(function (user) {
-                  $timeout(function () {
-                      // Check if user is defined first
-                      if (user) {
-                          authenticatedUser = user;
-                      }
+                  $http.get( '/api/user.json' ).success( function ( user ) {
+                      $timeout( function () {
+                          // Check if user is defined first
+                          if ( user )
+                          {
+                              authenticatedUser = user;
+                          }
 
-                      deferred.resolve(authenticatedUser);
-                  }, 1000);
+                          deferred.resolve( authenticatedUser );
+                      }, 1000 );
 
-              }).error(function (error) {
-                  deferred.reject(error);
-              });
+                  } ).error( function ( error ) {
+                      deferred.reject( error );
+                  } );
 
-              return deferred.promise;
-          },
+                  return deferred.promise;
+              },
 
-          getUser: function () {
-              return authenticatedUser;
-          },
+              getUser: function () {
+                  return authenticatedUser;
+              },
 
-          exists: function () {
-              return authenticatedUser != null;
-          },
+              exists: function () {
+                  return authenticatedUser != null;
+              },
 
-          login: function (userLoginSuccess) {
-              if (userLoginSuccess) {
-                  authenticatedUser = userLoginSuccess.Username;
-                  Username = userLoginSuccess.Username;
-                  isManager = userLoginSuccess.isManager;
-                  isFinanceApprover = userLoginSuccess.isFinanceApprover;
-                  Application.makeReady();
-              }
-          },
+              login: function ( userLoginSuccess ) {
+                  if ( userLoginSuccess )
+                  {
+                      authenticatedUser = userLoginSuccess.Username;
+                      Username = userLoginSuccess.Username;
+                      isManager = userLoginSuccess.isManager;
+                      isFinanceApprover = userLoginSuccess.isFinanceApprover;
+                      Cache.makeReady();
+                  }
+              },
 
-          logout: function () {
-              authenticatedUser = undefined;
-              Username = undefined;
-              isManager = undefined;
-              isFinanceApprover = undefined;
-          },
+              logout: function () {
+                  authenticatedUser = undefined;
+                  Username = undefined;
+                  isManager = undefined;
+                  isFinanceApprover = undefined;
+              },
 
-          isDeveloper: function () {
-              return this.exists() && authenticatedUser.type == 'developer';
-          },
+              isDeveloper: function () {
+                  return this.exists() && authenticatedUser.type == 'developer';
+              },
 
-          setUserName: function (name) {
-              Username = name;
-              authenticatedUser = name;
-          },
+              setUserName: function ( name ) {
+                  Username = name;
+                  authenticatedUser = name;
+              },
 
-          getUserName: function () {
-              return Username;
-          },
+              getUserName: function () {
+                  return Username;
+              },
 
-          getIsManager: function () {
-              return isManager;
-          },
+              getIsManager: function () {
+                  return isManager;
+              },
 
-          getIsFinanceApprover: function () {
-              return isFinanceApprover;
-          },
+              getIsFinanceApprover: function () {
+                  return isFinanceApprover;
+              },
+          }
       }
-  }]);
+  ] );

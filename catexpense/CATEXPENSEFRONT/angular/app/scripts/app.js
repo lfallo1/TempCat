@@ -6,7 +6,7 @@
  * @description
  * # expenseApp
  *
- * Main module of the application.
+ * Main module of the Application.
  */
 
 /**
@@ -83,23 +83,24 @@ angular
             redirectTo: '/home'
         } );
   }] )
-    .run( ["$rootScope", "$location", "Authentication", "$route", "Application", "RouteFilter", "LoginService", "SubmissionService", function ( $rootScope, $location, Authentication, $route, Application, RouteFilter, LoginService, SubmissionService ) {;
+    .run( ["$rootScope", "$location", "Authentication", "$route", "Cache", "RouteFilter", "LoginService", "SubmissionService", function ( $rootScope, $location, Authentication, $route, Cache, RouteFilter, LoginService, SubmissionService ) {;
         $location.path( '/login' );
-        if ( Authentication.getUser() !== null ) {
-            Application.makeReady();
+        if ( Authentication.getUser() !== null )
+        {
+            Cache.makeReady();
         }
 
         LoginService.isLoggedIn().then( function ( isLoggedIn ) {
 
             Authentication.login( isLoggedIn.data );
-            Application.makeReady();
+            Cache.makeReady();
             $rootScope.$broadcast( "refresh" );
             $location.path( '/home' );
 
         }, function ( error ) {
 
             Authentication.logout();
-            Application.logout();
+            Cache.logout();
             $location.path( '/login' );
             LoginService.userLogout();
         } );
@@ -108,28 +109,33 @@ angular
 
         $rootScope.$on( '$locationChangeStart', function ( scope, next, current ) {
 
-            if ( $location.path() === '/login' ) {
+            if ( $location.path() === '/login' )
+            {
                 return;
             }
-            // if application is not ready then check if user is logged in
-            if ( !Application.isReady() ) {
+            // if Cache is not ready then check if user is logged in
+            if ( !Cache.isReady() )
+            {
                 LoginService.isLoggedIn().then( function ( isLoggedIn ) {
                     // if the user is not logged in then destroy the front end and send the user to login page
-                    if ( !isLoggedIn.data.isLoggedIn ) {
+                    if ( !isLoggedIn.data.isLoggedIn )
+                    {
                         Authentication.logout();
-                        Application.logout();
+                        Cache.logout();
                         $location.path( '/login' );
                         LoginService.userLogout();
-                    } else {
+                    } else
+                    {
                         Authentication.login( isLoggedIn.data );
-                        Application.makeReady();
+                        Cache.makeReady();
                         $rootScope.$broadcast( "refresh" );
                     }
                 } );
             }
 
-            if ( $location.path() == '/login' || $location.path() == '/home' || $location.path() == '/logout' ) {
-                Application.setSubmission( undefined );
+            if ( $location.path() == '/login' || $location.path() == '/home' || $location.path() == '/logout' )
+            {
+                Cache.setSubmission( undefined );
             }
             RouteFilter.run( $location.path() );
         } )

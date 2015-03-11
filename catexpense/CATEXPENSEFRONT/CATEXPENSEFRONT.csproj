@@ -559,7 +559,7 @@
     <Content Include="angular\app\scripts\directives\imageupload.js" />
     <Content Include="angular\app\scripts\directives\submission-table.js" />
     <Content Include="angular\app\scripts\directives\submissionPage.js" />
-    <Content Include="angular\app\scripts\services\Application.js" />
+    <Content Include="angular\app\scripts\services\Cache.js" />
     <Content Include="angular\app\scripts\services\Authentication.js" />
     <Content Include="angular\app\scripts\services\CommentService.js" />
     <Content Include="angular\app\scripts\services\ExpenseCategoryService.js" />

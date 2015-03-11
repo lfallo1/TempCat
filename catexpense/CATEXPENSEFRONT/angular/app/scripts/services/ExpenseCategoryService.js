@@ -1,21 +1,28 @@
 ﻿'use strict';
 
-angular.module('expenseApp.Services')
-  .service('ExpenseCategory', ["$http", function RepliconProjectService($http) {
+angular.module( 'expenseApp.Services' )
+  .service(
+  'ExpenseCategory',
+  [
+      "$http",
+      function ExpenseCategory(
+          $http
+          ) {
 
-      var self = this;
+          var self = this;
 
-      //=====================================================================//
-      //
-      //  list of GET methods
-      //
-      //=====================================================================//
+          //=====================================================================//
+          //
+          //  list of GET methods
+          //
+          //=====================================================================//
 
-      self.getAllExpenseCategories = function () {
-          return $http({
-              method: 'GET',
-              url: '/api/ExpenseCategory/GetAllExpenseCategories'
-          });
-      };
+          self.getAllExpenseCategories = function () {
+              return $http( {
+                  method: 'GET',
+                  url: '/api/ExpenseCategory/GetAllExpenseCategories'
+              } );
+          };
 
-  }]);
+      }
+  ] );

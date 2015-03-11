@@ -1,65 +1,73 @@
 ﻿'use strict';
 
-angular.module('expenseApp.Services')
-  .service('LoginService', ["$http", function LoginService($http) {
-      var self = this;
+angular.module( 'expenseApp.Services' )
+  .service(
+  'LoginService',
+  [
+      "$http",
+      function LoginService(
+          $http
+          ) {
 
-      //=====================================================================//
-      //
-      //  list of GET methods
-      //
-      //=====================================================================//
+          var self = this;
 
-      /**
-      * This will check to see if the user is logged in.
-      */
-      self.isLoggedIn = function () {
-          return $http({
-              url: '/api/login/isLoggedIn',
-              method: 'GET'
-          });
-      };
+          //=====================================================================//
+          //
+          //  list of GET methods
+          //
+          //=====================================================================//
 
-      //=====================================================================//
-      //
-      //  list of POST methods
-      //
-      //=====================================================================//
+          /**
+          * This will check to see if the user is logged in.
+          */
+          self.isLoggedIn = function () {
+              return $http( {
+                  url: '/api/login/isLoggedIn',
+                  method: 'GET'
+              } );
+          };
 
-      /**
-       * This will attempt to log the user in with the given user name and password
-       */
-      self.userlogin = function (username, password) {
-          return $http({
-              method: "POST",
-              url: "/api/login/userlogin",
-              data: {
-                  Username: username,
-                  Password: password
-              }
-          });
-      };
+          //=====================================================================//
+          //
+          //  list of POST methods
+          //
+          //=====================================================================//
 
-      /**
-       * This will log the user out and destroy the session
-       */
-      self.userLogout = function () {
-          return $http({
-              method: "POST",
-              url: "/api/login/userLogout"
-          });
-      };
+          /**
+           * This will attempt to log the user in with the given user name and password
+           */
+          self.userlogin = function ( username, password ) {
+              return $http( {
+                  method: "POST",
+                  url: "/api/login/userlogin",
+                  data: {
+                      Username: username,
+                      Password: password
+                  }
+              } );
+          };
 
-      //=====================================================================//
-      //
-      //  list of PUT methods
-      //
-      //=====================================================================//
+          /**
+           * This will log the user out and destroy the session
+           */
+          self.userLogout = function () {
+              return $http( {
+                  method: "POST",
+                  url: "/api/login/userLogout"
+              } );
+          };
 
-      //=====================================================================//
-      //
-      //  list of DELETE methods
-      //
-      //=====================================================================//
+          //=====================================================================//
+          //
+          //  list of PUT methods
+          //
+          //=====================================================================//
 
-  }]);
+          //=====================================================================//
+          //
+          //  list of DELETE methods
+          //
+          //=====================================================================//
+
+      }
+  ] );

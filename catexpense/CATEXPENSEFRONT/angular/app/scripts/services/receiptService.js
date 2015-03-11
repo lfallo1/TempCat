@@ -1,119 +1,127 @@
 ﻿'use strict';
 
-angular.module('expenseApp.Services')
-  .service('ReceiptService', ["$http", function ReceiptService($http) {
-      var self = this;
+angular.module( 'expenseApp.Services' )
+  .service(
+  'ReceiptService',
+  [
+      "$http",
+      function ReceiptService(
+          $http
+          ) {
 
-      var receipts;
-      var addReceipt;
-      var allReceipts;
-      var showAllReceipts;
+          var self = this;
 
-      /**
-      * getters and setters 
-      */
-      self.getReceipts = function () {
-          return receipts;
-      };
+          var receipts;
+          var addReceipt;
+          var allReceipts;
+          var showAllReceipts;
 
-      self.setReceipts = function (data) {
-          receipts = data;
-      };
+          /**
+          * getters and setters 
+          */
+          self.getReceipts = function () {
+              return receipts;
+          };
 
-      self.getShowAllReceipts = function () {
-          return showAllReceipts;
-      };
+          self.setReceipts = function ( data ) {
+              receipts = data;
+          };
 
-      self.setShowAllReceipts = function (data) {
-          showAllReceipts = data;
-      };
+          self.getShowAllReceipts = function () {
+              return showAllReceipts;
+          };
 
-      self.getAllReceipts = function () {
-          return allReceipts;
-      };
+          self.setShowAllReceipts = function ( data ) {
+              showAllReceipts = data;
+          };
 
-      self.setAllReceipts = function (data) {
-          allReceipts = data;
-      };
+          self.getAllReceipts = function () {
+              return allReceipts;
+          };
 
-      self.getAddReceipt = function () {
-          return addReceipt;
-      };
+          self.setAllReceipts = function ( data ) {
+              allReceipts = data;
+          };
 
-      self.setAddReceipt = function (data) {
-          addReceipt = data;
-      };
+          self.getAddReceipt = function () {
+              return addReceipt;
+          };
 
-
-      //=====================================================================//
-      //
-      //  list of GET methods
-      //
-      //=====================================================================//
-
-      self.getReceiptById = function (id) {
-          return $http({
-              method: "GET",
-              url: '/api/Receipts',
-              params: { id: id }
-          })
-      };
-
-      /**
-      * Gets receipt of the submission that the submission id belongs to
-      */
-      self.GetReceiptsBySubmissionId = function (SubmissionId) {
-          return $http({
-              method: "GET",
-              url: '/api/Receipt/GetReceiptsBySubmissionId',
-              params: { id: SubmissionId }
-          })
-      };
-
-      /**
-      * Gets receipt of the submission that the submission id belongs to with the image
-      */
-      self.GetReceiptsWithImageBySubmissionId = function (SubmissionId) {
-          return $http({
-              method: "GET",
-              url: '/api/Receipt/GetReceiptsWithImageBySubmissionId',
-              params: { id: SubmissionId }
-          })
-      };
+          self.setAddReceipt = function ( data ) {
+              addReceipt = data;
+          };
 
 
-      //=====================================================================//
-      //
-      //  list of POST methods
-      //
-      //=====================================================================//
+          //=====================================================================//
+          //
+          //  list of GET methods
+          //
+          //=====================================================================//
 
-      self.submitReceipt = function (data) {
-          return $http({
-              method: "POST",
-              url: '/api/Receipts',
-              data: data
-          })
-      };
+          self.getReceiptById = function ( id ) {
+              return $http( {
+                  method: "GET",
+                  url: '/api/Receipts',
+                  params: { id: id }
+              } )
+          };
 
-      //=====================================================================//
-      //
-      //  list of PUT methods
-      //
-      //=====================================================================//
+          /**
+          * Gets receipt of the submission that the submission id belongs to
+          */
+          self.GetReceiptsBySubmissionId = function ( SubmissionId ) {
+              return $http( {
+                  method: "GET",
+                  url: '/api/Receipt/GetReceiptsBySubmissionId',
+                  params: { id: SubmissionId }
+              } )
+          };
 
-      //=====================================================================//
-      //
-      //  list of DELETE methods
-      //
-      //=====================================================================//
+          /**
+          * Gets receipt of the submission that the submission id belongs to with the image
+          */
+          self.GetReceiptsWithImageBySubmissionId = function ( SubmissionId ) {
+              return $http( {
+                  method: "GET",
+                  url: '/api/Receipt/GetReceiptsWithImageBySubmissionId',
+                  params: { id: SubmissionId }
+              } )
+          };
 
-      self.deleteReceipt = function (receiptID, lineitemID) {
-          return $http({
-              method: "DELETE",
-              url: "/api/Receipts",
-              params: { id: receiptID, lineItemId: lineitemID }
-          })
-      };
 
-  }]);
+          //=====================================================================//
+          //
+          //  list of POST methods
+          //
+          //=====================================================================//
+
+          self.submitReceipt = function ( data ) {
+              return $http( {
+                  method: "POST",
+                  url: '/api/Receipts',
+                  data: data
+              } )
+          };
+
+          //=====================================================================//
+          //
+          //  list of PUT methods
+          //
+          //=====================================================================//
+
+          //=====================================================================//
+          //
+          //  list of DELETE methods
+          //
+          //=====================================================================//
+
+          self.deleteReceipt = function ( receiptID, lineitemID ) {
+              return $http( {
+                  method: "DELETE",
+                  url: "/api/Receipts",
+                  params: { id: receiptID, lineItemId: lineitemID }
+              } )
+          };
+
+      }
+  ] );

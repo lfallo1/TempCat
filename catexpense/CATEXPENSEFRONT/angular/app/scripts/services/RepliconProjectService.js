@@ -5,47 +5,55 @@
  * @name RepliconProjectService
  * @description # RepliconProject Service 
  */
-angular.module('expenseApp.Services')
-  .service('RepliconProjectService', ["$http", function RepliconProjectService($http) {
-      var self = this;
+angular.module( 'expenseApp.Services' )
+  .service(
+  'RepliconProjectService',
+  [
+      "$http",
+      function RepliconProjectService(
+          $http
+          ) {
 
-      //=====================================================================//
-      //
-      //  list of GET methods
-      //
-      //=====================================================================//
+          var self = this;
 
-      self.getAllRepliconProjects = function (data) {
-          return $http({
-              method: 'GET',
-              url: '/api/RepliconProject',
-              params: data
-          });
-      };
+          //=====================================================================//
+          //
+          //  list of GET methods
+          //
+          //=====================================================================//
 
-      //=====================================================================//
-      //
-      //  list of POST methods
-      //
-      //=====================================================================//
+          self.getAllRepliconProjects = function ( data ) {
+              return $http( {
+                  method: 'GET',
+                  url: '/api/RepliconProject',
+                  params: data
+              } );
+          };
 
-      self.updateRepliconProjects = function () {
-          return $http({
-              method: 'POST',
-              url: '/api/RepliconProject/UpdateRepliconProjectTable'
-          });
-      };
+          //=====================================================================//
+          //
+          //  list of POST methods
+          //
+          //=====================================================================//
 
-      //=====================================================================//
-      //
-      //  list of PUT methods
-      //
-      //=====================================================================//
+          self.updateRepliconProjects = function () {
+              return $http( {
+                  method: 'POST',
+                  url: '/api/RepliconProject/UpdateRepliconProjectTable'
+              } );
+          };
 
-      //=====================================================================//
-      //
-      //  list of DELETE methods
-      //
-      //=====================================================================//
+          //=====================================================================//
+          //
+          //  list of PUT methods
+          //
+          //=====================================================================//
 
-  }]);
+          //=====================================================================//
+          //
+          //  list of DELETE methods
+          //
+          //=====================================================================//
+
+      }
+  ] );
