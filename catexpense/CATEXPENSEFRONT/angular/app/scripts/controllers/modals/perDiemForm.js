@@ -20,6 +20,27 @@ angular.module( 'expenseApp.Controllers' )
           ValidationService
           ) {
 
+          /****************************************************
+          *
+          * Private Variables
+          *
+          ***************************************************/
+
+          //default validation for fields
+          var perDiemValidation = {
+              days: {
+                  valid: true,
+                  message: 'This field is valid.'
+              },
+              validInput: true
+          };
+
+          /****************************************************
+          *
+          * Public Variables
+          *
+          ***************************************************/
+
           $scope.perDiemValues = {
               daysString: {
                   sunday: LineItemService.getDaysString().sunday,
@@ -35,14 +56,17 @@ angular.module( 'expenseApp.Controllers' )
               amount: LineItemService.getLineItemAmount()
           };
 
-          //default validation for fields
-          var perDiemValidation = {
-              days: {
-                  valid: true,
-                  message: 'This field is valid.'
-              },
-              validInput: true
-          };
+          /****************************************************
+          *
+          * Private Methods
+          *
+          ***************************************************/
+
+          /****************************************************
+          *
+          * Public Methods
+          *
+          ***************************************************/
 
           /**
            * Returns true if the days field is valid, returns false otherwise.
@@ -73,8 +97,10 @@ angular.module( 'expenseApp.Controllers' )
           $scope.calculateTotal = function () {
               var perDiem = 30;
               $scope.perDiemValues.amount = 0;
-              for ( var key in $scope.perDiemValues.days ) {
-                  if ( $scope.perDiemValues.days.hasOwnProperty( key ) ) {
+              for ( var key in $scope.perDiemValues.days )
+              {
+                  if ( $scope.perDiemValues.days.hasOwnProperty( key ) )
+                  {
                       $scope.perDiemValues.amount += $scope.perDiemValues.days[key] ? perDiem : 0;
                   }
               };
