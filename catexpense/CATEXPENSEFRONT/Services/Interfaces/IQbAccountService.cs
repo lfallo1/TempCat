@@ -8,7 +8,7 @@ using CatExpenseFront.Services.Interfaces.Base;
 
 namespace CatExpenseFront.Services.Interfaces
 {
-    interface IQbAccountService : IService<QbAccount>
+    public interface IQbAccountService : IService<QbAccount>
     {
     }
 }

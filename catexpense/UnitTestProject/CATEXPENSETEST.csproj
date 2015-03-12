@@ -173,6 +173,10 @@
     <Compile Include="BackEnd_UnitTests\ModelTests\ExpenseCategoryTests.cs" />
     <Compile Include="BackEnd_UnitTests\ModelTests\ExpenseTests.cs" />
     <Compile Include="BackEnd_UnitTests\ModelTests\LineItemTests.cs" />
+    <Compile Include="BackEnd_UnitTests\ModelTests\QbAccountTests.cs" />
+    <Compile Include="BackEnd_UnitTests\ModelTests\QbClientTests.cs" />
+    <Compile Include="BackEnd_UnitTests\ModelTests\QbVendorTests.cs" />
+    <Compile Include="BackEnd_UnitTests\ModelTests\QuickBooksRequestTests.cs" />
     <Compile Include="BackEnd_UnitTests\ModelTests\RepliconRequestTests.cs" />
     <Compile Include="BackEnd_UnitTests\ModelTests\StatusTests.cs" />
     <Compile Include="BackEnd_UnitTests\ModelTests\SubmissionsTest.cs" />
