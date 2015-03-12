@@ -12,6 +12,7 @@ angular.module( 'expenseApp.Services' )
           var id = "";
           var index = 0;
           var addComment = false;
+          var commentRequired = false;
 
           /**
           * getter and setter methods
@@ -55,6 +56,14 @@ angular.module( 'expenseApp.Services' )
 
               getAddComment: function () {
                   return addComment;
+              },
+
+              setCommentRequired: function ( required ) {
+                 commentRequired = required;
+              },
+
+              getCommentRequired: function () {
+                    return commentRequired;
               }
           }
       }

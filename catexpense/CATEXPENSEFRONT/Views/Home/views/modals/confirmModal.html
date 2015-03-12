@@ -10,7 +10,7 @@
             <br />
             <div class="col-md-12" ng-show="addComment">
                 <label class="col-md-5">Add a comment:</label>
-                <textarea placeholder="Reasons for rejecting this submission." ng-model="comment" class="form-control col-md-6"></textarea>
+                <textarea placeholder="Additional information for this submission." ng-model="comment" class="form-control col-md-6"></textarea>
             </div>
             <div class="col-md-12">
                 <div>
@@ -18,7 +18,7 @@
                         <i class="glyphicon glyphicon-ban-circle"></i>
                         <span>Cancel</span>
                     </button>
-                    <button id="yesButton" ng-disabled="!comment" class="btn btn-success col-md-2 pull-right" ng-click="confirm()">
+                    <button id="yesButton" ng-disabled="commentRequired  && !comment" class="btn btn-success col-md-2 pull-right" ng-click="confirm()">
                         <i class="glyphicon glyphicon-ok"></i>
                         <span>Yes</span>
                     </button>

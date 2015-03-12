@@ -8,7 +8,7 @@
                             <tbody ng-repeat="expenseComments in currentSubmission.Comments">
                                 <tr>
                                     <td>
-                                        <strong>{{expenseComments.RepliconUserName}}</strong> <small>added a comment</small> - {{expenseComments.DateUpdated | date:'yyyy/MM/dd h:mm a'}}<br />
+                                        <strong>{{expenseComments.RepliconUserName}}</strong> <small>added a comment for Status: </small>{{expenseComments.Status.StatusName}} - {{expenseComments.DateUpdated | date:'yyyy/MM/dd h:mm a'}}<br />
                                         <div class="cursorText col-md-5" ng-class="{'well': expenseComments.commentIsMine, 'well-sm': expenseComments.commentIsMine, 'whiteBackground': expenseComments.commentIsMine }" ng-click="editComment($index)">{{expenseComments.ExpenseComment}}</div>
                                     </td>
                                 </tr>
@@ -16,10 +16,6 @@
                         </table>
                     </div>
                     <div class="col-sm-12">
-                        <button id="newCommentButton" class="btn btn-primary" ng-click="editComment(-1)">
-                            <i class="glyphicon glyphicon-comment"></i>
-                            <span>New comment</span>
-                        </button>
                         <button class="btn btn-primary" id="addLineItemButton" ng-click="addNewLineItem()" ng-disabled="!createNewItemLoad">
                             <i class="glyphicon glyphicon-plus"></i>
                             <span>Add Line Item</span>
