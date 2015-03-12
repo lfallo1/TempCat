@@ -59,9 +59,13 @@ angular.module( 'expenseApp.Controllers' )
           */
           if ( $scope.submission )
           {
-              $scope.submittedNotApproved = Cache.getSubmissionStatus() === 2
-            && Cache.getSubmission().ActiveDirectoryUser.toUpperCase() == Authentication.getUserName().toUpperCase()
-              && ( Cache.getOrigin() == "FinanceTable" || Cache.getOrigin() == "ManagerTable" );
+              $scope.canUnsubmit = Cache.getSubmissionStatus() > 1 && Cache.getSubmissionStatus() != 6
+                && Cache.getSubmission().ActiveDirectoryUser.toUpperCase() == Authentication.getUserName().toUpperCase() &&
+                 Cache.getOrigin() == "EmployeeTable";
+              $scope.submittedNotApproved = Cache.getSubmissionStatus() > 1
+                                      && (Cache.getOrigin() == "FinanceTable"
+                                      || Cache.getSubmissionStatus() > 1 &&
+                                         Cache.getOrigin() == "ManagerTable");
               $scope.createNewItemLoad = $scope.submission.StatusId == 1 || $scope.submission.StatusId == 4 || $scope.submission.StatusId == 6
           }
 
@@ -619,25 +623,45 @@ angular.module( 'expenseApp.Controllers' )
             );
           };
 
-          /**
-          * submit the submissionTable, checking to see that the submission has at least one
-          * line item, then updating the submission with the correct status id
-          */
-          $scope.submitTable = function () {
-              //Show Optional Comment Modal
-              /*
-              Cache.setIsNewComment(true);
-              Cache.setComment("");
-              var modalInstance = $modal.open({
-                  templateUrl: 'Views/Home/views/modals/commentModal.html',
-                  controller: 'CommentController'
-              });
 
-              modalInstance.result.then(function (commentSaved) {
-                  */
+        /**
+         ** Called when the unsubmit broadcast is triggered. 
+         **/
+          $scope.$on("unsubmitExpense", function (response, comment) {
+
+              $scope.submission.Status["StatusName"] = 'In Progress'
+              $scope.submission.Status["StatusId"] = 1
+              $scope.currentSubmission.Comments = new Array();
+              $scope.currentSubmission.Comments[0] = {};
+              $scope.currentSubmission.Comments[0]["ExpenseComment"] = comment;
+
+              SubmissionService.updateSubmission($scope.submission.SubmissionId, $scope.submission).then(
+                  function (success) {
+                      var userSubmission = Cache.getAllUserSubmissions();
+                      userSubmission[Cache.getSubmissionIndex()] = $scope.submission
+                      $scope.dt1 = '';
+                      $scope.currentDescription = "";
+                      $scope.submissionCreated = false;
+                      $scope.startCreateSubmission = false;
+                      $window.location.reload();
+                  },
+                  function (error) {
+                      LogError.logError({ username: Authentication.getUser(), endpoint: error.config.url, error: error.statusText });
+                  });
+          });
+
+         /** 
+         * recieves broadcast message from MessageService confirming
+         * that the expense report is being submitted.
+         */
+          $scope.$on("confirmSubmission", function (response, comment ) {
               if ($scope.submission.LineItems.length > 0) {
                   $scope.submission.Status["StatusName"] = 'Submitted'
                   $scope.submission.Status["StatusId"] = 2
+                  $scope.currentSubmission.Comments = new Array();
+                  $scope.currentSubmission.Comments[0] = {};
+                  $scope.currentSubmission.Comments[0]["ExpenseComment"] = comment;
+
                   SubmissionService.updateSubmission($scope.submission.SubmissionId, $scope.submission).then(
                       function (success) {
                           var userSubmission = Cache.getAllUserSubmissions();
@@ -649,9 +673,8 @@ angular.module( 'expenseApp.Controllers' )
                           $window.location.reload();
                       },
                       function (error) {
-                          LogError.logError({ username: Authentication.getUser(), endpoint: error.config.url, error: error.statusText }).then(
-                              function (success) { },
-                              function (error) { });
+                          LogError.logError({ username: Authentication.getUser(), endpoint: error.config.url, error: error.statusText });
+
                       });
               } else {
                   MessageService.setMessage('You can not submit a table without any expense items');
@@ -667,6 +690,29 @@ angular.module( 'expenseApp.Controllers' )
                       }
                   });
               }
+
+          });
+
+
+
+          /**
+          * submit the submissionTable, checking to see that the submission has at least one
+          * line item, then updating the submission with the correct status id
+          */
+          $scope.submitTable = function () {
+
+              // the manager does not need a comment when approving
+              MessageService.setAddComment(true);
+              MessageService.setCommentRequired(false);
+              MessageService.setMessage("Please confirm you are about to submit this expense report for approval.");
+              MessageService.setBroadCastMessage("confirmSubmission");
+              var modalInstance = $modal.open({
+                  templateUrl: 'Views/Home/views/modals/confirmModal.html',
+                  controller: 'confirmModalController'
+              });
+
+
+             
           };
 
           /** 
@@ -684,25 +730,16 @@ angular.module( 'expenseApp.Controllers' )
           * user may update the line items in their submission
           */
           $scope.unSubmit = function () {
-
-              $scope.submission.Status["StatusName"] = 'In Progress'
-              $scope.submission.Status["StatusId"] = 1
-
-              SubmissionService.updateSubmission( $scope.submission.SubmissionId, $scope.submission ).then(
-                  function ( success ) {
-                      var userSubmission = Cache.getAllUserSubmissions();
-                      userSubmission[Cache.getSubmissionIndex()] = $scope.submission
-                      $scope.dt1 = '';
-                      $scope.currentDescription = "";
-                      $scope.submissionCreated = false;
-                      $scope.startCreateSubmission = false;
-                      $window.location.reload();
-                  },
-                  function ( error ) {
-                      LogError.logError( { username: Authentication.getUser(), endpoint: error.config.url, error: error.statusText } ).then(
-                        function ( success ) { },
-                        function ( error ) { } );
-                  } );
+             
+              MessageService.setAddComment(true);
+              MessageService.setCommentRequired(false);
+              MessageService.setMessage("Please confirm you are about to unsubmit this expense report.");
+              MessageService.setBroadCastMessage("unsubmitExpense");
+              var modalInstance = $modal.open({
+                  templateUrl: 'Views/Home/views/modals/confirmModal.html',
+                  controller: 'confirmModalController'
+              });
+            
           }
 
           /**

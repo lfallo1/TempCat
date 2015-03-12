@@ -274,13 +274,23 @@ namespace CatExpenseFront.Controllers
             //Checks the session to see if it is valid
             this.checkSession();
 
+            //Gets The replicon UseName
+            string Username = (null == HttpContextFactory.Current.Session["UserName"]
+           ? ""
+           : HttpContextFactory.Current.Session["UserName"].ToString().ToUpper());
+
             Comment comment = new Comment();
+           
+            comment.RepliconUserName = Username;
+            comment.ExpenseComment = submission.Comments.First<Comment>().ExpenseComment;
+            comment.DateCreated = DateTime.Now;
+            comment.DateUpdated = DateTime.Now;
+         
+
             HttpResponseMessage message = Request.CreateResponse(HttpStatusCode.OK);
             Submission mergedSubmission = service.Find(id);
 
-            string Username = (null == HttpContextFactory.Current.Session["UserName"]
-            ? ""
-            : HttpContextFactory.Current.Session["UserName"].ToString().ToUpper());
+           
             int userId = (from m in userProjectService.All()
                           where m.UserName.ToUpper() == Username
                           select m.ID).First();
@@ -326,13 +336,7 @@ namespace CatExpenseFront.Controllers
                         {
                             mergedSubmission.StatusId = APPROVAL_STATUS_MANAGER_REJECTED_ID;
                             mergedSubmission.RepliconManagerApproverDate = DateTime.Now;
-                            comment.SubmissionId = id;
-                            comment.RepliconUserName = Username;
-                            comment.ExpenseComment = submission.Comments.First<Comment>().ExpenseComment;
-                            comment.DateCreated = DateTime.Now;
-                            comment.DateUpdated = DateTime.Now;
-                            commentsService.Create(comment);
-                            commentsService.SaveChanges();
+                           
                         }
                         break;
                     }
@@ -352,19 +356,24 @@ namespace CatExpenseFront.Controllers
                         {
                             mergedSubmission.StatusId = APPROVAL_STATUS_FINANCE_REJECTED_ID;
                             mergedSubmission.RepliconFinanceApproverDate = DateTime.Now;
-                            comment.SubmissionId = id;
-                            comment.RepliconUserName = Username;
-                            comment.ExpenseComment = submission.Comments.First<Comment>().ExpenseComment;
-                            comment.DateCreated = DateTime.Now;
-                            comment.DateUpdated = DateTime.Now;
-                            commentsService.Create(comment);
-                            commentsService.SaveChanges();
+                           
                         }
                         break;
                     }
             }
+
+            //Only save the comment if it was sent.
+            if (comment.ExpenseComment != null) {
+                comment.StatusId = mergedSubmission.StatusId;
+                comment.SubmissionId = id;
+                commentsService.Create(comment);
+                commentsService.SaveChanges();
+            }
+            
             service.Update(mergedSubmission);
             service.SaveChanges();
+
+
             return message;
         }
 

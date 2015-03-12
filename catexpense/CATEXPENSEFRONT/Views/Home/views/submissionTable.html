@@ -3,6 +3,8 @@
         <div class="panel panel-default">
             <div>
                 <fieldset class="fieldset">
+                    
+
                     <div class="col-sm-12">
                         <button class="btn btn-primary" id="addLineItemButton" ng-click="addNewLineItem()" ng-disabled="!createNewItemLoad">
                             <i class="glyphicon glyphicon-plus"></i>
@@ -67,7 +69,7 @@
                 </tbody>
             </table>
             <div>
-                <button ng-if="submittedNotApproved" class="btn btn-warning pull-right" ng-click="unSubmit()">
+                <button ng-if="canUnsubmit" class="btn btn-warning pull-right" ng-click="unSubmit()">
                     <i class="glyphicon icon-undo-white"></i>
                     <span>Undo Submission</span>
                 </button>
@@ -109,7 +111,7 @@
                     <tr ng-repeat="expenseComments in currentSubmission.Comments">
                         <td>{{expenseComments.RepliconUserName}}</td>
                         <td>{{expenseComments.DateUpdated | date:'yyyy/MM/dd h:mm a'}}</td>
-                        <td>&lt;&lt;Status Placeholder&gt;&gt;</td>
+                        <td>{{expenseComments.Status.StatusName}}</td>
                         <td>{{expenseComments.ExpenseComment}}</td>
                         <td><span class="pointer glyphicon glyphicon-edit" ng-click="editComment($index)" data-toggle="tooltip" data-placement="left" title="Edit Comment"></span></td>
                     </tr>

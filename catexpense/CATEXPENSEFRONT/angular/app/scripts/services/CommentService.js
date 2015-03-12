@@ -46,11 +46,11 @@ angular.module( 'expenseApp.Services' )
           //
           //=====================================================================//
 
-          self.CreateComment = function ( id, comment ) {
+          self.CreateComment = function ( id, comment, statusId ) {
               return $http( {
                   url: '/api/Comment/CreateComment',
                   method: 'POST',
-                  params: { submissionId: id, comment: comment }
+                  params: { submissionId: id, comment: comment, StatusId : statusId }
               } );
           };
 

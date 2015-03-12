@@ -179,7 +179,7 @@ angular.module( 'expenseApp.Controllers' )
                     Cache.setComment( $scope.currentSubmission.Comments[index] );
                 } else
                 {
-                    Cache.setComment( "" );
+                    Cache.setComment("");
                 }
                 var modalInstance = $modal.open( {
                     templateUrl: 'Views/Home/views/modals/commentModal.html',
@@ -287,7 +287,8 @@ angular.module( 'expenseApp.Controllers' )
             */
             $scope.approve = function () {
                 // the manager does not need a comment when approving
-                MessageService.setAddComment( false );
+                MessageService.setAddComment(true);
+                MessageService.setCommentRequired(false);
                 MessageService.setMessage( "Please confirm you are about to approve this submission." );
                 MessageService.setBroadCastMessage( "confirmApproveSubmission" );
                 var modalInstance = $modal.open( {
@@ -304,7 +305,8 @@ angular.module( 'expenseApp.Controllers' )
             $scope.reject = function () {
                 MessageService.setMessage( "Please confirm you are about to reject this submission." );
                 MessageService.setBroadCastMessage( "confirmRejectSubmission" );
-                MessageService.setAddComment( true );
+                MessageService.setAddComment(true);
+                MessageService.setCommentRequired(true);
                 var modalInstance = $modal.open( {
                     templateUrl: 'Views/Home/views/modals/confirmModal.html',
                     controller: 'confirmModalController'
@@ -338,7 +340,7 @@ angular.module( 'expenseApp.Controllers' )
             * to approve a submission and updates the submission status in the database
             * adds the submission to the list of items for approval by the finance approver
             */
-            $scope.$on( "confirmApproveSubmission", function () {
+            $scope.$on("confirmApproveSubmission", function (response, comment) {
                 var statusName = "";
                 // this checks to see where the userer is comming from and if they are an approver
                 if ( $scope.isApprover && Cache.getOrigin() == "ManagerTable" )
@@ -350,7 +352,10 @@ angular.module( 'expenseApp.Controllers' )
                 }
 
                 $scope.currentSubmission.Status["StatusName"] = statusName;
-                SubmissionService.updateSubmission( $scope.currentSubmission.SubmissionId, $scope.currentSubmission ).then( function ( data ) {
+                $scope.currentSubmission.Comments = new Array();
+                $scope.currentSubmission.Comments[0] = {};
+                $scope.currentSubmission.Comments[0]["ExpenseComment"] = comment;
+                SubmissionService.updateSubmission($scope.currentSubmission.SubmissionId, $scope.currentSubmission).then(function (data) {
                     if ( statusName == "Manager Approved" )
                     {
                         var submissions = Cache.getPendingSubmissionsByManagerName();
@@ -395,7 +400,10 @@ angular.module( 'expenseApp.Controllers' )
                     } else
                     {
                         var submissions = Cache.getPendingSubmissionsByFinanceApprover();
-                        submissions.splice( Cache.getSubmissionIndex(), 1 );
+                        if (submissions) {
+                            submissions.splice(Cache.getSubmissionIndex(), 1);
+                        }
+                       
                     }
                     Cache.setSubmission( undefined );
                     $window.location.reload();
@@ -416,7 +424,7 @@ angular.module( 'expenseApp.Controllers' )
                 } else
                 {
                     // create new comment
-                    CommentService.CreateComment( $scope.currentSubmission.SubmissionId, comment ).then( function ( success ) {
+                    CommentService.CreateComment($scope.currentSubmission.SubmissionId, comment, $scope.currentSubmission.StatusId).then(function (success) {
                         success.data["commentIsMine"] = true;
                         $scope.currentSubmission.Comments.push( success.data );
                     } );

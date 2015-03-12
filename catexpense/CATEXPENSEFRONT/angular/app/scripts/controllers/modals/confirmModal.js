@@ -17,13 +17,7 @@ angular.module( 'expenseApp.Controllers' )
 
           $scope.message = MessageService.getMessage();
           $scope.addComment = MessageService.getAddComment();
-
-          /**
-          * add comment filler upon page load if no comment is stored in MessageService 
-          */
-          if ( !$scope.addComment ) {
-              $scope.comment = "filler";
-          }
+          $scope.commentRequired = MessageService.getCommentRequired();
 
           /**
           * send broadcase message stored in MessageService to submissionTable.js
