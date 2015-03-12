@@ -171,6 +171,8 @@ angular.module( 'expenseApp.Controllers' )
               }
           };
 
+          $scope._onLoad();
+
           /**
           * expand and contract financeTable view
           */

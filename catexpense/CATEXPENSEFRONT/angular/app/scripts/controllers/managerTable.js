@@ -172,6 +172,8 @@ angular.module( 'expenseApp.Controllers' )
               }
           };
 
+          $scope._onLoad();
+
 
 
           /**
