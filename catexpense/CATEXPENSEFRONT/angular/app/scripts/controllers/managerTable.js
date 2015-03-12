@@ -28,23 +28,68 @@ angular.module( 'expenseApp.Controllers' )
           Authentication,
           ReceiptService
           ) {
+
+          /****************************************************
+           *
+           * Private Variables
+           *
+           ***************************************************/
+
           /**
           * container for the submissions
           */
           var managerSubmissionsContainer = [];
+
+          /**
+           * Allows the fields to be orderable
+           */
           var orderBy = $filter( 'orderBy' );
-          var sortColumn = { field: 'DateCreated', reverse: false };
-          $scope.expanded = true;
+
+          /**
+           * Determines how the submissions will be sorted.
+           * Default sorting is by the 'DateCreated' field.
+           */
+          var sortColumn = {
+              field: 'DateCreated',
+              reverse: false
+          };
+
+          /****************************************************
+           *
+           * Public Variables
+           *
+           ***************************************************/
+
+
           $scope.isManager = Authentication.getIsManager();
+
+          /**
+           * Determines if the manager table is expanded or contracted
+           * True -> table expanded, hide the expand (+) button, show the contract (-) button
+           * False -> contracted, hide the contract (-) button, show the expand (+) button
+           */
+          $scope.expanded = true;
 
           /**
           * statuses used for the drop down filter
           */
           $scope.statuses = [
-            { name: 'All', value: '0' },
-            { name: 'Submitted', value: '2' },
-            { name: 'Manager Approved', value: '3' },
-            { name: 'Manager Rejected', value: '4' }
+            {
+                name: 'All',
+                value: '0'
+            },
+            {
+                name: 'Submitted',
+                value: '2'
+            },
+            {
+                name: 'Manager Approved',
+                value: '3'
+            },
+            {
+                name: 'Manager Rejected',
+                value: '4'
+            }
           ];
 
           /**
@@ -52,57 +97,19 @@ angular.module( 'expenseApp.Controllers' )
           */
           $scope.selectedStatus = $scope.statuses[1];
 
-          /**
-          * allow user to sort submissions in table by any column
-          */
-          $scope.managerOrder = function ( field ) {
-              if ( field === sortColumn.field )
-              {
-                  sortColumn.reverse = !sortColumn.reverse;
-                  $scope.managerSubmissions = orderBy( $scope.managerSubmissions, sortColumn.field, sortColumn.reverse );
-              } else
-              {
-                  sortColumn.field = field;
-                  sortColumn.reverse = false;
-                  $scope.managerSubmissions = orderBy( $scope.managerSubmissions, sortColumn.field, sortColumn.reverse );
-              };
-          };
+          /****************************************************
+           *
+           * Private Methods
+           *
+           ***************************************************/
 
-          /**
-          * allow user to expand and contract manager table view
-          */
-          $scope.expandContract = function ( value ) {
-              $scope.expanded = value;
-          };
-
-          /**
-          * load the table with the filtered items
-          */
-          $scope.filterTableBySubmissionStatus = function ( status ) {
-              var managerSubmissionsFilter = [];
-              for ( var i = 0; i < managerSubmissionsContainer.length; i++ )
-              {
-                  if ( managerSubmissionsContainer[i].StatusId == status || status == 0 )
-                  {
-                      managerSubmissionsFilter.push( managerSubmissionsContainer[i] );
-                  }
-              }
-              if ( managerSubmissionsFilter.length != 0 )
-              {
-                  $scope.managerSubmissions = managerSubmissionsFilter;
-              } else
-              {
-                  $scope.managerSubmissions = [];
-              }
-          }
-
-          var loadManagerTable = function () {
+          function loadManagerTable() {
               if ( Cache.getPendingSubmissionsByManagerName() != undefined )
               {
                   $scope.managerSubmissions = Cache.getPendingSubmissionsByManagerName();
                   managerSubmissionsContainer = $scope.managerSubmissions;
                   $scope.filterTableBySubmissionStatus( 2 );
-                  $rootScope.$broadcast( "managerTotal", $scope.managerSubmissions.length );
+                  $scope.setManagerSubmissionCount( $scope.managerSubmissions.length );
               } else
               {
                   // get all the submissions for the manager
@@ -141,18 +148,82 @@ angular.module( 'expenseApp.Controllers' )
                           $scope.managerSubmissions = userSubmissions;
                           managerSubmissionsContainer = $scope.managerSubmissions;
                           $scope.filterTableBySubmissionStatus( 2 );
-                          $rootScope.$broadcast( "managerTotal", $scope.managerSubmissions.length );
+                          $scope.setManagerSubmissionCount( $scope.managerSubmissions.length );
                       } );
               }
           };
 
+
+
+          /****************************************************
+           *
+           * Public Methods
+           *
+           ***************************************************/
+
+          $scope._onLoad = function () {
+
+              /**
+               * if user is a manager, load managerTable with submissions awaiting approval
+               */
+              if ( Authentication.getIsManager() )
+              {
+                  loadManagerTable();
+              }
+          };
+
+
+
           /**
-          * if user is a manager, load managerTable with submissions awaiting approval
+          * allow for sorting of submissions displayed in managerTable
           */
-          if ( Authentication.getIsManager() )
-          {
-              loadManagerTable();
-          }
+          $scope.managerOrder = function ( field ) {
+
+              //if currently sorted by a column, clicking the same column again will reverse the current sorting order
+              if ( field === sortColumn.field )
+              {
+                  sortColumn.reverse = !sortColumn.reverse;
+                  $scope.managerSubmissions = orderBy( $scope.managerSubmissions, sortColumn.field, sortColumn.reverse );
+              }
+
+                  //sort by a column in alphabetical order
+              else
+              {
+                  sortColumn.field = field;
+                  sortColumn.reverse = false;
+                  $scope.managerSubmissions = orderBy( $scope.managerSubmissions, sortColumn.field, sortColumn.reverse );
+              };
+          };
+
+          /**
+          * allow user to expand and contract manager table view
+          */
+          $scope.expandContract = function ( value ) {
+              $scope.expanded = !!value;
+          };
+
+          /**
+          * load the table with the filtered items
+          */
+          $scope.filterTableBySubmissionStatus = function ( status ) {
+              var managerSubmissionsFilter = [];
+              for ( var i = 0; i < managerSubmissionsContainer.length; i++ )
+              {
+                  if ( managerSubmissionsContainer[i].StatusId == status || status == 0 )
+                  {
+                      managerSubmissionsFilter.push( managerSubmissionsContainer[i] );
+                  }
+              }
+              if ( managerSubmissionsFilter.length != 0 )
+              {
+                  $scope.managerSubmissions = managerSubmissionsFilter;
+              } else
+              {
+                  $scope.managerSubmissions = [];
+              }
+          };
+
+
 
           /**
           * show all the receipts related to expense items in the particular submission
@@ -168,7 +239,7 @@ angular.module( 'expenseApp.Controllers' )
                   templateUrl: 'Views/Home/views/modals/receiptModal.html',
                   controller: 'receiptController'
               } );
-          }
+          };
 
           /**
           * load the table with the filtered items
@@ -183,7 +254,7 @@ angular.module( 'expenseApp.Controllers' )
                   }
               }
               $scope.managerSubmissions = managerSubmissionsFilter;
-          }
+          };
 
           /**
           * redirect to submission page with the submission id to allow the table to populate
@@ -207,7 +278,7 @@ angular.module( 'expenseApp.Controllers' )
               }
               ReceiptService.setAllReceipts( receipts );
               $location.path( '/submission' );
-          }
+          };
 
           /**
           * Delete a submission by id
@@ -226,7 +297,7 @@ angular.module( 'expenseApp.Controllers' )
                       }
                   }
               } );
-          }
+          };
 
 
           /**

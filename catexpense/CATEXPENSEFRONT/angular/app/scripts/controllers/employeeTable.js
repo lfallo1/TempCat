@@ -31,65 +31,94 @@ angular.module( 'expenseApp.Controllers' )
           LogError
           ) {
 
+          /****************************************************
+           *
+           * Private Variables
+           *
+           ***************************************************/
+
           /**
           * container for the submissions
           */
           var employeeSubmissionsContainer = [];
 
           /**
+           * Allows the fields to be orderable
+           */
+          var orderBy = $filter( 'orderBy' );
+
+          /**
+           * Determines how the submissions will be sorted.
+           * Default sorting is by the 'DateCreated' field.
+           */
+          var sortColumn = {
+              field: 'DateCreated',
+              reverse: false
+          };
+
+          /****************************************************
+          *
+          * Public Variables
+          *
+          ***************************************************/
+
+          /**
           * statuses used for the drop down filter
           */
           $scope.statuses = [
-            { name: 'All', value: '0' },
-            { name: 'In Progress', value: '1' },
-            { name: 'Submitted', value: '2' },
-            { name: 'Manager Approved', value: '3' },
-            { name: 'Manager Rejected', value: '4' },
-            { name: 'Finance Approved', value: '5' },
-            { name: 'Finance Rejected', value: '6' }
+            {
+                name: 'All',
+                value: '0'
+            },
+            {
+                name: 'In Progress',
+                value: '1'
+            },
+            {
+                name: 'Submitted',
+                value: '2'
+            },
+            {
+                name: 'Manager Approved',
+                value: '3'
+            },
+            {
+                name: 'Manager Rejected',
+                value: '4'
+            },
+            {
+                name: 'Finance Approved',
+                value: '5'
+            },
+            {
+                name: 'Finance Rejected',
+                value: '6'
+            }
           ];
 
+          /**
+           * Determines if the employee table is expanded or contracted
+           * True -> table expanded, hide the expand (+) button, show the contract (-) button
+           * False -> contracted, hide the contract (-) button, show the expand (+) button
+           */
           $scope.expanded = true;
-
-          var orderBy = $filter( 'orderBy' );
-
-          var sortColumn = { field: 'DateCreated', reverse: false };
-
-          /**
-          * allow expansion and contraction of employeeTable
-          */
-          $scope.expandContract = function ( value ) {
-              $scope.expanded = value;
-          };
-
-          /**
-          * allow for sorting of submissions displayed in employeeTable
-          */
-          $scope.employeeOrder = function ( field ) {
-              if ( field === sortColumn.field )
-              {
-                  sortColumn.reverse = !sortColumn.reverse;
-                  $scope.employeeSubmissions = orderBy( $scope.employeeSubmissions, sortColumn.field, sortColumn.reverse );
-              } else
-              {
-                  sortColumn.field = field;
-                  sortColumn.reverse = false;
-                  $scope.employeeSubmissions = orderBy( $scope.employeeSubmissions, sortColumn.field, sortColumn.reverse );
-              };
-          };
 
           /**
           * set $scope.statuses[0] to the default selected item in the list
           */
           $scope.selectedStatus = $scope.statuses[0];
 
+          /****************************************************
+          *
+          * Private Methods
+          *
+          ***************************************************/
+
           /**
           * load the user's submissions from the database into the table
           * upon page load
           */
-          $scope.loadEmployeeTable = function () {
-              //console.log('this is what is returned from ExpenseCategory');
-              //console.log($scope.expenseCategories);
+          function loadEmployeeTable() {
               if ( Cache.getAllUserSubmissions() != undefined )
               {
                   var rejected = 0;
@@ -155,7 +184,49 @@ angular.module( 'expenseApp.Controllers' )
                   } );
               }
           }
-          $scope.loadEmployeeTable();
+
+          /****************************************************
+          *
+          * Public Methods
+          *
+          ***************************************************/
+
+          /**
+           * This function is called on page load.
+           */
+          $scope._onLoad = function () {
+              loadEmployeeTable();
+          };
+
+          $scope._onLoad();
+
+          /**
+          * allow expansion and contraction of employeeTable
+          */
+          $scope.expandContract = function ( value ) {
+              $scope.expanded = !!value;
+          };
+
+          /**
+          * allow for sorting of submissions displayed in employeeTable
+          */
+          $scope.employeeOrder = function ( field ) {
+
+              //if currently sorted by a column, clicking the same column again will reverse the current sorting order
+              if ( field === sortColumn.field )
+              {
+                  sortColumn.reverse = !sortColumn.reverse;
+                  $scope.employeeSubmissions = orderBy( $scope.employeeSubmissions, sortColumn.field, sortColumn.reverse );
+              }
+
+                  //sort by a column in alphabetical order
+              else
+              {
+                  sortColumn.field = field;
+                  sortColumn.reverse = false;
+                  $scope.employeeSubmissions = orderBy( $scope.employeeSubmissions, sortColumn.field, sortColumn.reverse );
+              };
+          };
 
           /**
           * load the table with the filtered items
@@ -170,7 +241,7 @@ angular.module( 'expenseApp.Controllers' )
                   }
               }
               $scope.employeeSubmissions = employeeSubmissionsFilter;
-          }
+          };
 
           /**
           * redirect to submission page with the submission id to allow the table to populate
@@ -183,7 +254,7 @@ angular.module( 'expenseApp.Controllers' )
               Cache.setSubmissionIndex( index );
               ReceiptService.setAllReceipts( submission.allSubmissionReceipts );
               $location.path( '/submission' );
-          }
+          };
 
           /**
           * redirect to submission page with the submission id to allow the table to populate
@@ -202,7 +273,7 @@ angular.module( 'expenseApp.Controllers' )
                       }
                   }
               } );
-          }
+          };
 
           /**
           * show all the receipts related to expense items in the particular submission
@@ -218,7 +289,7 @@ angular.module( 'expenseApp.Controllers' )
                   templateUrl: 'Views/Home/views/modals/receiptModal.html',
                   controller: 'receiptController'
               } );
-          }
+          };
 
           /**
           * recieves broadcast message from MessageService confirming user would like to delete submission

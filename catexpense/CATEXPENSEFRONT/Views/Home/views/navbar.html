@@ -5,8 +5,8 @@
         </li>
         <li>
             <div class="col-sm-12 pull-right">
-                <button id="syncProjectsButton" class="btn btn-primary pull-right" ng-click="syncProjects()" ng-disabled="flag">
-                    <i ng-hide="flag" class="glyphicon glyphicon-retweet"></i>
+                <button id="syncProjectsButton" class="btn btn-primary pull-right" ng-click="syncProjects()" ng-disabled="disableSyncButton">
+                    <i ng-hide="disableSyncButton" class="glyphicon glyphicon-retweet"></i>
                     <i ng-attr-id="{{ spinner }}"></i>
                     <span>Sync Projects</span>
                 </button>
