@@ -48,6 +48,18 @@ namespace CatExpenseFront.Controllers
             }
         }
 
+        /// <summary>
+        /// Constructor that accepts all services as parameters for testing purposes
+        /// </summary>
+        public RepliconProjectController(IRepliconUserProjectService iProjectService, IFinanceApproverService iFinance,
+            RepliconRequest repRequest, RepliconResponse repResponse)
+        {
+            this.userProjectService = iProjectService;
+            this.financeApproverService = iFinance;
+            this.repliconRequest = repRequest;
+            this.repliconResponse = repResponse;
+        }
+
 
 
         /// <summary>
@@ -113,7 +125,7 @@ namespace CatExpenseFront.Controllers
         /// <summary>
         /// Search through the group.Members property until you have a Principal that you want. Then extract the name like this:
         /// </summary>
-        private void UpdateFinanceApprovers()
+        public void UpdateFinanceApprovers()
         {
             PrincipalContext principalContext = new PrincipalContext(ContextType.Domain);
             GroupPrincipal group = GroupPrincipal.FindByIdentity(principalContext, "Finance");
