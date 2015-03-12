@@ -619,6 +619,7 @@ angular.module( 'expenseApp.Controllers' )
             );
           };
 
+
          /** 
          * recieves broadcast message from MessageService confirming
          * that the expense report is being submitted.
@@ -643,6 +644,7 @@ angular.module( 'expenseApp.Controllers' )
                       },
                       function (error) {
                           LogError.logError({ username: Authentication.getUser(), endpoint: error.config.url, error: error.statusText });
+
                       });
               } else {
                   MessageService.setMessage('You can not submit a table without any expense items');
@@ -658,6 +660,7 @@ angular.module( 'expenseApp.Controllers' )
                       }
                   });
               }
+
           });
 
           /**
@@ -678,7 +681,6 @@ angular.module( 'expenseApp.Controllers' )
 
 
              
-
           };
 
           /** 

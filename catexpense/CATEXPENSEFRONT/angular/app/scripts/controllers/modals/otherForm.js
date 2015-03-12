@@ -20,13 +20,11 @@ angular.module( 'expenseApp.Controllers' )
           ValidationService
           ) {
 
-          //stores the values that will be manipulated in the modal
-          $scope.otherValues = {
-              date: LineItemService.getLineItemDate(),
-              description: LineItemService.getLineItemDesc(),
-              amount: LineItemService.getLineItemAmount(),
-              billable: LineItemService.getBillable()
-          };
+          /****************************************************
+          *
+          * Private Variables
+          *
+          ***************************************************/
 
           //default validation for the values stored above
           var otherValidation = {
@@ -44,6 +42,32 @@ angular.module( 'expenseApp.Controllers' )
               },
               validInput: true
           };
+
+          /****************************************************
+           *
+           * Public Variables
+           *
+           ***************************************************/
+
+          //stores the values that will be manipulated in the modal
+          $scope.otherValues = {
+              date: LineItemService.getLineItemDate(),
+              description: LineItemService.getLineItemDesc(),
+              amount: LineItemService.getLineItemAmount(),
+              billable: LineItemService.getBillable()
+          };
+
+          /****************************************************
+           *
+           * Private Methods
+           *
+           ***************************************************/
+
+          /****************************************************
+           *
+           * Public Methods
+           *
+           ***************************************************/
 
           /**
            * Returns true if the date field is valid, false otherwise.

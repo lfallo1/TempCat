@@ -184,7 +184,14 @@ angular.module( 'expenseApp.Controllers' )
                 var modalInstance = $modal.open( {
                     templateUrl: 'Views/Home/views/modals/commentModal.html',
                     controller: 'CommentController'
-                } );
+                });
+
+                modalInstance.result.then(function (commentSaved) {
+                }, function () {
+                    if (commentSaved) {
+                        console.log("Comment was saved");
+                    }
+                });
             } );
 
             /**
@@ -211,7 +218,7 @@ angular.module( 'expenseApp.Controllers' )
                 var modalInstance = $modal.open( {
                     templateUrl: 'Views/Home/views/modals/commentModal.html',
                     controller: 'CommentController'
-                } );
+                });
             }
 
             /**

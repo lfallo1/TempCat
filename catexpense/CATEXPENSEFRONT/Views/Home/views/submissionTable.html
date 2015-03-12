@@ -3,29 +3,19 @@
         <div class="panel panel-default">
             <div>
                 <fieldset class="fieldset">
-                    <div class="sizedTable col-sm-12">
-                        <table class="panel-body table table-condensed table-hover">
-                            <tbody ng-repeat="expenseComments in currentSubmission.Comments">
-                                <tr>
-                                    <td>
-                                        <strong>{{expenseComments.RepliconUserName}}</strong> <small>added a comment for Status: </small>{{expenseComments.Status.StatusName}} - {{expenseComments.DateUpdated | date:'yyyy/MM/dd h:mm a'}}<br />
-                                        <div class="cursorText col-md-5" ng-class="{'well': expenseComments.commentIsMine, 'well-sm': expenseComments.commentIsMine, 'whiteBackground': expenseComments.commentIsMine }" ng-click="editComment($index)">{{expenseComments.ExpenseComment}}</div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                    
+
                     <div class="col-sm-12">
                         <button class="btn btn-primary" id="addLineItemButton" ng-click="addNewLineItem()" ng-disabled="!createNewItemLoad">
                             <i class="glyphicon glyphicon-plus"></i>
-                            <span>Add Line Item</span>
+                            <span>Add Expense</span>
                         </button>
                     </div>
                 </fieldset>
             </div>
             <div class="panel-heading">
                 <div class="row">
-                    <h4 class="col-sm-12">Expenses in Submission</h4>
+                    <h4 class="col-sm-12">Expenses in Expense Report</h4>
                 </div>
             </div>
             <table class="panel-body table table-condensed table-hover">
@@ -34,14 +24,12 @@
                         <th ng-if="createNewItemLoad"></th>
                         <th ng-if="createNewItemLoad"></th>
                         <th>
-                            <a href="" id="subExpenseDate" ng-click="submissionOrder('LineItemDate')">
-                                Expense
+                            <a href="" id="subExpenseDate" ng-click="submissionOrder('LineItemDate')">Expense
                                 Date
                             </a>
                         </th>
                         <th>
-                            <a href="" id="subExpenseType" ng-click="submissionOrder('ExpenseCategory.ExpenseCategoryName')">
-                                Expense Type
+                            <a href="" id="subExpenseType" ng-click="submissionOrder('ExpenseCategory.ExpenseCategoryName')">Expense Type
                             </a>
                         </th>
                         <th>
@@ -59,19 +47,19 @@
                     <tr>
                         <td ng-if="createNewItemLoad">
                             <span class="pointer glyphicon glyphicon-edit" ng-click="editExpenseLine(expense, $index)"
-                                  data-toggle="tooltip" data-placement="left" title="Edit Report"></span>
+                                data-toggle="tooltip" data-placement="left" title="Edit Report"></span>
 
                         </td>
                         <td ng-if="createNewItemLoad">
                             <span class="pointer glyphicon glyphicon-trash" ng-click="confirmLineRemove(expense, $index)"
-                                  data-toggle="tooltip" data-placement="left" title="Delete Report"></span>
+                                data-toggle="tooltip" data-placement="left" title="Delete Report"></span>
                         </td>
                         <td>{{expense.LineItemDate | date:'yyyy/MM/dd'}}</td>
                         <td>{{expense.ExpenseCategory.ExpenseCategoryName}}</td>
                         <td>{{("$" + (expense.LineItemAmount).toFixed( 2 ))}}</td>
                         <td>
                             <span class="glyphicon" ng-class="{ 'glyphicon-remove': !{{expense.Billable}}, 'glyphicon-ok': {{expense.Billable}} }"
-                                  ng-style="{'color' : {{expense.Billable}} ? 'green' : 'red' }"></span>
+                                ng-style="{'color' : {{expense.Billable}} ? 'green' : 'red' }"></span>
                         </td>
                         <td class="row">
                             <span ng-if="expense.Receipts.length == 0" class="col-md-2 glyphicon glyphicon-remove" style="color: red"></span>
@@ -86,14 +74,14 @@
                     <span>Undo Submission</span>
                 </button>
                 <button id="saveTableButton" ng-disabled="currentSubmission.LineItems.length == 0" ng-if="submissionLoad && createNewItemLoad || createNewItemLoad"
-                        class="btn btn-primary pull-right" ng-click="saveTable()">
+                    class="btn btn-primary pull-right" ng-click="saveTable()">
                     <i class="glyphicon glyphicon-save"></i>
-                    <span>Save Table</span>
+                    <span>Save</span>
                 </button>
                 <button id="submitTableButton" ng-disabled="currentSubmission.LineItems.length == 0" ng-if="submissionLoad && createNewItemLoad || createNewItemLoad"
-                        class="btn btn-success pull-right" ng-click="submitTable()">
+                    class="btn btn-success pull-right" ng-click="submitTable()">
                     <i class="glyphicon glyphicon-ok"></i>
-                    <span>Submit Table</span>
+                    <span>Submit</span>
                 </button>
             </div>
             <div ng-if="isApprover">
@@ -106,6 +94,29 @@
                     <span>Approve</span>
                 </button>
             </div>
+        </div>
+        <div class="sizedTable col-sm-12">
+            <h4>Comments</h4>
+            <table class="panel-body table table-condensed table-hover">
+                <thead>
+                    <tr>
+                        <th>User</th>
+                        <th>Date</th>
+                        <th>Status</th>
+                        <th>Comment</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="expenseComments in currentSubmission.Comments">
+                        <td>{{expenseComments.RepliconUserName}}</td>
+                        <td>{{expenseComments.DateUpdated | date:'yyyy/MM/dd h:mm a'}}</td>
+                        <td>{{expenseComments.Status.StatusName}}</td>
+                        <td>{{expenseComments.ExpenseComment}}</td>
+                        <td><span class="pointer glyphicon glyphicon-edit" ng-click="editComment($index)" data-toggle="tooltip" data-placement="left" title="Edit Comment"></span></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

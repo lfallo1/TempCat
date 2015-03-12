@@ -22,10 +22,25 @@ angular.module( 'expenseApp.Controllers' )
           ExpenseCategory
           ) {
 
+          /****************************************************
+          *
+          * Private Variables
+          *
+          ***************************************************/
+
+          //This is where all of the expense categories retrieved from the database will be stored.
           var expenseCategories = [];
 
+          /****************************************************
+          *
+          * Public Variables
+          *
+          ***************************************************/
+
+          //This is the expense category that is chosen from the dropdown at the top of the modal.
           $scope.policyType = selectedType;
 
+          //This will determine which policy message will be shown.
           $scope.policyIs = {
               mileage: false,
               perdiem: false,
@@ -40,8 +55,46 @@ angular.module( 'expenseApp.Controllers' )
               error: false
           };
 
+          /****************************************************
+          *
+          * Private Methods
+          *
+          ***************************************************/
+
           /**
-           * Display the selected policy
+           * Get the list of all expense categories from the database.
+           */
+          function getExpenseCategories() {
+
+              //Call the Expensecategory Service
+              ExpenseCategory.getAllExpenseCategories().then(
+
+                  //call to ExpenseCategory was successful
+                  function ( success ) {
+
+                      //store the categories into a variable
+                      success.data.forEach( function ( category ) {
+                          expenseCategories.push( category.ExpenseCategoryName );
+                      } );
+
+                      //display the policy
+                      displayPolicy();
+                  },
+
+                  //call to Expensecategory failed
+                  function ( error ) {
+
+                      //log the error
+                      //this needs to be replaced with a call to the LogError service
+                      console.log( error );
+
+                      //display the policy(in this case, the error message will be displayed)
+                      displayPolicy();
+                  } );
+          };
+
+          /**
+           * Set which policy will be shown.
            */
           function displayPolicy() {
 
@@ -67,24 +120,20 @@ angular.module( 'expenseApp.Controllers' )
 
           };
 
+          /****************************************************
+          *
+          * Public Methods
+          *
+          ***************************************************/
+
           /**
-           * Get the list of all expense categories from the database.
+           * This method will run on page load and run any code that is needed to run.
            */
-          $scope.getExpenseCategories = function () {
-              ExpenseCategory.getAllExpenseCategories().then(
-                  function ( success ) {
-                      success.data.forEach( function ( category ) {
-                          expenseCategories.push( category.ExpenseCategoryName );
-                      } );
-                      displayPolicy();
-                  },
-                  function ( error ) {
-                      console.log( error );
-                      displayPolicy();
-                  } );
+          $scope._onLoad = function () {
+              getExpenseCategories();
           };
 
-          $scope.getExpenseCategories();
+          $scope._onLoad();
 
           /**
            * Close out of the Policy modal.

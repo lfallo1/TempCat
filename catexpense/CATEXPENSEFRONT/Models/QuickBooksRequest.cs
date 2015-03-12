@@ -38,6 +38,8 @@ namespace CatExpenseFront.Models
         private static IQbClientService clientService = new QbClientService();
         private static IQbAccountService accountService = new QbAccountService();
 
+        
+        
         /// <summary>
         /// Setup the cookies/headers required to interact with the quickbooks api
         /// </summary>
@@ -95,8 +97,9 @@ namespace CatExpenseFront.Models
         /// This method should delete all the records in the database pertaining to the clients, 
         /// vendors and accounts.  It is privatized, and should only ever be called at the start of a Sync
         /// </summary>
-        private static void DeleteAll()
+        public static void DeleteAll()
         {
+           
             foreach (QbClient qb in clientService.All().ToList<QbClient>())
             {
                 clientService.Delete(qb);
