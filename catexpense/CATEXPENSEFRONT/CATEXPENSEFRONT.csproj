@@ -612,7 +612,7 @@
     <Content Include="angular\test\spec\factories\RouteFilter.js" />
     <Content Include="angular\test\spec\services\SubmissionService.js" />
     <Content Include="angular\test\spec\services\ValidationService.js" />
-    <Content Include="DBScripts\Sprint-IV.sql" />
+    <Content Include="DBScripts\Sprint-VI.sql" />
     <Content Include="DBScripts\Sprint19.sql" />
     <Content Include="Views\Home\views\about.html" />
     <Content Include="Views\Home\views\admin.html" />
