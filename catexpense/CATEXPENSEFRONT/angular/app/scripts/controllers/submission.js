@@ -624,12 +624,22 @@ angular.module( 'expenseApp.Controllers' )
           * line item, then updating the submission with the correct status id
           */
           $scope.submitTable = function () {
-              if ( $scope.submission.LineItems.length > 0 )
-              {
+              //Show Optional Comment Modal
+              /*
+              Cache.setIsNewComment(true);
+              Cache.setComment("");
+              var modalInstance = $modal.open({
+                  templateUrl: 'Views/Home/views/modals/commentModal.html',
+                  controller: 'CommentController'
+              });
+
+              modalInstance.result.then(function (commentSaved) {
+                  */
+              if ($scope.submission.LineItems.length > 0) {
                   $scope.submission.Status["StatusName"] = 'Submitted'
                   $scope.submission.Status["StatusId"] = 2
-                  SubmissionService.updateSubmission( $scope.submission.SubmissionId, $scope.submission ).then(
-                      function ( success ) {
+                  SubmissionService.updateSubmission($scope.submission.SubmissionId, $scope.submission).then(
+                      function (success) {
                           var userSubmission = Cache.getAllUserSubmissions();
                           userSubmission[Cache.getSubmissionIndex()] = $scope.submission
                           $scope.dt1 = '';
@@ -638,17 +648,16 @@ angular.module( 'expenseApp.Controllers' )
                           $scope.startCreateSubmission = false;
                           $window.location.reload();
                       },
-                      function ( error ) {
-                          LogError.logError( { username: Authentication.getUser(), endpoint: error.config.url, error: error.statusText } ).then(
-                             function ( success ) { },
-                             function ( error ) { } );
-                      } );
-              } else
-              {
-                  MessageService.setMessage( 'You can not submit a table without any expense items' );
-                  MessageService.setBroadCastMessage( "confirmNoEmptyLineItems" );
-                  MessageService.setId( $scope.submission.SubmissionId );
-                  var modalInstance = $modal.open( {
+                      function (error) {
+                          LogError.logError({ username: Authentication.getUser(), endpoint: error.config.url, error: error.statusText }).then(
+                              function (success) { },
+                              function (error) { });
+                      });
+              } else {
+                  MessageService.setMessage('You can not submit a table without any expense items');
+                  MessageService.setBroadCastMessage("confirmNoEmptyLineItems");
+                  MessageService.setId($scope.submission.SubmissionId);
+                  var modalInstance = $modal.open({
                       templateUrl: 'Views/Home/views/modals/confirmModal.html',
                       controller: 'confirmModalController',
                       resolve: {
@@ -656,9 +665,8 @@ angular.module( 'expenseApp.Controllers' )
                               return $scope.selectedType;
                           }
                       }
-                  } );
+                  });
               }
-
           };
 
           /** 
