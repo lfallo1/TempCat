@@ -228,7 +228,12 @@ angular.module( 'expenseApp.Controllers' )
           {
               $scope.clients = Cache.getRepliconProjects();
               $scope.selectedClient = $scope.clients[0];
-              $scope.clientManager = $scope.selectedClient.ManagerName + "@catalystitservices.com";
+              if (Cache.getSubmission()) {
+                  $scope.clientManager =   Cache.getSubmission().ManagerName + "@catalystitservices.com";
+              } else {
+                  $scope.clientManager = $scope.selectedClient.ManagerName + "@catalystitservices.com";
+              }
+          
               $scope.loading = false;
           } else
           {
