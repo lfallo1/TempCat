@@ -206,7 +206,6 @@ angular.module( 'expenseApp.Controllers' )
               else
               {
                   console.log( 'Successfully saved report(s)' );
-
                   //send the array back to the submission controller
                   $modalInstance.close( obj );
               }
@@ -357,6 +356,9 @@ angular.module( 'expenseApp.Controllers' )
           $scope.saveNew = function () {
               var returnArray = [];
               var errorMsg = 'please create a ' + $scope.selectedType + ' expense.';
+
+              //set the LineItemService category to the currently selected one.
+              LineItemService.setExpenseCategoryName( $scope.selectedType );
               switch ( $scope.selectedType )
               {
                   case 'Mileage':
