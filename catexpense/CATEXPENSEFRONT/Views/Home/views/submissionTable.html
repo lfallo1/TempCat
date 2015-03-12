@@ -69,7 +69,7 @@
                 </tbody>
             </table>
             <div>
-                <button ng-if="submittedNotApproved" class="btn btn-warning pull-right" ng-click="unSubmit()">
+                <button ng-if="canUnsubmit" class="btn btn-warning pull-right" ng-click="unSubmit()">
                     <i class="glyphicon icon-undo-white"></i>
                     <span>Undo Submission</span>
                 </button>
