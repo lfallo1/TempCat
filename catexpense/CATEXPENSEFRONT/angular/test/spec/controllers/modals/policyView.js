@@ -1,6 +1,5 @@
 ﻿'use strict';
 
-//testing all the functionality except scope.policyIs
 describe( 'Controller: PolicyCtrl', function () {
 
     var PolicyCtrl;
@@ -63,7 +62,7 @@ describe( 'Controller: PolicyCtrl', function () {
             ExpenseCategory: ExpenseCategory
         } );
 
-        spyOn( scope, 'getExpenseCategories' );
+        spyOn( scope, '_onLoad' );
 
     } ) );
 
@@ -122,7 +121,7 @@ describe( 'Controller: PolicyCtrl', function () {
         getAllExpenseCategoriesDeferred.resolve( successObj );
 
         scope.$digest();
-        scope.getExpenseCategories();
+        scope._onLoad();
 
         expect( scope.policyIs ).toEqual( expected );
 
@@ -162,7 +161,7 @@ describe( 'Controller: PolicyCtrl', function () {
         getAllExpenseCategoriesDeferred.resolve( successObj );
 
         scope.$digest();
-        scope.getExpenseCategories();
+        scope._onLoad();
 
         expect( scope.policyIs ).toEqual( expected );
 
@@ -202,7 +201,7 @@ describe( 'Controller: PolicyCtrl', function () {
         getAllExpenseCategoriesDeferred.resolve( successObj );
 
         scope.$digest();
-        scope.getExpenseCategories();
+        scope._onLoad();
 
         expect( scope.policyIs ).toEqual( expected );
 
@@ -242,7 +241,7 @@ describe( 'Controller: PolicyCtrl', function () {
         getAllExpenseCategoriesDeferred.resolve( successObj );
 
         scope.$digest();
-        scope.getExpenseCategories();
+        scope._onLoad();
 
         expect( scope.policyIs ).toEqual( expected );
 
@@ -282,7 +281,7 @@ describe( 'Controller: PolicyCtrl', function () {
         getAllExpenseCategoriesDeferred.resolve( successObj );
 
         scope.$digest();
-        scope.getExpenseCategories();
+        scope._onLoad();
 
         expect( scope.policyIs ).toEqual( expected );
 
@@ -322,7 +321,7 @@ describe( 'Controller: PolicyCtrl', function () {
         getAllExpenseCategoriesDeferred.resolve( successObj );
 
         scope.$digest();
-        scope.getExpenseCategories();
+        scope._onLoad();
 
         expect( scope.policyIs ).toEqual( expected );
 
@@ -362,7 +361,7 @@ describe( 'Controller: PolicyCtrl', function () {
         getAllExpenseCategoriesDeferred.resolve( successObj );
 
         scope.$digest();
-        scope.getExpenseCategories();
+        scope._onLoad();
 
         expect( scope.policyIs ).toEqual( expected );
 
@@ -402,7 +401,7 @@ describe( 'Controller: PolicyCtrl', function () {
         getAllExpenseCategoriesDeferred.resolve( successObj );
 
         scope.$digest();
-        scope.getExpenseCategories();
+        scope._onLoad();
 
         expect( scope.policyIs ).toEqual( expected );
 
@@ -442,7 +441,7 @@ describe( 'Controller: PolicyCtrl', function () {
         getAllExpenseCategoriesDeferred.resolve( successObj );
 
         scope.$digest();
-        scope.getExpenseCategories();
+        scope._onLoad();
 
         expect( scope.policyIs ).toEqual( expected );
 
@@ -482,7 +481,7 @@ describe( 'Controller: PolicyCtrl', function () {
         getAllExpenseCategoriesDeferred.resolve( successObj );
 
         scope.$digest();
-        scope.getExpenseCategories();
+        scope._onLoad();
 
         expect( scope.policyIs ).toEqual( expected );
 
@@ -510,7 +509,7 @@ describe( 'Controller: PolicyCtrl', function () {
         getAllExpenseCategoriesDeferred.reject( errorObj );
 
         scope.$digest();
-        scope.getExpenseCategories();
+        scope._onLoad();
 
         expect( scope.policyIs ).toEqual( expected );
 
