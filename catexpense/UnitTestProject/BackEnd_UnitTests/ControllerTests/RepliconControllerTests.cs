@@ -107,14 +107,14 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             var emptyController = new RepliconProjectController();
 
             Assert.IsNotNull(emptyController);
-            Assert.AreSame(typeof(RepliconProjectController), emptyController);
+            Assert.AreSame(typeof(RepliconProjectController), emptyController.GetType());
         }
 
         [Test]
         public void RepliconControllerConstructorTest()
         {
             Assert.IsNotNull(controller);
-            Assert.AreSame(typeof(RepliconProjectController), controller);
+            Assert.AreSame(typeof(RepliconProjectController), controller.GetType());
         }
 
         [Test]
@@ -124,6 +124,7 @@ namespace UnitTestProject.BackEnd_UnitTests.ControllerTests
             var response = controller.GetRepliconProject();
 
             Assert.IsNotNull(response);
+            Assert.AreSame(typeof(List<RepliconUserProject>), response.GetType());
             Assert.AreEqual(1, response[0].ID);
           
         }
