@@ -23,6 +23,11 @@ namespace CatExpenseFront.Models
         }
 
         /// <summary>
+        /// Loads the Errors to the context.
+        /// </summary>
+        public DbSet<Error> Errors { get; set; }
+
+        /// <summary>
         /// Loads the Finannce Approvers to the context.
         /// </summary>
         public DbSet<FinanceApprover> FinanceApprovers { get; set; }

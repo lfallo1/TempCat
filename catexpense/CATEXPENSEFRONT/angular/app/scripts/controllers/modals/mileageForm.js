@@ -313,7 +313,7 @@ angular.module( 'expenseApp.Controllers' )
                       var errorObj = {
                           username: Authentication.getUser(),
                           endpoint: error.config.url,
-                          error: error.statusText
+                          errormessage: error.statusText
                       };
 
                       //store the errorObj in the Database
@@ -447,7 +447,7 @@ angular.module( 'expenseApp.Controllers' )
                               var errorObj = {
                                   username: Authentication.getUser(),
                                   endpoint: errorDestination.config.url,
-                                  error: errorDestination.statusText
+                                  errormessage: errorDestination.statusText
                               };
 
                               //store the error in the database
@@ -462,7 +462,7 @@ angular.module( 'expenseApp.Controllers' )
                       var errorObj = {
                           username: Authentication.getUser(),
                           endpoint: errorOrigin.config.url,
-                          error: errorOrigin.statusText
+                          errormessage: errorOrigin.statusText
                       };
 
                       //store the error in the database

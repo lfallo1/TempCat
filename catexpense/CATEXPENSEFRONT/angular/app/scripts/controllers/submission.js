@@ -63,9 +63,9 @@ angular.module( 'expenseApp.Controllers' )
                 && Cache.getSubmission().ActiveDirectoryUser.toUpperCase() == Authentication.getUserName().toUpperCase() &&
                  Cache.getOrigin() == "EmployeeTable";
               $scope.submittedNotApproved = Cache.getSubmissionStatus() > 1
-                                      && (Cache.getOrigin() == "FinanceTable"
+                                      && ( Cache.getOrigin() == "FinanceTable"
                                       || Cache.getSubmissionStatus() > 1 &&
-                                         Cache.getOrigin() == "ManagerTable");
+                                         Cache.getOrigin() == "ManagerTable" );
               $scope.createNewItemLoad = $scope.submission.StatusId == 1 || $scope.submission.StatusId == 4 || $scope.submission.StatusId == 6
           }
 
@@ -211,9 +211,14 @@ angular.module( 'expenseApp.Controllers' )
                       $scope.totalSubmissions = userSubmissions;
                       Cache.setAllUserSubmissions( userSubmissions );
                   }, function ( error ) {
-                      LogError.logError( { username: Authentication.getUser(), endpoint: error.config.url, error: error.statusText } ).then(
-                        function ( success ) { },
-                        function ( error ) { } );
+
+                      var errorObj = {
+                          username: Authentication.getUser(),
+                          endpoint: error.config.url,
+                          errormessage: error.statusText
+                      };
+
+                      LogError.logError( errorObj );
                   }
                  )
               }
@@ -228,12 +233,14 @@ angular.module( 'expenseApp.Controllers' )
           {
               $scope.clients = Cache.getRepliconProjects();
               $scope.selectedClient = $scope.clients[0];
-              if (Cache.getSubmission()) {
-                  $scope.clientManager =   Cache.getSubmission().ManagerName + "@catalystitservices.com";
-              } else {
+              if ( Cache.getSubmission() )
+              {
+                  $scope.clientManager = Cache.getSubmission().ManagerName + "@catalystitservices.com";
+              } else
+              {
                   $scope.clientManager = $scope.selectedClient.ManagerName + "@catalystitservices.com";
               }
-          
+
               $scope.loading = false;
           } else
           {
@@ -272,10 +279,15 @@ angular.module( 'expenseApp.Controllers' )
                           $scope.hasNoProjects = true;
                       }
 
-                  }, function ( fail ) {
-                      LogError.logError( { username: Authentication.getUser(), endpoint: error.config.url, error: error.statusText } ).then(
-                        function ( success ) { },
-                        function ( error ) { } );
+                  }, function ( error ) {
+
+                      var errorObj = {
+                          username: Authentication.getUser(),
+                          endpoint: error.config.url,
+                          errormessage: error.statusText
+                      };
+
+                      LogError.logError( errorObj );
                   } );
           }
 
@@ -324,9 +336,14 @@ angular.module( 'expenseApp.Controllers' )
                       $rootScope.$broadcast( "addSubmissionEmployeeTable" );
                       $scope.openModal();
                   }, function ( error ) {
-                      LogError.logError( { username: Authentication.getUser(), endpoint: error.config.url, error: error.statusText } ).then(
-                        function ( success ) { },
-                        function ( error ) { } );
+
+                      var errorObj = {
+                          username: Authentication.getUser(),
+                          endpoint: error.config.url,
+                          errormessage: error.statusText
+                      };
+
+                      LogError.logError( errorObj );
                   }
               );
           };
@@ -360,9 +377,13 @@ angular.module( 'expenseApp.Controllers' )
               SubmissionService.deleteExpenseReport( MessageService.getId() ).then( function ( success ) {
                   $window.location.href = '/';
               }, function ( error ) {
-                  LogError.logError( { username: Authentication.getUser(), endpoint: error.config.url, error: error.statusText } ).then(
-                      function ( success ) { },
-                      function ( error ) { } );
+                  var errorObj = {
+                      username: Authentication.getUser(),
+                      endpoint: error.config.url,
+                      errormessage: error.statusText
+                  };
+
+                  LogError.logError( errorObj );
               } );
 
           } );
@@ -553,9 +574,13 @@ angular.module( 'expenseApp.Controllers' )
                                   LineItemService.resetLineItem();
                               },
                                 function ( error ) {
-                                    LogError.logError( { username: Authentication.getUser(), endpoint: error.config.url, error: error.statusText } ).then(
-                                        function ( success ) { },
-                                        function ( error ) { } );
+                                    var errorObj = {
+                                        username: Authentication.getUser(),
+                                        endpoint: error.config.url,
+                                        errormessage: error.statusText
+                                    };
+
+                                    LogError.logError( errorObj );
                                 } );
                           LineItemService.setUnderEdit( false );
                       } else
@@ -610,29 +635,37 @@ angular.module( 'expenseApp.Controllers' )
                                                       } );
                                                   } );
                                               },
-                                              function ( err ) {
-                                                  LogError.logError( { username: Authentication.getUser(), endpoint: error.config.url, error: error.statusText } ).then(
-                                                    function ( success ) { },
-                                                    function ( error ) { } );
+                                              function ( error ) {
+                                                  var errorObj = {
+                                                      username: Authentication.getUser(),
+                                                      endpoint: error.config.url,
+                                                      errormessage: error.statusText
+                                                  };
+
+                                                  LogError.logError( errorObj );
                                               } );
                           } );
 
                       }
                   },
-                function ( errorMessage ) {
+                function ( error ) {
                     $scope.disableCreate = false;
-                    LogError.logError( { username: Authentication.getUser(), endpoint: error.config.url, error: error.statusText } ).then(
-                      function ( success ) { },
-                      function ( error ) { } );
+                    var errorObj = {
+                        username: Authentication.getUser(),
+                        endpoint: error.config.url,
+                        errormessage: error.statusText
+                    };
+
+                    LogError.logError( errorObj );
                 }
             );
           };
 
 
-        /**
-         ** Called when the unsubmit broadcast is triggered. 
-         **/
-          $scope.$on("unsubmitExpense", function (response, comment) {
+          /**
+           ** Called when the unsubmit broadcast is triggered. 
+           **/
+          $scope.$on( "unsubmitExpense", function ( response, comment ) {
 
               $scope.submission.Status["StatusName"] = 'In Progress'
               $scope.submission.Status["StatusId"] = 1
@@ -640,8 +673,8 @@ angular.module( 'expenseApp.Controllers' )
               $scope.currentSubmission.Comments[0] = {};
               $scope.currentSubmission.Comments[0]["ExpenseComment"] = comment;
 
-              SubmissionService.updateSubmission($scope.submission.SubmissionId, $scope.submission).then(
-                  function (success) {
+              SubmissionService.updateSubmission( $scope.submission.SubmissionId, $scope.submission ).then(
+                  function ( success ) {
                       var userSubmission = Cache.getAllUserSubmissions();
                       userSubmission[Cache.getSubmissionIndex()] = $scope.submission
                       $scope.dt1 = '';
@@ -650,25 +683,32 @@ angular.module( 'expenseApp.Controllers' )
                       $scope.startCreateSubmission = false;
                       $window.location.reload();
                   },
-                  function (error) {
-                      LogError.logError({ username: Authentication.getUser(), endpoint: error.config.url, error: error.statusText });
-                  });
-          });
+                  function ( error ) {
+                      var errorObj = {
+                          username: Authentication.getUser(),
+                          endpoint: error.config.url,
+                          errormessage: error.statusText
+                      };
 
-         /** 
-         * recieves broadcast message from MessageService confirming
-         * that the expense report is being submitted.
-         */
-          $scope.$on("confirmSubmission", function (response, comment ) {
-              if ($scope.submission.LineItems.length > 0) {
+                      LogError.logError( errorObj );
+                  } );
+          } );
+
+          /** 
+          * recieves broadcast message from MessageService confirming
+          * that the expense report is being submitted.
+          */
+          $scope.$on( "confirmSubmission", function ( response, comment ) {
+              if ( $scope.submission.LineItems.length > 0 )
+              {
                   $scope.submission.Status["StatusName"] = 'Submitted'
                   $scope.submission.Status["StatusId"] = 2
                   $scope.currentSubmission.Comments = new Array();
                   $scope.currentSubmission.Comments[0] = {};
                   $scope.currentSubmission.Comments[0]["ExpenseComment"] = comment;
 
-                  SubmissionService.updateSubmission($scope.submission.SubmissionId, $scope.submission).then(
-                      function (success) {
+                  SubmissionService.updateSubmission( $scope.submission.SubmissionId, $scope.submission ).then(
+                      function ( success ) {
                           var userSubmission = Cache.getAllUserSubmissions();
                           userSubmission[Cache.getSubmissionIndex()] = $scope.submission
                           $scope.dt1 = '';
@@ -677,15 +717,22 @@ angular.module( 'expenseApp.Controllers' )
                           $scope.startCreateSubmission = false;
                           $window.location.reload();
                       },
-                      function (error) {
-                          LogError.logError({ username: Authentication.getUser(), endpoint: error.config.url, error: error.statusText });
+                      function ( error ) {
+                          var errorObj = {
+                              username: Authentication.getUser(),
+                              endpoint: error.config.url,
+                              errormessage: error.statusText
+                          };
 
-                      });
-              } else {
-                  MessageService.setMessage('You can not submit a table without any expense items');
-                  MessageService.setBroadCastMessage("confirmNoEmptyLineItems");
-                  MessageService.setId($scope.submission.SubmissionId);
-                  var modalInstance = $modal.open({
+                          LogError.logError( errorObj );
+
+                      } );
+              } else
+              {
+                  MessageService.setMessage( 'You can not submit a table without any expense items' );
+                  MessageService.setBroadCastMessage( "confirmNoEmptyLineItems" );
+                  MessageService.setId( $scope.submission.SubmissionId );
+                  var modalInstance = $modal.open( {
                       templateUrl: 'Views/Home/views/modals/confirmModal.html',
                       controller: 'confirmModalController',
                       resolve: {
@@ -693,10 +740,10 @@ angular.module( 'expenseApp.Controllers' )
                               return $scope.selectedType;
                           }
                       }
-                  });
+                  } );
               }
 
-          });
+          } );
 
 
 
@@ -707,17 +754,17 @@ angular.module( 'expenseApp.Controllers' )
           $scope.submitTable = function () {
 
               // the manager does not need a comment when approving
-              MessageService.setAddComment(true);
-              MessageService.setCommentRequired(false);
-              MessageService.setMessage("Please confirm you are about to submit this expense report for approval.");
-              MessageService.setBroadCastMessage("confirmSubmission");
-              var modalInstance = $modal.open({
+              MessageService.setAddComment( true );
+              MessageService.setCommentRequired( false );
+              MessageService.setMessage( "Please confirm you are about to submit this expense report for approval." );
+              MessageService.setBroadCastMessage( "confirmSubmission" );
+              var modalInstance = $modal.open( {
                   templateUrl: 'Views/Home/views/modals/confirmModal.html',
                   controller: 'confirmModalController'
-              });
+              } );
 
 
-             
+
           };
 
           /** 
@@ -735,16 +782,16 @@ angular.module( 'expenseApp.Controllers' )
           * user may update the line items in their submission
           */
           $scope.unSubmit = function () {
-             
-              MessageService.setAddComment(true);
-              MessageService.setCommentRequired(false);
-              MessageService.setMessage("Please confirm you are about to unsubmit this expense report.");
-              MessageService.setBroadCastMessage("unsubmitExpense");
-              var modalInstance = $modal.open({
+
+              MessageService.setAddComment( true );
+              MessageService.setCommentRequired( false );
+              MessageService.setMessage( "Please confirm you are about to unsubmit this expense report." );
+              MessageService.setBroadCastMessage( "unsubmitExpense" );
+              var modalInstance = $modal.open( {
                   templateUrl: 'Views/Home/views/modals/confirmModal.html',
                   controller: 'confirmModalController'
-              });
-            
+              } );
+
           }
 
           /**
@@ -772,9 +819,13 @@ angular.module( 'expenseApp.Controllers' )
                      $window.location.reload();
                  },
                  function ( error ) {
-                     LogError.logError( { username: Authentication.getUser(), endpoint: error.config.url, error: error.statusText } ).then(
-                        function ( success ) { },
-                        function ( error ) { } );
+                     var errorObj = {
+                         username: Authentication.getUser(),
+                         endpoint: error.config.url,
+                         errormessage: error.statusText
+                     };
+
+                     LogError.logError( errorObj );
                  } );
 
 
