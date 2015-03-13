@@ -103,7 +103,56 @@ angular.module( 'expenseApp.Controllers' )
            *
            ***************************************************/
 
-          
+          function loadManagerTable() {
+              if ( Cache.getPendingSubmissionsByManagerName() != undefined )
+              {
+                  $scope.managerSubmissions = Cache.getPendingSubmissionsByManagerName();
+                  managerSubmissionsContainer = $scope.managerSubmissions;
+                  $scope.filterTableBySubmissionStatus( 2 );
+                  $scope.setManagerSubmissionCount( $scope.managerSubmissions.length );
+              } else
+              {
+                  // get all the submissions for the manager
+                  SubmissionService.getPendingSubmissionsByManagerName().then(
+                      function ( submissions ) {
+                          var userSubmissions = submissions.data;
+                          for ( var i = 0; i < userSubmissions.length; i++ )
+                          {
+                              // a status of 4 and 6 means the submission was rejected
+                              if ( userSubmissions[i].StatusId == 4 || userSubmissions[i].StatusId == 6 )
+                              {
+                                  //rejected++;
+                              }
+                              var receipts = [];
+                              //get all receipts in that submission
+                              for ( var b = 0; b < userSubmissions[i].LineItems.length; b++ )
+                              {
+                                  for ( var c = 0; c < userSubmissions[i].LineItems[b].Receipts.length; c++ )
+                                  {
+                                      receipts.push( userSubmissions[i].LineItems[b].Receipts[c] );
+                                  }
+                              }
+                              userSubmissions[i]["allSubmissionReceipts"] = receipts;
+                              if ( receipts.length > 0 )
+                              {
+                                  userSubmissions[i]["ReceiptPresent"] = true;
+                              } else
+                              {
+                                  userSubmissions[i]["ReceiptPresent"] = false;
+                              }
+                          }
+                          if ( userSubmissions.length > 0 )
+                          {
+                              Cache.setPendingSubmissionsByManagerName( userSubmissions );
+                          }
+                          $scope.managerSubmissions = userSubmissions;
+                          managerSubmissionsContainer = $scope.managerSubmissions;
+                          $scope.filterTableBySubmissionStatus( 2 );
+                          $scope.setManagerSubmissionCount( $scope.managerSubmissions.length );
+                      } );
+              }
+          };
+
 
 
           /****************************************************
@@ -111,21 +160,6 @@ angular.module( 'expenseApp.Controllers' )
            * Public Methods
            *
            ***************************************************/
-
-          $scope._onLoad = function () {
-
-              /**
-               * if user is a manager, load managerTable with submissions awaiting approval
-               */
-              if ( Authentication.getIsManager() )
-              {
-                  loadManagerTable();
-              }
-          };
-
-          $scope._onLoad();
-
-
 
           /**
           * allow for sorting of submissions displayed in managerTable
@@ -267,58 +301,20 @@ angular.module( 'expenseApp.Controllers' )
           } );
 
           /**
-            This code needs to be refactored so that private functions go in their designated areas.
-          */
-          function loadManagerTable() {
-              if ( Cache.getPendingSubmissionsByManagerName() != undefined )
+           * This method will run on page load.
+           */
+          $scope._onLoad = function () {
+
+              /**
+               * if user is a manager, load managerTable with submissions awaiting approval
+               */
+              if ( Authentication.getIsManager() )
               {
-                  $scope.managerSubmissions = Cache.getPendingSubmissionsByManagerName();
-                  managerSubmissionsContainer = $scope.managerSubmissions;
-                  $scope.filterTableBySubmissionStatus( 2 );
-                  $scope.setManagerSubmissionCount( $scope.managerSubmissions.length );
-              } else
-              {
-                  // get all the submissions for the manager
-                  SubmissionService.getPendingSubmissionsByManagerName().then(
-                      function ( submissions ) {
-                          var userSubmissions = submissions.data;
-                          for ( var i = 0; i < userSubmissions.length; i++ )
-                          {
-                              // a status of 4 and 6 means the submission was rejected
-                              if ( userSubmissions[i].StatusId == 4 || userSubmissions[i].StatusId == 6 )
-                              {
-                                  //rejected++;
-                              }
-                              var receipts = [];
-                              //get all receipts in that submission
-                              for ( var b = 0; b < userSubmissions[i].LineItems.length; b++ )
-                              {
-                                  for ( var c = 0; c < userSubmissions[i].LineItems[b].Receipts.length; c++ )
-                                  {
-                                      receipts.push( userSubmissions[i].LineItems[b].Receipts[c] );
-                                  }
-                              }
-                              userSubmissions[i]["allSubmissionReceipts"] = receipts;
-                              if ( receipts.length > 0 )
-                              {
-                                  userSubmissions[i]["ReceiptPresent"] = true;
-                              } else
-                              {
-                                  userSubmissions[i]["ReceiptPresent"] = false;
-                              }
-                          }
-                          if ( userSubmissions.length > 0 )
-                          {
-                              Cache.setPendingSubmissionsByManagerName( userSubmissions );
-                          }
-                          $scope.managerSubmissions = userSubmissions;
-                          managerSubmissionsContainer = $scope.managerSubmissions;
-                          $scope.filterTableBySubmissionStatus( 2 );
-                          $scope.setManagerSubmissionCount( $scope.managerSubmissions.length );
-                      } );
+                  loadManagerTable();
               }
           };
 
+          $scope._onLoad();
 
       }
   ] );

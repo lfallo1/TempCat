@@ -101,7 +101,55 @@ angular.module( 'expenseApp.Controllers' )
            *
            ***************************************************/
 
-          
+          function loadFinanceTable() {
+              if ( Cache.getPendingSubmissionsByFinanceApprover() != undefined && Cache.getPendingSubmissionsByFinanceApprover().length != 0 )
+              {
+                  $scope.financeSubmissions = Cache.getPendingSubmissionsByFinanceApprover();
+                  financeSubmissionsContainer = $scope.financeSubmissions;
+                  $scope.filterTableBySubmissionStatus( 3 );
+                  $scope.setFinanceSubmissionCount( $scope.financeSubmissions.length );
+              } else
+              {
+                  // get all the submissions for the finance approver
+                  SubmissionService.getPendingSubmissionsByFinanceApprover().then(
+                    function ( submissions ) {
+                        var userSubmissions = submissions.data;
+                        for ( var i = 0; i < userSubmissions.length; i++ )
+                        {
+                            // a status of 4 and 6 means the submission was rejected
+                            if ( userSubmissions[i].StatusId == 4 || userSubmissions[i].StatusId == 6 )
+                            {
+                                //rejected++;
+                            }
+                            var receipts = [];
+                            //get all receipts in that submission
+                            for ( var b = 0; b < userSubmissions[i].LineItems.length; b++ )
+                            {
+                                for ( var c = 0; c < userSubmissions[i].LineItems[b].Receipts.length; c++ )
+                                {
+                                    receipts.push( userSubmissions[i].LineItems[b].Receipts[c] );
+                                }
+                            }
+                            userSubmissions[i]["allSubmissionReceipts"] = receipts;
+                            if ( receipts.length > 0 )
+                            {
+                                userSubmissions[i]["ReceiptPresent"] = true;
+                            } else
+                            {
+                                userSubmissions[i]["ReceiptPresent"] = false;
+                            }
+                        }
+                        if ( userSubmissions.length > 0 )
+                        {
+                            Cache.setPendingSubmissionsByFinanceApprover( userSubmissions );
+                        }
+                        $scope.financeSubmissions = userSubmissions;
+                        financeSubmissionsContainer = $scope.financeSubmissions;
+                        $scope.filterTableBySubmissionStatus( 3 );
+                        $scope.setFinanceSubmissionCount( $scope.financeSubmissions.length );
+                    } );
+              }
+          };
 
 
 
@@ -111,19 +159,7 @@ angular.module( 'expenseApp.Controllers' )
            *
            ***************************************************/
 
-          $scope._onLoad = function () {
-
-              /**
-               * if the user is a finance approver, load the financeTable 
-               * with submissions awaiting their approval
-               */
-              if ( Authentication.getIsFinanceApprover() )
-              {
-                  loadFinanceTable();
-              }
-          };
-
-          $scope._onLoad();
+          
 
           /**
           * expand and contract financeTable view
@@ -245,55 +281,23 @@ angular.module( 'expenseApp.Controllers' )
 
           } );
 
-          function loadFinanceTable() {
-              if ( Cache.getPendingSubmissionsByFinanceApprover() != undefined && Cache.getPendingSubmissionsByFinanceApprover().length != 0 )
+
+          /**
+           * This method will run on page load.
+           */
+          $scope._onLoad = function () {
+
+              /**
+               * if the user is a finance approver, load the financeTable 
+               * with submissions awaiting their approval
+               */
+              if ( Authentication.getIsFinanceApprover() )
               {
-                  $scope.financeSubmissions = Cache.getPendingSubmissionsByFinanceApprover();
-                  financeSubmissionsContainer = $scope.financeSubmissions;
-                  $scope.filterTableBySubmissionStatus( 3 );
-                  $scope.setFinanceSubmissionCount( $scope.financeSubmissions.length );
-              } else
-              {
-                  // get all the submissions for the finance approver
-                  SubmissionService.getPendingSubmissionsByFinanceApprover().then(
-                    function ( submissions ) {
-                        var userSubmissions = submissions.data;
-                        for ( var i = 0; i < userSubmissions.length; i++ )
-                        {
-                            // a status of 4 and 6 means the submission was rejected
-                            if ( userSubmissions[i].StatusId == 4 || userSubmissions[i].StatusId == 6 )
-                            {
-                                //rejected++;
-                            }
-                            var receipts = [];
-                            //get all receipts in that submission
-                            for ( var b = 0; b < userSubmissions[i].LineItems.length; b++ )
-                            {
-                                for ( var c = 0; c < userSubmissions[i].LineItems[b].Receipts.length; c++ )
-                                {
-                                    receipts.push( userSubmissions[i].LineItems[b].Receipts[c] );
-                                }
-                            }
-                            userSubmissions[i]["allSubmissionReceipts"] = receipts;
-                            if ( receipts.length > 0 )
-                            {
-                                userSubmissions[i]["ReceiptPresent"] = true;
-                            } else
-                            {
-                                userSubmissions[i]["ReceiptPresent"] = false;
-                            }
-                        }
-                        if ( userSubmissions.length > 0 )
-                        {
-                            Cache.setPendingSubmissionsByFinanceApprover( userSubmissions );
-                        }
-                        $scope.financeSubmissions = userSubmissions;
-                        financeSubmissionsContainer = $scope.financeSubmissions;
-                        $scope.filterTableBySubmissionStatus( 3 );
-                        $scope.setFinanceSubmissionCount( $scope.financeSubmissions.length );
-                    } );
+                  loadFinanceTable();
               }
           };
+
+          $scope._onLoad();
 
       }
   ] );
