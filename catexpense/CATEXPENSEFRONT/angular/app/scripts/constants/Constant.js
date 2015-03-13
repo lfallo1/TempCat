@@ -6,6 +6,4 @@ angular.module( 'expenseApp.Constants' )
     .constant(
     'Constants',
     {
-        'ONE': 'one',
-        'TWO': 'two'
     } );
