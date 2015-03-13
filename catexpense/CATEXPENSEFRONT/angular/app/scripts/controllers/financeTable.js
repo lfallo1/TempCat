@@ -15,6 +15,7 @@ angular.module( 'expenseApp.Controllers' )
       "MessageService",
       "Authentication",
       "ReceiptService",
+      "LogError",
       function ( $scope,
           $location,
           $modal,
@@ -25,7 +26,8 @@ angular.module( 'expenseApp.Controllers' )
           SubmissionService,
           MessageService,
           Authentication,
-          ReceiptService
+          ReceiptService,
+          LogError
           ) {
 
           /****************************************************
@@ -59,12 +61,24 @@ angular.module( 'expenseApp.Controllers' )
            *
            ***************************************************/
 
+          /**
+           * Determines if the finance table is expanded or contracted
+           * True -> table expanded, hide the expand (+) button, show the contract (-) button
+           * False -> contracted, hide the contract (-) button, show the expand (+) button
+           */
+          $scope.expanded = true;
+
+          /**   
+           * Determines if the finance table becomes visible to the user.
+           * True -> table is visible because user is a finance approver
+           * False -> table is not visible because user is not a finance approver
+           */
           $scope.isFinanceApprover = Authentication.getIsFinanceApprover();
 
           /**
           * finance tatuses is used for the drop down filter
           */
-          $scope.financeStatuses = [
+          $scope.financeStatusList = [
             {
                 name: 'All',
                 value: '0'
@@ -83,17 +97,12 @@ angular.module( 'expenseApp.Controllers' )
             }
           ];
 
-          /**
-           * Determines if the employee table is expanded or contracted
-           * True -> table expanded, hide the expand (+) button, show the contract (-) button
-           * False -> contracted, hide the contract (-) button, show the expand (+) button
-           */
-          $scope.expanded = true;
+
 
           /**
           * set $scope.financeStatuses[1] to the default selected item in the list
           */
-          $scope.selectedFinanceStatus = $scope.financeStatuses[1];
+          $scope.selectedFinanceStatus = $scope.financeStatusList[1];
 
           /****************************************************
            *
@@ -101,53 +110,87 @@ angular.module( 'expenseApp.Controllers' )
            *
            ***************************************************/
 
+          /**
+           * Load all of the submissions for a finance table.
+           *
+           */
           function loadFinanceTable() {
+
+              //load the submissions from the cache
               if ( Cache.getPendingSubmissionsByFinanceApprover() != undefined && Cache.getPendingSubmissionsByFinanceApprover().length != 0 )
               {
-                  $scope.financeSubmissions = Cache.getPendingSubmissionsByFinanceApprover();
-                  financeSubmissionsContainer = $scope.financeSubmissions;
+                  //load submissions from cache
+                  financeSubmissionsContainer = Cache.getPendingSubmissionsByFinanceApprover();
+
+                  //filter the submissions and make them appear in the table
                   $scope.filterTableBySubmissionStatus( 3 );
+
+                  //call parent controller to set the count of the submissions awaiting finance approval.
                   $scope.setFinanceSubmissionCount( $scope.financeSubmissions.length );
-              } else
+              }
+
+                  //cache is empty, load submissions from the database
+              else
               {
-                  // get all the submissions for the finance approver
+                  //Call the SubmissionService and get all the submissions awaiting the user's approval
                   SubmissionService.getPendingSubmissionsByFinanceApprover().then(
-                    function ( submissions ) {
-                        var userSubmissions = submissions.data;
-                        for ( var i = 0; i < userSubmissions.length; i++ )
-                        {
-                            // a status of 4 and 6 means the submission was rejected
-                            if ( userSubmissions[i].StatusId == 4 || userSubmissions[i].StatusId == 6 )
-                            {
-                                //rejected++;
-                            }
-                            var receipts = [];
-                            //get all receipts in that submission
-                            for ( var b = 0; b < userSubmissions[i].LineItems.length; b++ )
-                            {
-                                for ( var c = 0; c < userSubmissions[i].LineItems[b].Receipts.length; c++ )
-                                {
-                                    receipts.push( userSubmissions[i].LineItems[b].Receipts[c] );
-                                }
-                            }
-                            userSubmissions[i]["allSubmissionReceipts"] = receipts;
-                            if ( receipts.length > 0 )
-                            {
-                                userSubmissions[i]["ReceiptPresent"] = true;
-                            } else
-                            {
-                                userSubmissions[i]["ReceiptPresent"] = false;
-                            }
-                        }
-                        if ( userSubmissions.length > 0 )
-                        {
-                            Cache.setPendingSubmissionsByFinanceApprover( userSubmissions );
-                        }
-                        $scope.financeSubmissions = userSubmissions;
-                        financeSubmissionsContainer = $scope.financeSubmissions;
-                        $scope.filterTableBySubmissionStatus( 3 );
-                        $scope.setFinanceSubmissionCount( $scope.financeSubmissions.length );
-                    } );
+
+                      //call to Db successful
+                      function ( submissions ) {
+                          var userSubmissions = submissions.data;
+
+                          //look at each submission
+                          for ( var i = 0; i < userSubmissions.length; i++ )
+                          {
+                              //create a list to store all of the receipts within the submission
+                              var receipts = [];
+
+                              //look at each lineitem within each submission
+                              for ( var j = 0; j < userSubmissions[i].LineItems.length; j++ )
+                              {
+                                  //look at each receipt within each lineitem
+                                  for ( var k = 0; k < userSubmissions[i].LineItems[j].Receipts.length; k++ )
+                                  {
+                                      //save each receipt to the list of total receipts
+                                      receipts.push( userSubmissions[i].LineItems[j].Receipts[k] );
+                                  }
+                              }
+
+                              //save the list of all receipts within the submission to a parameter
+                              userSubmissions[i]["allSubmissionReceipts"] = receipts;
+
+                              //does the specific submission have at least one receipt attached?
+                              userSubmissions[i]["ReceiptPresent"] = receipts.length > 0;
+                          }
+
+                          //save the submissions to the cache
+                          if ( userSubmissions.length > 0 )
+                          {
+                              Cache.setPendingSubmissionsByFinanceApprover( userSubmissions );
+                          }
+
+                          //save submissiosn to the list of all submissions
+                          financeSubmissionsContainer = userSubmissions;
+
+                          //filter the submissions and make them appear in the table
+                          $scope.filterTableBySubmissionStatus( 3 );
+
+                          //call parent controller to set the count of the submissions awaiting approval
+                          $scope.setFinanceSubmissionCount( $scope.financeSubmissions.length );
+                      },
+
+                      //error calling to the DB
+                      function ( error ) {
+
+                          var errorObj = {
+                              username: Authentication.getUser(),
+                              endpoint: error.config.url,
+                              errormessage: error.statusText
+                          };
+
+                          //save error
+                          LogError.logError( errorObj );
+                      } );
               }
           };
 
@@ -159,7 +202,7 @@ angular.module( 'expenseApp.Controllers' )
            *
            ***************************************************/
 
-          
+
 
           /**
           * expand and contract financeTable view
@@ -190,24 +233,25 @@ angular.module( 'expenseApp.Controllers' )
           };
 
           /**
-          * load the table with the filtered items
-          */
+           * Display the submissions that match the status selected in the dropdown.
+           */
           $scope.filterTableBySubmissionStatus = function ( status ) {
+
+              //array to store the submissions that are found to match the filter
               var financeSubmissionsFilter = [];
+
+              //find and save the submissions that match the filter
               for ( var i = 0; i < financeSubmissionsContainer.length; i++ )
               {
+                  //if the submission's status matches the filter selected OR the filter is set to All
                   if ( financeSubmissionsContainer[i].StatusId == status || status == 0 )
                   {
                       financeSubmissionsFilter.push( financeSubmissionsContainer[i] );
                   }
               }
-              if ( financeSubmissionsFilter.length != 0 )
-              {
-                  $scope.financeSubmissions = financeSubmissionsFilter;
-              } else
-              {
-                  $scope.financeSubmissions = [];
-              }
+
+              //display the filtered submissiosn
+              $scope.financeSubmissions = financeSubmissionsFilter;
           };
 
           /**

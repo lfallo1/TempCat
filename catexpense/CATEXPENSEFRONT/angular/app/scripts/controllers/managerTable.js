@@ -15,6 +15,7 @@ angular.module( 'expenseApp.Controllers' )
       "MessageService",
       "Authentication",
       "ReceiptService",
+      "LogError",
       function (
           $scope,
           $location,
@@ -26,7 +27,8 @@ angular.module( 'expenseApp.Controllers' )
           SubmissionService,
           MessageService,
           Authentication,
-          ReceiptService
+          ReceiptService,
+          LogError
           ) {
 
           /****************************************************
@@ -36,7 +38,7 @@ angular.module( 'expenseApp.Controllers' )
            ***************************************************/
 
           /**
-          * container for the submissions
+          * Array containing all of the submissions visible to the manager.
           */
           var managerSubmissionsContainer = [];
 
@@ -60,9 +62,6 @@ angular.module( 'expenseApp.Controllers' )
            *
            ***************************************************/
 
-
-          $scope.isManager = Authentication.getIsManager();
-
           /**
            * Determines if the manager table is expanded or contracted
            * True -> table expanded, hide the expand (+) button, show the contract (-) button
@@ -70,10 +69,17 @@ angular.module( 'expenseApp.Controllers' )
            */
           $scope.expanded = true;
 
+          /**   
+           * Determines if the manager table becomes visible to the user.
+           * True -> table is visible because user is a manager
+           * False -> table is not visible because user is not a manager
+           */
+          $scope.isManager = Authentication.getIsManager();
+
           /**
-          * statuses used for the drop down filter
-          */
-          $scope.statuses = [
+           * List of statuses that appear in the dropdown filter.
+           */
+          $scope.managerStatusList = [
             {
                 name: 'All',
                 value: '0'
@@ -93,9 +99,10 @@ angular.module( 'expenseApp.Controllers' )
           ];
 
           /**
-          * set $scope.statuses[0] to the default selected item in the list
-          */
-          $scope.selectedStatus = $scope.statuses[1];
+           * Set the default manager table filter.
+           * Currently set to filter by 'Submitted' status.
+           */
+          $scope.selectedStatus = $scope.managerStatusList[1];
 
           /****************************************************
            *
@@ -103,52 +110,86 @@ angular.module( 'expenseApp.Controllers' )
            *
            ***************************************************/
 
+          /**
+           * Load all of the submissions for a manager table.
+           */
           function loadManagerTable() {
-              if ( Cache.getPendingSubmissionsByManagerName() != undefined )
+
+              //load the submissions from the cacahe
+              if ( Cache.getPendingSubmissionsByManagerName() !== undefined && Cache.getPendingSubmissionsByManagerName().length !== 0 )
               {
-                  $scope.managerSubmissions = Cache.getPendingSubmissionsByManagerName();
-                  managerSubmissionsContainer = $scope.managerSubmissions;
+
+                  //load submissions from cache 
+                  managerSubmissionsContainer = Cache.getPendingSubmissionsByManagerName();
+
+                  //filter the submissions and make them appear in the table
                   $scope.filterTableBySubmissionStatus( 2 );
+
+                  //call parent controller to set the count of the submissions awaiting approval
                   $scope.setManagerSubmissionCount( $scope.managerSubmissions.length );
-              } else
+              }
+
+                  //cache is empty, load the submissions from the Database
+              else
               {
-                  // get all the submissions for the manager
+                  //Call the SubmissionService and get all the submissions awaiting the user's approval
                   SubmissionService.getPendingSubmissionsByManagerName().then(
+
+                      //call to DB was successfully
                       function ( submissions ) {
                           var userSubmissions = submissions.data;
+
+                          //look at each submission
                           for ( var i = 0; i < userSubmissions.length; i++ )
                           {
-                              // a status of 4 and 6 means the submission was rejected
-                              if ( userSubmissions[i].StatusId == 4 || userSubmissions[i].StatusId == 6 )
-                              {
-                                  //rejected++;
-                              }
+                              //create a list to store all of the receipts within the submission
                               var receipts = [];
-                              //get all receipts in that submission
-                              for ( var b = 0; b < userSubmissions[i].LineItems.length; b++ )
+
+                              //look at each lineitem within each submission
+                              for ( var j = 0; j < userSubmissions[i].LineItems.length; j++ )
                               {
-                                  for ( var c = 0; c < userSubmissions[i].LineItems[b].Receipts.length; c++ )
+                                  //look at each receipt within each lineitem
+                                  for ( var k = 0; k < userSubmissions[i].LineItems[j].Receipts.length; k++ )
                                   {
-                                      receipts.push( userSubmissions[i].LineItems[b].Receipts[c] );
+                                      //save each receipt to the list of total receipts
+                                      receipts.push( userSubmissions[i].LineItems[j].Receipts[k] );
                                   }
                               }
+
+                              //save the list of all receipts within the submission to a parameter
                               userSubmissions[i]["allSubmissionReceipts"] = receipts;
-                              if ( receipts.length > 0 )
-                              {
-                                  userSubmissions[i]["ReceiptPresent"] = true;
-                              } else
-                              {
-                                  userSubmissions[i]["ReceiptPresent"] = false;
-                              }
+
+                              //does the specific submission have at least one receipt attached?
+                              userSubmissions[i]["ReceiptPresent"] = receipts.length > 0;
                           }
+
+                          //save the submissions to the cache
                           if ( userSubmissions.length > 0 )
                           {
                               Cache.setPendingSubmissionsByManagerName( userSubmissions );
                           }
-                          $scope.managerSubmissions = userSubmissions;
-                          managerSubmissionsContainer = $scope.managerSubmissions;
+
+                          //save submissions to the list of all submissions
+                          managerSubmissionsContainer = userSubmissions;
+
+                          //filter the submissions and make them appear in the table
                           $scope.filterTableBySubmissionStatus( 2 );
+
+                          //call parent controller to set the count of the submissions awaiting approval
                           $scope.setManagerSubmissionCount( $scope.managerSubmissions.length );
+                      },
+
+                      //error calling to Db
+                      function ( error ) {
+
+                          var errorObj = {
+                              username: Authentication.getUser(),
+                              endpoint: error.config.url,
+                              errormessage: error.statusText
+                          };
+
+                          //save error
+                          LogError.logError( errorObj );
                       } );
               }
           };
@@ -162,8 +203,15 @@ angular.module( 'expenseApp.Controllers' )
            ***************************************************/
 
           /**
-          * allow for sorting of submissions displayed in managerTable
+          * allow user to expand and contract manager table view
           */
+          $scope.expandContract = function ( value ) {
+              $scope.expanded = !!value;
+          };
+
+          /**
+           * allow for sorting of submissions displayed in managerTable
+           */
           $scope.managerOrder = function ( field ) {
 
               //if currently sorted by a column, clicking the same column again will reverse the current sorting order
@@ -183,36 +231,6 @@ angular.module( 'expenseApp.Controllers' )
           };
 
           /**
-          * allow user to expand and contract manager table view
-          */
-          $scope.expandContract = function ( value ) {
-              $scope.expanded = !!value;
-          };
-
-          /**
-          * load the table with the filtered items
-          */
-          $scope.filterTableBySubmissionStatus = function ( status ) {
-              var managerSubmissionsFilter = [];
-              for ( var i = 0; i < managerSubmissionsContainer.length; i++ )
-              {
-                  if ( managerSubmissionsContainer[i].StatusId == status || status == 0 )
-                  {
-                      managerSubmissionsFilter.push( managerSubmissionsContainer[i] );
-                  }
-              }
-              if ( managerSubmissionsFilter.length != 0 )
-              {
-                  $scope.managerSubmissions = managerSubmissionsFilter;
-              } else
-              {
-                  $scope.managerSubmissions = [];
-              }
-          };
-
-
-
-          /**
           * show all the receipts related to expense items in the particular submission
           */
           $scope.showAllAvailableReceipts = function ( allReceipts, submission, submissionIndex ) {
@@ -229,17 +247,24 @@ angular.module( 'expenseApp.Controllers' )
           };
 
           /**
-          * load the table with the filtered items
-          */
+           * Display the submissions that match the status selected in the dropdown.
+           */
           $scope.filterTableBySubmissionStatus = function ( status ) {
+
+              //array to store the submissions that are found to match the filter
               var managerSubmissionsFilter = [];
+
+              //find and save the submissions that match the filter
               for ( var i = 0; i < managerSubmissionsContainer.length; i++ )
               {
+                  //if the submissions's status matches the filter selected OR the filter is set to All
                   if ( managerSubmissionsContainer[i].StatusId == status || status == 0 )
                   {
                       managerSubmissionsFilter.push( managerSubmissionsContainer[i] );
                   }
               }
+
+              //display the filtered submissions
               $scope.managerSubmissions = managerSubmissionsFilter;
           };
 
@@ -293,11 +318,11 @@ angular.module( 'expenseApp.Controllers' )
           $scope.$on( "confirmManagerDeleteSubmission", function () {
               MessageService.setMessage( "" );
               MessageService.setBroadCastMessage( "" );
-              SubmissionService.deleteExpenseReport( MessageService.getId() ).then( function ( success ) {
-                  $scope.managerSubmissions.splice( Cache.getSubmissionIndex(), 1 );
-                  Cache.setPendingSubmissionsByManagerName( $scope.managerSubmissions );
-              } );
-
+              SubmissionService.deleteExpenseReport( MessageService.getId() ).then(
+                  function ( success ) {
+                      $scope.managerSubmissions.splice( Cache.getSubmissionIndex(), 1 );
+                      Cache.setPendingSubmissionsByManagerName( $scope.managerSubmissions );
+                  } );
           } );
 
           /**

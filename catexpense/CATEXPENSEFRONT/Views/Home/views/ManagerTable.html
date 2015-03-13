@@ -12,7 +12,7 @@
             </div>
             <div class="col-sm-4 col-md-4 pull-right">
                 <select class="form-control col-sm-4 col-md-4 pull-right" ng-change="filterTableBySubmissionStatus(selectedStatus.value)"
-                        ng-model="selectedStatus" ng-options="status.name for status in statuses"></select>
+                        ng-model="selectedStatus" ng-options="status.name for status in managerStatusList"></select>
             </div>
         </div>
         <table class="panel-body table table-hover table-striped table-condensed" ng-if="expanded">
@@ -29,7 +29,7 @@
                     </th>
                      <th class="col-md-2"><a href="" id="manDescription" ng-click="managerOrder('Description')">Description</a></th>
                     <th  class="col-md-2"><a href="" id="manAmount" ng-click="managerOrder('TotalAmount')">Amount</a></th>
-                    <th  class="col-md-2"><a href="" id="Receipts" ng-click="employeeOrder('ReceiptPresent')">Receipts</a></th>
+                    <th  class="col-md-2"><a href="" id="manReceipts" ng-click="managerOrder('ReceiptPresent')">Receipts</a></th>
                 </tr>
             </thead>
             <tbody class="scrollTable">
@@ -53,7 +53,9 @@
                     <td class="col-md-2">{{("$" + (submission.TotalAmount).toFixed( 2 ))}}</td>
                     <td class="row col-md-2">
                         <span ng-if="submission.allSubmissionReceipts.length == 0" class="col-md-2 glyphicon glyphicon-remove" style="color: red"></span>
-                        <span title="View all receipts" class="pointer col-md-2 pull-left btn-link glyphicon glyphicon-file" ng-click="showAllAvailableReceipts(submission.allSubmissionReceipts, submission, $index)" ng-show="submission.allSubmissionReceipts.length > 0"></span>
+                        <span title="View all receipts" class="pointer col-md-2 pull-left btn-link glyphicon glyphicon-file" 
+                            ng-click="showAllAvailableReceipts(submission.allSubmissionReceipts, submission, $index)" 
+                            ng-show="submission.allSubmissionReceipts.length > 0"></span>
                     </td>
                 </tr>
             </tbody>

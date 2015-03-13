@@ -12,7 +12,7 @@
             </div>
             <div class="col-sm-4 col-md-4 pull-right">
                 <select class="form-control col-sm-5 col-md-5 pull-right" ng-change="filterTableBySubmissionStatus(selectedFinanceStatus.value)"
-                    ng-model="selectedFinanceStatus" ng-options="status.name for status in financeStatuses">
+                    ng-model="selectedFinanceStatus" ng-options="status.name for status in financeStatusList">
                 </select>
             </div>
         </div>
@@ -30,7 +30,7 @@
                     </th>
                     <th class="col-md-2"><a href="" id="finDescription" ng-click="financeOrder('Description')">Description</a></th>
                     <th class="col-md-2"><a href="" id="finAmount" ng-click="financeOrder('TotalAmount')">Amount</a></th>
-                    <th class="col-md-2"><a href="" id="Receipts" ng-click="employeeOrder('ReceiptPresent')">Receipts</a></th>
+                    <th class="col-md-2"><a href="" id="Receipts" ng-click="financeOrder('ReceiptPresent')">Receipts</a></th>
                 </tr>
             </thead>
             <tbody  class="scrollTable">
