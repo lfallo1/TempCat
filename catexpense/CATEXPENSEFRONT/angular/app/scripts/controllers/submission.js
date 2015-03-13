@@ -650,13 +650,7 @@ angular.module( 'expenseApp.Controllers' )
                   },
                 function ( error ) {
                     $scope.disableCreate = false;
-                    var errorObj = {
-                        username: Authentication.getUser(),
-                        endpoint: error.config.url,
-                        errormessage: error.statusText
-                    };
-
-                    LogError.logError( errorObj );
+                    
                 }
             );
           };
